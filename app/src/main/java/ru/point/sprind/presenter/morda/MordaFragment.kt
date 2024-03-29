@@ -39,7 +39,7 @@ class MordaFragment : Fragment(), MordaView {
         super.onViewCreated(view, savedInstanceState)
         initializeRecyclerView()
 
-
+        binding.toolbar.search.isFocusable = false
         binding.toolbar.search.setOnClickListener {
             findNavController().navigate(R.id.action_mordaFragment_to_searchFragment)
             Log.d("navigation", "clicked")
@@ -53,5 +53,22 @@ class MordaFragment : Fragment(), MordaView {
         )
 
         binding.recyclerView.addItemDecoration(ProductDecorator())
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(REQUEST_KEY, binding.toolbar.search.text.toString())
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+
+        if (savedInstanceState != null) {
+            binding.toolbar.search.setText(savedInstanceState.getString(REQUEST_KEY))
+        }
+    }
+
+    companion object {
+        const val REQUEST_KEY = "REQUEST_KEY"
     }
 }
