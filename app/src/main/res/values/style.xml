@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AccentText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CardPriceText" parent="AccentText">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="BuyButton" parent="AccentText">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="CardNameText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+</resources>
