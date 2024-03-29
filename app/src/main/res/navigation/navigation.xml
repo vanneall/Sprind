@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mordaFragment"
-        android:name="ru.point.sprind.MordaFragment"
+        android:name="ru.point.sprind.presenter.morda.MordaFragment"
         android:label="fragment_morda"
         tools:layout="@layout/fragment_morda" >
         <action
