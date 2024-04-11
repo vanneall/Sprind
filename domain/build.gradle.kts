@@ -40,6 +40,10 @@ dependencies {
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
 
+    //RxJava3
+    implementation(libs.rxandroid)
+    implementation(libs.rxjava)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

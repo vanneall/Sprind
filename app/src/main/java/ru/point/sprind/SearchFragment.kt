@@ -70,6 +70,22 @@ class SearchFragment : Fragment() {
                 outRect.bottom = 15
             }
         })
+    }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(REQUEST_KEY, binding.toolbar.search.text.toString())
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+
+        if (savedInstanceState != null) {
+            binding.toolbar.search.setText(savedInstanceState.getString(REQUEST_KEY))
+        }
+    }
+
+    private companion object {
+        const val REQUEST_KEY = "REQUEST_KEY"
     }
 }

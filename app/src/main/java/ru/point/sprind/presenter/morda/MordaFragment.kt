@@ -68,7 +68,7 @@ class MordaFragment : Fragment(), MordaView {
         }
     }
 
-    companion object {
+    private companion object {
         const val REQUEST_KEY = "REQUEST_KEY"
     }
 }
