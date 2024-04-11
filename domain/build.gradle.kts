@@ -40,8 +40,10 @@ dependencies {
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
 
+    //Gson converter
+    implementation (libs.converter.gson.v250)
+
     //RxJava3
-    implementation(libs.rxandroid)
     implementation(libs.rxjava)
 
     implementation(libs.androidx.core.ktx)

@@ -16,12 +16,12 @@ class ProductViewHolder(
             with(binding) {
 
                 image.load(
-                    view.url[0].url
+                    view.photosUrl[0]
                 ) {
                     scale(Scale.FIT)
                 }
                 name.text = view.name
-                price.text = view.price
+                price.text = view.price.money.toString()
             }
         }
     }

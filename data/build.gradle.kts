@@ -39,19 +39,15 @@ dependencies {
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
 
+    //Retrofit
+    implementation (libs.retrofit.v290)
+    implementation (libs.converter.gson)
+    implementation(libs.adapter.rxjava3)
+
     //RxJava3
-    implementation(libs.rxandroid)
     implementation(libs.rxjava)
 
-    //Gson
-    implementation(libs.converter.gson)
 
-    //Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.okhttp)
-
-    //RxAdapter for retrofit
-    implementation(libs.adapter.rxjava3)
 
     implementation(project(":domain"))
 

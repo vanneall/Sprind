@@ -1,13 +1,21 @@
 package ru.point.domain.entity
 
+import com.google.gson.annotations.SerializedName
+
 @JvmInline
 value class ImageURL(
-    val url: String
+    val url: String,
 )
 
 data class Product(
-    val skuId: Long,
+    @SerializedName("id")
+    val id: Long,
+    @SerializedName("name")
     val name: String,
-    val price: String,
-    val url: List<ImageURL>
-): ListView
+    @SerializedName("price")
+    val price: Price,
+    @SerializedName("description")
+    val description: String? = null,
+    @SerializedName("photosUrl")
+    val photosUrl: List<String>,
+) : ListView

@@ -1,28 +1,29 @@
 package ru.point.sprind.presenter.morda
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import moxy.presenter.InjectPresenter
-import ru.point.sprind.R
+import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
+import ru.point.domain.entity.ListView
 import ru.point.sprind.SprindApplication
 import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.ProductDecorator
 import ru.point.sprind.databinding.FragmentMordaBinding
+import ru.point.sprind.entity.deletage.Delegate
 import javax.inject.Inject
 
-class MordaFragment : Fragment(), MordaView {
+class MordaFragment : MvpAppCompatFragment(), MordaView {
 
     @Inject
-    @InjectPresenter
-    lateinit var presenter: MordaPresenter
+    lateinit var presenterProvider: MordaPresenter
 
-    init {
+    private val presenter: MordaPresenter by moxyPresenter { presenterProvider }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(fragment = this)
+        super.onCreate(savedInstanceState)
     }
 
     private lateinit var binding: FragmentMordaBinding
@@ -37,20 +38,11 @@ class MordaFragment : Fragment(), MordaView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeRecyclerView()
-
         binding.toolbar.search.isFocusable = false
         binding.toolbar.search.setOnClickListener {
-            findNavController().navigate(R.id.action_mordaFragment_to_searchFragment)
-            Log.d("navigation", "clicked")
+            //findNavController().navigate(R.id.action_mordaFragment_to_searchFragment)
+            //Log.d("navigation", "clicked")
         }
-    }
-
-    private fun initializeRecyclerView() {
-        binding.recyclerView.adapter = MordaAdapter(
-            delegates = presenter.delegates,
-            views = presenter.products
-        )
 
         binding.recyclerView.addItemDecoration(ProductDecorator())
     }
@@ -70,5 +62,12 @@ class MordaFragment : Fragment(), MordaView {
 
     private companion object {
         const val REQUEST_KEY = "REQUEST_KEY"
+    }
+
+    override fun setProductAdapter(list: List<ListView>, delegates: List<Delegate>) {
+        binding.recyclerView.adapter = MordaAdapter(
+            delegates = delegates,
+            views = list
+        )
     }
 }

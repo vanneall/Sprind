@@ -43,8 +43,11 @@ dependencies {
 
     //MvpMoxy
     val moxyVersion = "2.2.2"
-    implementation(libs.moxy)
-    kapt(libs.moxy.compiler)
+    implementation("com.github.moxy-community:moxy-androidx:$moxyVersion")
+    implementation("com.github.moxy-community:moxy-ktx:$moxyVersion")
+    implementation ("com.github.moxy-community:moxy:$moxyVersion")
+    kapt("com.github.moxy-community:moxy-compiler:$moxyVersion")
+
 
     //Dagger2
     val dagger2Version = "2.51"
@@ -62,9 +65,15 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
 
+    //Retrofit
+    implementation (libs.retrofit.v290)
+    implementation (libs.converter.gson.v250)
+    implementation(libs.adapter.rxjava3)
+
     //RxJava3
-    implementation(libs.rxandroid)
     implementation(libs.rxjava)
+    implementation (libs.rxandroid)
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
