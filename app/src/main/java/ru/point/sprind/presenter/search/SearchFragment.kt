@@ -1,16 +1,17 @@
-package ru.point.sprind
+package ru.point.sprind.presenter.search
 
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
-import ru.point.domain.entity.Request
+import ru.point.sprind.R
 import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.databinding.FragmentSearchBinding
 import ru.point.sprind.entity.deletage.RequestDelegate
@@ -18,12 +19,6 @@ import ru.point.sprind.entity.deletage.RequestDelegate
 class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
-
-    val list = listOf(
-        Request(1, "Goodle pixel 8"),
-        Request(2, "Iphone 13 pro max"),
-        Request(3, "Logitech")
-    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +43,10 @@ class SearchFragment : Fragment() {
             }
         }
 
+        binding.toolbar.address.setOnClickListener {
+            val bundle = bundleOf("string" to binding.toolbar.search.text.toString())
+            findNavController().navigate(R.id.action_searchFragment_to_resultFragment, bundle)
+        }
 
         binding.toolbar.back.visibility = View.VISIBLE
         binding.toolbar.back.setOnClickListener {
@@ -56,7 +55,7 @@ class SearchFragment : Fragment() {
 
         binding.recyclerView.adapter = MordaAdapter(
             listOf(RequestDelegate()),
-            list
+            emptyList()
         )
 
         binding.recyclerView.addItemDecoration(object : ItemDecoration() {

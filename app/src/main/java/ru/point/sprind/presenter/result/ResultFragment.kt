@@ -1,4 +1,4 @@
-package ru.point.sprind.presenter.morda
+package ru.point.sprind.presenter.result
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,57 +12,47 @@ import ru.point.sprind.R
 import ru.point.sprind.SprindApplication
 import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.ProductDecorator
-import ru.point.sprind.databinding.FragmentMordaBinding
+import ru.point.sprind.databinding.FragmentResultBinding
 import ru.point.sprind.entity.deletage.Delegate
+import ru.point.sprind.presenter.morda.MordaView
 import javax.inject.Inject
 
-class MordaFragment : MvpAppCompatFragment(), MordaView {
+class ResultFragment : MvpAppCompatFragment(), MordaView {
+
+    private lateinit var binding: FragmentResultBinding
+
+    private var search: String = ""
 
     @Inject
-    lateinit var presenterProvider: MordaPresenter
+    lateinit var presenterProvider: ResultPresenter
 
-    private val presenter: MordaPresenter by moxyPresenter { presenterProvider }
+    private val presenter: ResultPresenter by moxyPresenter { presenterProvider }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        SprindApplication.component.inject(fragment = this)
+        SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
-    }
 
-    private lateinit var binding: FragmentMordaBinding
+        search = arguments?.getString("string", "") ?: "";
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentMordaBinding.inflate(inflater, container, false)
+        binding = FragmentResultBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        presenter.getSearchResult(search)
+
         binding.toolbar.search.isFocusable = false
         binding.toolbar.search.setOnClickListener {
-            findNavController().navigate(R.id.action_mordaFragment_to_searchFragment)
+            findNavController().navigate(R.id.action_resultFragment_to_searchFragment)
         }
-
         binding.recyclerView.addItemDecoration(ProductDecorator())
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(REQUEST_KEY, binding.toolbar.search.text.toString())
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-
-        if (savedInstanceState != null) {
-            binding.toolbar.search.setText(savedInstanceState.getString(REQUEST_KEY))
-        }
-    }
-
-    private companion object {
-        const val REQUEST_KEY = "REQUEST_KEY"
     }
 
     override fun setProductAdapter(list: List<ListView>, delegates: List<Delegate>) {

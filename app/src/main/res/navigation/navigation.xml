@@ -16,7 +16,23 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="ru.point.sprind.SearchFragment"
+        android:name="ru.point.sprind.presenter.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="ru.point.sprind.presenter.result.ResultFragment"
+        android:label="fragment_result"
+        tools:layout="@layout/fragment_result" >
+        <action
+            android:id="@+id/action_resultFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
 </navigation>

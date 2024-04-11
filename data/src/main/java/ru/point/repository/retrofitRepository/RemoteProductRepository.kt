@@ -13,4 +13,8 @@ class RemoteProductRepository @Inject constructor(
     override fun getProducts(): Observable<List<Product>> {
         return api.getProductDto()
     }
+
+    override fun getProductsByName(name: String): Observable<List<Product>> {
+        return api.getProductDtoByName(search = name)
+    }
 }

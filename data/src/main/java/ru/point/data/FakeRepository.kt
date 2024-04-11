@@ -10,4 +10,8 @@ class FakeRepository @Inject constructor() : ProductRepository {
     override fun getProducts(): Observable<List<Product>> {
         return Observable.empty()
     }
+
+    override fun getProductsByName(name: String): Observable<List<Product>> {
+        TODO("Not yet implemented")
+    }
 }

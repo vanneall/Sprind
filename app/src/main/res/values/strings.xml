@@ -13,4 +13,12 @@
     <!-- Search screen -->
     <string name="search_history">История поиска</string>
     <string name="clear">очистить</string>
+
+    <!-- Not found screen -->
+    <string name="there_is_no_such_products">Такого товара нет :(</string>
+    <string name="there_is_no_such_products_description">К сожалению мы не знаем про такой товар, вероятно вы ошиблись. Проверьте название или измените фильтры</string>
+
+    <!-- Bad connection screen -->
+    <string name="bad_connection">Проблемы с подключением</string>
+    <string name="bad_connection_description">Кажется, произошел сбой, повторите попытку позже</string>
 </resources>

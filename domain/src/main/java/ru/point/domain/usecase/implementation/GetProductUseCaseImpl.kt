@@ -1,4 +1,4 @@
-package ru.point.domain.usecase.di.implementation
+package ru.point.domain.usecase.implementation
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers

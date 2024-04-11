@@ -1,6 +1,5 @@
 package ru.point.sprind.presenter.morda
 
-import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
@@ -29,9 +28,10 @@ class MordaPresenter @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
                 products = list
-                viewState.setProductAdapter(products, listOf(ProductDelegate()))
+                if (list.isEmpty()) viewState.setNotFound()
+                else viewState.setProductAdapter(products, listOf(ProductDelegate()))
             }, {
-                Log.d("Retrofit exception", "Error in connection")
+                viewState.setBadConnection()
             }
             )
 
