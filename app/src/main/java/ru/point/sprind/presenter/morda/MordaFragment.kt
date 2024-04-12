@@ -40,6 +40,8 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setLoadingScreen()
+
         binding.toolbar.search.isFocusable = false
         binding.toolbar.search.setOnClickListener {
             findNavController().navigate(R.id.action_mordaFragment_to_searchFragment)
@@ -72,11 +74,19 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
         )
     }
 
-    override fun setBadConnection() {
-        binding.badConnection.visibility = View.VISIBLE
+    override fun setNotFound() {
+        binding.notFoundScreen.root.visibility = View.VISIBLE
     }
 
-    override fun setNotFound() {
-        binding.notFoundGroup.visibility = View.VISIBLE
+    override fun setBadConnection() {
+        binding.badConnection.root.visibility = View.VISIBLE
+    }
+
+    override fun setLoadingScreen() {
+        binding.loadingScreen.root.visibility = View.VISIBLE
+    }
+
+    override fun disableLoadingScreen() {
+        binding.loadingScreen.root.visibility = View.GONE
     }
 }

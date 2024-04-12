@@ -11,4 +11,6 @@ interface MordaView : MvpView {
     fun setProductAdapter(list: List<ListView>, delegates: List<Delegate>)
     fun setBadConnection()
     fun setNotFound()
+    fun setLoadingScreen()
+    fun disableLoadingScreen()
 }

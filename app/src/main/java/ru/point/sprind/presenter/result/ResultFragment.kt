@@ -32,7 +32,7 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
 
-        search = arguments?.getString("string", "") ?: "";
+        search = arguments?.getString("string", "") ?: ""
     }
 
     override fun onCreateView(
@@ -46,6 +46,8 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setLoadingScreen()
+
         presenter.getSearchResult(search)
 
         binding.toolbar.search.isFocusable = false
@@ -63,10 +65,18 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
     }
 
     override fun setBadConnection() {
-        binding.badConnection.visibility = View.VISIBLE
+        binding.badConnection.root.visibility = View.VISIBLE
     }
 
     override fun setNotFound() {
-        binding.notFoundGroup.visibility = View.VISIBLE
+        binding.notFoundScreen.root.visibility = View.VISIBLE
+    }
+
+    override fun setLoadingScreen() {
+        binding.loadingScreen.root.visibility = View.VISIBLE
+    }
+
+    override fun disableLoadingScreen() {
+        binding.loadingScreen.root.visibility = View.GONE
     }
 }

@@ -27,108 +27,37 @@
         app:spanCount="2"
         tools:listitem="@layout/vertical_card_item" />
 
-    <View
-        android:id="@+id/not_found_background"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-    <View
-        android:id="@+id/not_found_illustration"
-        android:layout_width="215dp"
-        android:layout_height="215dp"
-        android:background="@drawable/not_found_illustration"
-        app:layout_constraintBottom_toBottomOf="@id/not_found_background"
-        app:layout_constraintEnd_toEndOf="@id/not_found_background"
-        app:layout_constraintStart_toStartOf="@id/not_found_background"
-        app:layout_constraintTop_toTopOf="@id/not_found_background"
-        app:layout_constraintVertical_bias="0.3" />
-
-    <TextView
-        android:id="@+id/no_product"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/opensans_condensed_bold"
-        android:text="@string/there_is_no_such_products"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@id/not_found_background"
-        app:layout_constraintStart_toStartOf="@id/not_found_background"
-        app:layout_constraintTop_toBottomOf="@id/not_found_illustration" />
-
-    <TextView
-        android:id="@+id/no_product_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/opensans_condensed_regular"
-        android:paddingHorizontal="20dp"
-        android:text="@string/there_is_no_such_products_description"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@id/not_found_background"
-        app:layout_constraintStart_toStartOf="@id/not_found_background"
-        app:layout_constraintTop_toBottomOf="@id/no_product" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/not_found_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="not_found_background, not_found_illustration, no_product, no_product_description" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/bad_connection_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="not_found_background2, bad_connection_illustration, bad_connection, bad_connection_desc" />
-
-    <View
-        android:id="@+id/not_found_background2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-    <View
-        android:id="@+id/bad_connection_illustration"
-        android:layout_width="215dp"
-        android:layout_height="215dp"
-        android:background="@drawable/bad_connection_illustration"
-        app:layout_constraintBottom_toBottomOf="@id/not_found_background2"
-        app:layout_constraintEnd_toEndOf="@id/not_found_background2"
-        app:layout_constraintStart_toStartOf="@id/not_found_background2"
-        app:layout_constraintTop_toTopOf="@id/not_found_background2"
-        app:layout_constraintVertical_bias="0.3" />
-
-    <TextView
+    <include
         android:id="@+id/bad_connection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/opensans_condensed_bold"
-        android:text="@string/bad_connection"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@id/not_found_background2"
-        app:layout_constraintStart_toStartOf="@id/not_found_background2"
-        app:layout_constraintTop_toBottomOf="@id/bad_connection_illustration" />
+        layout="@layout/no_connection_screen"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-    <TextView
-        android:id="@+id/bad_connection_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/opensans_condensed_regular"
-        android:paddingHorizontal="20dp"
-        android:text="@string/bad_connection_description"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@id/not_found_background2"
-        app:layout_constraintStart_toStartOf="@id/not_found_background2"
-        app:layout_constraintTop_toBottomOf="@id/bad_connection" />
+    <include
+        android:id="@+id/not_found_screen"
+        layout="@layout/not_found_screen"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <include
+        android:id="@+id/loading_screen"
+        layout="@layout/loading_screen"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

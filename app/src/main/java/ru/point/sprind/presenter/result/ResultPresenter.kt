@@ -17,9 +17,14 @@ class ResultPresenter @Inject constructor(
         val disposable = getProductsByNameUseCase.handle(result)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
-                if (list.isEmpty()) viewState.setNotFound()
-                else viewState.setProductAdapter(list, listOf(ProductDelegate()))
+                viewState.disableLoadingScreen()
+                if (list.isEmpty()) {
+                    viewState.setNotFound()
+                } else {
+                    viewState.setProductAdapter(list, listOf(ProductDelegate()))
+                }
             }, {
+                viewState.disableLoadingScreen()
                 viewState.setBadConnection()
             }
             )

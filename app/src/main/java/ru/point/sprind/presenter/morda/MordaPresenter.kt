@@ -28,9 +28,13 @@ class MordaPresenter @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
                 products = list
+                viewState.disableLoadingScreen()
                 if (list.isEmpty()) viewState.setNotFound()
-                else viewState.setProductAdapter(products, listOf(ProductDelegate()))
+                else {
+                    viewState.setProductAdapter(products, listOf(ProductDelegate()))
+                }
             }, {
+                viewState.disableLoadingScreen()
                 viewState.setBadConnection()
             }
             )
