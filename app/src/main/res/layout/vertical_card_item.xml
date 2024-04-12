@@ -27,7 +27,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/price"
-            style="@style/text_middle_bold_black"
+            style="@style/medium_14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -39,7 +39,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/name"
-            style="@style/text_small_white"
+            style="@style/regular_12"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
@@ -49,7 +49,7 @@
             tools:text="Смартфон Google Pixel 8 128Gb US Obsidian" />
 
         <com.google.android.material.button.MaterialButton
-            style="@style/text_middle_bold_white"
+            style="@style/medium_14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/buy"

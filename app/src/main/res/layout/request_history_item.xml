@@ -19,6 +19,7 @@
         android:lines="1"
         android:layout_marginHorizontal="15dp"
         android:layout_width="0dp"
+        style="@style/regular_14"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@id/delete"
         app:layout_constraintStart_toEndOf="@id/recent"

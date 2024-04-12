@@ -15,7 +15,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/search_history_text"
-        style="@style/text_middle_bold_black"
+        style="@style/regular_14"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -27,6 +27,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/clear_text"
+        style="@style/regular_12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
@@ -38,18 +39,18 @@
         android:id="@+id/separator"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@drawable/line_separator"
         android:layout_marginHorizontal="20dp"
+        android:background="@drawable/line_separator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_history_text" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingHorizontal="20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

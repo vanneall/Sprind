@@ -4,7 +4,7 @@
 
     <color name="white">#FDFDFD</color>
     <color name="brown_orange">#D07928</color>
-    <color name="black">#FF1A1A1A</color>
+    <color name="black">#000000</color>
     <color name="gray">#949494</color>
     <color name="brown_orange_50">#F0D07928</color>
     <color name="red">#EC0000</color>
