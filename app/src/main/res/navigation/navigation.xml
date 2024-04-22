@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mordaFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_mordaFragment_to_productCardFragment"
+            app:destination="@id/productCardFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -34,5 +37,13 @@
         <argument
             android:name="name"
             app:argType="string" />
+        <action
+            android:id="@+id/action_resultFragment_to_productCardFragment"
+            app:destination="@id/productCardFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/productCardFragment"
+        android:name="ru.point.sprind.presenter.product.ProductCardFragment"
+        android:label="fragment_product_card"
+        tools:layout="@layout/fragment_product_card" />
 </navigation>

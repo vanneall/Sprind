@@ -1,14 +1,20 @@
 package ru.point.repository.retrofit
 
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.point.domain.entity.Product
+import ru.point.domain.entity.FeedProductDto
+import ru.point.domain.entity.ProductDto
 
 interface ProductApi {
-    @GET("product")
-    fun getProductDto(): Observable<List<Product>>
+    @GET("feed")
+    fun getProductDto(): Observable<List<FeedProductDto>>
 
-    @GET("product")
-    fun getProductDtoByName(@Query("name") search: String): Observable<List<Product>>
+    @GET("feed")
+    fun getProductDtoByName(@Query("name") search: String): Observable<List<FeedProductDto>>
+
+    @GET("product/{id}")
+    fun getProductDtoById(@Path("id") id: Long): Single<ProductDto>
 }

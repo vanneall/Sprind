@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
-import ru.point.domain.entity.Product
+import ru.point.domain.entity.FeedProductDto
 import ru.point.domain.usecase.interfaces.GetProductsUseCase
 import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.deletage.ProductDelegate
@@ -18,7 +18,7 @@ class MordaPresenter @Inject constructor(
 ) : MvpPresenter<MordaView>() {
 
     private var delegates: List<Delegate> = emptyList()
-    private var products: List<Product> = emptyList()
+    private var feedProductDtos: List<FeedProductDto> = emptyList()
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -27,11 +27,15 @@ class MordaPresenter @Inject constructor(
         val disposable = getProductsUseCase.handle()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
-                products = list
                 viewState.disableLoadingScreen()
+                list.forEach {
+                    it.onClick = { viewState.openCard(it.id) }
+                }
+
+                feedProductDtos = list
                 if (list.isEmpty()) viewState.setNotFound()
                 else {
-                    viewState.setProductAdapter(products, listOf(ProductDelegate()))
+                    viewState.setProductAdapter(feedProductDtos, listOf(ProductDelegate()))
                 }
             }, {
                 viewState.disableLoadingScreen()

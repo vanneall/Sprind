@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -78,5 +80,11 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
 
     override fun disableLoadingScreen() {
         binding.loadingScreen.root.visibility = View.GONE
+    }
+
+    override fun openCard(id: Long) {
+        val bundle = bundleOf("PRODUCT_ID" to id)
+        binding.root.findNavController()
+            .navigate(R.id.action_mordaFragment_to_productCardFragment, bundle)
     }
 }

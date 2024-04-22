@@ -21,4 +21,5 @@
     <!-- Bad connection screen -->
     <string name="bad_connection">Проблемы с подключением</string>
     <string name="bad_connection_description">Кажется, произошел сбой, повторите попытку позже</string>
+    <string name="about_product">О товаре</string>
 </resources>
