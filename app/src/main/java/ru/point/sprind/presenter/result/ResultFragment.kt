@@ -1,5 +1,6 @@
 package ru.point.sprind.presenter.result
 
+import android.content.res.Resources.NotFoundException
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import ru.point.sprind.adapters.ProductDecorator
 import ru.point.sprind.databinding.FragmentResultBinding
 import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.presenter.morda.MordaView
+import ru.point.sprind.presenter.product.ProductCardFragment.Companion.PRODUCT_ID
 import javax.inject.Inject
 
 class ResultFragment : MvpAppCompatFragment(), MordaView {
@@ -34,7 +36,8 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
 
-        search = arguments?.getString("string", "") ?: ""
+        search = arguments?.getString(SEARCH_REQUEST, "")
+            ?: throw NotFoundException("Search request required but not found")
     }
 
     override fun onCreateView(
@@ -42,39 +45,46 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentResultBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setLoadingScreen()
 
         presenter.getSearchResult(search)
 
+        initializeToolbar()
+        initializeRecyclerView()
+    }
+
+    private fun initializeToolbar() {
         binding.toolbar.search.isFocusable = false
+        binding.toolbar.search.setText(search)
         binding.toolbar.search.setOnClickListener {
             findNavController().navigate(R.id.action_resultFragment_to_searchFragment)
         }
+    }
+
+    private fun initializeRecyclerView() {
         binding.recyclerView.addItemDecoration(ProductDecorator())
     }
 
-    override fun setProductAdapter(list: List<ListView>, delegates: List<Delegate>) {
+    override fun setProductAdapter(views: List<ListView>, delegates: List<Delegate>) {
         binding.recyclerView.adapter = MordaAdapter(
             delegates = delegates,
-            views = list
+            views = views
         )
     }
 
-    override fun setBadConnection() {
+    override fun showBadConnectionScreen() {
         binding.badConnection.root.visibility = View.VISIBLE
     }
 
-    override fun setNotFound() {
+    override fun showNotFoundScreen() {
         binding.notFoundScreen.root.visibility = View.VISIBLE
     }
 
-    override fun setLoadingScreen() {
+    override fun showLoadingScreen() {
         binding.loadingScreen.root.visibility = View.VISIBLE
     }
 
@@ -83,8 +93,13 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
     }
 
     override fun openCard(id: Long) {
-        val bundle = bundleOf("PRODUCT_ID" to id)
-        binding.root.findNavController()
+        val bundle = bundleOf(PRODUCT_ID to id)
+        binding.root
+            .findNavController()
             .navigate(R.id.action_mordaFragment_to_productCardFragment, bundle)
+    }
+
+    companion object {
+        const val SEARCH_REQUEST = "SEARCH_REQUEST"
     }
 }

@@ -6,11 +6,13 @@ import moxy.viewstate.strategy.StateStrategyType
 import ru.point.domain.entity.ListView
 import ru.point.sprind.entity.deletage.Delegate
 
-@StateStrategyType(AddToEndSingleStrategy::class)
 interface ProductCardView : MvpView {
+    @StateStrategyType(AddToEndSingleStrategy::class)
     fun setProductAdapter(list: List<ListView>, delegates: List<Delegate>)
-    fun setBadConnection()
-    fun setNotFound()
-    fun setLoadingScreen()
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showBadConnectionScreen()
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showLoadingScreen()
+    @StateStrategyType(AddToEndSingleStrategy::class)
     fun disableLoadingScreen()
 }

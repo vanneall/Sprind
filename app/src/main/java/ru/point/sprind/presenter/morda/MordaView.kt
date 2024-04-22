@@ -10,13 +10,13 @@ import ru.point.sprind.entity.deletage.Delegate
 
 interface MordaView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setProductAdapter(list: List<ListView>, delegates: List<Delegate>)
+    fun setProductAdapter(views: List<ListView>, delegates: List<Delegate>)
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setBadConnection()
+    fun showBadConnectionScreen()
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setNotFound()
+    fun showNotFoundScreen()
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setLoadingScreen()
+    fun showLoadingScreen()
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun disableLoadingScreen()
     @StateStrategyType(SkipStrategy::class)

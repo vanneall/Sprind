@@ -16,6 +16,7 @@ import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.ProductDecorator
 import ru.point.sprind.databinding.FragmentMordaBinding
 import ru.point.sprind.entity.deletage.Delegate
+import ru.point.sprind.presenter.product.ProductCardFragment.Companion.PRODUCT_ID
 import javax.inject.Inject
 
 class MordaFragment : MvpAppCompatFragment(), MordaView {
@@ -25,12 +26,12 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
 
     private val presenter: MordaPresenter by moxyPresenter { presenterProvider }
 
+    private lateinit var binding: FragmentMordaBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(fragment = this)
         super.onCreate(savedInstanceState)
     }
-
-    private lateinit var binding: FragmentMordaBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,49 +43,38 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setLoadingScreen()
+        initializeToolbar()
+        initializeRecyclerView()
+    }
 
+    private fun initializeToolbar() {
         binding.toolbar.search.isFocusable = false
+
         binding.toolbar.search.setOnClickListener {
             findNavController().navigate(R.id.action_mordaFragment_to_searchFragment)
         }
+    }
 
+    private fun initializeRecyclerView() {
         binding.recyclerView.addItemDecoration(ProductDecorator())
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(REQUEST_KEY, binding.toolbar.search.text.toString())
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-
-        if (savedInstanceState != null) {
-            binding.toolbar.search.setText(savedInstanceState.getString(REQUEST_KEY))
-        }
-    }
-
-    private companion object {
-        const val REQUEST_KEY = "REQUEST_KEY"
-    }
-
-    override fun setProductAdapter(list: List<ListView>, delegates: List<Delegate>) {
+    override fun setProductAdapter(views: List<ListView>, delegates: List<Delegate>) {
         binding.recyclerView.adapter = MordaAdapter(
             delegates = delegates,
-            views = list
+            views = views
         )
     }
 
-    override fun setNotFound() {
+    override fun showNotFoundScreen() {
         binding.notFoundScreen.root.visibility = View.VISIBLE
     }
 
-    override fun setBadConnection() {
+    override fun showBadConnectionScreen() {
         binding.badConnection.root.visibility = View.VISIBLE
     }
 
-    override fun setLoadingScreen() {
+    override fun showLoadingScreen() {
         binding.loadingScreen.root.visibility = View.VISIBLE
     }
 
@@ -93,8 +83,10 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
     }
 
     override fun openCard(id: Long) {
-        val bundle = bundleOf("PRODUCT_ID" to id)
-        binding.root.findNavController()
+        val bundle = bundleOf(PRODUCT_ID to id)
+
+        binding.root
+            .findNavController()
             .navigate(R.id.action_mordaFragment_to_productCardFragment, bundle)
     }
 }

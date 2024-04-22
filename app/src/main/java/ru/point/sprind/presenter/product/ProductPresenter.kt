@@ -23,25 +23,24 @@ class ProductPresenter @Inject constructor(
     private val compositeDisposable = CompositeDisposable()
 
     fun init(id: Long) {
+
         delegates = listOf(
             ProductImageDelegate(),
             ProductTitleDelegate(),
             ProductDescriptionDelegate()
         )
 
-        val disposable = getProductByIdUseCase.invoke(id = id, ProductDtoToListViewMapperImpl())
+        val disposable = getProductByIdUseCase
+            .invoke(id = id, ProductDtoToListViewMapperImpl())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
                 productListView = list
                 viewState.disableLoadingScreen()
-                if (list.isEmpty()) {
-                    viewState.setNotFound()
-                } else {
-                    viewState.setProductAdapter(productListView, delegates)
-                }
+
+                viewState.setProductAdapter(productListView, delegates)
             }, {
                 viewState.disableLoadingScreen()
-                viewState.setBadConnection()
+                viewState.showBadConnectionScreen()
             }
             )
 

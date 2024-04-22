@@ -13,8 +13,8 @@ import javax.inject.Inject
 
 @InjectViewState
 class MordaPresenter @Inject constructor(
-    getProductsUseCase: GetProductsUseCase,
-    getMordaDelegatesUseCase: GetMordaDelegatesUseCase,
+    private val getProductsUseCase: GetProductsUseCase,
+    private val getMordaDelegatesUseCase: GetMordaDelegatesUseCase,
 ) : MvpPresenter<MordaView>() {
 
     private var delegates: List<Delegate> = emptyList()
@@ -24,25 +24,25 @@ class MordaPresenter @Inject constructor(
 
     init {
         delegates = getMordaDelegatesUseCase.handle()
-        val disposable = getProductsUseCase.handle()
+
+        viewState.showLoadingScreen()
+        val disposable = getProductsUseCase
+            .handle()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ list ->
-                viewState.disableLoadingScreen()
-                list.forEach {
-                    it.onClick = { viewState.openCard(it.id) }
-                }
+            .subscribe(
+                { list ->
+                    viewState.disableLoadingScreen()
+                    feedProductDtos = list
 
-                feedProductDtos = list
-                if (list.isEmpty()) viewState.setNotFound()
-                else {
-                    viewState.setProductAdapter(feedProductDtos, listOf(ProductDelegate()))
+                    viewState.setProductAdapter(
+                        delegates = delegates,
+                        views = feedProductDtos
+                    )
+                }, {
+                    viewState.disableLoadingScreen()
+                    viewState.showBadConnectionScreen()
                 }
-            }, {
-                viewState.disableLoadingScreen()
-                viewState.setBadConnection()
-            }
             )
-
         compositeDisposable.add(disposable)
     }
 

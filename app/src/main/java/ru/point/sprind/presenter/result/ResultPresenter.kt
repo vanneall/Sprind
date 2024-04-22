@@ -19,13 +19,13 @@ class ResultPresenter @Inject constructor(
             .subscribe({ list ->
                 viewState.disableLoadingScreen()
                 if (list.isEmpty()) {
-                    viewState.setNotFound()
+                    viewState.showNotFoundScreen()
                 } else {
                     viewState.setProductAdapter(list, listOf(ProductDelegate()))
                 }
             }, {
                 viewState.disableLoadingScreen()
-                viewState.setBadConnection()
+                viewState.showBadConnectionScreen()
             }
             )
     }

@@ -11,12 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import moxy.MvpAppCompatFragment
 import ru.point.sprind.R
 import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.databinding.FragmentSearchBinding
 import ru.point.sprind.entity.deletage.RequestDelegate
 
-class SearchFragment : Fragment() {
+class SearchFragment : MvpAppCompatFragment() {
 
     private lateinit var binding: FragmentSearchBinding
 
@@ -30,9 +31,20 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initializeToolbar()
+        initializeRecyclerView()
+    }
 
-        binding.toolbar.clearButton.setOnClickListener {
-            binding.toolbar.search.setText("")
+    private fun initializeToolbar() {
+        binding.toolbar.back.visibility = View.VISIBLE
+
+        binding.toolbar.back.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.toolbar.address.setOnClickListener {
+            val bundle = bundleOf("string" to binding.toolbar.search.text.toString())
+            findNavController().navigate(R.id.action_searchFragment_to_resultFragment, bundle)
         }
 
         binding.toolbar.search.addTextChangedListener { text ->
@@ -43,19 +55,16 @@ class SearchFragment : Fragment() {
             }
         }
 
-        binding.toolbar.address.setOnClickListener {
-            val bundle = bundleOf("string" to binding.toolbar.search.text.toString())
-            findNavController().navigate(R.id.action_searchFragment_to_resultFragment, bundle)
+        binding.toolbar.clearButton.setOnClickListener {
+            binding.toolbar.search.setText("")
         }
+    }
 
-        binding.toolbar.back.visibility = View.VISIBLE
-        binding.toolbar.back.setOnClickListener {
-            findNavController().popBackStack()
-        }
+    private fun initializeRecyclerView() {
 
         binding.recyclerView.adapter = MordaAdapter(
-            listOf(RequestDelegate()),
-            emptyList()
+            delegates = emptyList(),
+            views = emptyList()
         )
 
         binding.recyclerView.addItemDecoration(object : ItemDecoration() {
@@ -66,25 +75,8 @@ class SearchFragment : Fragment() {
                 state: RecyclerView.State,
             ) {
                 super.getItemOffsets(outRect, view, parent, state)
-                outRect.bottom = 15
+                outRect.bottom = 16
             }
         })
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(REQUEST_KEY, binding.toolbar.search.text.toString())
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-
-        if (savedInstanceState != null) {
-            binding.toolbar.search.setText(savedInstanceState.getString(REQUEST_KEY))
-        }
-    }
-
-    private companion object {
-        const val REQUEST_KEY = "REQUEST_KEY"
     }
 }
