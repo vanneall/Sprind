@@ -1,20 +1,27 @@
 package ru.point.sprind.presenter.result
 
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import ru.point.domain.usecase.interfaces.GetProductsByNameUseCase
 import ru.point.sprind.entity.deletage.ProductDelegate
 import ru.point.sprind.presenter.morda.MordaView
-import javax.inject.Inject
+import ru.point.sprind.presenter.result.ResultPresenterAssistedFactory.Companion.QUERY
 
 @InjectViewState
-class ResultPresenter @Inject constructor(
+class ResultPresenter @AssistedInject constructor(
+    @Assisted(QUERY) private val query: String,
     private val getProductsByNameUseCase: GetProductsByNameUseCase,
 ) : MvpPresenter<MordaView>() {
 
-    fun getSearchResult(result: String) {
-        val disposable = getProductsByNameUseCase.handle(result)
+    init {
+        getSearchResult()
+    }
+
+    fun getSearchResult() {
+        val disposable = getProductsByNameUseCase.handle(query)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
                 viewState.disableLoadingScreen()

@@ -19,12 +19,13 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
     private lateinit var binding: FragmentProductCardBinding
 
     @Inject
-    lateinit var presenterProvider: ProductPresenter
+    lateinit var presenterProvider: ProductPresenterAssistedFactory
 
-    private val presenter: ProductPresenter by moxyPresenter { presenterProvider }
+    private val presenter: ProductPresenter by moxyPresenter {
+        presenterProvider.create(productId = args.productId)
+    }
 
     private val args: ProductCardFragmentArgs by navArgs()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(fragment = this)
@@ -35,7 +36,7 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        presenter.init(args.productId)
+        presenter.getProduct()
         binding = FragmentProductCardBinding.inflate(layoutInflater)
         return binding.root
     }

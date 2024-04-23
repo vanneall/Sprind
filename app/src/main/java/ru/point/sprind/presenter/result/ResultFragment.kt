@@ -23,17 +23,18 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
 
     private lateinit var binding: FragmentResultBinding
 
-    private val args: ResultFragmentArgs by navArgs()
-
     @Inject
-    lateinit var presenterProvider: ResultPresenter
+    lateinit var presenterProvider: ResultPresenterAssistedFactory
 
-    private val presenter: ResultPresenter by moxyPresenter { presenterProvider }
+    private val presenter: ResultPresenter by moxyPresenter {
+        presenterProvider.create(request = args.request)
+    }
+
+    private val args: ResultFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -46,18 +47,19 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        presenter.getSearchResult(args.request)
+        presenter.getSearchResult()
 
         initializeToolbar()
         initializeRecyclerView()
     }
 
     private fun initializeToolbar() {
-        binding.toolbar.search.isFocusable = false
-        binding.toolbar.search.setText(args.request)
-        binding.toolbar.search.setOnClickListener {
-            findNavController().navigate(R.id.action_resultFragment_to_searchFragment)
+        with(binding.toolbar) {
+            search.isFocusable = false
+            search.setText(args.request)
+            search.setOnClickListener {
+                findNavController().navigate(R.id.action_resultFragment_to_searchFragment)
+            }
         }
     }
 
