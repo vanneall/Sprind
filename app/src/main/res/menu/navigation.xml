@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/mordaFragment"
+        android:id="@+id/morda_fragment"
         android:icon="@drawable/home_nav_icon_selector"
-        android:title="Главная" />
+        android:title="@string/main_screen_title" />
+
+    <item
+        android:id="@+id/favorites_fragment"
+        android:icon="@drawable/favorite_filled"
+        android:title="@string/favorites_screen_title" />
+
+    <item
+        android:id="@+id/cart_fragment"
+        android:icon="@drawable/cart_filled"
+        android:title="@string/cart_screen_title" />
+
+    <item
+        android:id="@+id/profile_fragment"
+        android:icon="@drawable/profile_filled"
+        android:title="@string/profile" />
+
 </menu>

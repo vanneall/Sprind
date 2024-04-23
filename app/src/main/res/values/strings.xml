@@ -22,4 +22,9 @@
     <string name="bad_connection">Проблемы с подключением</string>
     <string name="bad_connection_description">Кажется, произошел сбой, повторите попытку позже</string>
     <string name="about_product">О товаре</string>
+    <string name="not_available">Пока недоступно</string>
+    <string name="main_screen_title">Главная</string>
+    <string name="favorites_screen_title">Избранное</string>
+    <string name="cart_screen_title">Корзина</string>
+    <string name="profile">Профиль</string>
 </resources>
