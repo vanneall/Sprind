@@ -27,6 +27,7 @@ rxjava = "3.1.5"
 adapter-rxjava3 = { module = "com.squareup.retrofit2:adapter-rxjava3", version.ref = "adapterRxjava3" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationFragmentKtx" }
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
@@ -44,6 +45,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 moxy = { module = "com.github.moxy-community:moxy", version.ref = "moxyVersion" }
 moxy-androidx = { module = "com.github.moxy-community:moxy-androidx", version.ref = "moxyVersion" }
 moxy-compiler = { module = "com.github.moxy-community:moxy-compiler", version.ref = "moxyVersion" }
+moxy-ktx = { module = "com.github.moxy-community:moxy-ktx", version.ref = "moxyVersion" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterGson" }
 retrofit-v290 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }

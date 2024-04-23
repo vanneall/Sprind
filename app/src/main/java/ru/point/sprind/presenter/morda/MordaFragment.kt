@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import moxy.MvpAppCompatFragment
@@ -16,7 +15,6 @@ import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.ProductDecorator
 import ru.point.sprind.databinding.FragmentMordaBinding
 import ru.point.sprind.entity.deletage.Delegate
-import ru.point.sprind.presenter.product.ProductCardFragment.Companion.PRODUCT_ID
 import javax.inject.Inject
 
 class MordaFragment : MvpAppCompatFragment(), MordaView {
@@ -83,10 +81,10 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
     }
 
     override fun openCard(id: Long) {
-        val bundle = bundleOf(PRODUCT_ID to id)
+        val args = MordaFragmentDirections.actionMordaFragmentToProductCardFragment(
+            productId = id
+        )
 
-        binding.root
-            .findNavController()
-            .navigate(R.id.action_mordaFragment_to_productCardFragment, bundle)
+        binding.root.findNavController().navigate(args)
     }
 }

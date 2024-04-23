@@ -35,7 +35,7 @@
             android:id="@+id/action_resultFragment_to_searchFragment"
             app:destination="@id/search_fragment" />
         <argument
-            android:name="name"
+            android:name="request"
             app:argType="string" />
         <action
             android:id="@+id/action_resultFragment_to_productCardFragment"
@@ -45,7 +45,11 @@
         android:id="@+id/product_card_fragment"
         android:name="ru.point.sprind.presenter.product.ProductCardFragment"
         android:label="fragment_product_card"
-        tools:layout="@layout/fragment_product_card" />
+        tools:layout="@layout/fragment_product_card" >
+        <argument
+            android:name="productId"
+            app:argType="long" />
+    </fragment>
     <fragment
         android:id="@+id/cart_fragment"
         android:name="ru.point.sprind.presenter.cart.CartFragment"

@@ -5,3 +5,12 @@ plugins {
     alias(libs.plugins.androidLibrary) apply false
     alias(libs.plugins.jetbrainsKotlinJvm) apply false
 }
+
+buildscript {
+    repositories {
+        google()
+    }
+    dependencies {
+        classpath(libs.androidx.navigation.safe.args.gradle.plugin)
+    }
+}

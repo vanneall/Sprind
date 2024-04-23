@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -42,38 +43,34 @@ android {
 dependencies {
 
     //MvpMoxy
-    val moxyVersion = "2.2.2"
-    implementation("com.github.moxy-community:moxy-androidx:$moxyVersion")
-    implementation("com.github.moxy-community:moxy-ktx:$moxyVersion")
-    implementation ("com.github.moxy-community:moxy:$moxyVersion")
-    kapt("com.github.moxy-community:moxy-compiler:$moxyVersion")
-
+    implementation(libs.moxy.androidx)
+    implementation(libs.moxy.ktx)
+    implementation(libs.moxy)
+    kapt(libs.moxy.compiler)
 
     //Dagger2
-    val dagger2Version = "2.51"
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
 
     //Coil
     implementation(libs.coil)
 
-    val navVersion = "2.7.7"
-    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
-
-    //Modules
-    implementation(project(":data"))
-    implementation(project(":domain"))
+    //Navigation
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     //Retrofit
-    implementation (libs.retrofit.v290)
-    implementation (libs.converter.gson.v250)
+    implementation(libs.retrofit.v290)
+    implementation(libs.converter.gson.v250)
     implementation(libs.adapter.rxjava3)
 
     //RxJava3
     implementation(libs.rxjava)
-    implementation (libs.rxandroid)
-
+    implementation(libs.rxandroid)
+    
+    //Modules
+    implementation(project(":data"))
+    implementation(project(":domain"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

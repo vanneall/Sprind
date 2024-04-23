@@ -1,11 +1,10 @@
 package ru.point.sprind.presenter.product
 
-import android.content.res.Resources.NotFoundException
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.ListView
@@ -17,28 +16,26 @@ import javax.inject.Inject
 
 class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
 
+    private lateinit var binding: FragmentProductCardBinding
+
     @Inject
     lateinit var presenterProvider: ProductPresenter
 
-    private lateinit var binding: FragmentProductCardBinding
-
-    private var id: Long = 0
-
     private val presenter: ProductPresenter by moxyPresenter { presenterProvider }
+
+    private val args: ProductCardFragmentArgs by navArgs()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(fragment = this)
         super.onCreate(savedInstanceState)
-
-        id = arguments?.getLong(PRODUCT_ID)
-            ?: throw NotFoundException("Product id required but not found")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        presenter.init(id)
+        presenter.init(args.productId)
         binding = FragmentProductCardBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -60,9 +57,5 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
 
     override fun disableLoadingScreen() {
         binding.loadingScreen.root.visibility = View.GONE
-    }
-
-    companion object {
-        const val PRODUCT_ID = "PRODUCT_ID"
     }
 }
