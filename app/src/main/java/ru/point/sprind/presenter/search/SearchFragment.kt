@@ -9,13 +9,36 @@ import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import io.reactivex.rxjava3.core.Observable
 import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
+import ru.point.domain.entity.ListView
+import ru.point.sprind.RequestManager
+import ru.point.sprind.SprindApplication
 import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.databinding.FragmentSearchBinding
+import ru.point.sprind.entity.deletage.Delegate
+import ru.point.sprind.entity.deletage.RequestDelegate
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class SearchFragment : MvpAppCompatFragment() {
+class SearchFragment : MvpAppCompatFragment(), SearchView {
+
+
+    @Inject
+    lateinit var presenterProvider: SearchPresenter
+
+    private val presenter: SearchPresenter by moxyPresenter { presenterProvider }
 
     private lateinit var binding: FragmentSearchBinding
+
+    private var requestManager: RequestManager? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        SprindApplication.component.inject(fragment = this)
+        super.onCreate(savedInstanceState)
+        requestManager = context as? RequestManager
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +64,8 @@ class SearchFragment : MvpAppCompatFragment() {
 
             address.setOnClickListener {
                 if (!search.text.isNullOrEmpty()) {
+                    requestManager?.addRequest(search.text.toString())
+
                     val args = SearchFragmentDirections.actionSearchFragmentToResultFragment(
                         request = search.text.toString()
                     )
@@ -49,13 +74,22 @@ class SearchFragment : MvpAppCompatFragment() {
                 }
             }
 
-            search.addTextChangedListener { text ->
-                if (!text.isNullOrEmpty()) {
-                    clearButton.visibility = View.VISIBLE
-                } else {
-                    clearButton.visibility = View.GONE
+            val disposable = Observable.create { emitter ->
+                search.addTextChangedListener { text ->
+                    emitter.onNext(text?.toString() ?: "")
+                    if (!text.isNullOrEmpty()) {
+                        clearButton.visibility = View.VISIBLE
+                    } else {
+                        clearButton.visibility = View.GONE
+                        binding.recyclerView.adapter = MordaAdapter(
+                            delegates = listOf(RequestDelegate()),
+                            views = requestManager?.getRequestsHistory() ?: emptyList()
+                        )
+                    }
                 }
-            }
+            }.debounce(2, TimeUnit.SECONDS).subscribe { if (it.isNotEmpty()) presenter.getByName(it) }
+
+
 
             clearButton.setOnClickListener {
                 search.setText("")
@@ -63,13 +97,35 @@ class SearchFragment : MvpAppCompatFragment() {
         }
     }
 
-    private fun initializeRecyclerView() {
+    override fun openResult(name: String) {
+        requestManager?.addRequest(name)
+
+        val args = SearchFragmentDirections.actionSearchFragmentToResultFragment(
+            request = name
+        )
+
+        findNavController().navigate(args)
+    }
+
+    override fun onResume() {
+        super.onResume()
         with(binding.recyclerView) {
             adapter = MordaAdapter(
-                delegates = emptyList(),
-                views = emptyList()
+                delegates = listOf(RequestDelegate()),
+                views = requestManager?.getRequestsHistory() ?: emptyList()
             )
+        }
+    }
 
+    override fun setAdapter(delegates: List<Delegate>, view: List<ListView>) {
+        binding.recyclerView.adapter = MordaAdapter(
+            delegates = delegates,
+            views = view
+        )
+    }
+
+    private fun initializeRecyclerView() {
+        with(binding.recyclerView) {
             addItemDecoration(object : ItemDecoration() {
                 override fun getItemOffsets(
                     outRect: Rect,

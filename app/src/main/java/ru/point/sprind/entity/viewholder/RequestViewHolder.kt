@@ -6,12 +6,18 @@ import ru.point.domain.entity.Request
 import ru.point.sprind.databinding.RequestHistoryItemBinding
 
 class RequestViewHolder(
-    private val binding: RequestHistoryItemBinding
+    private val binding: RequestHistoryItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(view: ListView) {
         (view as? Request)?.let {
             binding.text.text = view.text
+
+            view.onClick?.let { func ->
+                binding.root.setOnClickListener {
+                    func(view.text)
+                }
+            }
         }
     }
 }
