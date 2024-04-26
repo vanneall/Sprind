@@ -8,4 +8,6 @@ interface RequestManager {
 
     fun addRequest(request: Request)
 
+    fun clear()
+
 }

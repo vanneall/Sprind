@@ -52,6 +52,11 @@ class SearchFragment : MvpAppCompatFragment(), SearchView {
         super.onViewCreated(view, savedInstanceState)
         initializeToolbar()
         initializeRecyclerView()
+
+        binding.clearText.setOnClickListener {
+            setAdapter(emptyList(), emptyList())
+            requestManager?.clear()
+        }
     }
 
     private fun initializeToolbar() {
@@ -87,7 +92,8 @@ class SearchFragment : MvpAppCompatFragment(), SearchView {
                         )
                     }
                 }
-            }.debounce(2, TimeUnit.SECONDS).subscribe { if (it.isNotEmpty()) presenter.getByName(it) }
+            }.debounce(2, TimeUnit.SECONDS)
+                .subscribe { if (it.isNotEmpty()) presenter.getByName(it) }
 
 
 

@@ -87,6 +87,11 @@ class MainActivity : AppCompatActivity(), ThemeSwitcher, RequestManager {
         sharedPreferences.edit().putString(REQUESTS, newRequest.take(10).joinToString(";")).apply()
     }
 
+    override fun clear() {
+        val sharedPreferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString(REQUESTS, "").apply()
+    }
+
     companion object {
         private const val PREFERENCES = "Preferences"
         private const val REQUESTS = "REQUESTS"
