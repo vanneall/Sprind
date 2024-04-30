@@ -2,11 +2,12 @@ package ru.point.data
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import ru.point.domain.entity.FeedProductDto
+import ru.point.domain.entity.dto.Characteristic
+import ru.point.domain.entity.dto.FeedProductDto
 import ru.point.domain.entity.Price
-import ru.point.domain.entity.ProductCategoryDto
-import ru.point.domain.entity.ProductDto
-import ru.point.domain.entity.ProductShopDto
+import ru.point.domain.entity.dto.ProductCategoryDto
+import ru.point.domain.entity.dto.ProductDto
+import ru.point.domain.entity.view.ProductShopDto
 import ru.point.domain.enums.Currency
 import ru.point.domain.repository.ProductRepository
 import javax.inject.Inject
@@ -42,10 +43,10 @@ class FakeRepository @Inject constructor() : ProductRepository {
                     count = 3,
                     price = Price(1337.0, Currency.RUR),
                     description = "some google phone",
-                    characteristics = mapOf(),
+                    characteristics = setOf(Characteristic("name", "")),
                     photosUrl = listOf("https://avatars.mds.yandex.net/get-mpic/11385384/2a0000018c584064d574e2164cc429553aa7/600x800"),
                     shopDto = ProductShopDto(
-                        id = 1, name = "Google store", description = "some"
+                        id = 1, name = "Google store"
                     ),
                     categoryDto = ProductCategoryDto(
                         id = 1,

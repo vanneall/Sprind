@@ -3,15 +3,15 @@ package ru.point.sprind.entity.deletage.product.card
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.point.domain.entity.ListView
-import ru.point.domain.entity.ProductDescription
+import ru.point.domain.entity.view.ListView
+import ru.point.domain.entity.view.ProductDescriptionView
 import ru.point.sprind.databinding.ProductCardDescriptionBinding
 import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.viewholder.product.card.ProductDescriptionViewHolder
 
 class ProductDescriptionDelegate : Delegate {
     override fun forItem(view: ListView): Boolean {
-        return view is ProductDescription
+        return view is ProductDescriptionView
     }
 
     override fun createViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {

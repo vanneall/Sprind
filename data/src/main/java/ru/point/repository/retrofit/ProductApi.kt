@@ -5,8 +5,8 @@ import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.point.domain.entity.FeedProductDto
-import ru.point.domain.entity.ProductDto
+import ru.point.domain.entity.dto.FeedProductDto
+import ru.point.domain.entity.dto.ProductDto
 
 interface ProductApi {
     @GET("feed")

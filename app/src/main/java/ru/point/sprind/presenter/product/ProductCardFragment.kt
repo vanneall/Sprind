@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import ru.point.domain.entity.ListView
+import ru.point.domain.entity.view.ListView
 import ru.point.sprind.SprindApplication
 import ru.point.sprind.adapters.MordaAdapter
+import ru.point.sprind.adapters.decorators.InfoProductDecorator
+
 import ru.point.sprind.databinding.FragmentProductCardBinding
 import ru.point.sprind.entity.deletage.Delegate
 import javax.inject.Inject
@@ -24,6 +26,8 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
     private val presenter: ProductPresenter by moxyPresenter {
         presenterProvider.create(productId = args.productId)
     }
+
+    private lateinit var adapter: MordaAdapter
 
     private val args: ProductCardFragmentArgs by navArgs()
 
@@ -41,11 +45,20 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initializeRecyclerView()
+    }
+
+    private fun initializeRecyclerView() {
+        adapter = MordaAdapter(delegates = presenter.delegates)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.addItemDecoration(InfoProductDecorator())
+    }
+
+
     override fun setProductAdapter(list: List<ListView>, delegates: List<Delegate>) {
-        binding.recyclerView.adapter = MordaAdapter(
-            delegates = delegates,
-            views = list
-        )
+        adapter.views = list
     }
 
     override fun showBadConnectionScreen() {

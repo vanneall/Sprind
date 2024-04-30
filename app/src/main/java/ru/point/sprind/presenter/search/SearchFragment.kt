@@ -66,8 +66,7 @@ class SearchFragment : MvpAppCompatFragment() {
     private fun initializeRecyclerView() {
         with(binding.recyclerView) {
             adapter = MordaAdapter(
-                delegates = emptyList(),
-                views = emptyList()
+                delegates = emptyList()
             )
 
             addItemDecoration(object : ItemDecoration() {

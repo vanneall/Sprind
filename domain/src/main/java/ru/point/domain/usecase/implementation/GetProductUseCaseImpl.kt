@@ -2,7 +2,7 @@ package ru.point.domain.usecase.implementation
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import ru.point.domain.entity.FeedProductDto
+import ru.point.domain.entity.dto.FeedProductDto
 import ru.point.domain.repository.ProductRepository
 import ru.point.domain.usecase.interfaces.GetProductsUseCase
 

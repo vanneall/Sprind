@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
-import ru.point.domain.entity.FeedProductDto
+import ru.point.domain.entity.dto.FeedProductDto
 import ru.point.domain.usecase.interfaces.GetProductsUseCase
 import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.deletage.ProductDelegate

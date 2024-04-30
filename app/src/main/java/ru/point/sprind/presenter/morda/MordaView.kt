@@ -4,7 +4,7 @@ import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
-import ru.point.domain.entity.ListView
+import ru.point.domain.entity.view.ListView
 import ru.point.sprind.entity.deletage.Delegate
 
 

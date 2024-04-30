@@ -3,8 +3,8 @@ package ru.point.repository.retrofitRepository
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import ru.point.domain.entity.FeedProductDto
-import ru.point.domain.entity.ProductDto
+import ru.point.domain.entity.dto.FeedProductDto
+import ru.point.domain.entity.dto.ProductDto
 import ru.point.domain.repository.ProductRepository
 import ru.point.repository.retrofit.ProductApi
 import javax.inject.Inject

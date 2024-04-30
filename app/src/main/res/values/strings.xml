@@ -27,4 +27,7 @@
     <string name="favorites_screen_title">Избранное</string>
     <string name="cart_screen_title">Корзина</string>
     <string name="profile">Профиль</string>
+    <string name="about_shop">Магазин</string>
+    <string name="about_category">Категория</string>
+    <string name="characteristics">Характеристики</string>
 </resources>

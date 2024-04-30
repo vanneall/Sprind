@@ -1,4 +1,4 @@
-package ru.point.domain.entity
+package ru.point.domain.entity.dto
 
 import com.google.gson.annotations.SerializedName
 
@@ -7,6 +7,4 @@ data class ProductCategoryDto(
     val id: Long,
     @SerializedName("name")
     val name: String,
-    @SerializedName("parentCatrgory")
-    val parentCategoryDto: ProductCategoryDto? = null
 )

@@ -8,11 +8,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import ru.point.domain.entity.ListView
+import ru.point.domain.entity.view.ListView
 import ru.point.sprind.R
 import ru.point.sprind.SprindApplication
 import ru.point.sprind.adapters.MordaAdapter
-import ru.point.sprind.adapters.ProductDecorator
+import ru.point.sprind.adapters.decorators.FeedProductDecorator
 import ru.point.sprind.databinding.FragmentMordaBinding
 import ru.point.sprind.entity.deletage.Delegate
 import javax.inject.Inject
@@ -54,14 +54,13 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
     }
 
     private fun initializeRecyclerView() {
-        binding.recyclerView.addItemDecoration(ProductDecorator())
+        binding.recyclerView.addItemDecoration(FeedProductDecorator())
     }
 
     override fun setProductAdapter(views: List<ListView>, delegates: List<Delegate>) {
-        binding.recyclerView.adapter = MordaAdapter(
-            delegates = delegates,
-            views = views
-        )
+        val adapter = MordaAdapter(delegates = delegates)
+        adapter.views = views
+        binding.recyclerView.adapter = adapter
     }
 
     override fun showNotFoundScreen() {

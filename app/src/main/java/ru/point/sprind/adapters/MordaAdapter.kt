@@ -1,14 +1,25 @@
 package ru.point.sprind.adapters
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import ru.point.domain.entity.ListView
+import ru.point.domain.entity.view.ListView
 import ru.point.sprind.entity.deletage.Delegate
 
 class MordaAdapter(
     private val delegates: List<Delegate>,
-    var views: List<ru.point.domain.entity.ListView>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var views: List<ListView> = emptyList()
+        set(new) {
+            val callback = DiffUtilCallback<ListView>(
+                oldList = field,
+                newList = new
+            )
+            field = new
+            val diffResult = DiffUtil.calculateDiff(callback)
+            diffResult.dispatchUpdatesTo(this)
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return delegates[viewType].createViewHolder(parent = parent)

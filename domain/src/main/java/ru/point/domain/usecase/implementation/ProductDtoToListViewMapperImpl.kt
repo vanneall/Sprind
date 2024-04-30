@@ -1,24 +1,30 @@
 package ru.point.domain.usecase.implementation
 
-import ru.point.domain.entity.ListView
-import ru.point.domain.entity.ProductDescription
-import ru.point.domain.entity.ProductDto
-import ru.point.domain.entity.ProductImage
-import ru.point.domain.entity.ProductTitle
+import ru.point.domain.entity.dto.ProductDto
+import ru.point.domain.entity.view.AllCharacteristicsView
+import ru.point.domain.entity.view.ListView
+import ru.point.domain.entity.view.ProductDescriptionView
+import ru.point.domain.entity.view.ProductImageView
+import ru.point.domain.entity.view.ProductTitleView
 import ru.point.domain.usecase.interfaces.ProductDtoToListViewMapper
 
 class ProductDtoToListViewMapperImpl : ProductDtoToListViewMapper {
     override fun map(productDto: ProductDto): List<ListView> {
         return listOf(
-            ProductImage(
+            ProductImageView(
                 url = productDto.photosUrl[0]
             ),
-            ProductTitle(
+            ProductTitleView(
                 title = productDto.name,
                 price = productDto.price
             ),
-            ProductDescription(
-                description = productDto.description ?: ""
+            ProductDescriptionView(
+                description = productDto.description ?: "",
+                shopName = productDto.shopDto.name,
+                categoryName = productDto.categoryDto.name
+            ),
+            AllCharacteristicsView(
+                characteristics = productDto.characteristics.toList()
             )
         )
     }

@@ -1,4 +1,4 @@
-package ru.point.domain.entity
+package ru.point.domain.entity.view
 
 import com.google.gson.annotations.SerializedName
 
@@ -7,6 +7,4 @@ data class ProductShopDto(
     val id: Long,
     @SerializedName("name")
     val name: String,
-    @SerializedName("description")
-    val description: String
 )

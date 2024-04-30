@@ -1,8 +1,8 @@
 package ru.point.sprind.entity.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
-import ru.point.domain.entity.ListView
-import ru.point.domain.entity.Request
+import ru.point.domain.entity.view.ListView
+import ru.point.domain.entity.view.Request
 import ru.point.sprind.databinding.RequestHistoryItemBinding
 
 class RequestViewHolder(
