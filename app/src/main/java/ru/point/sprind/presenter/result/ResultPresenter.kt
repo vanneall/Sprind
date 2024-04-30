@@ -16,6 +16,10 @@ class ResultPresenter @AssistedInject constructor(
     private val getProductsByNameUseCase: GetProductsByNameUseCase,
 ) : MvpPresenter<MordaView>() {
 
+    private val delegates = listOf(
+        ProductDelegate(onClickCard = viewState::openCard)
+    )
+
     init {
         getSearchResult()
     }
@@ -28,7 +32,10 @@ class ResultPresenter @AssistedInject constructor(
                 if (list.isEmpty()) {
                     viewState.showNotFoundScreen()
                 } else {
-                    viewState.setProductAdapter(list, listOf(ProductDelegate()))
+                    viewState.setProductAdapter(
+                        list,
+                        delegates
+                    )
                 }
             }, {
                 viewState.disableLoadingScreen()

@@ -8,13 +8,11 @@ import ru.point.domain.entity.FeedProductDto
 import ru.point.domain.usecase.interfaces.GetProductsUseCase
 import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.deletage.ProductDelegate
-import ru.point.sprind.usecase.GetMordaDelegatesUseCase
 import javax.inject.Inject
 
 @InjectViewState
 class MordaPresenter @Inject constructor(
     private val getProductsUseCase: GetProductsUseCase,
-    private val getMordaDelegatesUseCase: GetMordaDelegatesUseCase,
 ) : MvpPresenter<MordaView>() {
 
     private var delegates: List<Delegate> = emptyList()
@@ -23,7 +21,9 @@ class MordaPresenter @Inject constructor(
     private val compositeDisposable = CompositeDisposable()
 
     init {
-        delegates = getMordaDelegatesUseCase.handle()
+        delegates = listOf(
+            ProductDelegate(onClickCard = viewState::openCard)
+        )
 
         viewState.showLoadingScreen()
         val disposable = getProductsUseCase

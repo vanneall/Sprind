@@ -17,6 +17,5 @@ data class FeedProductDto(
     @SerializedName("description")
     val description: String? = null,
     @SerializedName("photosUrl")
-    val photosUrl: List<String>,
-    var onClick: (() -> Unit)? = null,
+    val photosUrl: List<String>
 ) : ListView

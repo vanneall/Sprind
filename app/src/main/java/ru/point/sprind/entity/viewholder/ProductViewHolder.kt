@@ -9,6 +9,7 @@ import ru.point.sprind.databinding.VerticalCardItemBinding
 
 class ProductViewHolder(
     private val binding: VerticalCardItemBinding,
+    private val onClickCard: (Long) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(view: ListView) {
@@ -23,7 +24,7 @@ class ProductViewHolder(
                 name.text = view.name
                 price.text = view.price.money.toString()
                 root.setOnClickListener {
-                    view.onClick?.invoke()
+                    onClickCard(view.id)
                 }
             }
         }

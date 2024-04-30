@@ -7,7 +7,9 @@ import ru.point.domain.entity.FeedProductDto
 import ru.point.sprind.databinding.VerticalCardItemBinding
 import ru.point.sprind.entity.viewholder.ProductViewHolder
 
-class ProductDelegate : Delegate {
+class ProductDelegate(
+    private val onClickCard: (Long) -> Unit
+) : Delegate {
 
     override fun forItem(view: ru.point.domain.entity.ListView) = view is FeedProductDto
 
@@ -17,7 +19,7 @@ class ProductDelegate : Delegate {
             parent,
             false
         )
-        return ProductViewHolder(binding)
+        return ProductViewHolder(binding, onClickCard)
     }
 
     override fun bindViewHolder(
