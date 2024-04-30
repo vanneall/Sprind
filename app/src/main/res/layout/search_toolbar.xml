@@ -2,10 +2,12 @@
 <com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:contentInsetEnd="20dp"
-    app:contentInsetStart="20dp">
+    app:contentInsetStart="20dp"
+    android:paddingBottom="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
