@@ -10,7 +10,7 @@ import ru.point.domain.entity.view.AllCharacteristicsView
 import ru.point.domain.entity.view.CharacteristicDescriptionView
 import ru.point.domain.entity.view.CharacteristicTitleView
 import ru.point.domain.entity.view.ListView
-import ru.point.domain.usecase.implementation.ProductDtoToListViewMapperImpl
+import ru.point.domain.mapper.ProductDtoToListViewMapperImpl
 import ru.point.domain.usecase.interfaces.GetProductByIdUseCase
 import ru.point.sprind.entity.deletage.product.card.AllCharacteristicsDelegate
 import ru.point.sprind.entity.deletage.product.card.CharacteristicDelegate

@@ -1,4 +1,4 @@
-package ru.point.domain.usecase.implementation
+package ru.point.domain.mapper
 
 import ru.point.domain.entity.dto.ProductDto
 import ru.point.domain.entity.view.AllCharacteristicsView

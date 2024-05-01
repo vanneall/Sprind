@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="delivery_title"
+        app:layout_constraintTop_toTopOf="@id/delivery_title"
         tools:text="0" />
 
     <TextView
@@ -96,9 +96,9 @@
     <TextView
         android:id="@+id/summary_price"
         style="@style/bold_20"
-        android:textColor="@color/avocado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/avocado"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/summary_title"
         tools:text="0" />

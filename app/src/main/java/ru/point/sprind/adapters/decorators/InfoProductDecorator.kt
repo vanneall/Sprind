@@ -1,7 +1,6 @@
 package ru.point.sprind.adapters.decorators
 
 import android.graphics.Rect
-import android.util.TypedValue
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import ru.point.sprind.entity.viewholder.product.card.CharacteristicSectionViewHolder
@@ -16,16 +15,13 @@ class InfoProductDecorator : RecyclerView.ItemDecoration() {
         state: RecyclerView.State,
     ) {
         super.getItemOffsets(outRect, view, parent, state)
+
         when (val viewHolder = parent.getChildViewHolder(view)) {
             is CharacteristicSectionViewHolder -> {}
             is CharacteristicViewHolder -> {}
             is CharacteristicTitleViewHolder -> {}
             else -> {
-                outRect.bottom = TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    8f,
-                    view.context.resources.displayMetrics
-                ).toInt()
+                outRect.bottom = 8.toDp(view)
             }
         }
     }

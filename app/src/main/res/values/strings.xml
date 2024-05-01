@@ -38,4 +38,5 @@
     <string name="summary">Итого</string>
     <string name="empty_cart_warning">Корзина пуста</string>
     <string name="empty_cart_description">Загляните в поиск и возвращайтесь когда что-нибудь найдете!</string>
+    <string name="pay">Оплатить</string>
 </resources>
