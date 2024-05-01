@@ -6,10 +6,10 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
-import ru.point.domain.entity.view.AllCharacteristicsView
-import ru.point.domain.entity.view.CharacteristicDescriptionView
-import ru.point.domain.entity.view.CharacteristicTitleView
-import ru.point.domain.entity.view.ListView
+import ru.point.domain.entity.view.AllCharacteristicsViewObject
+import ru.point.domain.entity.view.CharacteristicDescriptionViewObject
+import ru.point.domain.entity.view.CharacteristicTitleViewObject
+import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.mapper.ProductDtoToListViewMapperImpl
 import ru.point.domain.usecase.interfaces.GetProductByIdUseCase
 import ru.point.sprind.entity.deletage.product.card.AllCharacteristicsDelegate
@@ -34,7 +34,7 @@ class ProductPresenter @AssistedInject constructor(
         CharacteristicDelegate(),
         CharacteristicTitleDelegate()
     )
-    private var productListView: List<ListView> = emptyList()
+    private var productViewObject: List<ViewObject> = emptyList()
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -44,10 +44,10 @@ class ProductPresenter @AssistedInject constructor(
             .invoke(id = productId, ProductDtoToListViewMapperImpl())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
-                productListView = list
+                productViewObject = list
                 viewState.disableLoadingScreen()
 
-                viewState.setProductAdapter(productListView, delegates)
+                viewState.setProductAdapter(productViewObject, delegates)
             }, {
                 println(it.stackTraceToString())
                 viewState.disableLoadingScreen()
@@ -59,27 +59,27 @@ class ProductPresenter @AssistedInject constructor(
     }
 
     private fun expandCharacteristics(isExpanded: Boolean) {
-        val startIndex = productListView.indexOfFirst { view -> view is AllCharacteristicsView }
+        val startIndex = productViewObject.indexOfFirst { view -> view is AllCharacteristicsViewObject }
 
         if (startIndex == -1) return
-        val characteristic = productListView[startIndex] as? AllCharacteristicsView ?: return
+        val characteristic = productViewObject[startIndex] as? AllCharacteristicsViewObject ?: return
 
         if (isExpanded) {
             val nel = characteristic.run {
                 characteristics.map { characteristic ->
                     listOf(
-                        CharacteristicTitleView(characteristic.name)
+                        CharacteristicTitleViewObject(characteristic.name)
                     ) + characteristic.elements.map { pair ->
-                        CharacteristicDescriptionView(pair.first, pair.second)
+                        CharacteristicDescriptionViewObject(pair.first, pair.second)
                     }
                 }.flatten()
             }
 
-            productListView = buildExpandedList(startIndex, nel)
+            productViewObject = buildExpandedList(startIndex, nel)
         } else {
             val endIndex =
-                productListView.indexOfLast { view -> view is CharacteristicDescriptionView }
-            productListView = buildNotExpandedList(startIndex, endIndex)
+                productViewObject.indexOfLast { view -> view is CharacteristicDescriptionViewObject }
+            productViewObject = buildNotExpandedList(startIndex, endIndex)
         }
 
 
@@ -87,7 +87,7 @@ class ProductPresenter @AssistedInject constructor(
         characteristic.let {
             viewState
                 .setProductAdapter(
-                    list = productListView,
+                    list = productViewObject,
                     delegates = delegates
                 )
         }
@@ -95,22 +95,22 @@ class ProductPresenter @AssistedInject constructor(
 
     private fun buildExpandedList(
         indexForInsert: Int,
-        characteristics: List<ListView>,
-    ): List<ListView> {
-        return productListView.subList(
+        characteristics: List<ViewObject>,
+    ): List<ViewObject> {
+        return productViewObject.subList(
             0,
             indexForInsert + 1
-        ) + characteristics + productListView.subList(indexForInsert + 1, productListView.size)
+        ) + characteristics + productViewObject.subList(indexForInsert + 1, productViewObject.size)
     }
 
     private fun buildNotExpandedList(
         indexForInsert: Int,
         indexOfEnd: Int,
-    ): List<ListView> {
-        return productListView.subList(
+    ): List<ViewObject> {
+        return productViewObject.subList(
             0,
             indexForInsert + 1
-        ) + productListView.subList(indexOfEnd + 1, productListView.size)
+        ) + productViewObject.subList(indexOfEnd + 1, productViewObject.size)
     }
 
     override fun onDestroy() {

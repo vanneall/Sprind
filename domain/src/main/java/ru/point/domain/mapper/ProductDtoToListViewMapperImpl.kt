@@ -1,29 +1,29 @@
 package ru.point.domain.mapper
 
 import ru.point.domain.entity.dto.ProductDto
-import ru.point.domain.entity.view.AllCharacteristicsView
-import ru.point.domain.entity.view.ListView
-import ru.point.domain.entity.view.ProductDescriptionView
-import ru.point.domain.entity.view.ProductImageView
-import ru.point.domain.entity.view.ProductTitleView
+import ru.point.domain.entity.view.AllCharacteristicsViewObject
+import ru.point.domain.entity.view.ViewObject
+import ru.point.domain.entity.view.ProductDescriptionViewObject
+import ru.point.domain.entity.view.ProductImageViewObject
+import ru.point.domain.entity.view.ProductTitleViewObject
 import ru.point.domain.usecase.interfaces.ProductDtoToListViewMapper
 
 class ProductDtoToListViewMapperImpl : ProductDtoToListViewMapper {
-    override fun map(productDto: ProductDto): List<ListView> {
+    override fun map(productDto: ProductDto): List<ViewObject> {
         return listOf(
-            ProductImageView(
+            ProductImageViewObject(
                 url = productDto.photosUrl[0]
             ),
-            ProductTitleView(
+            ProductTitleViewObject(
                 title = productDto.name,
                 price = productDto.price
             ),
-            ProductDescriptionView(
+            ProductDescriptionViewObject(
                 description = productDto.description ?: "",
                 shopName = productDto.shopDto.name,
                 categoryName = productDto.categoryDto.name
             ),
-            AllCharacteristicsView(
+            AllCharacteristicsViewObject(
                 characteristics = productDto.characteristics.toList()
             )
         )

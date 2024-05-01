@@ -6,4 +6,4 @@ data class CartSummaryVo(
     val discount: String,
     val promocode: String,
     val summary: String,
-) : ListView
+) : ViewObject

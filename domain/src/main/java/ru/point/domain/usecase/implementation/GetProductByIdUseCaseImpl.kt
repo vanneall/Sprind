@@ -1,7 +1,7 @@
 package ru.point.domain.usecase.implementation
 
 import io.reactivex.rxjava3.core.Single
-import ru.point.domain.entity.view.ListView
+import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.repository.ProductRepository
 import ru.point.domain.usecase.interfaces.GetProductByIdUseCase
 import ru.point.domain.usecase.interfaces.ProductDtoToListViewMapper
@@ -13,7 +13,7 @@ class GetProductByIdUseCaseImpl @Inject constructor(
     override fun invoke(
         id: Long,
         productDtoToListViewMapper: ProductDtoToListViewMapper,
-    ): Single<List<ListView>> {
+    ): Single<List<ViewObject>> {
         return repository.getProductById(id = id).map(productDtoToListViewMapper::map)
     }
 }

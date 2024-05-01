@@ -1,6 +1,6 @@
 package ru.point.sprind.entity.viewholder.product.card
 
-import ru.point.domain.entity.view.AllCharacteristicsView
+import ru.point.domain.entity.view.AllCharacteristicsViewObject
 import ru.point.sprind.R
 import ru.point.sprind.databinding.ProductCharacteristicStartBinding
 import ru.point.sprind.entity.viewholder.ViewHolderV2
@@ -8,11 +8,11 @@ import ru.point.sprind.entity.viewholder.ViewHolderV2
 class CharacteristicSectionViewHolder(
     val binding: ProductCharacteristicStartBinding,
     private val onClick: (Boolean) -> Unit,
-) : ViewHolderV2<AllCharacteristicsView>(binding.root) {
+) : ViewHolderV2<AllCharacteristicsViewObject>(binding.root) {
 
     private var isExpanded = false
 
-    override fun bind(view: AllCharacteristicsView) {
+    override fun bind(view: AllCharacteristicsViewObject) {
         binding.root.setOnClickListener {
             isExpanded = !isExpanded
             if (isExpanded) {

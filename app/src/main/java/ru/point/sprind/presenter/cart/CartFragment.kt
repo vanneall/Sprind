@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import ru.point.domain.entity.view.ListView
+import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
 import ru.point.sprind.SprindApplication
 import ru.point.sprind.adapters.MordaAdapter
@@ -57,7 +57,7 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         presenter.initAdapter()
     }
 
-    override fun setAdapter(view: List<ListView>) {
+    override fun setAdapter(view: List<ViewObject>) {
         adapter.views = view
     }
 

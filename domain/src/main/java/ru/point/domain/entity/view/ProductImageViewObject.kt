@@ -4,31 +4,31 @@ import ru.point.domain.entity.Price
 import ru.point.domain.entity.dto.Characteristic
 
 @JvmInline
-value class ProductImageView(
+value class ProductImageViewObject(
     val url: String,
-) : ListView
+) : ViewObject
 
-data class ProductTitleView(
+data class ProductTitleViewObject(
     val title: String,
     val price: Price,
     val rating: String = "5.0",
-) : ListView
+) : ViewObject
 
-data class ProductDescriptionView(
+data class ProductDescriptionViewObject(
     val description: String,
     val shopName: String,
     val categoryName: String,
-) : ListView
+) : ViewObject
 
-data class AllCharacteristicsView(
+data class AllCharacteristicsViewObject(
     val characteristics: List<Characteristic>,
-) : ListView
+) : ViewObject
 
-data class CharacteristicDescriptionView(
+data class CharacteristicDescriptionViewObject(
     val name: String,
     val description: String,
-) : ListView
+) : ViewObject
 
-data class CharacteristicTitleView(
+data class CharacteristicTitleViewObject(
     val title: String
-): ListView
+): ViewObject

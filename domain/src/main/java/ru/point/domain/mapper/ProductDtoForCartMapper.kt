@@ -6,10 +6,10 @@ import ru.point.domain.entity.view.CartEmptyVo
 import ru.point.domain.entity.view.CartProductVo
 import ru.point.domain.entity.view.CartPromocodeVo
 import ru.point.domain.entity.view.CartSummaryVo
-import ru.point.domain.entity.view.ListView
+import ru.point.domain.entity.view.ViewObject
 
 class ProductDtoForCartMapper : FeedProductListViewMapper {
-    override fun map(feedProductDto: List<FeedProductDto>): List<ListView> {
+    override fun map(feedProductDto: List<FeedProductDto>): List<ViewObject> {
 
         if (feedProductDto.isEmpty()) return listOf(CartEmptyVo())
 
@@ -44,7 +44,7 @@ class ProductDtoForCartMapper : FeedProductListViewMapper {
 }
 
 interface FeedProductListViewMapper {
-    fun map(feedProductDto: List<FeedProductDto>): List<ListView>
+    fun map(feedProductDto: List<FeedProductDto>): List<ViewObject>
 }
 
 fun sumPrice(collection: Collection<*>): Price {

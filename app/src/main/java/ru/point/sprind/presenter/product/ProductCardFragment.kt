@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import ru.point.domain.entity.view.ListView
+import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.SprindApplication
 import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.InfoProductDecorator
@@ -57,7 +57,7 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
     }
 
 
-    override fun setProductAdapter(list: List<ListView>, delegates: List<Delegate<*>>) {
+    override fun setProductAdapter(list: List<ViewObject>, delegates: List<Delegate<*>>) {
         adapter.views = list
     }
 

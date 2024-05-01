@@ -2,7 +2,7 @@ package ru.point.domain.entity.dto
 
 import com.google.gson.annotations.SerializedName
 import ru.point.domain.entity.Price
-import ru.point.domain.entity.view.ListView
+import ru.point.domain.entity.view.ViewObject
 
 @JvmInline
 value class ImageURL(
@@ -20,4 +20,4 @@ data class FeedProductDto(
     val description: String? = null,
     @SerializedName("photosUrl")
     val photosUrl: List<String>
-) : ListView
+) : ViewObject

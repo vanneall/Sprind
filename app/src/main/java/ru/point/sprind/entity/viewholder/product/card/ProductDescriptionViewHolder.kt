@@ -1,15 +1,15 @@
 package ru.point.sprind.entity.viewholder.product.card
 
-import ru.point.domain.entity.view.ProductDescriptionView
+import ru.point.domain.entity.view.ProductDescriptionViewObject
 import ru.point.sprind.databinding.ProductCardDescriptionBinding
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class ProductDescriptionViewHolder(
     private val binding: ProductCardDescriptionBinding,
-) : ViewHolderV2<ProductDescriptionView>(binding.root) {
+) : ViewHolderV2<ProductDescriptionViewObject>(binding.root) {
 
-    override fun bind(view: ProductDescriptionView) {
-        (view as? ProductDescriptionView)?.let {
+    override fun bind(view: ProductDescriptionViewObject) {
+        (view as? ProductDescriptionViewObject)?.let {
             with(binding) {
                 description.text = view.description
                 shopName.text = view.shopName

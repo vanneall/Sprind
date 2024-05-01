@@ -7,4 +7,4 @@ data class CartProductVo(
     val name: String,
     val url: String,
     val price: Price
-): ListView
+): ViewObject

@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import ru.point.domain.entity.view.ListView
+import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
 import ru.point.sprind.SprindApplication
 import ru.point.sprind.adapters.MordaAdapter
@@ -67,7 +67,7 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
         binding.recyclerView.addItemDecoration(FeedProductDecorator())
     }
 
-    override fun setProductAdapter(views: List<ListView>, delegates: List<Delegate<*>>) {
+    override fun setProductAdapter(views: List<ViewObject>, delegates: List<Delegate<*>>) {
         val adapter = MordaAdapter(delegates = delegates)
         adapter.views = views
         binding.recyclerView.adapter = adapter
