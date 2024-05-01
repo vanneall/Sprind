@@ -1,10 +1,12 @@
 package ru.point.sprind.entity.viewholder.product.cart
 
-import androidx.recyclerview.widget.RecyclerView
+import ru.point.domain.entity.view.ListView
 import ru.point.sprind.databinding.CartPromocodeBinding
+import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class CartPromocodeViewHolder(
     private val binding: CartPromocodeBinding,
-) : RecyclerView.ViewHolder(binding.root) {
-    fun bind() {}
+) : ViewHolderV2(binding.root) {
+
+    override fun bind(view: ListView) {}
 }

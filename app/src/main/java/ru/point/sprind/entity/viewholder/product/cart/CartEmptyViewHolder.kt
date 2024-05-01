@@ -1,9 +1,12 @@
 package ru.point.sprind.entity.viewholder.product.cart
 
-import androidx.recyclerview.widget.RecyclerView
+import ru.point.domain.entity.view.ListView
 import ru.point.sprind.databinding.CartEmptyWarningBinding
+import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class CartEmptyViewHolder(
     private val binding: CartEmptyWarningBinding,
-) : RecyclerView.ViewHolder(binding.root) {
+) : ViewHolderV2(binding.root) {
+
+    override fun bind(view: ListView) {}
 }

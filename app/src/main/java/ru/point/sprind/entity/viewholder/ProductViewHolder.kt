@@ -1,6 +1,5 @@
 package ru.point.sprind.entity.viewholder
 
-import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.size.Scale
 import ru.point.domain.entity.dto.FeedProductDto
@@ -10,9 +9,9 @@ import ru.point.sprind.databinding.VerticalCardItemBinding
 class ProductViewHolder(
     private val binding: VerticalCardItemBinding,
     private val onClickCard: (Long) -> Unit
-) : RecyclerView.ViewHolder(binding.root) {
+) : ViewHolderV2(binding.root) {
 
-    fun bind(view: ListView) {
+    override fun bind(view: ListView) {
         (view as? FeedProductDto)?.let {
             with(binding) {
 

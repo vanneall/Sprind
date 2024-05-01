@@ -1,15 +1,15 @@
 package ru.point.sprind.entity.viewholder.product.card
 
-import androidx.recyclerview.widget.RecyclerView
 import ru.point.domain.entity.view.ListView
 import ru.point.domain.entity.view.ProductTitleView
 import ru.point.sprind.databinding.ProductCardTitleBinding
+import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class ProductTitleViewHolder(
     private val productCardTitleBinding: ProductCardTitleBinding,
-) : RecyclerView.ViewHolder(productCardTitleBinding.root) {
+) : ViewHolderV2(productCardTitleBinding.root) {
 
-    fun bind(view: ListView) {
+    override fun bind(view: ListView) {
         (view as? ProductTitleView)?.let { productTitle ->
             with(productCardTitleBinding) {
                 title.text = productTitle.title

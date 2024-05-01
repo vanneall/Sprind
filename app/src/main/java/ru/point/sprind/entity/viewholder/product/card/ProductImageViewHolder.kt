@@ -1,20 +1,20 @@
 package ru.point.sprind.entity.viewholder.product.card
 
-import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.size.Scale
 import ru.point.domain.entity.view.ListView
 import ru.point.domain.entity.view.ProductImageView
 import ru.point.sprind.databinding.ProductCardImageBinding
+import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class ProductImageViewHolder(
     private val binding: ProductCardImageBinding,
-) : RecyclerView.ViewHolder(binding.root) {
+) : ViewHolderV2(binding.root) {
 
-    fun bind(productImage: ListView) {
-        (productImage as? ProductImageView)?.let {
+    override fun bind(view: ListView) {
+        (view as? ProductImageView)?.let {
             binding.imageView.load(
-                productImage.url
+                view.url
             ) {
                 scale(Scale.FIT)
             }

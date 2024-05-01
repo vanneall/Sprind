@@ -5,10 +5,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.point.domain.entity.view.ListView
 import ru.point.sprind.entity.deletage.Delegate
+import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class MordaAdapter(
     private val delegates: List<Delegate>,
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<ViewHolderV2>() {
 
     var views: List<ListView> = emptyList()
         set(new) {
@@ -21,11 +22,11 @@ class MordaAdapter(
             diffResult.dispatchUpdatesTo(this)
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderV2 {
         return delegates[viewType].createViewHolder(parent = parent)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolderV2, position: Int) {
         delegates[getItemViewType(position)].bindViewHolder(
             viewHolder = holder,
             view = views[position]

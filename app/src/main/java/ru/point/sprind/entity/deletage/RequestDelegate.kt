@@ -2,16 +2,16 @@ package ru.point.sprind.entity.deletage
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import ru.point.sprind.databinding.RequestHistoryItemBinding
 import ru.point.domain.entity.view.ListView
 import ru.point.domain.entity.view.Request
+import ru.point.sprind.databinding.RequestHistoryItemBinding
 import ru.point.sprind.entity.viewholder.RequestViewHolder
+import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class RequestDelegate : Delegate {
     override fun forItem(view: ListView): Boolean = view is Request
 
-    override fun createViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
+    override fun createViewHolder(parent: ViewGroup): ViewHolderV2 {
         val binding = RequestHistoryItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -20,7 +20,7 @@ class RequestDelegate : Delegate {
         return RequestViewHolder(binding = binding)
     }
 
-    override fun bindViewHolder(view: ListView, viewHolder: RecyclerView.ViewHolder) {
+    override fun bindViewHolder(view: ListView, viewHolder: ViewHolderV2) {
         (viewHolder as? RequestViewHolder)?.let {
             viewHolder.bind(view)
         }
