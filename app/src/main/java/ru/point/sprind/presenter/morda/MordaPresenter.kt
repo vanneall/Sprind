@@ -15,7 +15,7 @@ class MordaPresenter @Inject constructor(
     private val getProductsUseCase: GetProductsUseCase,
 ) : MvpPresenter<MordaView>() {
 
-    private var delegates: List<Delegate> = emptyList()
+    private var delegates: List<Delegate<*>> = emptyList()
     private var feedProductDtos: List<FeedProductDto> = emptyList()
 
     private val compositeDisposable = CompositeDisposable()

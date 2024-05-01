@@ -9,12 +9,11 @@ import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 import ru.point.sprind.entity.viewholder.product.cart.CartPromocodeViewHolder
 
-class CartPromocodeDelegate: Delegate {
-    override fun forItem(view: ListView): Boolean {
-        return view is CartPromocodeVo
-    }
+class CartPromocodeDelegate: Delegate<CartPromocodeVo> {
 
-    override fun createViewHolder(parent: ViewGroup): ViewHolderV2 {
+    override fun isSupported(view: ListView) = view is CartPromocodeVo
+
+    override fun createViewHolder(parent: ViewGroup): ViewHolderV2<CartPromocodeVo> {
         val binding = CartPromocodeBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -22,11 +21,5 @@ class CartPromocodeDelegate: Delegate {
         )
 
         return CartPromocodeViewHolder(binding)
-    }
-
-    override fun bindViewHolder(view: ListView, viewHolder: ViewHolderV2) {
-        (viewHolder as? CartPromocodeViewHolder)?.let {
-            viewHolder.bind(view)
-        }
     }
 }

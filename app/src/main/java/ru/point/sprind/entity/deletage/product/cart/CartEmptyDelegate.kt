@@ -9,12 +9,11 @@ import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 import ru.point.sprind.entity.viewholder.product.cart.CartEmptyViewHolder
 
-class CartEmptyDelegate : Delegate {
-    override fun forItem(view: ListView): Boolean {
-        return view is CartEmptyVo
-    }
+class CartEmptyDelegate : Delegate<CartEmptyVo> {
 
-    override fun createViewHolder(parent: ViewGroup): ViewHolderV2 {
+    override fun isSupported(view: ListView) = view is CartEmptyVo
+
+    override fun createViewHolder(parent: ViewGroup): ViewHolderV2<CartEmptyVo> {
         val binding = CartEmptyWarningBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -22,6 +21,4 @@ class CartEmptyDelegate : Delegate {
         )
         return CartEmptyViewHolder(binding)
     }
-
-    override fun bindViewHolder(view: ListView, viewHolder: ViewHolderV2) {}
 }

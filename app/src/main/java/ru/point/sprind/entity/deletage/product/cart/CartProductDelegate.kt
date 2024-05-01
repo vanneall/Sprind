@@ -9,24 +9,16 @@ import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 import ru.point.sprind.entity.viewholder.product.cart.CartProductViewHolder
 
-class CartProductDelegate : Delegate {
+class CartProductDelegate : Delegate<CartProductVo> {
 
-    override fun forItem(view: ListView): Boolean {
-        return view is CartProductVo
-    }
+    override fun isSupported(view: ListView) = view is CartProductVo
 
-    override fun createViewHolder(parent: ViewGroup): ViewHolderV2 {
+    override fun createViewHolder(parent: ViewGroup): ViewHolderV2<CartProductVo> {
         val binding = CartProductCardBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
         return CartProductViewHolder(binding)
-    }
-
-    override fun bindViewHolder(view: ListView, viewHolder: ViewHolderV2) {
-        (viewHolder as? CartProductViewHolder)?.let {
-            viewHolder.bind(view)
-        }
     }
 }

@@ -8,12 +8,12 @@ import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class MordaAdapter(
-    private val delegates: List<Delegate>,
-) : RecyclerView.Adapter<ViewHolderV2>() {
+    private val delegates: List<Delegate<*>>,
+) : RecyclerView.Adapter<ViewHolderV2<ListView>>() {
 
     var views: List<ListView> = emptyList()
         set(new) {
-            val callback = DiffUtilCallback<ListView>(
+            val callback = DiffUtilCallback(
                 oldList = field,
                 newList = new
             )
@@ -22,19 +22,18 @@ class MordaAdapter(
             diffResult.dispatchUpdatesTo(this)
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderV2 {
-        return delegates[viewType].createViewHolder(parent = parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderV2<ListView> {
+        return delegates[viewType]
+            .createViewHolder(parent)
+            .run { this as ViewHolderV2<ListView> }
     }
 
-    override fun onBindViewHolder(holder: ViewHolderV2, position: Int) {
-        delegates[getItemViewType(position)].bindViewHolder(
-            viewHolder = holder,
-            view = views[position]
-        )
+    override fun onBindViewHolder(holder: ViewHolderV2<ListView>, position: Int) {
+        holder.bind(views[position])
     }
 
     override fun getItemViewType(position: Int): Int {
-        return delegates.indexOfFirst { delegate -> delegate.forItem(views[position]) }
+        return delegates.indexOfFirst { delegate -> delegate.isSupported(views[position]) }
     }
 
     override fun getItemCount(): Int = views.size

@@ -7,7 +7,6 @@ import moxy.InjectViewState
 import moxy.MvpPresenter
 import ru.point.domain.entity.view.CartEmptyVo
 import ru.point.domain.usecase.interfaces.GetProductDtoFromCartUseCase
-import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.deletage.product.cart.CartEmptyDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartProductDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartPromocodeDelegate
@@ -19,7 +18,7 @@ class CartPresenter @Inject constructor(
     private val getProductDtoFromCartUseCase: GetProductDtoFromCartUseCase,
 ) : MvpPresenter<CartView>() {
 
-    val delegates: List<Delegate> = listOf(
+    val delegates = listOf(
         CartProductDelegate(),
         CartEmptyDelegate(),
         CartPromocodeDelegate(),

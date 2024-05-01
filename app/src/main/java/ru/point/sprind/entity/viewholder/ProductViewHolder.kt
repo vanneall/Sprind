@@ -3,15 +3,14 @@ package ru.point.sprind.entity.viewholder
 import coil.load
 import coil.size.Scale
 import ru.point.domain.entity.dto.FeedProductDto
-import ru.point.domain.entity.view.ListView
 import ru.point.sprind.databinding.VerticalCardItemBinding
 
 class ProductViewHolder(
     private val binding: VerticalCardItemBinding,
     private val onClickCard: (Long) -> Unit
-) : ViewHolderV2(binding.root) {
+) : ViewHolderV2<FeedProductDto>(binding.root) {
 
-    override fun bind(view: ListView) {
+    override fun bind(view: FeedProductDto) {
         (view as? FeedProductDto)?.let {
             with(binding) {
 

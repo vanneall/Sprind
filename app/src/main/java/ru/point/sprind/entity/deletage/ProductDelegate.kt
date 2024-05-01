@@ -10,25 +10,16 @@ import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class ProductDelegate(
     private val onClickCard: (Long) -> Unit,
-) : Delegate {
+) : Delegate<FeedProductDto> {
 
-    override fun forItem(view: ListView) = view is FeedProductDto
+    override fun isSupported(view: ListView) = view is FeedProductDto
 
-    override fun createViewHolder(parent: ViewGroup): ViewHolderV2 {
+    override fun createViewHolder(parent: ViewGroup): ViewHolderV2<FeedProductDto> {
         val binding = VerticalCardItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
         return ProductViewHolder(binding, onClickCard)
-    }
-
-    override fun bindViewHolder(
-        view: ListView,
-        viewHolder: ViewHolderV2,
-    ) {
-        (viewHolder as? ProductViewHolder)?.let {
-            viewHolder.bind(view)
-        }
     }
 }

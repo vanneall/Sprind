@@ -8,7 +8,7 @@ import ru.point.sprind.entity.deletage.Delegate
 
 interface ProductCardView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setProductAdapter(list: List<ListView>, delegates: List<Delegate>)
+    fun setProductAdapter(list: List<ListView>, delegates: List<Delegate<*>>)
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showBadConnectionScreen()
     @StateStrategyType(AddToEndSingleStrategy::class)

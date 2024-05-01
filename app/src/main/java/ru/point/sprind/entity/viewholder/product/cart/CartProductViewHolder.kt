@@ -9,9 +9,9 @@ import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class CartProductViewHolder(
     private val binding: CartProductCardBinding,
-) : ViewHolderV2(binding.root) {
+) : ViewHolderV2<CartProductVo>(binding.root) {
 
-    override fun bind(view: ListView) {
+    override fun bind(view: CartProductVo) {
         (view as? CartProductVo)?.let {
             with(binding) {
                 image.load(

@@ -67,7 +67,7 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
         binding.recyclerView.addItemDecoration(FeedProductDecorator())
     }
 
-    override fun setProductAdapter(views: List<ListView>, delegates: List<Delegate>) {
+    override fun setProductAdapter(views: List<ListView>, delegates: List<Delegate<*>>) {
         val adapter = MordaAdapter(delegates = delegates)
         adapter.views = views
         binding.recyclerView.adapter = adapter

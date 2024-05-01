@@ -11,12 +11,11 @@ import ru.point.sprind.entity.viewholder.product.card.CharacteristicSectionViewH
 
 class AllCharacteristicsDelegate(
     private val onClick: (Boolean) -> Unit,
-) : Delegate {
-    override fun forItem(view: ListView): Boolean {
-        return view is AllCharacteristicsView
-    }
+) : Delegate<AllCharacteristicsView> {
 
-    override fun createViewHolder(parent: ViewGroup): ViewHolderV2 {
+    override fun isSupported(view: ListView) = view is AllCharacteristicsView
+
+    override fun createViewHolder(parent: ViewGroup): ViewHolderV2<AllCharacteristicsView> {
         val binding = ProductCharacteristicStartBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -24,11 +23,5 @@ class AllCharacteristicsDelegate(
         )
 
         return CharacteristicSectionViewHolder(binding, onClick);
-    }
-
-    override fun bindViewHolder(view: ListView, viewHolder: ViewHolderV2) {
-        (viewHolder as? CharacteristicSectionViewHolder)?.let {
-            viewHolder.bind(view)
-        }
     }
 }

@@ -8,21 +8,16 @@ import ru.point.sprind.databinding.RequestHistoryItemBinding
 import ru.point.sprind.entity.viewholder.RequestViewHolder
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 
-class RequestDelegate : Delegate {
-    override fun forItem(view: ListView): Boolean = view is Request
+class RequestDelegate : Delegate<Request> {
 
-    override fun createViewHolder(parent: ViewGroup): ViewHolderV2 {
+    override fun isSupported(view: ListView): Boolean = view is Request
+
+    override fun createViewHolder(parent: ViewGroup): ViewHolderV2<Request> {
         val binding = RequestHistoryItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
         return RequestViewHolder(binding = binding)
-    }
-
-    override fun bindViewHolder(view: ListView, viewHolder: ViewHolderV2) {
-        (viewHolder as? RequestViewHolder)?.let {
-            viewHolder.bind(view)
-        }
     }
 }

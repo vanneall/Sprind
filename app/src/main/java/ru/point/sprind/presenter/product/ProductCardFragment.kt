@@ -57,7 +57,7 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
     }
 
 
-    override fun setProductAdapter(list: List<ListView>, delegates: List<Delegate>) {
+    override fun setProductAdapter(list: List<ListView>, delegates: List<Delegate<*>>) {
         adapter.views = list
     }
 

@@ -9,12 +9,11 @@ import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 import ru.point.sprind.entity.viewholder.product.card.CharacteristicTitleViewHolder
 
-class CharacteristicTitleDelegate : Delegate {
-    override fun forItem(view: ListView): Boolean {
-        return view is CharacteristicTitleView
-    }
+class CharacteristicTitleDelegate : Delegate<CharacteristicTitleView> {
 
-    override fun createViewHolder(parent: ViewGroup): ViewHolderV2 {
+    override fun isSupported(view: ListView)=view is CharacteristicTitleView
+
+    override fun createViewHolder(parent: ViewGroup): ViewHolderV2<CharacteristicTitleView> {
         val binding = ProductCharacteristicTitleBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -22,11 +21,5 @@ class CharacteristicTitleDelegate : Delegate {
         )
 
         return CharacteristicTitleViewHolder(binding);
-    }
-
-    override fun bindViewHolder(view: ListView, viewHolder: ViewHolderV2) {
-        (viewHolder as? CharacteristicTitleViewHolder)?.let {
-            viewHolder.bind(view)
-        }
     }
 }
