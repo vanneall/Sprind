@@ -11,12 +11,10 @@ class ProductImageViewHolder(
 ) : ViewHolderV2<ProductImageViewObject>(binding.root) {
 
     override fun bind(view: ProductImageViewObject) {
-        (view as? ProductImageViewObject)?.let {
-            binding.imageView.load(
-                view.url
-            ) {
-                scale(Scale.FIT)
-            }
+        binding.imageView.load(
+            view.url
+        ) {
+            scale(Scale.FIT)
         }
     }
 }

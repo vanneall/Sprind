@@ -9,11 +9,9 @@ class CharacteristicViewHolder(
 ) : ViewHolderV2<CharacteristicDescriptionViewObject>(binding.root) {
 
     override fun bind(view: CharacteristicDescriptionViewObject) {
-        (view as? CharacteristicDescriptionViewObject)?.let {
-            with(binding) {
-                title.text = view.name
-                value.text = view.description
-            }
+        with(binding) {
+            title.text = view.name
+            value.text = view.description
         }
     }
 }

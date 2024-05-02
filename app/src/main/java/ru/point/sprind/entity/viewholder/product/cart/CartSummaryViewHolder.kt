@@ -9,14 +9,12 @@ class CartSummaryViewHolder(
 ) : ViewHolderV2<CartSummaryVo>(binding.root) {
 
     override fun bind(view: CartSummaryVo) {
-        (view as? CartSummaryVo)?.let { vo ->
-            with(binding) {
-                deliveryPrice.text = vo.delivery
-                productsSumPrice.text = vo.products
-                discountPrice.text = vo.discount
-                promocodePrice.text = vo.promocode
-                summaryPrice.text = vo.summary
-            }
+        with(binding) {
+            deliveryPrice.text = view.delivery
+            productsSumPrice.text = view.products
+            discountPrice.text = view.discount
+            promocodePrice.text = view.promocode
+            summaryPrice.text = view.summary
         }
     }
 }

@@ -9,12 +9,10 @@ class ProductTitleViewHolder(
 ) : ViewHolderV2<ProductTitleViewObject>(productCardTitleBinding.root) {
 
     override fun bind(view: ProductTitleViewObject) {
-        (view as? ProductTitleViewObject)?.let { productTitle ->
-            with(productCardTitleBinding) {
-                title.text = productTitle.title
-                price.text = productTitle.price.money.toString()
-                rating.text = productTitle.rating
-            }
+        with(productCardTitleBinding) {
+            title.text = view.title
+            price.text = view.price.money.toString()
+            rating.text = view.rating
         }
     }
 }

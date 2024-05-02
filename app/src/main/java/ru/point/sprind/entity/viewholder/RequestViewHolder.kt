@@ -8,8 +8,6 @@ class RequestViewHolder(
 ) : ViewHolderV2<Request>(binding.root) {
 
     override fun bind(view: Request) {
-        (view as? Request)?.let {
-            binding.text.text = view.text
-        }
+        binding.text.text = view.text
     }
 }

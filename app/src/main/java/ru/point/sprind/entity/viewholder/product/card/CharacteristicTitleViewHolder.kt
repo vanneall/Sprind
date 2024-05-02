@@ -9,10 +9,8 @@ class CharacteristicTitleViewHolder(
 ) : ViewHolderV2<CharacteristicTitleViewObject>(binding.root) {
 
     override fun bind(view: CharacteristicTitleViewObject) {
-        (view as? CharacteristicTitleViewObject)?.let {
-            with(binding) {
-                title.text = view.title
-            }
+        with(binding) {
+            title.text = view.title
         }
     }
 }

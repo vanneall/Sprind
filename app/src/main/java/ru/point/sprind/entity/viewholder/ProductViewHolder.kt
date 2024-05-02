@@ -11,19 +11,17 @@ class ProductViewHolder(
 ) : ViewHolderV2<FeedProductDto>(binding.root) {
 
     override fun bind(view: FeedProductDto) {
-        (view as? FeedProductDto)?.let {
-            with(binding) {
+        with(binding) {
 
-                image.load(
-                    view.photosUrl[0]
-                ) {
-                    scale(Scale.FIT)
-                }
-                name.text = view.name
-                price.text = view.price.money.toString()
-                root.setOnClickListener {
-                    onClickCard(view.id)
-                }
+            image.load(
+                view.photosUrl[0]
+            ) {
+                scale(Scale.FIT)
+            }
+            name.text = view.name
+            price.text = view.price.money.toString()
+            root.setOnClickListener {
+                onClickCard(view.id)
             }
         }
     }

@@ -9,12 +9,10 @@ class ProductDescriptionViewHolder(
 ) : ViewHolderV2<ProductDescriptionViewObject>(binding.root) {
 
     override fun bind(view: ProductDescriptionViewObject) {
-        (view as? ProductDescriptionViewObject)?.let {
-            with(binding) {
-                description.text = view.description
-                shopName.text = view.shopName
-                categoryName.text = view.categoryName
-            }
+        with(binding) {
+            description.text = view.description
+            shopName.text = view.shopName
+            categoryName.text = view.categoryName
         }
     }
 }

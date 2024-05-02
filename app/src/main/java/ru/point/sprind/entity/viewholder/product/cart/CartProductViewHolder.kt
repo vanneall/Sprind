@@ -11,16 +11,14 @@ class CartProductViewHolder(
 ) : ViewHolderV2<CartProductVo>(binding.root) {
 
     override fun bind(view: CartProductVo) {
-        (view as? CartProductVo)?.let {
-            with(binding) {
-                image.load(
-                    view.url
-                ) {
-                    scale(Scale.FIT)
-                }
-                name.text = view.name
-                price.text = view.price.money.toString()
+        with(binding) {
+            image.load(
+                view.url
+            ) {
+                scale(Scale.FIT)
             }
+            name.text = view.name
+            price.text = view.price.money.toString()
         }
     }
 }
