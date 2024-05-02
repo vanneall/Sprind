@@ -7,7 +7,8 @@ import ru.point.sprind.databinding.VerticalCardItemBinding
 
 class ProductViewHolder(
     private val binding: VerticalCardItemBinding,
-    private val onClickCard: (Long) -> Unit
+    private val onClickCard: (Long) -> Unit,
+    private val onBuyClick: (Long) -> Unit,
 ) : ViewHolderV2<FeedProductDto>(binding.root) {
 
     override fun bind(view: FeedProductDto) {
@@ -22,6 +23,10 @@ class ProductViewHolder(
             price.text = view.price.money.toString()
             root.setOnClickListener {
                 onClickCard(view.id)
+            }
+
+            buyButton.setOnClickListener {
+                onBuyClick(view.id)
             }
         }
     }

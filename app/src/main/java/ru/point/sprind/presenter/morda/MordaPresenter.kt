@@ -5,6 +5,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import ru.point.domain.entity.dto.FeedProductDto
+import ru.point.domain.usecase.interfaces.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.GetProductsUseCase
 import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.deletage.ProductDelegate
@@ -12,6 +13,7 @@ import javax.inject.Inject
 
 @InjectViewState
 class MordaPresenter @Inject constructor(
+    private val addProductToCartUseCase: AddProductToCartUseCase,
     private val getProductsUseCase: GetProductsUseCase,
 ) : MvpPresenter<MordaView>() {
 
@@ -22,7 +24,10 @@ class MordaPresenter @Inject constructor(
 
     init {
         delegates = listOf(
-            ProductDelegate(onClickCard = viewState::openCard)
+            ProductDelegate(
+                onClickCard = viewState::openCard,
+                onBuyClick = addProductToCartUseCase::handle
+            )
         )
 
         viewState.showLoadingScreen()

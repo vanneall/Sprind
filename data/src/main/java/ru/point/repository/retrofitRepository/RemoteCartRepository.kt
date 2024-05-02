@@ -14,4 +14,10 @@ class RemoteCartRepository @Inject constructor(
     override fun getProducts(): Observable<List<FeedProductDto>> {
         return api.getProductsFromCart().subscribeOn(Schedulers.io())
     }
+
+    override fun addProduct(id: Long) {
+        //TODO переписать на возврат значения с сервера
+        api.addProduct(id = id).subscribeOn(Schedulers.io())
+            .subscribe({ println("Success") }, { it.printStackTrace() })
+    }
 }

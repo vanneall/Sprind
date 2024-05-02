@@ -49,6 +49,7 @@
             tools:text="Смартфон Google Pixel 8 128Gb US Obsidian" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/buy_button"
             style="@style/medium_14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

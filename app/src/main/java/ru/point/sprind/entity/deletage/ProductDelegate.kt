@@ -10,6 +10,7 @@ import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class ProductDelegate(
     private val onClickCard: (Long) -> Unit,
+    private val onBuyClick: (Long) -> Unit,
 ) : Delegate<FeedProductDto> {
 
     override fun isSupported(view: ViewObject) = view is FeedProductDto
@@ -20,6 +21,11 @@ class ProductDelegate(
             parent,
             false
         )
-        return ProductViewHolder(binding, onClickCard)
+
+        return ProductViewHolder(
+            binding = binding,
+            onClickCard = onClickCard,
+            onBuyClick = onBuyClick
+        )
     }
 }

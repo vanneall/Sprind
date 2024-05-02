@@ -7,4 +7,6 @@ interface CartRepository {
 
     fun getProducts(): Observable<List<FeedProductDto>>
 
+    fun addProduct(id: Long)
+
 }
