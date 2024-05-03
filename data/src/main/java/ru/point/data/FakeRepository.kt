@@ -2,9 +2,9 @@ package ru.point.data
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import ru.point.domain.entity.Price
 import ru.point.domain.entity.dto.Characteristic
 import ru.point.domain.entity.dto.FeedProductDto
-import ru.point.domain.entity.Price
 import ru.point.domain.entity.dto.ProductCategoryDto
 import ru.point.domain.entity.dto.ProductDto
 import ru.point.domain.entity.view.ProductShopDto
@@ -22,6 +22,7 @@ class FakeRepository @Inject constructor() : ProductRepository {
                         id = 1,
                         name = "pixel",
                         price = Price(1234.0, Currency.RUR),
+                        false,
                         "",
                         photosUrl = listOf("https://avatars.mds.yandex.net/get-mpic/11385384/2a0000018c584064d574e2164cc429553aa7/600x800")
                     )

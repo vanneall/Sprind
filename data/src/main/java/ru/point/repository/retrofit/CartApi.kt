@@ -9,7 +9,7 @@ import retrofit2.http.Query
 import ru.point.domain.entity.dto.FeedProductDto
 
 const val toke1n =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWZveHl3ZWV4QGdtYWlsLmNvbSIsImV4cCI6MTcxNDY4MTA4MSwiaWF0IjoxNzE0NTk0NjgxLCJhdXRob3JpdHkiOlsiUk9MRV9VU0VSIl19.GNs5wE5u5O7BHE7HNkXqfwuJ22qDjWPzOjkSyjLoXhg"
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWZveHl3ZWV4QGdtYWlsLmNvbSIsImV4cCI6MTcxNDgxMzYwMSwiaWF0IjoxNzE0NzI3MjAxLCJhdXRob3JpdHkiOlsiUk9MRV9VU0VSIl19.HcxXsxuvBiskIs3y9DWwGorN5W5U7E24nZ2FwrGHCMU"
 
 interface CartApi {
 

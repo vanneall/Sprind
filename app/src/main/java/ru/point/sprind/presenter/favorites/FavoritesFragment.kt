@@ -4,16 +4,70 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
+import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
+import ru.point.sprind.SprindApplication
+import ru.point.sprind.adapters.MordaAdapter
+import ru.point.sprind.databinding.FragmentFavoritesBinding
+import javax.inject.Inject
 
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
+
+    private lateinit var binding: FragmentFavoritesBinding
+
+    private lateinit var adapter: MordaAdapter
+
+    @Inject
+    lateinit var presenterProvider: FavoritePresenter
+
+    private val presenter by moxyPresenter { presenterProvider }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        SprindApplication.component.inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorites, container, false)
+    ): View {
+        binding = FragmentFavoritesBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initializeToolbar()
+
+        initializeRecyclerView()
+    }
+
+    private fun initializeToolbar() {
+        with(binding) {
+            favoritesToolbar.title.text = resources.getString(R.string.favorites_screen_title)
+        }
+    }
+
+    private fun initializeRecyclerView() {
+        with(binding) {
+            adapter = MordaAdapter(delegates = presenter.delegates)
+            favoritesRecyclerView.adapter = adapter
+        }
+    }
+
+    override fun setAdapter(view: List<ViewObject>) {
+        adapter.views = view
+    }
+
+    override fun openCard(id: Long) {
+        val args = FavoritesFragmentDirections.actionFavoritesFragmentToProductCardFragment(
+            productId = id
+        )
+
+        binding.root.findNavController().navigate(args)
     }
 }

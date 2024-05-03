@@ -1,4 +1,4 @@
-package ru.point
+package ru.point.di
 
 import dagger.Module
 import dagger.Provides
@@ -6,13 +6,16 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.point.domain.repository.CartRepository
+import ru.point.domain.repository.FavoriteRepository
 import ru.point.domain.repository.ProductRepository
 import ru.point.repository.retrofit.CartApi
+import ru.point.repository.retrofit.FavoriteApi
 import ru.point.repository.retrofit.ProductApi
 import ru.point.repository.retrofitRepository.RemoteCartRepository
+import ru.point.repository.retrofitRepository.RemoteFavoriteRepository
 import ru.point.repository.retrofitRepository.RemoteProductRepository
 
-@Module
+@Module(includes = [ApiModule::class])
 class RepositoryModule {
     @Provides
     fun provideRemoteProductRepository(api: ProductApi): ProductRepository {
@@ -25,13 +28,8 @@ class RepositoryModule {
     }
 
     @Provides
-    fun provideCartApi(retrofit: Retrofit): CartApi {
-        return retrofit.create(CartApi::class.java)
-    }
-
-    @Provides
-    fun provideProductApi(retrofit: Retrofit): ProductApi {
-        return retrofit.create(ProductApi::class.java)
+    fun provideRemoteFavoriteRepository(api: FavoriteApi): FavoriteRepository {
+        return RemoteFavoriteRepository(api = api)
     }
 
     @Provides

@@ -16,6 +16,8 @@ data class FeedProductDto(
     val name: String,
     @SerializedName("price")
     val price: Price,
+    @SerializedName("isFavorite")
+    val isFavorite: Boolean,
     @SerializedName("description")
     val description: String? = null,
     @SerializedName("photosUrl")
