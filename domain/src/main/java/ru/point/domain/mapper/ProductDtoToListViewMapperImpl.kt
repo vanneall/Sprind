@@ -16,7 +16,7 @@ class ProductDtoToListViewMapperImpl : ProductDtoToListViewMapper {
             ),
             ProductTitleViewObject(
                 title = productDto.name,
-                price = productDto.price
+                price = productDto.price,
             ),
             ProductDescriptionViewObject(
                 description = productDto.description ?: "",

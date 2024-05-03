@@ -5,4 +5,9 @@ import ru.point.domain.entity.dto.FeedProductDto
 
 interface FavoriteRepository {
     fun getFavorite(): Observable<List<FeedProductDto>>
+
+    fun addFavorite(id: Long)
+
+    fun deleteFavorite(id: Long)
+
 }

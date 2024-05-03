@@ -42,8 +42,12 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeToolbar()
-
         initializeRecyclerView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.getFavorites()
     }
 
     private fun initializeToolbar() {
