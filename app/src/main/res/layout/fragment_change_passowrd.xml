@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="44dp"
+    tools:context=".presenter.auth.password.change.ChangePasswordFragment">
+
+    <TextView
+        android:id="@+id/new_password_title"
+        style="@style/medium_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:text="@string/new_password_screen_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/input_new_password"
+        style="@style/regular_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:autofillHints=""
+        android:background="@drawable/authorization_input_background"
+        android:hint="@string/input_new_password_hint"
+        android:inputType="textPassword"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/new_password_title" />
+
+    <EditText
+        android:id="@+id/input_verify_new_password"
+        style="@style/regular_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:autofillHints=""
+        android:background="@drawable/authorization_input_background"
+        android:hint="@string/input_verify_new_password_hint"
+        android:inputType="textPassword"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_new_password" />
+
+    <Button
+        android:id="@+id/button_enter"
+        style="@style/bold_18"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:paddingVertical="16dp"
+        android:text="@string/change_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_verify_new_password" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

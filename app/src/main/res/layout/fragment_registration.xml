@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="44dp"
+    tools:context=".presenter.auth.registration.RegistrationFragment">
+
+    <TextView
+        android:id="@+id/registration_title"
+        style="@style/medium_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:text="@string/registration_screen_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/input_login"
+        style="@style/regular_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:autofillHints=""
+        android:background="@drawable/authorization_input_background"
+        android:hint="@string/input_login_hint"
+        android:inputType="text"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registration_title" />
+
+    <EditText
+        android:id="@+id/input_secret"
+        style="@style/regular_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:autofillHints=""
+        android:background="@drawable/authorization_input_background"
+        android:hint="@string/input_secret_hint"
+        android:inputType="text"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_login" />
+
+    <EditText
+        android:id="@+id/input_password"
+        style="@style/regular_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:autofillHints=""
+        android:background="@drawable/authorization_input_background"
+        android:hint="@string/input_password_hint"
+        android:inputType="textPassword"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_secret" />
+
+    <Button
+        android:id="@+id/button_start_registration"
+        style="@style/regular_18"
+        android:layout_width="match_parent"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/authorization_input_background"
+        android:paddingVertical="12dp"
+        android:text="@string/start_registration"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_password" />
+
+    <TextView
+        android:id="@+id/text_reset_password"
+        style="@style/regular_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/registration_term_warning"
+        android:textAlignment="center"
+        android:textColor="@color/brown_orange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_start_registration" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
