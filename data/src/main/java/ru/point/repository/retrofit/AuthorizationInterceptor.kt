@@ -14,7 +14,7 @@ class AuthorizationInterceptor @Inject constructor(
         val requireAuthorizationHeader = authorizationRequiredEndpoints
             .any { endpoint -> path.endsWith(endpoint) }
 
-        if (requireAuthorizationHeader) {
+        if (requireAuthorizationHeader && manager.token.value.isNotEmpty()) {
             val handledRequest = chain.request()
                 .newBuilder()
                 .addHeader("Authorization", manager.token.value)
