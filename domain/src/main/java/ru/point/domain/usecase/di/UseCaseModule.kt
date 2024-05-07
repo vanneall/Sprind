@@ -2,6 +2,8 @@ package ru.point.domain.usecase.di
 
 import dagger.Module
 import dagger.Provides
+import ru.point.domain.factory.RegisterUserFactory
+import ru.point.domain.factory.RegisterUserFactoryImpl
 import ru.point.domain.repository.CartRepository
 import ru.point.domain.repository.FavoriteRepository
 import ru.point.domain.repository.ProductRepository
@@ -14,6 +16,7 @@ import ru.point.domain.usecase.implementation.GetProductByIdUseCaseImpl
 import ru.point.domain.usecase.implementation.GetProductDtoFromCartUseCaseImpl
 import ru.point.domain.usecase.implementation.GetProductUseCaseImpl
 import ru.point.domain.usecase.implementation.GetProductsByNameUseCaseImpl
+import ru.point.domain.usecase.implementation.RegisterUserUseCaseImpl
 import ru.point.domain.usecase.interfaces.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.AuthorizeUseCase
 import ru.point.domain.usecase.interfaces.ChangeFavoriteStateUseCase
@@ -22,6 +25,7 @@ import ru.point.domain.usecase.interfaces.GetProductByIdUseCase
 import ru.point.domain.usecase.interfaces.GetProductDtoFromCartUseCase
 import ru.point.domain.usecase.interfaces.GetProductsByNameUseCase
 import ru.point.domain.usecase.interfaces.GetProductsUseCase
+import ru.point.domain.usecase.interfaces.RegisterUserUseCase
 
 @Module
 class UseCaseModule {
@@ -63,5 +67,18 @@ class UseCaseModule {
     @Provides
     fun provideAuthorizeUseCase(repository: UserRepository): AuthorizeUseCase {
         return AuthorizeUseCaseImpl(repository = repository)
+    }
+
+    @Provides
+    fun provideRegistrationUseCase(
+        factory: RegisterUserFactory,
+        repository: UserRepository,
+    ): RegisterUserUseCase {
+        return RegisterUserUseCaseImpl(factory = factory, repository = repository)
+    }
+
+    @Provides
+    fun provideUserFactory(): RegisterUserFactory {
+        return RegisterUserFactoryImpl()
     }
 }

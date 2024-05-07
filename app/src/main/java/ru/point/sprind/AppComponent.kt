@@ -9,6 +9,8 @@ import ru.point.di.RepositoryModule
 import ru.point.di.RetrofitModule
 import ru.point.domain.usecase.di.UseCaseModule
 import ru.point.sprind.presenter.auth.authorization.AuthorizationFragment
+import ru.point.sprind.presenter.auth.registration.credentials.CredentialsFragment
+import ru.point.sprind.presenter.auth.registration.password.RegistrationFragment
 import ru.point.sprind.presenter.cart.CartFragment
 import ru.point.sprind.presenter.favorites.FavoritesFragment
 import ru.point.sprind.presenter.morda.MordaFragment
@@ -24,6 +26,8 @@ import javax.inject.Singleton
 )
 interface AppComponent {
 
+    fun inject(application: SprindApplication)
+
     fun inject(fragment: MordaFragment)
 
     fun inject(fragment: ResultFragment)
@@ -32,11 +36,13 @@ interface AppComponent {
 
     fun inject(fragment: CartFragment)
 
-    fun inject(favoritesFragment: FavoritesFragment)
+    fun inject(fragment: FavoritesFragment)
 
     fun inject(fragment: AuthorizationFragment)
 
-    fun inject(application: SprindApplication)
+    fun inject(fragment: CredentialsFragment)
+
+    fun inject(fragment: RegistrationFragment)
 
     @Component.Factory
     interface AppComponentFactory {

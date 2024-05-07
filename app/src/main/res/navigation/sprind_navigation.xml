@@ -85,7 +85,20 @@
         android:id="@+id/registrationFragment"
         android:name="ru.point.sprind.presenter.auth.registration.password.RegistrationFragment"
         android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" />
+        tools:layout="@layout/fragment_registration" >
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="secondName"
+            app:argType="string" />
+        <argument
+            android:name="telephone"
+            app:argType="string" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/changePasswordFragment"
         android:name="ru.point.sprind.presenter.auth.password.change.ChangePasswordFragment"

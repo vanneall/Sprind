@@ -71,6 +71,7 @@
         android:id="@+id/button_start_registration"
         style="@style/regular_18"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:background="@drawable/authorization_input_background"
         android:paddingVertical="12dp"
