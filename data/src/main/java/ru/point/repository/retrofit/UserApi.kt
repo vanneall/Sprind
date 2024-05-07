@@ -6,6 +6,7 @@ import retrofit2.http.Query
 import ru.point.domain.entity.utils.Token
 
 interface UserApi {
+
     @GET("auth")
     fun authorize(
         @Query("username") username: String,

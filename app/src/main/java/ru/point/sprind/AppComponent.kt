@@ -3,8 +3,10 @@ package ru.point.sprind
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
+import ru.point.di.InterceptorModule
 import ru.point.di.ManagerModule
 import ru.point.di.RepositoryModule
+import ru.point.di.RetrofitModule
 import ru.point.domain.usecase.di.UseCaseModule
 import ru.point.sprind.presenter.auth.authorization.AuthorizationFragment
 import ru.point.sprind.presenter.cart.CartFragment
@@ -15,7 +17,11 @@ import ru.point.sprind.presenter.result.ResultFragment
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [RepositoryModule::class, UseCaseModule::class, ManagerModule::class])
+@Component(
+    modules = [RepositoryModule::class, UseCaseModule::class,
+        ManagerModule::class, InterceptorModule::class,
+        RetrofitModule::class]
+)
 interface AppComponent {
 
     fun inject(fragment: MordaFragment)

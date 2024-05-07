@@ -44,7 +44,6 @@ class CartPresenter @Inject constructor(
                         403 -> viewState.requireAuthorization()
                     }
                 }
-
             })
 
         compositeDisposable.add(disposable)
