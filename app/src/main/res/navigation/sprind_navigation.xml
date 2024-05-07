@@ -69,4 +69,44 @@
         android:name="ru.point.sprind.presenter.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/authorizationFragment"
+        android:name="ru.point.sprind.presenter.auth.authorization.AuthorizationFragment"
+        android:label="fragment_authorization"
+        tools:layout="@layout/fragment_authorization" >
+        <action
+            android:id="@+id/action_authorizationFragment_to_credentialsFragment"
+            app:destination="@id/credentialsFragment" />
+        <action
+            android:id="@+id/action_authorizationFragment_to_verifyUserFragment"
+            app:destination="@id/verifyUserFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="ru.point.sprind.presenter.auth.registration.password.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="ru.point.sprind.presenter.auth.password.change.ChangePasswordFragment"
+        android:label="fragment_change_passowrd"
+        tools:layout="@layout/fragment_change_passowrd" />
+    <fragment
+        android:id="@+id/verifyUserFragment"
+        android:name="ru.point.sprind.presenter.auth.password.verify.VerifyUserFragment"
+        android:label="fragment_verify_user"
+        tools:layout="@layout/fragment_verify_user" >
+        <action
+            android:id="@+id/action_verifyUserFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/credentialsFragment"
+        android:name="ru.point.sprind.presenter.auth.registration.credentials.CredentialsFragment"
+        android:label="fragment_credentials"
+        tools:layout="@layout/fragment_credentials" >
+        <action
+            android:id="@+id/action_credentialsFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+    </fragment><action android:id="@+id/action_global_authorizationFragment" app:destination="@id/authorizationFragment"/>
 </navigation>
