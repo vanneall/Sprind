@@ -5,7 +5,9 @@ import dagger.Provides
 import ru.point.domain.repository.CartRepository
 import ru.point.domain.repository.FavoriteRepository
 import ru.point.domain.repository.ProductRepository
+import ru.point.domain.repository.UserRepository
 import ru.point.domain.usecase.implementation.AddProductToCartUseCaseImpl
+import ru.point.domain.usecase.implementation.AuthorizeUseCaseImpl
 import ru.point.domain.usecase.implementation.ChangeFavoriteStateUseCaseImpl
 import ru.point.domain.usecase.implementation.GetFavoritesUseCaseImpl
 import ru.point.domain.usecase.implementation.GetProductByIdUseCaseImpl
@@ -13,6 +15,7 @@ import ru.point.domain.usecase.implementation.GetProductDtoFromCartUseCaseImpl
 import ru.point.domain.usecase.implementation.GetProductUseCaseImpl
 import ru.point.domain.usecase.implementation.GetProductsByNameUseCaseImpl
 import ru.point.domain.usecase.interfaces.AddProductToCartUseCase
+import ru.point.domain.usecase.interfaces.AuthorizeUseCase
 import ru.point.domain.usecase.interfaces.ChangeFavoriteStateUseCase
 import ru.point.domain.usecase.interfaces.GetFavoritesUseCase
 import ru.point.domain.usecase.interfaces.GetProductByIdUseCase
@@ -55,5 +58,10 @@ class UseCaseModule {
     @Provides
     fun provideFavoriteChangeStateUseCase(repository: FavoriteRepository): ChangeFavoriteStateUseCase {
         return ChangeFavoriteStateUseCaseImpl(repository = repository)
+    }
+
+    @Provides
+    fun provideAuthorizeUseCase(repository: UserRepository): AuthorizeUseCase {
+        return AuthorizeUseCaseImpl(repository = repository)
     }
 }

@@ -1,6 +1,6 @@
 package ru.point.domain.mapper
 
-import ru.point.domain.entity.Price
+import ru.point.domain.entity.utils.Price
 import ru.point.domain.entity.dto.FeedProductDto
 import ru.point.domain.entity.view.CartEmptyVo
 import ru.point.domain.entity.view.CartProductVo

@@ -1,4 +1,4 @@
-package ru.point.domain.entity
+package ru.point.domain.entity.utils
 
 import com.google.gson.annotations.SerializedName
 import ru.point.domain.enums.Currency

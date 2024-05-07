@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
@@ -63,5 +64,9 @@ class CartFragment : MvpAppCompatFragment(), CartView {
 
     override fun showPayButton() {
         binding.payButton.visibility = View.VISIBLE
+    }
+
+    override fun requireAuthorization() {
+        findNavController().navigate(CartFragmentDirections.actionGlobalAuthorizationFragment())
     }
 }

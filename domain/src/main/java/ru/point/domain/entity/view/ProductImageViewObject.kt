@@ -1,6 +1,6 @@
 package ru.point.domain.entity.view
 
-import ru.point.domain.entity.Price
+import ru.point.domain.entity.utils.Price
 import ru.point.domain.entity.dto.Characteristic
 
 @JvmInline

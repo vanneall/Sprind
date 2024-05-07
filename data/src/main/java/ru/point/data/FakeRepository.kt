@@ -2,7 +2,7 @@ package ru.point.data
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import ru.point.domain.entity.Price
+import ru.point.domain.entity.utils.Price
 import ru.point.domain.entity.dto.Characteristic
 import ru.point.domain.entity.dto.FeedProductDto
 import ru.point.domain.entity.dto.ProductCategoryDto

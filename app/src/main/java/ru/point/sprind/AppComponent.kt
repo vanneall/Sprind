@@ -3,6 +3,7 @@ package ru.point.sprind
 import dagger.Component
 import ru.point.di.RepositoryModule
 import ru.point.domain.usecase.di.UseCaseModule
+import ru.point.sprind.presenter.auth.authorization.AuthorizationFragment
 import ru.point.sprind.presenter.cart.CartFragment
 import ru.point.sprind.presenter.favorites.FavoritesFragment
 import ru.point.sprind.presenter.morda.MordaFragment
@@ -21,4 +22,6 @@ interface AppComponent {
     fun inject(fragment: CartFragment)
 
     fun inject(favoritesFragment: FavoritesFragment)
+
+    fun inject(fragment: AuthorizationFragment)
 }

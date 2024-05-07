@@ -1,7 +1,7 @@
 package ru.point.domain.entity.dto
 
 import com.google.gson.annotations.SerializedName
-import ru.point.domain.entity.Price
+import ru.point.domain.entity.utils.Price
 import ru.point.domain.entity.view.ProductShopDto
 
 data class ProductDto(

@@ -34,14 +34,16 @@ android {
 }
 
 dependencies {
+    implementation("com.squareup.okhttp3:logging-interceptor:3.9.0")
+
     //Dagger2
     val dagger2Version = "2.51"
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
 
     //Retrofit
-    implementation (libs.retrofit.v290)
-    implementation (libs.converter.gson)
+    implementation(libs.retrofit.v290)
+    implementation(libs.converter.gson)
     implementation(libs.adapter.rxjava3)
 
     //RxJava3

@@ -1,10 +1,10 @@
 package ru.point.sprind.presenter.cart
 
-import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
+import retrofit2.HttpException
 import ru.point.domain.entity.view.CartEmptyVo
 import ru.point.domain.usecase.interfaces.GetProductDtoFromCartUseCase
 import ru.point.sprind.entity.deletage.product.cart.CartEmptyDelegate
@@ -38,8 +38,13 @@ class CartPresenter @Inject constructor(
                     viewState.showPayButton()
                 }
 
-            }, {
-                Log.e("CART ERROR", it.stackTraceToString())
+            }, { ex ->
+                if (ex is HttpException) {
+                    when (ex.code()) {
+                        403 -> viewState.requireAuthorization()
+                    }
+                }
+
             })
 
         compositeDisposable.add(disposable)
