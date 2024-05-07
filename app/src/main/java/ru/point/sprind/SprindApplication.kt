@@ -1,6 +1,8 @@
 package ru.point.sprind
 
 import android.app.Application
+import ru.point.storage.SettingsManager
+import javax.inject.Inject
 
 class SprindApplication : Application() {
 
@@ -10,6 +12,11 @@ class SprindApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        component = DaggerAppComponent.create()
+        component = DaggerAppComponent.factory().create(this)
+
+        component.inject(this)
     }
+
+    @Inject
+    lateinit var initSettingsManager: SettingsManager
 }

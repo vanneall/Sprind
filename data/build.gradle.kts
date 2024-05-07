@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-kapt")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -34,7 +35,11 @@ android {
 }
 
 dependencies {
-    implementation("com.squareup.okhttp3:logging-interceptor:3.9.0")
+
+    //DataStore
+    implementation("androidx.datastore:datastore:1.1.1")
+    implementation("androidx.datastore:datastore-rxjava3:1.1.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 
     //Dagger2
     val dagger2Version = "2.51"
