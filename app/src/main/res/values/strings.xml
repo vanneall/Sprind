@@ -53,4 +53,9 @@
     <string name="input_verify_new_password_hint">Подтверждение пароля</string>
     <string name="change_password">Сменить пароль</string>
     <string name="recovery_password_screen_title">Восстановление пароля</string>
+    <string name="name">Имя</string>
+    <string name="second_name">Фамилия</string>
+    <string name="telephone">Телефон</string>
+    <string name="email">Почта</string>
+    <string name="continue_reg">Продолжить</string>
 </resources>
