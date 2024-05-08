@@ -7,8 +7,10 @@ import ru.point.domain.factory.RegisterUserFactoryImpl
 import ru.point.domain.repository.CartRepository
 import ru.point.domain.repository.FavoriteRepository
 import ru.point.domain.repository.ProductRepository
+import ru.point.domain.repository.ReviewRepository
 import ru.point.domain.repository.UserRepository
 import ru.point.domain.usecase.implementation.AddProductToCartUseCaseImpl
+import ru.point.domain.usecase.implementation.AddReviewUseCaseImpl
 import ru.point.domain.usecase.implementation.AuthorizeUseCaseImpl
 import ru.point.domain.usecase.implementation.ChangeFavoriteStateUseCaseImpl
 import ru.point.domain.usecase.implementation.GetFavoritesUseCaseImpl
@@ -16,8 +18,10 @@ import ru.point.domain.usecase.implementation.GetProductByIdUseCaseImpl
 import ru.point.domain.usecase.implementation.GetProductDtoFromCartUseCaseImpl
 import ru.point.domain.usecase.implementation.GetProductUseCaseImpl
 import ru.point.domain.usecase.implementation.GetProductsByNameUseCaseImpl
+import ru.point.domain.usecase.implementation.GetReviewsByProductIdUseCaseImpl
 import ru.point.domain.usecase.implementation.RegisterUserUseCaseImpl
 import ru.point.domain.usecase.interfaces.AddProductToCartUseCase
+import ru.point.domain.usecase.interfaces.AddReviewUseCase
 import ru.point.domain.usecase.interfaces.AuthorizeUseCase
 import ru.point.domain.usecase.interfaces.ChangeFavoriteStateUseCase
 import ru.point.domain.usecase.interfaces.GetFavoritesUseCase
@@ -25,6 +29,7 @@ import ru.point.domain.usecase.interfaces.GetProductByIdUseCase
 import ru.point.domain.usecase.interfaces.GetProductDtoFromCartUseCase
 import ru.point.domain.usecase.interfaces.GetProductsByNameUseCase
 import ru.point.domain.usecase.interfaces.GetProductsUseCase
+import ru.point.domain.usecase.interfaces.GetReviewsByProductIdUseCase
 import ru.point.domain.usecase.interfaces.RegisterUserUseCase
 
 @Module
@@ -80,5 +85,15 @@ class UseCaseModule {
     @Provides
     fun provideUserFactory(): RegisterUserFactory {
         return RegisterUserFactoryImpl()
+    }
+
+    @Provides
+    fun provideGetReviewsByIdUseCase(repository: ReviewRepository): GetReviewsByProductIdUseCase {
+        return GetReviewsByProductIdUseCaseImpl(repository = repository)
+    }
+
+    @Provides
+    fun provideAddReviewUseCase(repository: ReviewRepository): AddReviewUseCase {
+        return AddReviewUseCaseImpl(repository = repository)
     }
 }

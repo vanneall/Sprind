@@ -10,6 +10,7 @@ class CardReviewViewHolder(
 ) : ViewHolderV2<ProductReviewVo>(binding.root) {
 
     override fun bind(view: ProductReviewVo) {
+
         binding.root.setOnClickListener { onClick() }
     }
 }

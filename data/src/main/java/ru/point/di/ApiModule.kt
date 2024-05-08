@@ -6,6 +6,7 @@ import retrofit2.Retrofit
 import ru.point.repository.retrofit.CartApi
 import ru.point.repository.retrofit.FavoriteApi
 import ru.point.repository.retrofit.ProductApi
+import ru.point.repository.retrofit.ReviewApi
 import ru.point.repository.retrofit.UserApi
 
 @Module
@@ -28,5 +29,10 @@ class ApiModule {
     @Provides
     fun provideUserApi(retrofit: Retrofit): UserApi {
         return retrofit.create(UserApi::class.java)
+    }
+
+    @Provides
+    fun provideReviewApi(retrofit: Retrofit): ReviewApi{
+        return retrofit.create(ReviewApi::class.java)
     }
 }

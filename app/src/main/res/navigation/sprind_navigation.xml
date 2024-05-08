@@ -133,10 +133,17 @@
         <action
             android:id="@+id/action_allReviewsFragment_to_createReviewFragment"
             app:destination="@id/createReviewFragment" />
+        <argument
+            android:name="id"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/createReviewFragment"
         android:name="ru.point.sprind.presenter.review.create.CreateReviewFragment"
         android:label="fragment_create_review"
-        tools:layout="@layout/fragment_create_review" />
+        tools:layout="@layout/fragment_create_review" >
+        <argument
+            android:name="productId"
+            app:argType="long" />
+    </fragment>
 </navigation>

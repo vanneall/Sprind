@@ -74,7 +74,7 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
     }
 
     override fun openReviews() {
-        val destination = ProductCardFragmentDirections.actionProductCardFragmentToAllReviewsFragment()
+        val destination = ProductCardFragmentDirections.actionProductCardFragmentToAllReviewsFragment(args.productId)
         findNavController().navigate(destination)
     }
 }

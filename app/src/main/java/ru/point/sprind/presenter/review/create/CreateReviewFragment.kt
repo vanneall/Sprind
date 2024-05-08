@@ -4,13 +4,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
+import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
+import ru.point.sprind.SprindApplication
 import ru.point.sprind.databinding.FragmentCreateReviewBinding
+import javax.inject.Inject
 
 
-class CreateReviewFragment : Fragment() {
+class CreateReviewFragment : MvpAppCompatFragment(), CreateReviewView {
 
     private lateinit var binding: FragmentCreateReviewBinding
+
+    private val args by navArgs<CreateReviewFragmentArgs>()
+
+    @Inject
+    lateinit var provider: CreateReviewPresenterFactory
+
+    private val presenter by moxyPresenter { provider.create(args.productId) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        SprindApplication.component.inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,5 +34,12 @@ class CreateReviewFragment : Fragment() {
     ): View {
         binding = FragmentCreateReviewBinding.inflate(layoutInflater)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.save.setOnClickListener {
+            presenter.addReview(binding.rating.text.toString(), binding.commentary.text.toString())
+        }
     }
 }
