@@ -1,7 +1,7 @@
 package ru.point.domain.entity.view
 
-import ru.point.domain.entity.utils.Price
 import ru.point.domain.entity.dto.Characteristic
+import ru.point.domain.entity.utils.Price
 
 @JvmInline
 value class ProductImageViewObject(
@@ -30,5 +30,7 @@ data class CharacteristicDescriptionViewObject(
 ) : ViewObject
 
 data class CharacteristicTitleViewObject(
-    val title: String
-): ViewObject
+    val title: String,
+) : ViewObject
+
+class ProductReviewVo() : ViewObject

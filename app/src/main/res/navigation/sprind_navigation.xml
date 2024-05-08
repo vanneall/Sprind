@@ -49,6 +49,9 @@
         <argument
             android:name="productId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_product_card_fragment_to_allReviewsFragment"
+            app:destination="@id/allReviewsFragment" />
     </fragment>
     <fragment
         android:id="@+id/cart_fragment"
@@ -122,4 +125,18 @@
             android:id="@+id/action_credentialsFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
     </fragment><action android:id="@+id/action_global_authorizationFragment" app:destination="@id/authorizationFragment"/>
+    <fragment
+        android:id="@+id/allReviewsFragment"
+        android:name="ru.point.sprind.presenter.review.all.AllReviewsFragment"
+        android:label="fragment_all_reviews"
+        tools:layout="@layout/fragment_all_reviews" >
+        <action
+            android:id="@+id/action_allReviewsFragment_to_createReviewFragment"
+            app:destination="@id/createReviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createReviewFragment"
+        android:name="ru.point.sprind.presenter.review.create.CreateReviewFragment"
+        android:label="fragment_create_review"
+        tools:layout="@layout/fragment_create_review" />
 </navigation>

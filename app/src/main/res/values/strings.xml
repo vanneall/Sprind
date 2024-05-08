@@ -58,4 +58,5 @@
     <string name="telephone">Телефон</string>
     <string name="email">Почта</string>
     <string name="continue_reg">Продолжить</string>
+    <string name="all_reviews">Все отзывы</string>
 </resources>

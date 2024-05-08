@@ -16,6 +16,7 @@ import ru.point.sprind.presenter.favorites.FavoritesFragment
 import ru.point.sprind.presenter.morda.MordaFragment
 import ru.point.sprind.presenter.product.ProductCardFragment
 import ru.point.sprind.presenter.result.ResultFragment
+import ru.point.sprind.presenter.review.all.AllReviewsFragment
 import javax.inject.Singleton
 
 @Singleton
@@ -43,6 +44,8 @@ interface AppComponent {
     fun inject(fragment: CredentialsFragment)
 
     fun inject(fragment: RegistrationFragment)
+
+    fun inject(fragment: AllReviewsFragment)
 
     @Component.Factory
     interface AppComponentFactory {

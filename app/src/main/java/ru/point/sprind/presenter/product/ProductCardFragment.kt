@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -40,7 +41,6 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        presenter.getProduct()
         binding = FragmentProductCardBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -71,5 +71,10 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
 
     override fun disableLoadingScreen() {
         binding.loadingScreen.root.visibility = View.GONE
+    }
+
+    override fun openReviews() {
+        val destination = ProductCardFragmentDirections.actionProductCardFragmentToAllReviewsFragment()
+        findNavController().navigate(destination)
     }
 }

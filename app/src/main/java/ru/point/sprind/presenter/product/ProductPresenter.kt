@@ -15,6 +15,7 @@ import ru.point.domain.usecase.interfaces.GetProductByIdUseCase
 import ru.point.sprind.entity.deletage.product.card.AllCharacteristicsDelegate
 import ru.point.sprind.entity.deletage.product.card.CharacteristicDelegate
 import ru.point.sprind.entity.deletage.product.card.CharacteristicTitleDelegate
+import ru.point.sprind.entity.deletage.product.card.ProductCardReviewDelegate
 import ru.point.sprind.entity.deletage.product.card.ProductDescriptionDelegate
 import ru.point.sprind.entity.deletage.product.card.ProductImageDelegate
 import ru.point.sprind.entity.deletage.product.card.ProductTitleDelegate
@@ -32,14 +33,17 @@ class ProductPresenter @AssistedInject constructor(
         ProductDescriptionDelegate(),
         AllCharacteristicsDelegate(::expandCharacteristics),
         CharacteristicDelegate(),
-        CharacteristicTitleDelegate()
+        CharacteristicTitleDelegate(),
+        ProductCardReviewDelegate(viewState::openReviews)
     )
     private var productViewObject: List<ViewObject> = emptyList()
 
     private val compositeDisposable = CompositeDisposable()
 
-    fun getProduct() {
-
+    init {
+        getProduct()
+    }
+    private fun getProduct() {
         val disposable = getProductByIdUseCase
             .invoke(id = productId, ProductDtoToListViewMapperImpl())
             .observeOn(AndroidSchedulers.mainThread())

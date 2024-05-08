@@ -2,10 +2,11 @@ package ru.point.domain.mapper
 
 import ru.point.domain.entity.dto.ProductDto
 import ru.point.domain.entity.view.AllCharacteristicsViewObject
-import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.entity.view.ProductDescriptionViewObject
 import ru.point.domain.entity.view.ProductImageViewObject
+import ru.point.domain.entity.view.ProductReviewVo
 import ru.point.domain.entity.view.ProductTitleViewObject
+import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.usecase.interfaces.ProductDtoToListViewMapper
 
 class ProductDtoToListViewMapperImpl : ProductDtoToListViewMapper {
@@ -25,7 +26,8 @@ class ProductDtoToListViewMapperImpl : ProductDtoToListViewMapper {
             ),
             AllCharacteristicsViewObject(
                 characteristics = productDto.characteristics.toList()
-            )
+            ),
+            ProductReviewVo()
         )
     }
 }
