@@ -7,17 +7,17 @@
 
     <item
         android:id="@+id/favorites_fragment"
-        android:icon="@drawable/favorite_filled"
+        android:icon="@drawable/selector_favorite"
         android:title="@string/favorites_screen_title" />
 
     <item
         android:id="@+id/cart_fragment"
-        android:icon="@drawable/cart_filled"
+        android:icon="@drawable/selector_nav_cart"
         android:title="@string/cart_screen_title" />
 
     <item
         android:id="@+id/profile_fragment"
-        android:icon="@drawable/profile_filled"
+        android:icon="@drawable/selector_nav_profile"
         android:title="@string/profile" />
 
 </menu>

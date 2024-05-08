@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -34,31 +35,36 @@ class SearchFragment : MvpAppCompatFragment() {
     private fun initializeToolbar() {
         with(binding.toolbar) {
             back.visibility = View.VISIBLE
+            searchButton.visibility = View.GONE
 
             back.setOnClickListener {
                 findNavController().popBackStack()
             }
 
-            address.setOnClickListener {
-                if (!search.text.isNullOrEmpty()) {
-                    val args = SearchFragmentDirections.actionSearchFragmentToResultFragment(
-                        request = search.text.toString()
-                    )
-
-                    findNavController().navigate(args)
-                }
-            }
-
             search.addTextChangedListener { text ->
                 if (!text.isNullOrEmpty()) {
                     clearButton.visibility = View.VISIBLE
+                    searchButton.visibility = View.VISIBLE
                 } else {
                     clearButton.visibility = View.GONE
+                    searchButton.visibility = View.GONE
                 }
             }
 
             clearButton.setOnClickListener {
                 search.setText("")
+            }
+
+            searchButton.setOnClickListener {
+                navigateToResult()
+            }
+
+            search.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    navigateToResult()
+                    return@setOnEditorActionListener true
+                }
+                return@setOnEditorActionListener false
             }
         }
     }
@@ -81,5 +87,16 @@ class SearchFragment : MvpAppCompatFragment() {
                 }
             })
         }
+    }
+
+    private fun navigateToResult() {
+        val request = binding.toolbar.search.text.toString()
+        if (request.isEmpty()) return
+
+        val args = SearchFragmentDirections.actionSearchFragmentToResultFragment(
+            request = request
+        )
+
+        findNavController().navigate(args)
     }
 }

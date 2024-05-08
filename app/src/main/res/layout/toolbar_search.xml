@@ -2,12 +2,12 @@
 <com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingBottom="8dp"
     app:contentInsetEnd="20dp"
-    app:contentInsetStart="20dp"
-    android:paddingBottom="8dp">
+    app:contentInsetStart="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,29 +28,30 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/address"
+            style="@style/regular_14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/select_address"
-            style="@style/regular_14"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/search"
+            style="@style/regular_14"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:autofillHints=""
             android:background="@drawable/toolbar_search_background"
             android:clickable="true"
-            android:drawableStart="@drawable/search_icon"
             android:drawablePadding="5dp"
             android:hint="@string/search"
             android:inputType="text"
             android:lines="1"
             android:paddingHorizontal="10dp"
-            style="@style/regular_14"
+            android:paddingStart="12dp"
+            android:imeOptions="actionSearch"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/back"
             app:layout_constraintTop_toBottomOf="@id/address" />
@@ -63,6 +64,18 @@
             android:background="@android:color/transparent"
             android:src="@drawable/delete_icon"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/search"
+            app:layout_constraintEnd_toStartOf="@id/search_button"
+            app:layout_constraintTop_toTopOf="@id/search" />
+
+        <ImageButton
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/search_icon"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@id/search"
             app:layout_constraintEnd_toEndOf="@id/search"
             app:layout_constraintTop_toTopOf="@id/search" />
