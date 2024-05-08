@@ -11,6 +11,7 @@ import ru.point.repository.retrofit.UserApi
 
 @Module
 class ApiModule {
+
     @Provides
     fun provideCartApi(retrofit: Retrofit): CartApi {
         return retrofit.create(CartApi::class.java)

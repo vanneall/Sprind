@@ -1,6 +1,7 @@
 package ru.point.sprind.presenter.auth.authorization
 
 import android.util.Log
+import dagger.Lazy
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
@@ -11,7 +12,7 @@ import javax.inject.Inject
 
 @InjectViewState
 class AuthPresenter @Inject constructor(
-    private val authorizeUseCase: AuthorizeUseCase,
+    private val authorizeUseCase: Lazy<AuthorizeUseCase>,
     private val settingsManager: SettingsManager
 ) : MvpPresenter<AuthView>() {
 
@@ -22,7 +23,7 @@ class AuthPresenter @Inject constructor(
     }
 
     fun auth(username: String, password: String) {
-        val disposable = authorizeUseCase.handle(username = username, password = password)
+        val disposable = authorizeUseCase.get().handle(username = username, password = password)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.v("Auth", it.value)

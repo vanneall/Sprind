@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @InjectViewState
 class FavoritePresenter @Inject constructor(
-    private val addProductToCartUseCase: AddProductToCartUseCase,
+    private val addProductToCartUseCase: Lazy<AddProductToCartUseCase>,
     private val getFavoritesUseCase: GetFavoritesUseCase,
     private val changeFavoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
 ) : MvpPresenter<FavoriteView>() {
@@ -24,7 +24,7 @@ class FavoritePresenter @Inject constructor(
     val delegates = listOf(
         ProductDelegate(
             onClickCard = viewState::openCard,
-            onBuyClick = addProductToCartUseCase::handle,
+            onBuyClick = addProductToCartUseCase.get()::handle,
             onFavoriteCheckedChange = changeFavoriteStateUseCase.get()::handle
         )
     )

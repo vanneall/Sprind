@@ -1,5 +1,6 @@
 package ru.point.sprind.presenter.review.create
 
+import dagger.Lazy
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -13,13 +14,13 @@ import ru.point.sprind.presenter.review.create.CreateReviewPresenterFactory.Comp
 class CreateReviewPresenter @AssistedInject constructor(
     @Assisted(ID)
     private val productId: Long,
-    private val addReviewUseCase: AddReviewUseCase,
+    private val addReviewUseCase: Lazy<AddReviewUseCase>,
 ) : MvpPresenter<CreateReviewView>() {
 
     private val compositeDisposable = CompositeDisposable()
 
     fun addReview(rating: String, description: String) {
-        val disposable = addReviewUseCase.handle(productId = productId, rating.toFloat(), description = description)
+        val disposable = addReviewUseCase.get().handle(productId = productId, rating.toFloat(), description = description)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({}, {it.printStackTrace()})
 

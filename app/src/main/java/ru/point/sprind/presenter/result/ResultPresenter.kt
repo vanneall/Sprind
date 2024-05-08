@@ -16,7 +16,7 @@ import ru.point.sprind.presenter.result.ResultPresenterAssistedFactory.Companion
 @InjectViewState
 class ResultPresenter @AssistedInject constructor(
     @Assisted(QUERY) private val query: String,
-    private val addProductToCartUseCase: AddProductToCartUseCase,
+    private val addProductToCartUseCase: Lazy<AddProductToCartUseCase>,
     private val getProductsByNameUseCase: GetProductsByNameUseCase,
     private val changeFavoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
 ) : MvpPresenter<MordaView>() {
@@ -24,7 +24,7 @@ class ResultPresenter @AssistedInject constructor(
     private val delegates = listOf(
         ProductDelegate(
             onClickCard = viewState::openCard,
-            onBuyClick = addProductToCartUseCase::handle,
+            onBuyClick = addProductToCartUseCase.get()::handle,
             onFavoriteCheckedChange = changeFavoriteStateUseCase.get()::handle
         )
     )

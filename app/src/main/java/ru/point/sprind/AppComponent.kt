@@ -7,6 +7,7 @@ import ru.point.di.InterceptorModule
 import ru.point.di.ManagerModule
 import ru.point.di.RepositoryModule
 import ru.point.di.RetrofitModule
+import ru.point.domain.factory.di.FactoryModule
 import ru.point.domain.usecase.di.UseCaseModule
 import ru.point.sprind.presenter.auth.authorization.AuthorizationFragment
 import ru.point.sprind.presenter.auth.registration.credentials.CredentialsFragment
@@ -22,9 +23,11 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [RepositoryModule::class, UseCaseModule::class,
-        ManagerModule::class, InterceptorModule::class,
-        RetrofitModule::class]
+    modules = [
+        UseCaseModule::class, FactoryModule::class,
+        RepositoryModule::class, RetrofitModule::class,
+        InterceptorModule::class, ManagerModule::class,
+    ]
 )
 interface AppComponent {
 

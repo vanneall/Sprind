@@ -1,5 +1,6 @@
 package ru.point.sprind.presenter.auth.registration.password
 
+import dagger.Lazy
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -18,7 +19,7 @@ class RegistrationPresenter @AssistedInject constructor(
     @Assisted(SECOND_NAME) private val secondName: String,
     @Assisted(TELEPHONE) private val telephone: String,
     @Assisted(EMAIL) private val email: String,
-    private val registerUserUseCase: RegisterUserUseCase,
+    private val registerUserUseCase: Lazy<RegisterUserUseCase>,
 ) : MvpPresenter<RegistrationView>() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -33,7 +34,7 @@ class RegistrationPresenter @AssistedInject constructor(
             return
         }
 
-        val disposable = registerUserUseCase.handle(
+        val disposable = registerUserUseCase.get().handle(
             name = name,
             secondName = secondName,
             telephone = telephone,

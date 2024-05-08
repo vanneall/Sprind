@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @InjectViewState
 class MordaPresenter @Inject constructor(
-    private val addProductToCartUseCase: AddProductToCartUseCase,
+    private val addProductToCartUseCase: Lazy<AddProductToCartUseCase>,
     private val getProductsUseCase: GetProductsUseCase,
     private val changeFavoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
 ) : MvpPresenter<MordaView>() {
@@ -22,7 +22,7 @@ class MordaPresenter @Inject constructor(
     private var delegates = listOf(
         ProductDelegate(
             onClickCard = viewState::openCard,
-            onBuyClick = addProductToCartUseCase::handle,
+            onBuyClick = addProductToCartUseCase.get()::handle,
             onFavoriteCheckedChange = changeFavoriteStateUseCase.get()::handle
         )
     )
