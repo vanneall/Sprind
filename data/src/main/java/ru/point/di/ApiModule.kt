@@ -3,11 +3,11 @@ package ru.point.di
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
-import ru.point.repository.retrofit.CartApi
-import ru.point.repository.retrofit.FavoriteApi
-import ru.point.repository.retrofit.ProductApi
-import ru.point.repository.retrofit.ReviewApi
-import ru.point.repository.retrofit.UserApi
+import ru.point.retrofit.api.CartApi
+import ru.point.retrofit.api.FavoriteApi
+import ru.point.retrofit.api.ProductApi
+import ru.point.retrofit.api.ReviewApi
+import ru.point.retrofit.api.UserApi
 
 @Module
 class ApiModule {
@@ -33,7 +33,7 @@ class ApiModule {
     }
 
     @Provides
-    fun provideReviewApi(retrofit: Retrofit): ReviewApi{
+    fun provideReviewApi(retrofit: Retrofit): ReviewApi {
         return retrofit.create(ReviewApi::class.java)
     }
 }

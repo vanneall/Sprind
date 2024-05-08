@@ -3,10 +3,10 @@ package ru.point.domain.usecase.di
 import dagger.Module
 import dagger.Provides
 import ru.point.domain.repository.FavoriteRepository
-import ru.point.domain.usecase.implementation.ChangeFavoriteStateUseCaseImpl
-import ru.point.domain.usecase.implementation.GetFavoritesUseCaseImpl
-import ru.point.domain.usecase.interfaces.ChangeFavoriteStateUseCase
-import ru.point.domain.usecase.interfaces.GetFavoritesUseCase
+import ru.point.domain.usecase.implementation.favorite.ChangeFavoriteStateUseCaseImpl
+import ru.point.domain.usecase.implementation.favorite.GetFavoritesUseCaseImpl
+import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
+import ru.point.domain.usecase.interfaces.favorite.GetFavoritesUseCase
 
 @Module
 class FavoriteUseCaseModule {

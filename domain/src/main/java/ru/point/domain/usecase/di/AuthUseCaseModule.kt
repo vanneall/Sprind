@@ -2,12 +2,12 @@ package ru.point.domain.usecase.di
 
 import dagger.Module
 import dagger.Provides
-import ru.point.domain.factory.RegisterUserFactory
+import ru.point.domain.factory.interfaces.RegisterUserFactory
 import ru.point.domain.repository.UserRepository
-import ru.point.domain.usecase.implementation.AuthorizeUseCaseImpl
-import ru.point.domain.usecase.implementation.RegisterUserUseCaseImpl
-import ru.point.domain.usecase.interfaces.AuthorizeUseCase
-import ru.point.domain.usecase.interfaces.RegisterUserUseCase
+import ru.point.domain.usecase.implementation.auth.AuthorizeUseCaseImpl
+import ru.point.domain.usecase.implementation.auth.RegisterUserUseCaseImpl
+import ru.point.domain.usecase.interfaces.auth.AuthorizeUseCase
+import ru.point.domain.usecase.interfaces.auth.RegisterUserUseCase
 
 @Module
 class AuthUseCaseModule {

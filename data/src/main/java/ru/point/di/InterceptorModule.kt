@@ -2,14 +2,12 @@ package ru.point.di
 
 import dagger.Module
 import dagger.Provides
-import ru.point.repository.retrofit.AuthorizationInterceptor
-import ru.point.storage.SettingsManager
-import javax.inject.Singleton
+import ru.point.retrofit.interceptor.AuthorizationInterceptor
+import ru.point.manager.SettingsManager
 
 @Module
 class InterceptorModule {
 
-    @Singleton
     @Provides
     fun provideAuthInterceptor(manager: SettingsManager): AuthorizationInterceptor {
         return AuthorizationInterceptor(manager = manager)

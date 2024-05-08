@@ -2,8 +2,8 @@ package ru.point.domain.repository
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
-import ru.point.domain.entity.dto.CreatedReviewDto
-import ru.point.domain.entity.dto.ReviewDto
+import ru.point.domain.entity.dto.review.CreatedReviewDto
+import ru.point.domain.entity.dto.review.ReviewDto
 
 interface ReviewRepository {
 

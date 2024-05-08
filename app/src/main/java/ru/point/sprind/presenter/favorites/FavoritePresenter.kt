@@ -6,10 +6,10 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
-import ru.point.domain.usecase.interfaces.AddProductToCartUseCase
-import ru.point.domain.usecase.interfaces.ChangeFavoriteStateUseCase
-import ru.point.domain.usecase.interfaces.GetFavoritesUseCase
-import ru.point.sprind.entity.deletage.ProductDelegate
+import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
+import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
+import ru.point.domain.usecase.interfaces.favorite.GetFavoritesUseCase
+import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
 import javax.inject.Inject
 
 @InjectViewState

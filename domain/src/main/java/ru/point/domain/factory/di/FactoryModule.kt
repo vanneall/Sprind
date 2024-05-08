@@ -2,8 +2,8 @@ package ru.point.domain.factory.di
 
 import dagger.Module
 import dagger.Provides
-import ru.point.domain.factory.RegisterUserFactory
-import ru.point.domain.factory.RegisterUserFactoryImpl
+import ru.point.domain.factory.interfaces.RegisterUserFactory
+import ru.point.domain.factory.implementation.RegisterUserFactoryImpl
 
 @Module
 class FactoryModule {

@@ -6,7 +6,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.point.repository.retrofit.AuthorizationInterceptor
+import ru.point.retrofit.interceptor.AuthorizationInterceptor
 import javax.inject.Singleton
 
 @Module

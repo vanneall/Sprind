@@ -2,8 +2,8 @@ package ru.point.sprind.entity.deletage.product.card
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import ru.point.domain.entity.view.ProductReviewVo
 import ru.point.domain.entity.view.ViewObject
+import ru.point.domain.entity.view.product.info.ProductReviewVo
 import ru.point.sprind.databinding.ProductCardReviewBinding
 import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.viewholder.ViewHolderV2

@@ -1,6 +1,6 @@
 package ru.point.sprind.entity.viewholder.product.cart
 
-import ru.point.domain.entity.view.CartSummaryVo
+import ru.point.domain.entity.view.cart.CartSummaryVo
 import ru.point.sprind.databinding.CartSummaryBinding
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 

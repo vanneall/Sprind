@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/morda_fragment"
-        android:name="ru.point.sprind.presenter.morda.MordaFragment"
+        android:name="ru.point.sprind.presenter.product.morda.MordaFragment"
         android:label="fragment_morda"
         tools:layout="@layout/fragment_morda" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/result_fragment"
-        android:name="ru.point.sprind.presenter.result.ResultFragment"
+        android:name="ru.point.sprind.presenter.product.result.ResultFragment"
         android:label="fragment_result"
         tools:layout="@layout/fragment_result" >
         <action
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/product_card_fragment"
-        android:name="ru.point.sprind.presenter.product.ProductCardFragment"
+        android:name="ru.point.sprind.presenter.product.card.ProductCardFragment"
         android:label="fragment_product_card"
         tools:layout="@layout/fragment_product_card" >
         <argument

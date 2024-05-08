@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
-import ru.point.domain.usecase.interfaces.RegisterUserUseCase
+import ru.point.domain.usecase.interfaces.auth.RegisterUserUseCase
 import ru.point.sprind.presenter.auth.registration.password.RegistrationPresenterFactory.Companion.EMAIL
 import ru.point.sprind.presenter.auth.registration.password.RegistrationPresenterFactory.Companion.NAME
 import ru.point.sprind.presenter.auth.registration.password.RegistrationPresenterFactory.Companion.SECOND_NAME

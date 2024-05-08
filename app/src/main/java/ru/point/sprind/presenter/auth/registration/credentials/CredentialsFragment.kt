@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import ru.point.sprind.SprindApplication
+import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentCredentialsBinding
 import javax.inject.Inject
 

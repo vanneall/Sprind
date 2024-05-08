@@ -5,8 +5,8 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import retrofit2.HttpException
-import ru.point.domain.entity.view.CartEmptyVo
-import ru.point.domain.usecase.interfaces.GetProductDtoFromCartUseCase
+import ru.point.domain.entity.view.cart.CartEmptyVo
+import ru.point.domain.usecase.interfaces.cart.GetProductsInCartUseCase
 import ru.point.sprind.entity.deletage.product.cart.CartEmptyDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartProductDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartPromocodeDelegate
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @InjectViewState
 class CartPresenter @Inject constructor(
-    private val getProductDtoFromCartUseCase: GetProductDtoFromCartUseCase,
+    private val getProductsInCartUseCase: GetProductsInCartUseCase,
 ) : MvpPresenter<CartView>() {
 
     val delegates = listOf(
@@ -28,7 +28,7 @@ class CartPresenter @Inject constructor(
     private val compositeDisposable = CompositeDisposable()
 
     fun initAdapter() {
-        val disposable = getProductDtoFromCartUseCase
+        val disposable = getProductsInCartUseCase
             .handle()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->

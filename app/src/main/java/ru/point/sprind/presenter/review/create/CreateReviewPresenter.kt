@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
-import ru.point.domain.usecase.interfaces.AddReviewUseCase
+import ru.point.domain.usecase.interfaces.review.AddReviewUseCase
 import ru.point.sprind.presenter.review.create.CreateReviewPresenterFactory.Companion.ID
 
 @InjectViewState

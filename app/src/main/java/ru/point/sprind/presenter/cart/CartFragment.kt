@@ -9,7 +9,7 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
-import ru.point.sprind.SprindApplication
+import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.CartItemDecorator
 import ru.point.sprind.databinding.FragmentCartBinding

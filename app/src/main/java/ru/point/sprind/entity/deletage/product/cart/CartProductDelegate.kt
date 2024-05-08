@@ -2,7 +2,7 @@ package ru.point.sprind.entity.deletage.product.cart
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import ru.point.domain.entity.view.CartProductVo
+import ru.point.domain.entity.view.cart.CartProductVo
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.databinding.CartProductCardBinding
 import ru.point.sprind.entity.deletage.Delegate

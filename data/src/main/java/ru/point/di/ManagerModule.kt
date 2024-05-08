@@ -3,7 +3,7 @@ package ru.point.di
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import ru.point.storage.SettingsManager
+import ru.point.manager.SettingsManager
 import javax.inject.Singleton
 
 @Module

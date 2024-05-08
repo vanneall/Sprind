@@ -2,7 +2,7 @@ package ru.point.sprind.entity.viewholder.product.cart
 
 import coil.load
 import coil.size.Scale
-import ru.point.domain.entity.view.CartProductVo
+import ru.point.domain.entity.view.cart.CartProductVo
 import ru.point.sprind.databinding.CartProductCardBinding
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 

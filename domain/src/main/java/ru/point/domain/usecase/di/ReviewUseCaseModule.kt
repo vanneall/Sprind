@@ -3,10 +3,10 @@ package ru.point.domain.usecase.di
 import dagger.Module
 import dagger.Provides
 import ru.point.domain.repository.ReviewRepository
-import ru.point.domain.usecase.implementation.AddReviewUseCaseImpl
-import ru.point.domain.usecase.implementation.GetReviewsByProductIdUseCaseImpl
-import ru.point.domain.usecase.interfaces.AddReviewUseCase
-import ru.point.domain.usecase.interfaces.GetReviewsByProductIdUseCase
+import ru.point.domain.usecase.implementation.review.AddReviewUseCaseImpl
+import ru.point.domain.usecase.implementation.review.GetReviewsByProductIdUseCaseImpl
+import ru.point.domain.usecase.interfaces.review.AddReviewUseCase
+import ru.point.domain.usecase.interfaces.review.GetReviewsByProductIdUseCase
 
 @Module
 class ReviewUseCaseModule {

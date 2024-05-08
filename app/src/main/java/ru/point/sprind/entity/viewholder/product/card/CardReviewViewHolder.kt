@@ -1,6 +1,6 @@
 package ru.point.sprind.entity.viewholder.product.card
 
-import ru.point.domain.entity.view.ProductReviewVo
+import ru.point.domain.entity.view.product.info.ProductReviewVo
 import ru.point.sprind.databinding.ProductCardReviewBinding
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 

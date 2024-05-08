@@ -6,8 +6,8 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
-import ru.point.domain.usecase.interfaces.AuthorizeUseCase
-import ru.point.storage.SettingsManager
+import ru.point.domain.usecase.interfaces.auth.AuthorizeUseCase
+import ru.point.manager.SettingsManager
 import javax.inject.Inject
 
 @InjectViewState
