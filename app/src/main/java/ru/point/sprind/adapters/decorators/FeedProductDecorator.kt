@@ -12,7 +12,16 @@ class FeedProductDecorator : RecyclerView.ItemDecoration() {
         state: RecyclerView.State,
     ) {
         super.getItemOffsets(outRect, view, parent, state)
-        outRect.bottom = 20.toDp(view)
+        val index = parent.getChildLayoutPosition(view)
+        val px = 18.toDp(view)
+
+        val isLeft = (index % 2 == 0)
+        outRect.set(
+            if (isLeft) px else px/2,
+            0,
+            if (isLeft) px/2 else px,
+            px
+        )
     }
 }
 
