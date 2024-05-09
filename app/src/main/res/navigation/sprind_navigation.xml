@@ -9,7 +9,7 @@
         android:id="@+id/morda_fragment"
         android:name="ru.point.sprind.presenter.product.morda.MordaFragment"
         android:label="fragment_morda"
-        tools:layout="@layout/fragment_morda" >
+        tools:layout="@layout/fragment_morda">
         <action
             android:id="@+id/action_mordaFragment_to_searchFragment"
             app:destination="@id/search_fragment" />
@@ -21,16 +21,22 @@
         android:id="@+id/search_fragment"
         android:name="ru.point.sprind.presenter.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_resultFragment"
-            app:destination="@id/result_fragment" />
+            app:destination="@id/result_fragment"
+            app:popUpTo="@id/search_fragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="request"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/result_fragment"
         android:name="ru.point.sprind.presenter.product.result.ResultFragment"
         android:label="fragment_result"
-        tools:layout="@layout/fragment_result" >
+        tools:layout="@layout/fragment_result">
         <action
             android:id="@+id/action_resultFragment_to_searchFragment"
             app:destination="@id/search_fragment" />
@@ -45,7 +51,7 @@
         android:id="@+id/product_card_fragment"
         android:name="ru.point.sprind.presenter.product.card.ProductCardFragment"
         android:label="fragment_product_card"
-        tools:layout="@layout/fragment_product_card" >
+        tools:layout="@layout/fragment_product_card">
         <argument
             android:name="productId"
             app:argType="long" />
@@ -62,7 +68,7 @@
         android:id="@+id/favorites_fragment"
         android:name="ru.point.sprind.presenter.favorites.FavoritesFragment"
         android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" >
+        tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_favorites_fragment_to_product_card_fragment"
             app:destination="@id/product_card_fragment" />
@@ -76,7 +82,7 @@
         android:id="@+id/authorizationFragment"
         android:name="ru.point.sprind.presenter.auth.authorization.AuthorizationFragment"
         android:label="fragment_authorization"
-        tools:layout="@layout/fragment_authorization" >
+        tools:layout="@layout/fragment_authorization">
         <action
             android:id="@+id/action_authorizationFragment_to_credentialsFragment"
             app:destination="@id/credentialsFragment" />
@@ -88,7 +94,7 @@
         android:id="@+id/registrationFragment"
         android:name="ru.point.sprind.presenter.auth.registration.password.RegistrationFragment"
         android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" >
+        tools:layout="@layout/fragment_registration">
         <argument
             android:name="name"
             app:argType="string" />
@@ -111,7 +117,7 @@
         android:id="@+id/verifyUserFragment"
         android:name="ru.point.sprind.presenter.auth.password.verify.VerifyUserFragment"
         android:label="fragment_verify_user"
-        tools:layout="@layout/fragment_verify_user" >
+        tools:layout="@layout/fragment_verify_user">
         <action
             android:id="@+id/action_verifyUserFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
@@ -120,16 +126,19 @@
         android:id="@+id/credentialsFragment"
         android:name="ru.point.sprind.presenter.auth.registration.credentials.CredentialsFragment"
         android:label="fragment_credentials"
-        tools:layout="@layout/fragment_credentials" >
+        tools:layout="@layout/fragment_credentials">
         <action
             android:id="@+id/action_credentialsFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
-    </fragment><action android:id="@+id/action_global_authorizationFragment" app:destination="@id/authorizationFragment"/>
+    </fragment>
+    <action
+        android:id="@+id/action_global_authorizationFragment"
+        app:destination="@id/authorizationFragment" />
     <fragment
         android:id="@+id/allReviewsFragment"
         android:name="ru.point.sprind.presenter.review.all.AllReviewsFragment"
         android:label="fragment_all_reviews"
-        tools:layout="@layout/fragment_all_reviews" >
+        tools:layout="@layout/fragment_all_reviews">
         <action
             android:id="@+id/action_allReviewsFragment_to_createReviewFragment"
             app:destination="@id/createReviewFragment" />
@@ -141,7 +150,7 @@
         android:id="@+id/createReviewFragment"
         android:name="ru.point.sprind.presenter.review.create.CreateReviewFragment"
         android:label="fragment_create_review"
-        tools:layout="@layout/fragment_create_review" >
+        tools:layout="@layout/fragment_create_review">
         <argument
             android:name="productId"
             app:argType="long" />

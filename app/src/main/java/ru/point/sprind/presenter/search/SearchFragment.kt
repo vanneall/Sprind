@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import moxy.MvpAppCompatFragment
@@ -17,6 +18,8 @@ import ru.point.sprind.databinding.FragmentSearchBinding
 class SearchFragment : MvpAppCompatFragment() {
 
     private lateinit var binding: FragmentSearchBinding
+
+    private val args by navArgs<SearchFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +39,8 @@ class SearchFragment : MvpAppCompatFragment() {
         with(binding.toolbar) {
             back.visibility = View.VISIBLE
             searchButton.visibility = View.GONE
+
+            args.request?.let { request -> search.setText(request) }
 
             back.setOnClickListener {
                 findNavController().popBackStack()

@@ -9,10 +9,9 @@ import androidx.navigation.fragment.findNavController
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
-import ru.point.sprind.R
-import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.FeedProductDecorator
+import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentMordaBinding
 import ru.point.sprind.entity.deletage.Delegate
 import javax.inject.Inject
@@ -49,7 +48,9 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
         binding.toolbar.search.isFocusable = false
 
         binding.toolbar.search.setOnClickListener {
-            findNavController().navigate(R.id.action_mordaFragment_to_searchFragment)
+            val destination = MordaFragmentDirections
+                .actionMordaFragmentToSearchFragment(request = null)
+            findNavController().navigate(destination)
         }
     }
 
