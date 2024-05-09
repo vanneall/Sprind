@@ -1,11 +1,6 @@
 package ru.point.sprind.presenter.review.all
 
-import moxy.MvpView
-import moxy.viewstate.strategy.AddToEndSingleStrategy
-import moxy.viewstate.strategy.StateStrategyType
-import ru.point.domain.entity.view.ViewObject
+import ru.point.sprind.presenter.general.ConnectionRequiredView
+import ru.point.sprind.presenter.general.UsingAdapterView
 
-interface AllReviewsView: MvpView {
-    @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setProductAdapter(views: List<ViewObject>)
-}
+interface AllReviewsView: ConnectionRequiredView, UsingAdapterView

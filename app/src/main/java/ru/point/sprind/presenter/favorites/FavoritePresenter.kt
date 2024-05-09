@@ -1,6 +1,5 @@
 package ru.point.sprind.presenter.favorites
 
-import android.util.Log
 import dagger.Lazy
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -30,14 +29,16 @@ class FavoritePresenter @Inject constructor(
     )
 
     fun getFavorites() {
+        viewState.displayLoadingScreen(show = true)
         val disposable = getFavoritesUseCase.handle()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
-                viewState.setAdapter(
-                    view = list
-                )
+                viewState.displayLoadingScreen(show = false)
+                viewState.setAdapter(list)
             }, { ex ->
-                Log.e("Favorite page", ex.stackTraceToString())
+                viewState.displayLoadingScreen(show = false)
+                viewState.displayBadConnectionScreen(show = true)
+                ex.printStackTrace()
             })
         compositeDisposable.add(disposable)
     }

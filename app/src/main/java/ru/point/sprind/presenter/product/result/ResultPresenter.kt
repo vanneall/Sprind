@@ -4,6 +4,7 @@ import dagger.Lazy
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
@@ -21,7 +22,7 @@ class ResultPresenter @AssistedInject constructor(
     private val changeFavoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
 ) : MvpPresenter<MordaView>() {
 
-    private val delegates = listOf(
+    val delegates = listOf(
         ProductDelegate(
             onClickCard = viewState::openCard,
             onBuyClick = addProductToCartUseCase.get()::handle,
@@ -29,29 +30,25 @@ class ResultPresenter @AssistedInject constructor(
         )
     )
 
-    init {
-        getSearchResult()
-    }
+    private val compositeDisposable = CompositeDisposable()
 
-    fun getSearchResult() {
+    init {
+        viewState.displayLoadingScreen(show = true)
         val disposable = getProductsByNameUseCase.handle(query)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
-                viewState.disableLoadingScreen()
-                if (list.isEmpty()) {
-                    viewState.showNotFoundScreen()
-                } else {
-                    viewState.setProductAdapter(
-                        list,
-                        delegates
-                    )
-                }
-            }, {
-                it.printStackTrace()
-                viewState.disableLoadingScreen()
-                viewState.showBadConnectionScreen()
-            }
-            )
+                viewState.displayLoadingScreen(show = false)
+                viewState.setAdapter(views = list)
+            }, { ex ->
+                viewState.displayLoadingScreen(show = false)
+                viewState.displayBadConnectionScreen(show = true)
+                ex.printStackTrace()
+            })
+        compositeDisposable.add(disposable)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
+    }
 }

@@ -9,8 +9,8 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
-import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.adapters.MordaAdapter
+import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentFavoritesBinding
 import javax.inject.Inject
 
@@ -63,8 +63,8 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
         }
     }
 
-    override fun setAdapter(view: List<ViewObject>) {
-        adapter.views = view
+    override fun setAdapter(views: List<ViewObject>) {
+        adapter.views = views
     }
 
     override fun openCard(id: Long) {
@@ -73,5 +73,21 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
         )
 
         binding.root.findNavController().navigate(args)
+    }
+
+    override fun displayBadConnectionScreen(show: Boolean) {
+        binding.badConnection.root.visibility = if (show) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
+    override fun displayLoadingScreen(show: Boolean) {
+        binding.loadingScreen.root.visibility = if (show) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
     }
 }

@@ -28,4 +28,26 @@
         app:layout_constraintTop_toBottomOf="@id/favorites_toolbar"
         app:spanCount="2" />
 
+    <include
+        android:id="@+id/loading_screen"
+        layout="@layout/loading_screen"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/favorites_toolbar" />
+
+    <include
+        android:id="@+id/bad_connection"
+        layout="@layout/no_connection_screen"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/favorites_toolbar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

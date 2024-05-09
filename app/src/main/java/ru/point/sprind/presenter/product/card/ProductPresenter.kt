@@ -41,21 +41,19 @@ class ProductPresenter @AssistedInject constructor(
     private val compositeDisposable = CompositeDisposable()
 
     init {
-        getProduct()
-    }
-    private fun getProduct() {
+        viewState.displayLoadingScreen(show = true)
         val disposable = getProductByIdUseCase
             .invoke(id = productId, ProductDtoToListViewMapperImpl())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
                 productViewObject = list
-                viewState.disableLoadingScreen()
+                viewState.displayLoadingScreen(show = false)
 
-                viewState.setProductAdapter(productViewObject, delegates)
-            }, {
-                println(it.stackTraceToString())
-                viewState.disableLoadingScreen()
-                viewState.showBadConnectionScreen()
+                viewState.setAdapter(productViewObject)
+            }, { ex ->
+                ex.printStackTrace()
+                viewState.displayLoadingScreen(show = false)
+                viewState.displayBadConnectionScreen(show = true)
             }
             )
 
@@ -89,11 +87,7 @@ class ProductPresenter @AssistedInject constructor(
 
 
         characteristic.let {
-            viewState
-                .setProductAdapter(
-                    list = productViewObject,
-                    delegates = delegates
-                )
+            viewState.setAdapter(productViewObject)
         }
     }
 

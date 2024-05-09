@@ -9,9 +9,9 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
-import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.CartItemDecorator
+import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentCartBinding
 import javax.inject.Inject
 
@@ -54,19 +54,33 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         adapter = MordaAdapter(delegates = presenter.delegates)
         binding.cartRecyclerView.adapter = adapter
         binding.cartRecyclerView.addItemDecoration(CartItemDecorator())
-
-        presenter.initAdapter()
     }
 
-    override fun setAdapter(view: List<ViewObject>) {
-        adapter.views = view
+    override fun requireAuthorization() {
+        findNavController().navigate(CartFragmentDirections.actionGlobalAuthorizationFragment())
+    }
+
+    override fun setAdapter(views: List<ViewObject>) {
+        adapter.views = views
     }
 
     override fun showPayButton() {
         binding.payButton.visibility = View.VISIBLE
     }
 
-    override fun requireAuthorization() {
-        findNavController().navigate(CartFragmentDirections.actionGlobalAuthorizationFragment())
+    override fun displayBadConnectionScreen(show: Boolean) {
+        binding.badConnection.root.visibility = if (show) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
+    override fun displayLoadingScreen(show: Boolean) {
+        binding.loadingScreen.root.visibility = if (show) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
     }
 }

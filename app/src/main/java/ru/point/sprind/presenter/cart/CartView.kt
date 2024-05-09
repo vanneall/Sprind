@@ -1,14 +1,12 @@
 package ru.point.sprind.presenter.cart
 
-import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
-import ru.point.domain.entity.view.ViewObject
+import ru.point.sprind.presenter.general.ConnectionRequiredView
+import ru.point.sprind.presenter.general.UsingAdapterView
 
-interface CartView : MvpView {
-    @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setAdapter(view: List<ViewObject>)
+interface CartView : ConnectionRequiredView, UsingAdapterView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showPayButton()
     @StateStrategyType(SkipStrategy::class)

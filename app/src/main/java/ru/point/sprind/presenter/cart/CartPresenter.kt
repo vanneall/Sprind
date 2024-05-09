@@ -27,22 +27,28 @@ class CartPresenter @Inject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    fun initAdapter() {
+    init {
+        viewState.displayLoadingScreen(show = true)
         val disposable = getProductsInCartUseCase
             .handle()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
-                viewState.setAdapter(list)
+                viewState.displayLoadingScreen(show = false)
 
                 if (list.first() !is CartEmptyVo) {
                     viewState.showPayButton()
                 }
-
+                viewState.setAdapter(list)
             }, { ex ->
+                viewState.displayLoadingScreen(show = false)
+                ex.printStackTrace()
                 if (ex is HttpException) {
                     when (ex.code()) {
                         403 -> viewState.requireAuthorization()
+                        else -> viewState.displayBadConnectionScreen(show = true)
                     }
+                } else {
+                    viewState.displayBadConnectionScreen(show = true)
                 }
             })
 

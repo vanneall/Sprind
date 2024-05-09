@@ -1,15 +1,11 @@
 package ru.point.sprind.presenter.favorites
 
-import moxy.MvpView
-import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
-import ru.point.domain.entity.view.ViewObject
+import ru.point.sprind.presenter.general.ConnectionRequiredView
+import ru.point.sprind.presenter.general.UsingAdapterView
 
-interface FavoriteView : MvpView {
-    @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setAdapter(view: List<ViewObject>)
-
+interface FavoriteView : ConnectionRequiredView, UsingAdapterView {
     @StateStrategyType(SkipStrategy::class)
     fun openCard(id: Long)
 }

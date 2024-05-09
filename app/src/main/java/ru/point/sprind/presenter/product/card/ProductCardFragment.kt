@@ -9,12 +9,10 @@ import androidx.navigation.fragment.navArgs
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
-import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.InfoProductDecorator
-
+import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentProductCardBinding
-import ru.point.sprind.entity.deletage.Delegate
 import javax.inject.Inject
 
 class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
@@ -56,25 +54,28 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
         binding.recyclerView.addItemDecoration(InfoProductDecorator())
     }
 
-
-    override fun setProductAdapter(list: List<ViewObject>, delegates: List<Delegate<*>>) {
-        adapter.views = list
-    }
-
-    override fun showBadConnectionScreen() {
-        binding.badConnection.root.visibility = View.VISIBLE
-    }
-
-    override fun showLoadingScreen() {
-        binding.loadingScreen.root.visibility = View.VISIBLE
-    }
-
-    override fun disableLoadingScreen() {
-        binding.loadingScreen.root.visibility = View.GONE
-    }
-
     override fun openReviews() {
         val destination = ProductCardFragmentDirections.actionProductCardFragmentToAllReviewsFragment(args.productId)
         findNavController().navigate(destination)
+    }
+
+    override fun displayBadConnectionScreen(show: Boolean) {
+        binding.badConnection.root.visibility = if (show) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
+    override fun displayLoadingScreen(show: Boolean) {
+        binding.loadingScreen.root.visibility = if (show) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
+    override fun setAdapter(views: List<ViewObject>) {
+        adapter.views = views
     }
 }

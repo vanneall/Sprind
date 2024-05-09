@@ -13,17 +13,19 @@ import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.FeedProductDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentMordaBinding
-import ru.point.sprind.entity.deletage.Delegate
 import javax.inject.Inject
 
 class MordaFragment : MvpAppCompatFragment(), MordaView {
+
+    private lateinit var binding: FragmentMordaBinding
+
+    private lateinit var adapter: MordaAdapter
 
     @Inject
     lateinit var presenterProvider: MordaPresenter
 
     private val presenter: MordaPresenter by moxyPresenter { presenterProvider }
 
-    private lateinit var binding: FragmentMordaBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(fragment = this)
@@ -40,44 +42,27 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initializeToolbar()
         initializeRecyclerView()
     }
 
     private fun initializeToolbar() {
-        binding.toolbar.search.isFocusable = false
+        with(binding.toolbar) {
+            search.isFocusable = false
 
-        binding.toolbar.search.setOnClickListener {
-            val destination = MordaFragmentDirections
-                .actionMordaFragmentToSearchFragment(request = null)
-            findNavController().navigate(destination)
+            search.setOnClickListener {
+                val destination =
+                    MordaFragmentDirections.actionMordaFragmentToSearchFragment(request = null)
+                findNavController().navigate(destination)
+            }
         }
     }
 
     private fun initializeRecyclerView() {
-        binding.recyclerView.addItemDecoration(FeedProductDecorator())
-    }
-
-    override fun setProductAdapter(views: List<ViewObject>, delegates: List<Delegate<*>>) {
-        val adapter = MordaAdapter(delegates = delegates)
-        adapter.views = views
+        adapter = MordaAdapter(presenter.delegates)
         binding.recyclerView.adapter = adapter
-    }
-
-    override fun showNotFoundScreen() {
-        binding.notFoundScreen.root.visibility = View.VISIBLE
-    }
-
-    override fun showBadConnectionScreen() {
-        binding.badConnection.root.visibility = View.VISIBLE
-    }
-
-    override fun showLoadingScreen() {
-        binding.loadingScreen.root.visibility = View.VISIBLE
-    }
-
-    override fun disableLoadingScreen() {
-        binding.loadingScreen.root.visibility = View.GONE
+        binding.recyclerView.addItemDecoration(FeedProductDecorator())
     }
 
     override fun openCard(id: Long) {
@@ -86,5 +71,25 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
         )
 
         binding.root.findNavController().navigate(args)
+    }
+
+    override fun displayBadConnectionScreen(show: Boolean) {
+        binding.badConnection.root.visibility = if (show) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
+    override fun displayLoadingScreen(show: Boolean) {
+        binding.loadingScreen.root.visibility = if (show) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
+    override fun setAdapter(views: List<ViewObject>) {
+        adapter.views = views
     }
 }

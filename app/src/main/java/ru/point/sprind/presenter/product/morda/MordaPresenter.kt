@@ -5,7 +5,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
-import ru.point.domain.entity.dto.product.ProductFeedDto
 import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
 import ru.point.domain.usecase.interfaces.product.GetProductsUseCase
@@ -19,31 +18,27 @@ class MordaPresenter @Inject constructor(
     private val changeFavoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
 ) : MvpPresenter<MordaView>() {
 
-    private var delegates = listOf(
+    val delegates = listOf(
         ProductDelegate(
             onClickCard = viewState::openCard,
             onBuyClick = addProductToCartUseCase.get()::handle,
             onFavoriteCheckedChange = changeFavoriteStateUseCase.get()::handle
         )
     )
-    private var productFeedDtos: List<ProductFeedDto> = emptyList()
 
     private val compositeDisposable = CompositeDisposable()
 
     init {
-        viewState.showLoadingScreen()
+        viewState.displayLoadingScreen(show = true)
         val disposable = getProductsUseCase.handle()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
-                viewState.disableLoadingScreen()
-                productFeedDtos = list
-
-                viewState.setProductAdapter(
-                    delegates = delegates, views = productFeedDtos
-                )
-            }, {
-                viewState.disableLoadingScreen()
-                viewState.showBadConnectionScreen()
+                viewState.displayLoadingScreen(show = false)
+                viewState.setAdapter(views = list)
+            }, { ex ->
+                viewState.displayLoadingScreen(show = false)
+                viewState.displayBadConnectionScreen(show = true)
+                ex.printStackTrace()
             })
         compositeDisposable.add(disposable)
     }

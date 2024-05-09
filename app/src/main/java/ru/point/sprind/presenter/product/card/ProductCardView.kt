@@ -1,21 +1,11 @@
 package ru.point.sprind.presenter.product.card
 
-import moxy.MvpView
-import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
-import ru.point.domain.entity.view.ViewObject
-import ru.point.sprind.entity.deletage.Delegate
+import ru.point.sprind.presenter.general.ConnectionRequiredView
+import ru.point.sprind.presenter.general.UsingAdapterView
 
-interface ProductCardView : MvpView {
-    @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setProductAdapter(list: List<ViewObject>, delegates: List<Delegate<*>>)
-    @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showBadConnectionScreen()
-    @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showLoadingScreen()
-    @StateStrategyType(AddToEndSingleStrategy::class)
-    fun disableLoadingScreen()
+interface ProductCardView : ConnectionRequiredView, UsingAdapterView {
     @StateStrategyType(SkipStrategy::class)
     fun openReviews()
 }

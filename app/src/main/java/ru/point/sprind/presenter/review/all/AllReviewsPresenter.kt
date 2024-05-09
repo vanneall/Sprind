@@ -23,11 +23,17 @@ class AllReviewsPresenter @AssistedInject constructor(
     )
 
     init {
+        viewState.displayLoadingScreen(show = true)
         val disposable = getReviewsByProductIdUseCase.handle(id)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                viewState.setProductAdapter(it)
-            }, { it.printStackTrace() })
+            .subscribe({ list ->
+                viewState.displayLoadingScreen(show = false)
+                viewState.setAdapter(list)
+            }, { ex ->
+                viewState.displayLoadingScreen(show = false)
+                viewState.displayBadConnectionScreen(show = true)
+                ex.printStackTrace()
+            })
 
         compositeDisposable.add(disposable)
     }

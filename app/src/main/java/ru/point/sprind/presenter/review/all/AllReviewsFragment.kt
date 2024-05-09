@@ -9,9 +9,9 @@ import androidx.navigation.fragment.navArgs
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
-import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.InfoProductDecorator
+import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentAllReviewsBinding
 import javax.inject.Inject
 
@@ -56,7 +56,23 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
         }
     }
 
-    override fun setProductAdapter(views: List<ViewObject>) {
+    override fun displayBadConnectionScreen(show: Boolean) {
+        binding.badConnection.root.visibility = if (show) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
+    override fun displayLoadingScreen(show: Boolean) {
+        binding.loadingScreen.root.visibility = if (show) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
+    override fun setAdapter(views: List<ViewObject>) {
         adapter.views = views
     }
 }
