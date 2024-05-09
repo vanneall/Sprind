@@ -26,7 +26,7 @@ class ResultPresenter @AssistedInject constructor(
         ProductDelegate(
             onClickCard = viewState::openCard,
             onBuyClick = addProductToCartUseCase.get()::handle,
-            onFavoriteCheckedChange = changeFavoriteStateUseCase.get()::handle
+            onFavoriteCheckedChange = ::onCheckedFavoriteStateChange
         )
     )
 
@@ -44,6 +44,25 @@ class ResultPresenter @AssistedInject constructor(
                 viewState.displayBadConnectionScreen(show = true)
                 ex.printStackTrace()
             })
+        compositeDisposable.add(disposable)
+    }
+
+    private fun onCheckedFavoriteStateChange(
+        productId: Long,
+        isChecked: Boolean,
+        isSuccessfulCallback: (Boolean) -> Unit,
+    ) {
+        val disposable =
+            changeFavoriteStateUseCase.get().handle(id = productId, isFavorite = isChecked)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    isSuccessfulCallback(true)
+                }, { ex ->
+                    ex.printStackTrace()
+                    isSuccessfulCallback(false)
+                    viewState.displaySomethingGoesWrongError()
+                })
+
         compositeDisposable.add(disposable)
     }
 

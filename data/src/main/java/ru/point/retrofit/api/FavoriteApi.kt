@@ -1,5 +1,6 @@
 package ru.point.retrofit.api
 
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -14,8 +15,8 @@ interface FavoriteApi {
     fun getFavorites(): Observable<List<ProductFeedDto>>
 
     @POST("favorites")
-    fun putFavorites(@Query(value = "productId") id: Long): Observable<List<String>>
+    fun putFavorites(@Query(value = "productId") id: Long): Completable
 
     @DELETE("favorites")
-    fun deleteFavorites(@Query(value = "productId") id: Long): Observable<List<String>>
+    fun deleteFavorites(@Query(value = "productId") id: Long): Completable
 }

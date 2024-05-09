@@ -24,12 +24,12 @@ class FavoritePresenter @Inject constructor(
         ProductDelegate(
             onClickCard = viewState::openCard,
             onBuyClick = addProductToCartUseCase.get()::handle,
-            onFavoriteCheckedChange = changeFavoriteStateUseCase.get()::handle
+            onFavoriteCheckedChange = ::onCheckedFavoriteStateChange
         )
     )
 
     fun getFavorites() {
-        viewState.displayLoadingScreen(show = true)
+        //viewState.displayLoadingScreen(show = true)
         val disposable = getFavoritesUseCase.handle()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
@@ -40,6 +40,25 @@ class FavoritePresenter @Inject constructor(
                 viewState.displayBadConnectionScreen(show = true)
                 ex.printStackTrace()
             })
+        compositeDisposable.add(disposable)
+    }
+
+    private fun onCheckedFavoriteStateChange(
+        productId: Long,
+        isChecked: Boolean,
+        isSuccessfulCallback: (Boolean) -> Unit,
+    ) {
+        val disposable =
+            changeFavoriteStateUseCase.get().handle(id = productId, isFavorite = isChecked)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    isSuccessfulCallback(true)
+                }, { ex ->
+                    ex.printStackTrace()
+                    isSuccessfulCallback(false)
+                    viewState.displaySomethingGoesWrongError()
+                })
+
         compositeDisposable.add(disposable)
     }
 

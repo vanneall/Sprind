@@ -12,7 +12,7 @@ import ru.point.sprind.entity.viewholder.product.feed.ProductViewHolder
 class ProductDelegate(
     private val onClickCard: (Long) -> Unit,
     private val onBuyClick: (Long) -> Unit,
-    private val onFavoriteCheckedChange: (Long, Boolean) -> Unit,
+    private val onFavoriteCheckedChange: (Long, Boolean, (Boolean) -> Unit) -> Unit,
 ) : Delegate<ProductFeedDto> {
 
     override fun isSupported(view: ViewObject) = view is ProductFeedDto

@@ -1,5 +1,6 @@
 package ru.point.repository.remote
 
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.point.domain.entity.dto.product.ProductFeedDto
@@ -14,13 +15,11 @@ class RemoteFavoriteRepository @Inject constructor(
         return api.getFavorites().subscribeOn(Schedulers.io())
     }
 
-    override fun addFavorite(id: Long) {
-        api.putFavorites(id = id).subscribeOn(Schedulers.io())
-            .subscribe({}, { it.printStackTrace() })
+    override fun addFavorite(id: Long): Completable {
+        return api.putFavorites(id = id).subscribeOn(Schedulers.io())
     }
 
-    override fun deleteFavorite(id: Long) {
-        api.deleteFavorites(id = id).subscribeOn(Schedulers.io())
-            .subscribe({}, { it.printStackTrace() })
+    override fun deleteFavorite(id: Long): Completable {
+        return api.deleteFavorites(id = id).subscribeOn(Schedulers.io())
     }
 }

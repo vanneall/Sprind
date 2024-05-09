@@ -59,4 +59,5 @@
     <string name="email">Почта</string>
     <string name="continue_reg">Продолжить</string>
     <string name="all_reviews">Все отзывы</string>
+    <string name="someting_goes_wrong_hint">Что-то пошло не так, попробуйте позже</string>
 </resources>

@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
+import ru.point.sprind.R
 import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.FeedProductDecorator
 import ru.point.sprind.components.SprindApplication
@@ -91,5 +93,13 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
 
     override fun setAdapter(views: List<ViewObject>) {
         adapter.views = views
+    }
+
+    override fun displaySomethingGoesWrongError() {
+        Toast.makeText(
+            this@MordaFragment.context,
+            getString(R.string.someting_goes_wrong_hint),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }

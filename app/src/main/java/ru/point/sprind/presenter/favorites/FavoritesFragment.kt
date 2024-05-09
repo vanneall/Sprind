@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
 import ru.point.sprind.adapters.MordaAdapter
+import ru.point.sprind.adapters.decorators.FeedProductDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentFavoritesBinding
 import javax.inject.Inject
@@ -60,6 +62,7 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
         with(binding) {
             adapter = MordaAdapter(delegates = presenter.delegates)
             favoritesRecyclerView.adapter = adapter
+            favoritesRecyclerView.addItemDecoration(FeedProductDecorator())
         }
     }
 
@@ -89,5 +92,13 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
         } else {
             View.GONE
         }
+    }
+
+    override fun displaySomethingGoesWrongError() {
+        Toast.makeText(
+            this@FavoritesFragment.context,
+            getString(R.string.someting_goes_wrong_hint),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }

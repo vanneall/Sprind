@@ -10,7 +10,7 @@ class ProductViewHolder(
     private val binding: VerticalCardItemBinding,
     private val onClickCard: (Long) -> Unit,
     private val onBuyClick: (Long) -> Unit,
-    private val onFavoriteCheckedChange: (Long, Boolean) -> Unit,
+    private val onFavoriteCheckedChange: (Long, Boolean, (Boolean) -> Unit) -> Unit,
 ) : ViewHolderV2<ProductFeedDto>(binding.root) {
 
     override fun bind(view: ProductFeedDto) = with(binding) {
@@ -22,8 +22,12 @@ class ProductViewHolder(
         name.text = view.name
         price.text = view.price.money.toString()
         isFavorite.isChecked = view.isFavorite
+
         isFavorite.setOnCheckedChangeListener { _, isChecked ->
-            onFavoriteCheckedChange(view.id, isChecked)
+            onFavoriteCheckedChange(view.id, isChecked) { isSuccess ->
+                isFavorite.isChecked = if (isSuccess) isChecked
+                else !isChecked
+            }
         }
 
         root.setOnClickListener {
