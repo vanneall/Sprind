@@ -5,6 +5,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
+import retrofit2.HttpException
 import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
 import ru.point.domain.usecase.interfaces.product.GetProductsUseCase
@@ -48,7 +49,12 @@ class MordaPresenter @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({}, { ex ->
                 ex.printStackTrace()
-                viewState.displaySomethingGoesWrongError()
+                if (ex is HttpException) {
+                    when (ex.code()) {
+                        403 -> viewState.requireAuthorization()
+                        else -> viewState.displaySomethingGoesWrongError()
+                    }
+                }
             })
 
         compositeDisposable.add(disposable);
@@ -67,7 +73,12 @@ class MordaPresenter @Inject constructor(
                 }, { ex ->
                     ex.printStackTrace()
                     isSuccessfulCallback(false)
-                    viewState.displaySomethingGoesWrongError()
+                    if (ex is HttpException) {
+                        when (ex.code()) {
+                            403 -> viewState.requireAuthorization()
+                            else -> viewState.displaySomethingGoesWrongError()
+                        }
+                    }
                 })
 
         compositeDisposable.add(disposable)

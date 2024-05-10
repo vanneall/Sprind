@@ -5,6 +5,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
+import retrofit2.HttpException
 import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
 import ru.point.domain.usecase.interfaces.favorite.GetFavoritesUseCase
@@ -36,9 +37,14 @@ class FavoritePresenter @Inject constructor(
                 viewState.displayLoadingScreen(show = false)
                 viewState.setAdapter(list)
             }, { ex ->
-                viewState.displayLoadingScreen(show = false)
-                viewState.displayBadConnectionScreen(show = true)
-                ex.printStackTrace()
+                if (ex is HttpException) {
+                    when (ex.code()) {
+                        403 -> viewState.requireAuthorization()
+                        else -> viewState.displayBadConnectionScreen(show = true)
+                    }
+                } else {
+                    viewState.displayBadConnectionScreen(show = true)
+                }
             })
         compositeDisposable.add(disposable)
     }

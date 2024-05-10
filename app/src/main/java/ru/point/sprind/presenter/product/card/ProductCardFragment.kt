@@ -13,6 +13,7 @@ import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.InfoProductDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentProductCardBinding
+import ru.point.sprind.presenter.cart.CartFragmentDirections
 import javax.inject.Inject
 
 class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
@@ -77,5 +78,9 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
 
     override fun setAdapter(views: List<ViewObject>) {
         adapter.views = views
+    }
+
+    override fun requireAuthorization() {
+        findNavController().navigate(CartFragmentDirections.actionGlobalAuthorizationFragment())
     }
 }

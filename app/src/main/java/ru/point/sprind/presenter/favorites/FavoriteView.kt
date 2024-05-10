@@ -8,4 +8,6 @@ import ru.point.sprind.presenter.general.UsingAdapterView
 interface FavoriteView : ConnectionRequiredView, UsingAdapterView {
     @StateStrategyType(SkipStrategy::class)
     fun openCard(id: Long)
+    @StateStrategyType(SkipStrategy::class)
+    fun requireAuthorization()
 }

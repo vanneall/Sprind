@@ -30,7 +30,7 @@ class CartPresenter @Inject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    init {
+    fun getCartProducts() {
         viewState.displayLoadingScreen(show = true)
         val disposable = getProductsInCartUseCase
             .handle()
@@ -48,7 +48,6 @@ class CartPresenter @Inject constructor(
                 if (ex is HttpException) {
                     when (ex.code()) {
                         403 -> viewState.requireAuthorization()
-                        else -> viewState.displayBadConnectionScreen(show = true)
                     }
                 } else {
                     viewState.displayBadConnectionScreen(show = true)

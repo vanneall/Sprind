@@ -15,6 +15,7 @@ import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.FeedProductDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentMordaBinding
+import ru.point.sprind.presenter.cart.CartFragmentDirections
 import javax.inject.Inject
 
 class MordaFragment : MvpAppCompatFragment(), MordaView {
@@ -73,6 +74,10 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
         )
 
         binding.root.findNavController().navigate(args)
+    }
+
+    override fun requireAuthorization() {
+        findNavController().navigate(CartFragmentDirections.actionGlobalAuthorizationFragment())
     }
 
     override fun displayBadConnectionScreen(show: Boolean) {

@@ -16,6 +16,7 @@ import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.FeedProductDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentResultBinding
+import ru.point.sprind.presenter.cart.CartFragmentDirections
 import ru.point.sprind.presenter.product.morda.MordaView
 import javax.inject.Inject
 
@@ -98,6 +99,10 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
         )
 
         binding.root.findNavController().navigate(args)
+    }
+
+    override fun requireAuthorization() {
+        findNavController().navigate(CartFragmentDirections.actionGlobalAuthorizationFragment())
     }
 
     override fun displaySomethingGoesWrongError() {

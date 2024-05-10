@@ -47,6 +47,11 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         binding.payButton.visibility = View.GONE
     }
 
+    override fun onStart() {
+        super.onStart()
+        presenter.getCartProducts()
+    }
+
     private fun initializeToolbar() {
         binding.cartToolbar.title.text = resources.getText(R.string.cart_screen_title)
     }
@@ -58,7 +63,10 @@ class CartFragment : MvpAppCompatFragment(), CartView {
     }
 
     override fun requireAuthorization() {
-        findNavController().navigate(CartFragmentDirections.actionGlobalAuthorizationFragment())
+        binding.authorizeWarning.root.visibility = View.VISIBLE
+        binding.authorizeWarning.authorizeButton.setOnClickListener {
+            findNavController().navigate(CartFragmentDirections.actionGlobalAuthorizationFragment())
+        }
     }
 
     override fun setAdapter(views: List<ViewObject>) {

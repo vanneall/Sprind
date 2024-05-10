@@ -8,4 +8,6 @@ import ru.point.sprind.presenter.general.UsingAdapterView
 interface ProductCardView : ConnectionRequiredView, UsingAdapterView {
     @StateStrategyType(SkipStrategy::class)
     fun openReviews()
+    @StateStrategyType(SkipStrategy::class)
+    fun requireAuthorization()
 }

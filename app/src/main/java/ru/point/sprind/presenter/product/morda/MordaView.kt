@@ -9,4 +9,6 @@ import ru.point.sprind.presenter.general.UsingAdapterView
 interface MordaView : ConnectionRequiredView, UsingAdapterView {
     @StateStrategyType(SkipStrategy::class)
     fun openCard(id: Long)
+    @StateStrategyType(SkipStrategy::class)
+    fun requireAuthorization()
 }

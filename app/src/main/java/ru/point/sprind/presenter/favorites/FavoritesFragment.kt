@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
@@ -76,6 +77,13 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
         )
 
         binding.root.findNavController().navigate(args)
+    }
+
+    override fun requireAuthorization() {
+        binding.authorizeWarning.root.visibility = View.VISIBLE
+        binding.authorizeWarning.authorizeButton.setOnClickListener {
+            findNavController().navigate(FavoritesFragmentDirections.actionGlobalAuthorizationFragment())
+        }
     }
 
     override fun displayBadConnectionScreen(show: Boolean) {

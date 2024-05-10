@@ -68,4 +68,6 @@
     <string name="logout_from_account">Выйти из аккаунта</string>
     <string name="company_copyright">© 2024 ООО «Point»\nПроект компании Point</string>
     <string name="greetings">Здравствуйте, %s</string>
+    <string name="authorize_warning">Авторизуйтесь, чтобы продолжить</string>
+    <string name="authorize">Авторизоваться</string>
 </resources>
