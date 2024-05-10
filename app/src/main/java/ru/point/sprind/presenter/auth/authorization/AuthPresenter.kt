@@ -19,7 +19,7 @@ class AuthPresenter @Inject constructor(
     private val compositeDisposable = CompositeDisposable()
 
     init {
-        Log.i("Token", "Token in data store before getting token: ${settingsManager.token.value}")
+        Log.i("Token", "Token in data store before getting token: ${settingsManager.token?.value}")
     }
 
     fun auth(username: String, password: String) {
@@ -29,7 +29,7 @@ class AuthPresenter @Inject constructor(
                 Log.v("Auth", it.value)
                 viewState.successfulAuthorization()
                 settingsManager.token = it
-                Log.i("Token", "Token in data store after getting token: ${settingsManager.token.value}")
+                Log.i("Token", "Token in data store after getting token: ${settingsManager.token?.value}")
             }, {
                 it.printStackTrace()
             })

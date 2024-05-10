@@ -62,4 +62,10 @@
     <string name="someting_goes_wrong_hint">Что-то пошло не так, попробуйте позже</string>
     <string name="thanks_screen_title">Спасибка!</string>
     <string name="thanks_for_buying_text"><b>Спасибо за покупку!</b>\nВаш заказ сформирован и оплачен, в ближайшее время мы начнем его сборку и отправку!</string>
+    <string name="orders">Заказы</string>
+    <string name="reviews">Отзывы</string>
+    <string name="favorites">Избранное</string>
+    <string name="logout_from_account">Выйти из аккаунта</string>
+    <string name="company_copyright">© 2024 ООО «Point»\nПроект компании Point</string>
+    <string name="greetings">Здравствуйте, %s</string>
 </resources>

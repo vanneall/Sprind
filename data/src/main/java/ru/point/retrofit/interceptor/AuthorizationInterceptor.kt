@@ -14,8 +14,6 @@ class AuthorizationInterceptor @Inject constructor(
         var requireAuthorizationHeader = authorizationRequiredEndpoints
             .any { endpoint -> path.endsWith(endpoint) }
 
-        //if (path.endsWith("/reviews") && chain.request().url().)
-
         if (requireAuthorizationHeader && manager.token.value.isNotEmpty()) {
             val handledRequest = chain.request()
                 .newBuilder()
@@ -30,10 +28,10 @@ class AuthorizationInterceptor @Inject constructor(
 
     private val authorizationRequiredEndpoints = listOf(
         "/cart",
-        "/cart",
         "/cart/order",
         "/feed",
         "/favorites",
-        "/reviews"
+        "/reviews",
+        "/user"
     )
 }

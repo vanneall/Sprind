@@ -7,6 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 import ru.point.domain.entity.dto.user.RegisterUserDto
+import ru.point.domain.entity.dto.user.UserDto
 import ru.point.domain.entity.utils.Token
 
 interface UserApi {
@@ -19,4 +20,7 @@ interface UserApi {
 
     @POST("auth")
     fun register(@Body user: RegisterUserDto): Completable
+
+    @GET("user")
+    fun getUserInfo(): Single<UserDto>
 }

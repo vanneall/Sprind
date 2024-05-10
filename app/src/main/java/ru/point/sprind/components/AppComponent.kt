@@ -14,9 +14,10 @@ import ru.point.sprind.presenter.auth.registration.credentials.CredentialsFragme
 import ru.point.sprind.presenter.auth.registration.password.RegistrationFragment
 import ru.point.sprind.presenter.cart.CartFragment
 import ru.point.sprind.presenter.favorites.FavoritesFragment
-import ru.point.sprind.presenter.product.morda.MordaFragment
 import ru.point.sprind.presenter.product.card.ProductCardFragment
+import ru.point.sprind.presenter.product.morda.MordaFragment
 import ru.point.sprind.presenter.product.result.ResultFragment
+import ru.point.sprind.presenter.profile.main.ProfileFragment
 import ru.point.sprind.presenter.review.all.AllReviewsFragment
 import ru.point.sprind.presenter.review.create.CreateReviewFragment
 import javax.inject.Singleton
@@ -52,6 +53,8 @@ interface AppComponent {
     fun inject(fragment: AllReviewsFragment)
 
     fun inject(fragment: CreateReviewFragment)
+
+    fun inject(fragment: ProfileFragment)
 
     @Component.Factory
     interface AppComponentFactory {

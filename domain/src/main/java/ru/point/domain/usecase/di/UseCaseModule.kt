@@ -4,7 +4,7 @@ import dagger.Module
 
 @Module(
     includes = [
-        AuthUseCaseModule::class, CartUseCaseModule::class,
+        ProfileUseCaseModule::class, CartUseCaseModule::class,
         FavoriteUseCaseModule::class, ProductUseCaseModule::class,
         ReviewUseCaseModule::class]
 )
