@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".presenter.thanks.ThanksFragment">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_thanks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAlignment="center"
+        android:layout_marginTop="40dp"
+        android:paddingVertical="20dp"
+        style="@style/regular_16"
+        android:paddingHorizontal="12dp"
+        android:background="@drawable/card_background"
+        android:lineSpacingExtra="2dp"
+        android:text="@string/thanks_for_buying_text"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

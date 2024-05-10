@@ -60,4 +60,6 @@
     <string name="continue_reg">Продолжить</string>
     <string name="all_reviews">Все отзывы</string>
     <string name="someting_goes_wrong_hint">Что-то пошло не так, попробуйте позже</string>
+    <string name="thanks_screen_title">Спасибка!</string>
+    <string name="thanks_for_buying_text"><b>Спасибо за покупку!</b>\nВаш заказ сформирован и оплачен, в ближайшее время мы начнем его сборку и отправку!</string>
 </resources>

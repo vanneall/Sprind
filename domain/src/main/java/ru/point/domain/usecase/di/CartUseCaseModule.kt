@@ -5,8 +5,10 @@ import dagger.Provides
 import ru.point.domain.repository.CartRepository
 import ru.point.domain.usecase.implementation.cart.AddProductToCartUseCaseImpl
 import ru.point.domain.usecase.implementation.cart.GetProductsInCartUseCaseImpl
+import ru.point.domain.usecase.implementation.cart.MakeOrderUseCaseImpl
 import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.cart.GetProductsInCartUseCase
+import ru.point.domain.usecase.interfaces.cart.MakeOrderUseCase
 
 @Module
 class CartUseCaseModule {
@@ -17,7 +19,12 @@ class CartUseCaseModule {
     }
 
     @Provides
-    fun providerAddProductToCartUseCase(repository: CartRepository): AddProductToCartUseCase {
+    fun provideAddProductToCartUseCase(repository: CartRepository): AddProductToCartUseCase {
         return AddProductToCartUseCaseImpl(repository = repository)
+    }
+
+    @Provides
+    fun provideMakeOrderUseCase(repository: CartRepository): MakeOrderUseCase {
+        return MakeOrderUseCaseImpl(repository = repository)
     }
 }

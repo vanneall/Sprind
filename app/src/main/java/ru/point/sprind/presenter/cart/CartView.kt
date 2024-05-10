@@ -8,7 +8,9 @@ import ru.point.sprind.presenter.general.UsingAdapterView
 
 interface CartView : ConnectionRequiredView, UsingAdapterView {
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showPayButton()
+    fun displayPayButton(show: Boolean = false)
     @StateStrategyType(SkipStrategy::class)
     fun requireAuthorization()
+    @StateStrategyType(SkipStrategy::class)
+    fun openThanksScreen()
 }

@@ -21,7 +21,7 @@ class MordaPresenter @Inject constructor(
     val delegates = listOf(
         ProductDelegate(
             onClickCard = viewState::openCard,
-            onBuyClick = addProductToCartUseCase.get()::handle,
+            onBuyClick = ::onAddProductToCart,
             onFavoriteCheckedChange = ::onCheckedFavoriteStateChange
         )
     )
@@ -41,6 +41,17 @@ class MordaPresenter @Inject constructor(
                 ex.printStackTrace()
             })
         compositeDisposable.add(disposable)
+    }
+
+    private fun onAddProductToCart(productId: Long) {
+        val disposable = addProductToCartUseCase.get().handle(id = productId)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, { ex ->
+                ex.printStackTrace()
+                viewState.displaySomethingGoesWrongError()
+            })
+
+        compositeDisposable.add(disposable);
     }
 
     private fun onCheckedFavoriteStateChange(

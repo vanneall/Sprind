@@ -23,7 +23,7 @@ class FavoritePresenter @Inject constructor(
     val delegates = listOf(
         ProductDelegate(
             onClickCard = viewState::openCard,
-            onBuyClick = addProductToCartUseCase.get()::handle,
+            onBuyClick = ::onAddProductToCart,
             onFavoriteCheckedChange = ::onCheckedFavoriteStateChange
         )
     )
@@ -43,21 +43,32 @@ class FavoritePresenter @Inject constructor(
         compositeDisposable.add(disposable)
     }
 
+    private fun onAddProductToCart(productId: Long) {
+        val disposable = addProductToCartUseCase.get().handle(id = productId)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, { ex ->
+                ex.printStackTrace()
+                viewState.displaySomethingGoesWrongError()
+            })
+
+        compositeDisposable.add(disposable);
+    }
+
     private fun onCheckedFavoriteStateChange(
         productId: Long,
         isChecked: Boolean,
         isSuccessfulCallback: (Boolean) -> Unit,
     ) {
-        val disposable =
-            changeFavoriteStateUseCase.get().handle(id = productId, isFavorite = isChecked)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    isSuccessfulCallback(true)
-                }, { ex ->
-                    ex.printStackTrace()
-                    isSuccessfulCallback(false)
-                    viewState.displaySomethingGoesWrongError()
-                })
+        val disposable = changeFavoriteStateUseCase.get()
+            .handle(id = productId, isFavorite = isChecked)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                isSuccessfulCallback(true)
+            }, { ex ->
+                ex.printStackTrace()
+                isSuccessfulCallback(false)
+                viewState.displaySomethingGoesWrongError()
+            })
 
         compositeDisposable.add(disposable)
     }

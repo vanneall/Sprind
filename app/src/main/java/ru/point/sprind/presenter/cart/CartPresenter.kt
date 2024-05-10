@@ -1,5 +1,6 @@
 package ru.point.sprind.presenter.cart
 
+import dagger.Lazy
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
@@ -7,6 +8,7 @@ import moxy.MvpPresenter
 import retrofit2.HttpException
 import ru.point.domain.entity.view.cart.CartEmptyVo
 import ru.point.domain.usecase.interfaces.cart.GetProductsInCartUseCase
+import ru.point.domain.usecase.interfaces.cart.MakeOrderUseCase
 import ru.point.sprind.entity.deletage.product.cart.CartEmptyDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartProductDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartPromocodeDelegate
@@ -16,6 +18,7 @@ import javax.inject.Inject
 @InjectViewState
 class CartPresenter @Inject constructor(
     private val getProductsInCartUseCase: GetProductsInCartUseCase,
+    private val makeOrderUseCase: Lazy<MakeOrderUseCase>,
 ) : MvpPresenter<CartView>() {
 
     val delegates = listOf(
@@ -36,7 +39,7 @@ class CartPresenter @Inject constructor(
                 viewState.displayLoadingScreen(show = false)
 
                 if (list.first() !is CartEmptyVo) {
-                    viewState.showPayButton()
+                    viewState.displayPayButton(true)
                 }
                 viewState.setAdapter(list)
             }, { ex ->
@@ -50,6 +53,21 @@ class CartPresenter @Inject constructor(
                 } else {
                     viewState.displayBadConnectionScreen(show = true)
                 }
+            })
+
+        compositeDisposable.add(disposable)
+    }
+
+    fun makeOrder() {
+        val disposable = makeOrderUseCase.get().handle()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                viewState.openThanksScreen()
+                viewState.setAdapter(listOf(CartEmptyVo()))
+                viewState.displayPayButton(false)
+            }, { ex ->
+                viewState.displaySomethingGoesWrongError()
+                ex.printStackTrace()
             })
 
         compositeDisposable.add(disposable)

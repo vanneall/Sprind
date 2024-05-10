@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -64,8 +65,23 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         adapter.views = views
     }
 
-    override fun showPayButton() {
-        binding.payButton.visibility = View.VISIBLE
+    override fun displayPayButton(show: Boolean) {
+        with(binding.payButton) {
+            if (show) {
+                visibility = View.VISIBLE
+                setOnClickListener { presenter.makeOrder() }
+            } else {
+                visibility = View.GONE
+            }
+        }
+    }
+
+    override fun displaySomethingGoesWrongError() {
+        Toast.makeText(
+            this@CartFragment.context,
+            getString(R.string.someting_goes_wrong_hint),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun displayBadConnectionScreen(show: Boolean) {
@@ -82,5 +98,10 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         } else {
             View.GONE
         }
+    }
+
+    override fun openThanksScreen() {
+        val destination = CartFragmentDirections.actionCartFragmentToThanksFragment()
+        findNavController().navigate(destination)
     }
 }

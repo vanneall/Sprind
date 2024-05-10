@@ -63,7 +63,14 @@
         android:id="@+id/cart_fragment"
         android:name="ru.point.sprind.presenter.cart.CartFragment"
         android:label="fragment_cart"
-        tools:layout="@layout/fragment_cart" />
+        tools:layout="@layout/fragment_cart" >
+        <action
+            android:id="@+id/action_cart_fragment_to_thanksFragment"
+            app:destination="@id/thanksFragment" />
+        <action
+            android:id="@+id/action_cart_fragment_to_product_card_fragment"
+            app:destination="@id/product_card_fragment" />
+    </fragment>
     <fragment
         android:id="@+id/favorites_fragment"
         android:name="ru.point.sprind.presenter.favorites.FavoritesFragment"
@@ -155,4 +162,9 @@
             android:name="productId"
             app:argType="long" />
     </fragment>
+    <fragment
+        android:id="@+id/thanksFragment"
+        android:name="ru.point.sprind.presenter.thanks.ThanksFragment"
+        android:label="fragment_thanks"
+        tools:layout="@layout/fragment_thanks" />
 </navigation>

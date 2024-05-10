@@ -30,7 +30,8 @@ class AuthorizationInterceptor @Inject constructor(
 
     private val authorizationRequiredEndpoints = listOf(
         "/cart",
-        "/cart/add",
+        "/cart",
+        "/cart/order",
         "/feed",
         "/favorites",
         "/reviews"
