@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
 import ru.point.sprind.adapters.MordaAdapter
-import ru.point.sprind.adapters.decorators.FeedProductDecorator
+import ru.point.sprind.adapters.decorators.FavoritesItemDecorator
+import ru.point.sprind.adapters.decorators.spans.FavoriteSpanSizeLookup
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentFavoritesBinding
 import javax.inject.Inject
@@ -60,10 +62,13 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
     }
 
     private fun initializeRecyclerView() {
-        with(binding) {
+        binding.let {
             adapter = MordaAdapter(delegates = presenter.delegates)
-            favoritesRecyclerView.adapter = adapter
-            favoritesRecyclerView.addItemDecoration(FeedProductDecorator())
+            it.favoritesRecyclerView.adapter = adapter
+
+            val layoutManager = it.favoritesRecyclerView.layoutManager as GridLayoutManager
+            layoutManager.spanSizeLookup = FavoriteSpanSizeLookup(presenter.delegates, adapter)
+            it.favoritesRecyclerView.addItemDecoration(FavoritesItemDecorator())
         }
     }
 

@@ -9,6 +9,7 @@ import retrofit2.HttpException
 import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
 import ru.point.domain.usecase.interfaces.favorite.GetFavoritesUseCase
+import ru.point.sprind.entity.deletage.product.favorites.EmptyFavoritesDelegate
 import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
 import javax.inject.Inject
 
@@ -26,7 +27,8 @@ class FavoritePresenter @Inject constructor(
             onClickCard = viewState::openCard,
             onBuyClick = ::onAddProductToCart,
             onFavoriteCheckedChange = ::onCheckedFavoriteStateChange
-        )
+        ),
+        EmptyFavoritesDelegate()
     )
 
     fun getFavorites() {

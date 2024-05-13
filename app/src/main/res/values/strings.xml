@@ -70,4 +70,6 @@
     <string name="greetings">Здравствуйте, %s</string>
     <string name="authorize_warning">Авторизуйтесь, чтобы продолжить</string>
     <string name="authorize">Авторизоваться</string>
+    <string name="empty_favorites_warning">У вас нет избранных товаров :(</string>
+    <string name="empty_favorites_description">Загляните в поиск, вероятно, что-то да Вам понравится!</string>
 </resources>
