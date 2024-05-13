@@ -65,21 +65,21 @@ class MordaPresenter @Inject constructor(
         isChecked: Boolean,
         isSuccessfulCallback: (Boolean) -> Unit,
     ) {
-        val disposable =
-            changeFavoriteStateUseCase.get().handle(id = productId, isFavorite = isChecked)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    isSuccessfulCallback(true)
-                }, { ex ->
-                    ex.printStackTrace()
-                    isSuccessfulCallback(false)
-                    if (ex is HttpException) {
-                        when (ex.code()) {
-                            403 -> viewState.requireAuthorization()
-                            else -> viewState.displaySomethingGoesWrongError()
-                        }
+        val disposable = changeFavoriteStateUseCase.get()
+            .handle(id = productId, isFavorite = isChecked)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                isSuccessfulCallback(true)
+            }, { ex ->
+                ex.printStackTrace()
+                isSuccessfulCallback(false)
+                if (ex is HttpException) {
+                    when (ex.code()) {
+                        403 -> viewState.requireAuthorization()
+                        else -> viewState.displaySomethingGoesWrongError()
                     }
-                })
+                }
+            })
 
         compositeDisposable.add(disposable)
     }

@@ -23,10 +23,10 @@ class ProductViewHolder(
         price.text = view.price.money.toString()
         isFavorite.isChecked = view.isFavorite
 
-        isFavorite.setOnCheckedChangeListener { _, isChecked ->
+        isFavorite.setOnClickListener {
+            val isChecked = isFavorite.isChecked
             onFavoriteCheckedChange(view.id, isChecked) { isSuccess ->
-                isFavorite.isChecked = if (isSuccess) isChecked
-                else !isChecked
+                isFavorite.isChecked = if (isSuccess) isChecked else !isChecked
             }
         }
 
