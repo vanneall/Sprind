@@ -63,20 +63,21 @@ class ProductPresenter @AssistedInject constructor(
     private fun expandCharacteristics(isExpanded: Boolean) {
         val startIndex = productViewObject.indexOfFirst { view -> view is AllCharacteristicsVo }
 
-        if (startIndex == -1) return
-        val characteristic = productViewObject[startIndex] as? AllCharacteristicsVo ?: return
+        if (!makeSureThatExpandIsNeeded(startIndex, productViewObject)) return
 
+        val characteristic = productViewObject[startIndex] as AllCharacteristicsVo
         if (isExpanded) {
             val nel = characteristic.run {
-                productCharacteristicDtos.map { characteristic ->
-                    listOf(
-                        CharacteristicTitleVo(characteristic.name)
-                    ) + characteristic.elements.map { pair ->
-                        CharacteristicDescriptionVo(pair.first, pair.second)
+                productCharacteristicDtos
+                    .map { characteristic ->
+                        listOf(
+                            CharacteristicTitleVo(characteristic.name)
+                        ) + characteristic.elements.map { pair ->
+                            CharacteristicDescriptionVo(pair.first, pair.second)
+                        }
                     }
-                }.flatten()
+                    .flatten()
             }
-
             productViewObject = buildExpandedList(startIndex, nel)
         } else {
             val endIndex =
@@ -84,11 +85,14 @@ class ProductPresenter @AssistedInject constructor(
             productViewObject = buildNotExpandedList(startIndex, endIndex)
         }
 
+        viewState.setAdapter(productViewObject)
+    }
 
+    private fun makeSureThatExpandIsNeeded(index: Int, views: List<ViewObject>): Boolean {
+        if (index == -1) return false
 
-        characteristic.let {
-            viewState.setAdapter(productViewObject)
-        }
+        val characteristic = views[index] as? AllCharacteristicsVo ?: return false
+        return characteristic.productCharacteristicDtos.isNotEmpty()
     }
 
     private fun buildExpandedList(

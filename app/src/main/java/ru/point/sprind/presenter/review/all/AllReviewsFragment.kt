@@ -10,7 +10,7 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.adapters.MordaAdapter
-import ru.point.sprind.adapters.decorators.InfoProductDecorator
+import ru.point.sprind.adapters.decorators.ProductInfoDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentAllReviewsBinding
 import javax.inject.Inject
@@ -45,7 +45,7 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
         super.onViewCreated(view, savedInstanceState)
         adapter = MordaAdapter(presenter.delegates)
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.addItemDecoration(InfoProductDecorator())
+        binding.recyclerView.addItemDecoration(ProductInfoDecorator())
 
         binding.addReview.setOnClickListener {
             val destination =
