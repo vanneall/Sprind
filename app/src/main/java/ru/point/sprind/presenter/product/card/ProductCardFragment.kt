@@ -49,6 +49,11 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
         initializeRecyclerView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.init()
+    }
+
     private fun initializeRecyclerView() {
         adapter = MordaAdapter(delegates = presenter.delegates)
         binding.recyclerView.adapter = adapter

@@ -40,7 +40,7 @@ class ProductPresenter @AssistedInject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    init {
+    fun init() {
         viewState.displayLoadingScreen(show = true)
         val disposable = getProductByIdUseCase
             .invoke(id = productId, ProductDtoToListViewMapperImpl())

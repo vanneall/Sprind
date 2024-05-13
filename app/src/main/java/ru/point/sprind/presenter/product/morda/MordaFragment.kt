@@ -50,6 +50,11 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
         initializeRecyclerView()
     }
 
+    override fun onStart() {
+        super.onStart()
+        presenter.init()
+    }
+
     private fun initializeToolbar() {
         with(binding.toolbar) {
             search.isFocusable = false

@@ -29,7 +29,7 @@ class MordaPresenter @Inject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    init {
+    fun init() {
         viewState.displayLoadingScreen(show = true)
         val disposable = getProductsUseCase.handle()
             .observeOn(AndroidSchedulers.mainThread())

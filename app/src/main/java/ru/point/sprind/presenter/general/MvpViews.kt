@@ -18,6 +18,6 @@ interface ConnectionRequiredView : MvpView {
 }
 
 interface UsingAdapterView: MvpView {
-    @StateStrategyType(AddToEndSingleStrategy::class)
+    @StateStrategyType(SkipStrategy::class)
     fun setAdapter(views: List<ViewObject>)
 }

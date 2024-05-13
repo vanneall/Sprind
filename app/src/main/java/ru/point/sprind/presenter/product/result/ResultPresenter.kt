@@ -33,7 +33,7 @@ class ResultPresenter @AssistedInject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    init {
+    fun init() {
         viewState.displayLoadingScreen(show = true)
         val disposable = getProductsByNameUseCase.handle(query)
             .observeOn(AndroidSchedulers.mainThread())
@@ -47,6 +47,7 @@ class ResultPresenter @AssistedInject constructor(
             })
         compositeDisposable.add(disposable)
     }
+
 
     private fun onAddProductToCart(productId: Long) {
         val disposable = addProductToCartUseCase.get().handle(id = productId)
