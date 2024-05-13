@@ -88,4 +88,9 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
     override fun requireAuthorization() {
         findNavController().navigate(CartFragmentDirections.actionGlobalAuthorizationFragment())
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.recyclerView.adapter = null
+    }
 }

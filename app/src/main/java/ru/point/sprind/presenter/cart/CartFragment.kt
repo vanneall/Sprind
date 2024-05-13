@@ -112,4 +112,9 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         val destination = CartFragmentDirections.actionCartFragmentToThanksFragment()
         findNavController().navigate(destination)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.cartRecyclerView.adapter = null
+    }
 }

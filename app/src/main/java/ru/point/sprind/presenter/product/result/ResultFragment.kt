@@ -117,4 +117,9 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
             Toast.LENGTH_SHORT
         ).show()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.recyclerView.adapter = null
+    }
 }

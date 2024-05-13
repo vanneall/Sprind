@@ -109,4 +109,9 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
             Toast.LENGTH_SHORT
         ).show()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.favoritesRecyclerView.adapter = null
+    }
 }

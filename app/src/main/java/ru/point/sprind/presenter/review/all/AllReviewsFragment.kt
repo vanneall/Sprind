@@ -75,4 +75,9 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
     override fun setAdapter(views: List<ViewObject>) {
         adapter.views = views
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.recyclerView.adapter = null
+    }
 }
