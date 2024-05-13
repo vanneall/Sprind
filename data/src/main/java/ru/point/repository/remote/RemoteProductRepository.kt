@@ -3,6 +3,7 @@ package ru.point.repository.remote
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.point.domain.entity.dto.product.ProductFeedDto
 import ru.point.domain.entity.dto.product.ProductInfoDto
 import ru.point.domain.repository.ProductRepository
@@ -13,14 +14,14 @@ class RemoteProductRepository @Inject constructor(
     private val api: ProductApi
 ): ProductRepository {
     override fun getProducts(): Observable<List<ProductFeedDto>> {
-        return api.getProductDto()
+        return api.getProductDto().subscribeOn(Schedulers.io())
     }
 
     override fun getProductsByName(name: String): Observable<List<ProductFeedDto>> {
-        return api.getProductDtoByName(search = name)
+        return api.getProductDtoByName(search = name).subscribeOn(Schedulers.io())
     }
 
     override fun getProductById(id: Long): Single<ProductInfoDto> {
-        return api.getProductDtoById(id = id)
+        return api.getProductDtoById(id = id).subscribeOn(Schedulers.io())
     }
 }
