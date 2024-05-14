@@ -49,6 +49,10 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeRecyclerView()
+
+        binding.payButton.setOnClickListener {
+            presenter.addToCart()
+        }
     }
 
     override fun onResume() {

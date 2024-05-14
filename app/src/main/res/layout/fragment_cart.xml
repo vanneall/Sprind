@@ -20,7 +20,6 @@
         android:id="@+id/cart_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingTop="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,6 +33,7 @@
         android:layout_marginHorizontal="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/pay"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

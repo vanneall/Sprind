@@ -13,6 +13,7 @@ import ru.point.domain.entity.view.product.info.AllCharacteristicsVo
 import ru.point.domain.entity.view.product.info.CharacteristicDescriptionVo
 import ru.point.domain.entity.view.product.info.CharacteristicTitleVo
 import ru.point.domain.mapper.implementations.ProductDtoToListViewMapperImpl
+import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
 import ru.point.domain.usecase.interfaces.product.GetProductByIdUseCase
 import ru.point.sprind.entity.deletage.product.card.AllCharacteristicsDelegate
@@ -28,7 +29,8 @@ import ru.point.sprind.presenter.product.card.ProductPresenterAssistedFactory.Co
 class ProductPresenter @AssistedInject constructor(
     @Assisted(ID) private val productId: Long,
     private val getProductByIdUseCase: GetProductByIdUseCase,
-    private val favoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>
+    private val favoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
+    private val addProductToCartUseCase: Lazy<AddProductToCartUseCase>,
 ) : MvpPresenter<ProductCardView>() {
 
     val delegates = listOf(
@@ -60,6 +62,17 @@ class ProductPresenter @AssistedInject constructor(
                 viewState.displayBadConnectionScreen(show = true)
             }
             )
+
+        compositeDisposable.add(disposable)
+    }
+
+    fun addToCart() {
+        val disposable = addProductToCartUseCase.get()
+            .handle(productId)
+            .subscribe({ }, { ex ->
+                ex.printStackTrace()
+                viewState.displaySomethingGoesWrongError()
+            })
 
         compositeDisposable.add(disposable)
     }

@@ -8,6 +8,7 @@ import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class CartProductViewHolder(
     private val binding: CartProductCardBinding,
+    private val onClick: (Long) -> Unit
 ) : ViewHolderV2<CartProductVo>(binding.root) {
 
     override fun bind(view: CartProductVo) {
@@ -19,6 +20,10 @@ class CartProductViewHolder(
             }
             name.text = view.name
             price.text = view.price
+
+            root.setOnClickListener {
+                onClick(view.id)
+            }
         }
     }
 }

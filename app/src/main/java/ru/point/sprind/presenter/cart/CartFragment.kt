@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -71,6 +72,14 @@ class CartFragment : MvpAppCompatFragment(), CartView {
 
     override fun setAdapter(views: List<ViewObject>) {
         adapter.views = views
+    }
+
+    override fun openCard(id: Long) {
+        val args = CartFragmentDirections.actionCartFragmentToProductCardFragment(
+            productId = id
+        )
+
+        binding.root.findNavController().navigate(args)
     }
 
     override fun displayPayButton(show: Boolean) {

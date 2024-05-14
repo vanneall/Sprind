@@ -23,7 +23,7 @@ class CartPresenter @Inject constructor(
 ) : MvpPresenter<CartView>() {
 
     val delegates = listOf(
-        CartProductDelegate(),
+        CartProductDelegate(viewState::openCard),
         CartEmptyDelegate(),
         CartPromocodeDelegate(),
         CartHeaderDelegate(),
