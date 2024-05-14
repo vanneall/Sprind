@@ -1,0 +1,34 @@
+package ru.point.sprind.entity.viewholder.product.card
+
+import androidx.recyclerview.widget.PagerSnapHelper
+import ru.point.domain.entity.view.product.info.NestedRecyclerViewVo
+import ru.point.sprind.adapters.MordaAdapter
+import ru.point.sprind.databinding.ProductCardImageRecyclerBinding
+import ru.point.sprind.entity.deletage.Delegate
+import ru.point.sprind.entity.viewholder.ViewHolderV2
+
+class NestedRecyclerViewViewHolder(
+    private val binding: ProductCardImageRecyclerBinding,
+    delegates: List<Delegate<*>>,
+    useViewPagerEffect: Boolean
+) : ViewHolderV2<NestedRecyclerViewVo>(binding.root) {
+
+    private val adapter: MordaAdapter = MordaAdapter(delegates = delegates)
+
+    init {
+        binding.nestedRecyclerview.adapter = adapter
+        binding.nestedRecyclerview.tag = "nested recycler"
+        if (useViewPagerEffect) {
+            val snapHelper = PagerSnapHelper()
+            snapHelper.attachToRecyclerView(binding.nestedRecyclerview)
+        }
+    }
+
+    override fun bind(view: NestedRecyclerViewVo) {
+        adapter.views = view.viewObjects
+    }
+
+    fun clear() {
+        binding.nestedRecyclerview.adapter = null
+    }
+}

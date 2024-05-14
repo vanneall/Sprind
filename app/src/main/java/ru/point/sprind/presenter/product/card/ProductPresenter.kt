@@ -19,6 +19,7 @@ import ru.point.domain.usecase.interfaces.product.GetProductByIdUseCase
 import ru.point.sprind.entity.deletage.product.card.AllCharacteristicsDelegate
 import ru.point.sprind.entity.deletage.product.card.CharacteristicDelegate
 import ru.point.sprind.entity.deletage.product.card.CharacteristicTitleDelegate
+import ru.point.sprind.entity.deletage.product.card.NestedRecyclerViewDelegate
 import ru.point.sprind.entity.deletage.product.card.ProductCardReviewDelegate
 import ru.point.sprind.entity.deletage.product.card.ProductDescriptionDelegate
 import ru.point.sprind.entity.deletage.product.card.ProductImageDelegate
@@ -34,7 +35,7 @@ class ProductPresenter @AssistedInject constructor(
 ) : MvpPresenter<ProductCardView>() {
 
     val delegates = listOf(
-        ProductImageDelegate(),
+        NestedRecyclerViewDelegate(delegates = listOf(ProductImageDelegate()), useViewPagerEffect = true),
         ProductTitleDelegate(::onCheckedFavoriteStateChange),
         ProductDescriptionDelegate(),
         AllCharacteristicsDelegate(::expandCharacteristics),

@@ -28,7 +28,7 @@
         android:paddingVertical="20dp"
         style="@style/regular_16"
         android:paddingHorizontal="12dp"
-        android:background="@drawable/card_background"
+        android:background="@drawable/card_background_full"
         android:lineSpacingExtra="2dp"
         android:text="@string/thanks_for_buying_text"/>
 

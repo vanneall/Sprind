@@ -11,6 +11,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.viewholder.ViewHolderV2
+import ru.point.sprind.entity.viewholder.product.card.NestedRecyclerViewViewHolder
 
 class MordaAdapter(
     private val delegates: List<Delegate<*>>,
@@ -55,7 +56,14 @@ class MordaAdapter(
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
-        Log.d("RecyclerView", "cleared ${compositeDisposable.size()}")
+        Log.d("RecyclerView with tag ${recyclerView.tag}", "cleared ${compositeDisposable.size()}")
         compositeDisposable.clear()
+
+        for (i in 0 until recyclerView.childCount) {
+            val viewHolder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i))
+            if (viewHolder is NestedRecyclerViewViewHolder) {
+                viewHolder.clear()
+            }
+        }
     }
 }

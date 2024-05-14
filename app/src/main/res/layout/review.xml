@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:paddingHorizontal="20dp"
     android:paddingVertical="10dp"
-    android:background="@drawable/card_background">
+    android:background="@drawable/card_background_full">
 
     <TextView
         android:id="@+id/text_username"

@@ -5,7 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import ru.point.sprind.entity.viewholder.product.card.CharacteristicTitleViewHolder
 import ru.point.sprind.entity.viewholder.product.card.CharacteristicViewHolder
-import ru.point.sprind.entity.viewholder.product.card.ProductImageViewHolder
+import ru.point.sprind.entity.viewholder.product.card.NestedRecyclerViewViewHolder
 
 class ProductInfoDecorator : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
@@ -24,7 +24,7 @@ class ProductInfoDecorator : RecyclerView.ItemDecoration() {
 
 
         when (val viewHolder = parent.getChildViewHolder(view)) {
-            is ProductImageViewHolder -> {}
+            is NestedRecyclerViewViewHolder -> {}
             is CharacteristicViewHolder -> {}
             is CharacteristicTitleViewHolder -> {}
             else -> {
