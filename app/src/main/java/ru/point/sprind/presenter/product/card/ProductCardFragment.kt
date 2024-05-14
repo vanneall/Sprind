@@ -20,7 +20,9 @@ import javax.inject.Inject
 
 class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
 
-    private lateinit var binding: FragmentProductCardBinding
+    private var _binding: FragmentProductCardBinding? = null
+
+    private val binding get() = _binding!!
 
     @Inject
     lateinit var presenterProvider: ProductPresenterAssistedFactory
@@ -42,7 +44,7 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentProductCardBinding.inflate(layoutInflater)
+        _binding = FragmentProductCardBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -103,8 +105,9 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
         findNavController().navigate(CartFragmentDirections.actionGlobalAuthorizationFragment())
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         binding.recyclerView.adapter = null
+        _binding = null
     }
 }

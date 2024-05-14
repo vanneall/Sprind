@@ -19,7 +19,9 @@ import javax.inject.Inject
 
 class CartFragment : MvpAppCompatFragment(), CartView {
 
-    private lateinit var binding: FragmentCartBinding
+    private var _binding: FragmentCartBinding? = null
+
+    private val binding get() = _binding!!
 
     private lateinit var adapter: MordaAdapter
 
@@ -37,7 +39,7 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentCartBinding.inflate(layoutInflater)
+        _binding = FragmentCartBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -122,8 +124,9 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         findNavController().navigate(destination)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         binding.cartRecyclerView.adapter = null
+        _binding = null
     }
 }

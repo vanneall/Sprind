@@ -13,7 +13,9 @@ import javax.inject.Inject
 
 class AuthorizationFragment : MvpAppCompatFragment(), AuthView {
 
-    private lateinit var binding: FragmentAuthorizationBinding
+    private var _binding: FragmentAuthorizationBinding? = null
+
+    private val binding get() = _binding!!
 
     @Inject
     lateinit var provider: AuthPresenter
@@ -29,7 +31,7 @@ class AuthorizationFragment : MvpAppCompatFragment(), AuthView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentAuthorizationBinding.inflate(layoutInflater)
+        _binding = FragmentAuthorizationBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -70,5 +72,10 @@ class AuthorizationFragment : MvpAppCompatFragment(), AuthView {
 
     override fun successfulAuthorization() {
         findNavController().popBackStack()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

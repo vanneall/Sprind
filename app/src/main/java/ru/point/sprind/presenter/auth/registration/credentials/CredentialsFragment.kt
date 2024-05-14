@@ -13,7 +13,9 @@ import javax.inject.Inject
 
 class CredentialsFragment : MvpAppCompatFragment(), CredentialsView {
 
-    private lateinit var binding: FragmentCredentialsBinding
+    private var _binding: FragmentCredentialsBinding? = null
+
+    private val binding get() = _binding!!
 
     @Inject
     lateinit var provider: CredentialsPresenter
@@ -29,7 +31,7 @@ class CredentialsFragment : MvpAppCompatFragment(), CredentialsView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentCredentialsBinding.inflate(layoutInflater)
+        _binding = FragmentCredentialsBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -67,5 +69,10 @@ class CredentialsFragment : MvpAppCompatFragment(), CredentialsView {
 
             findNavController().navigate(destination)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

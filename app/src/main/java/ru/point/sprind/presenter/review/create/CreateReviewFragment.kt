@@ -14,7 +14,9 @@ import javax.inject.Inject
 
 class CreateReviewFragment : MvpAppCompatFragment(), CreateReviewView {
 
-    private lateinit var binding: FragmentCreateReviewBinding
+    private var _binding: FragmentCreateReviewBinding? = null
+
+    private val binding get() = _binding!!
 
     private val args by navArgs<CreateReviewFragmentArgs>()
 
@@ -32,7 +34,7 @@ class CreateReviewFragment : MvpAppCompatFragment(), CreateReviewView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentCreateReviewBinding.inflate(layoutInflater)
+        _binding = FragmentCreateReviewBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -41,5 +43,10 @@ class CreateReviewFragment : MvpAppCompatFragment(), CreateReviewView {
         binding.save.setOnClickListener {
             presenter.addReview(binding.rating.text.toString(), binding.commentary.text.toString())
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

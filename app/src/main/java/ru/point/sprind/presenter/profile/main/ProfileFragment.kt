@@ -14,7 +14,9 @@ import javax.inject.Inject
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
-    private lateinit var binding: FragmentProfileBinding
+    private var _binding: FragmentProfileBinding? = null
+
+    private val binding get() = _binding!!
 
     @Inject
     lateinit var provider: ProfilePresenter
@@ -30,7 +32,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentProfileBinding.inflate(layoutInflater)
+        _binding = FragmentProfileBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -56,5 +58,10 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
                 visibility = View.GONE
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

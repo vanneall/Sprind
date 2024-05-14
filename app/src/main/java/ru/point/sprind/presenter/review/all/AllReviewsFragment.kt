@@ -17,7 +17,9 @@ import javax.inject.Inject
 
 class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
 
-    private lateinit var binding: FragmentAllReviewsBinding
+    private var _binding: FragmentAllReviewsBinding? = null
+
+    private val binding get() = _binding!!
 
     private lateinit var adapter: MordaAdapter
 
@@ -37,7 +39,7 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentAllReviewsBinding.inflate(layoutInflater)
+        _binding = FragmentAllReviewsBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -76,8 +78,9 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
         adapter.views = views
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         binding.recyclerView.adapter = null
+        _binding = null
     }
 }

@@ -16,7 +16,9 @@ import javax.inject.Inject
 
 class RegistrationFragment : MvpAppCompatFragment(), RegistrationView {
 
-    private lateinit var binding: FragmentRegistrationBinding
+    private var _binding: FragmentRegistrationBinding? = null
+
+    private val binding get() = _binding!!
 
     private val args by navArgs<RegistrationFragmentArgs>()
 
@@ -41,7 +43,7 @@ class RegistrationFragment : MvpAppCompatFragment(), RegistrationView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentRegistrationBinding.inflate(layoutInflater)
+        _binding = FragmentRegistrationBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -75,5 +77,10 @@ class RegistrationFragment : MvpAppCompatFragment(), RegistrationView {
 
     override fun exitFromRegistration() {
         findNavController().popBackStack(R.id.authorizationFragment, inclusive = true)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

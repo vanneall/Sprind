@@ -10,18 +10,25 @@ import ru.point.sprind.databinding.FragmentThanksBinding
 
 class ThanksFragment : Fragment() {
 
-    private lateinit var binding: FragmentThanksBinding
+    private var _binding: FragmentThanksBinding? = null
+
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentThanksBinding.inflate(layoutInflater)
+        _binding = FragmentThanksBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.title.text = resources.getString(R.string.thanks_screen_title);
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

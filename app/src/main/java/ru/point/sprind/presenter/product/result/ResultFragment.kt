@@ -22,7 +22,9 @@ import javax.inject.Inject
 
 class ResultFragment : MvpAppCompatFragment(), MordaView {
 
-    private lateinit var binding: FragmentResultBinding
+    private var _binding: FragmentResultBinding? = null
+
+    private val binding get() = _binding!!
 
     private lateinit var adapter: MordaAdapter
 
@@ -44,7 +46,7 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentResultBinding.inflate(inflater, container, false)
+        _binding = FragmentResultBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -118,8 +120,9 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
         ).show()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         binding.recyclerView.adapter = null
+        _binding = null
     }
 }

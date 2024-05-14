@@ -21,7 +21,9 @@ import javax.inject.Inject
 
 class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
 
-    private lateinit var binding: FragmentFavoritesBinding
+    private var _binding: FragmentFavoritesBinding? = null
+
+    private val binding get() = _binding!!
 
     private lateinit var adapter: MordaAdapter
 
@@ -40,7 +42,7 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentFavoritesBinding.inflate(layoutInflater)
+        _binding = FragmentFavoritesBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -115,8 +117,9 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
         ).show()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         binding.favoritesRecyclerView.adapter = null
+        _binding = null
     }
 }

@@ -17,7 +17,9 @@ import ru.point.sprind.databinding.FragmentSearchBinding
 
 class SearchFragment : MvpAppCompatFragment() {
 
-    private lateinit var binding: FragmentSearchBinding
+    private var _binding: FragmentSearchBinding? = null
+
+    private val binding get() = _binding!!
 
     private val args by navArgs<SearchFragmentArgs>()
 
@@ -25,7 +27,7 @@ class SearchFragment : MvpAppCompatFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentSearchBinding.inflate(inflater, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -105,8 +107,9 @@ class SearchFragment : MvpAppCompatFragment() {
         findNavController().navigate(args)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         binding.recyclerView.adapter = null
+        _binding = null
     }
 }
