@@ -29,7 +29,16 @@
         <item name="colorPrimaryInverse">@color/theme_light_inversePrimary</item>
     </style>
 
-    <style name="Theme.Sprind" parent="Base.Theme.Sprind" >
+    <style name="Widget.Material3.CompoundButton.CheckBox.Favorite">
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorSecondary">@color/avocado</item>
+    </style>
+
+    <style name="checkbox_favorite_overlay" parent="Widget.Material3.CompoundButton.CheckBox">
+        <item name="materialThemeOverlay">@style/Widget.Material3.CompoundButton.CheckBox.Favorite</item>
+    </style>
+
+    <style name="Theme.Sprind" parent="Base.Theme.Sprind">
 
     </style>
 </resources>

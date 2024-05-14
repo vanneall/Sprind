@@ -21,12 +21,13 @@
 
     <CheckBox
         android:id="@+id/is_favorite"
+        style="@style/checkbox_favorite_overlay"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:gravity="center"
         android:button="@drawable/selector_favorite"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

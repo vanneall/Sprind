@@ -9,7 +9,9 @@ import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 import ru.point.sprind.entity.viewholder.product.card.ProductTitleViewHolder
 
-class ProductTitleDelegate : Delegate<ProductTitleVo> {
+class ProductTitleDelegate(
+    private val onFavoriteCheckedChange: (Boolean, (Boolean) -> Unit) -> Unit
+) : Delegate<ProductTitleVo> {
 
     override fun isSupported(view: ViewObject) = view is ProductTitleVo
 
@@ -20,6 +22,6 @@ class ProductTitleDelegate : Delegate<ProductTitleVo> {
             false
         )
 
-        return ProductTitleViewHolder(binding)
+        return ProductTitleViewHolder(binding, onFavoriteCheckedChange)
     }
 }

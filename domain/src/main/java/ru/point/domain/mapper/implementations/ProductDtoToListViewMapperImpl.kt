@@ -8,6 +8,7 @@ import ru.point.domain.entity.view.product.info.ProductImageVo
 import ru.point.domain.entity.view.product.info.ProductReviewVo
 import ru.point.domain.entity.view.product.info.ProductTitleVo
 import ru.point.domain.mapper.interfaces.ProductDtoToListViewMapper
+import ru.point.domain.utils.StringFormatter
 
 class ProductDtoToListViewMapperImpl : ProductDtoToListViewMapper {
     override fun map(productInfoDto: ProductInfoDto): List<ViewObject> {
@@ -17,7 +18,8 @@ class ProductDtoToListViewMapperImpl : ProductDtoToListViewMapper {
             ),
             ProductTitleVo(
                 title = productInfoDto.name,
-                price = productInfoDto.price,
+                isFavorite = productInfoDto.isFavorite,
+                price = StringFormatter.formatPrice(productInfoDto.price),
             ),
             ProductDescriptionVo(
                 description = productInfoDto.description ?: "",

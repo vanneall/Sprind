@@ -1,16 +1,19 @@
 package ru.point.sprind.presenter.product.card
 
+import dagger.Lazy
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
+import retrofit2.HttpException
 import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.entity.view.product.info.AllCharacteristicsVo
 import ru.point.domain.entity.view.product.info.CharacteristicDescriptionVo
 import ru.point.domain.entity.view.product.info.CharacteristicTitleVo
 import ru.point.domain.mapper.implementations.ProductDtoToListViewMapperImpl
+import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
 import ru.point.domain.usecase.interfaces.product.GetProductByIdUseCase
 import ru.point.sprind.entity.deletage.product.card.AllCharacteristicsDelegate
 import ru.point.sprind.entity.deletage.product.card.CharacteristicDelegate
@@ -25,11 +28,12 @@ import ru.point.sprind.presenter.product.card.ProductPresenterAssistedFactory.Co
 class ProductPresenter @AssistedInject constructor(
     @Assisted(ID) private val productId: Long,
     private val getProductByIdUseCase: GetProductByIdUseCase,
+    private val favoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>
 ) : MvpPresenter<ProductCardView>() {
 
     val delegates = listOf(
         ProductImageDelegate(),
-        ProductTitleDelegate(),
+        ProductTitleDelegate(::onCheckedFavoriteStateChange),
         ProductDescriptionDelegate(),
         AllCharacteristicsDelegate(::expandCharacteristics),
         CharacteristicDelegate(),
@@ -56,6 +60,29 @@ class ProductPresenter @AssistedInject constructor(
                 viewState.displayBadConnectionScreen(show = true)
             }
             )
+
+        compositeDisposable.add(disposable)
+    }
+
+    private fun onCheckedFavoriteStateChange(
+        isChecked: Boolean,
+        isSuccessfulCallback: (Boolean) -> Unit,
+    ) {
+        val disposable = favoriteStateUseCase.get()
+            .handle(id = productId, isFavorite = isChecked)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                isSuccessfulCallback(true)
+            }, { ex ->
+                ex.printStackTrace()
+                isSuccessfulCallback(false)
+                if (ex is HttpException) {
+                    when (ex.code()) {
+                        403 -> viewState.requireAuthorization()
+                        else -> viewState.displaySomethingGoesWrongError()
+                    }
+                }
+            })
 
         compositeDisposable.add(disposable)
     }

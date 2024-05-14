@@ -5,14 +5,23 @@ import ru.point.sprind.databinding.ProductCardTitleBinding
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class ProductTitleViewHolder(
-    private val productCardTitleBinding: ProductCardTitleBinding,
-) : ViewHolderV2<ProductTitleVo>(productCardTitleBinding.root) {
+    private val binding: ProductCardTitleBinding,
+    private val onFavoriteCheckedChange: (Boolean, (Boolean) -> Unit) -> Unit,
+) : ViewHolderV2<ProductTitleVo>(binding.root) {
 
     override fun bind(view: ProductTitleVo) {
-        with(productCardTitleBinding) {
+        with(binding) {
             title.text = view.title
-            price.text = view.price.money.toString()
+            price.text = view.price
             rating.text = view.rating
+            favoriteCheckbox.isChecked = view.isFavorite
+
+            favoriteCheckbox.setOnClickListener {
+                val isChecked = favoriteCheckbox.isChecked
+                onFavoriteCheckedChange(isChecked) { isSuccess ->
+                    favoriteCheckbox.isChecked = if (isSuccess) isChecked else !isChecked
+                }
+            }
         }
     }
 }

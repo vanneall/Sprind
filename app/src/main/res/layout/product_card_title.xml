@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/regular_24"
+        style="@style/regular_20"
         android:layout_width="wrap_content"
         android:layout_height="56dp"
         android:gravity="center_vertical"
@@ -30,6 +30,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="59 990Р" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/favorite_checkbox"
+        style="@style/checkbox_favorite_overlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/selector_favorite"
+        app:layout_constraintBottom_toBottomOf="@id/title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@id/title"
+        app:layout_constraintTop_toTopOf="@id/title" />
 
     <TextView
         android:id="@+id/rating"

@@ -12,6 +12,8 @@ data class ProductInfoDto(
     val count: Int,
     @SerializedName("price")
     val price: Price,
+    @SerializedName("isFavorite")
+    val isFavorite: Boolean = false,
     @SerializedName("description")
     val description: String? = null,
     @SerializedName("characteristics")
