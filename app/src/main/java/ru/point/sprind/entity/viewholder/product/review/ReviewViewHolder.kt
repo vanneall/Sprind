@@ -12,7 +12,9 @@ class ReviewViewHolder(
         with(binding) {
             textRating.text = view.rating.toString()
             textUsername.text = view.username
-            description.text = view.description
+            descriptionText.text = view.description
+            disadvantageText.text = view.disadvantages
+            advantageText.text = view.advantages
         }
     }
 }

@@ -8,10 +8,12 @@ class ReviewDtoToReviewVoMapper private constructor() {
     companion object {
         fun map(dto: ReviewDto): ReviewVo {
             return ReviewVo(
-                dto.id,
-                dto.username,
-                dto.rating,
-                dto.description
+                id = dto.id,
+                username = dto.username,
+                rating = dto.rating,
+                description = dto.description,
+                advantages = dto.advantage,
+                disadvantages = dto.disadvantage
             )
         }
     }

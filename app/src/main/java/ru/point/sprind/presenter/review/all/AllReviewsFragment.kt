@@ -9,6 +9,7 @@ import androidx.navigation.fragment.navArgs
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
+import ru.point.sprind.R
 import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.ProductInfoDecorator
 import ru.point.sprind.components.SprindApplication
@@ -48,6 +49,8 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
         adapter = MordaAdapter(presenter.delegates)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(ProductInfoDecorator())
+
+        binding.toolbar.title.text = resources.getText(R.string.reviews)
 
         binding.addReview.setOnClickListener {
             val destination =

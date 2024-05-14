@@ -72,4 +72,7 @@
     <string name="authorize">Авторизоваться</string>
     <string name="empty_favorites_warning">У вас нет избранных товаров :(</string>
     <string name="empty_favorites_description">Загляните в поиск, вероятно, что-то да Вам понравится!</string>
+    <string name="advantage">Достоинства:</string>
+    <string name="disadvantage">Недостатки:</string>
+    <string name="commentary">Комментарий:</string>
 </resources>

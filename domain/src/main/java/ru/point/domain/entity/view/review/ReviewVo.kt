@@ -6,5 +6,7 @@ data class ReviewVo(
     val id: Long,
     val username: String,
     val rating: Float,
-    val description: String,
+    val description: String?,
+    val advantages: String?,
+    val disadvantages: String?
 ) : ViewObject

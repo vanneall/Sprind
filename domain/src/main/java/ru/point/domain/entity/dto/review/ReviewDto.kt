@@ -7,8 +7,12 @@ data class ReviewDto(
     val id: Long,
     @SerializedName("username")
     val username: String,
+    @SerializedName("advantage")
+    val advantage: String? = null,
+    @SerializedName(value = "disadvantage")
+    val disadvantage: String? = null,
     @SerializedName("description")
-    val description: String,
+    val description: String? = null,
     @SerializedName("rating")
-    val rating: Float
+    val rating: Float,
 )
