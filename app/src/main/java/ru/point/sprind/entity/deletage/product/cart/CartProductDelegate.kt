@@ -12,6 +12,7 @@ import ru.point.sprind.entity.viewholder.product.cart.CartProductViewHolder
 class CartProductDelegate(
     private val onClick: (Long) -> Unit,
     private val onFavoriteCheckedChange: (Long, Boolean, (Boolean) -> Unit) -> Unit,
+    private val delete: (Long) -> Unit
 ) : Delegate<CartProductVo> {
 
     override fun isSupported(view: ViewObject) = view is CartProductVo
@@ -22,6 +23,6 @@ class CartProductDelegate(
             parent,
             false
         )
-        return CartProductViewHolder(binding, onClick, onFavoriteCheckedChange)
+        return CartProductViewHolder(binding, onClick, onFavoriteCheckedChange, delete)
     }
 }

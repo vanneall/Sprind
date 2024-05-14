@@ -43,6 +43,17 @@
         android:layout_marginBottom="4dp"
         app:layout_constraintVertical_bias="1" />
 
+    <ImageButton
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toEndOf="@id/is_favorite"
+        app:layout_constraintTop_toTopOf="@id/is_favorite"
+        app:layout_constraintBottom_toBottomOf="@id/is_favorite"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/baseline_clear_24"/>
+
     <TextView
         android:id="@+id/name"
         style="@style/regular_14"

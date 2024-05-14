@@ -11,4 +11,6 @@ interface CartRepository {
     fun addProduct(id: Long): Completable
 
     fun makeOrder(): Completable
+
+    fun deleteFromCart(id: Long): Completable
 }

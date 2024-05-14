@@ -23,4 +23,8 @@ class RemoteCartRepository @Inject constructor(
     override fun makeOrder(): Completable {
         return api.makeOrder().subscribeOn(Schedulers.io())
     }
+
+    override fun deleteFromCart(id: Long): Completable {
+        return api.deleteFromCart(id).subscribeOn(Schedulers.io())
+    }
 }

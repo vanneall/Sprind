@@ -3,6 +3,7 @@ package ru.point.retrofit.api
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.Query
@@ -18,4 +19,7 @@ interface CartApi {
 
     @PATCH("cart/order")
     fun makeOrder(): Completable
+
+    @DELETE("cart")
+    fun deleteFromCart(@Query("id") id: Long): Completable
 }

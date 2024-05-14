@@ -7,6 +7,7 @@ import moxy.InjectViewState
 import moxy.MvpPresenter
 import retrofit2.HttpException
 import ru.point.domain.entity.view.cart.CartEmptyVo
+import ru.point.domain.usecase.interfaces.cart.DeleteProductFromCartUseCase
 import ru.point.domain.usecase.interfaces.cart.GetProductsInCartUseCase
 import ru.point.domain.usecase.interfaces.cart.MakeOrderUseCase
 import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
@@ -22,12 +23,14 @@ class CartPresenter @Inject constructor(
     private val getProductsInCartUseCase: GetProductsInCartUseCase,
     private val makeOrderUseCase: Lazy<MakeOrderUseCase>,
     private val changeFavoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
+    private val deleteProductFromCartUseCase: Lazy<DeleteProductFromCartUseCase>,
 ) : MvpPresenter<CartView>() {
 
     val delegates = listOf(
         CartProductDelegate(
             onClick = viewState::openCard,
-            onFavoriteCheckedChange = ::onCheckedFavoriteStateChange
+            onFavoriteCheckedChange = ::onCheckedFavoriteStateChange,
+            delete = ::deleteFromCart
         ),
         CartEmptyDelegate(),
         CartPromocodeDelegate(),
@@ -47,6 +50,8 @@ class CartPresenter @Inject constructor(
 
                 if (list.first() !is CartEmptyVo) {
                     viewState.displayPayButton(true)
+                } else {
+                    viewState.displayPayButton(false)
                 }
                 viewState.setAdapter(list)
             }, { ex ->
@@ -60,6 +65,19 @@ class CartPresenter @Inject constructor(
                     viewState.displayBadConnectionScreen(show = true)
                 }
             })
+
+        compositeDisposable.add(disposable)
+    }
+
+    private fun deleteFromCart(id: Long) {
+        val disposable = deleteProductFromCartUseCase.get()
+            .handle(id)
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {}, { ex ->
+                    ex.printStackTrace()
+                    viewState.displaySomethingGoesWrongError()
+                })
 
         compositeDisposable.add(disposable)
     }

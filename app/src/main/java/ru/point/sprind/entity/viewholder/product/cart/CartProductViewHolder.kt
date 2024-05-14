@@ -10,6 +10,7 @@ class CartProductViewHolder(
     private val binding: CartProductCardBinding,
     private val onClick: (Long) -> Unit,
     private val onFavoriteCheckedChange: (Long, Boolean, (Boolean) -> Unit) -> Unit,
+    private val delete: (Long) -> Unit
 ) : ViewHolderV2<CartProductVo>(binding.root) {
 
     override fun bind(view: CartProductVo) {
@@ -28,6 +29,10 @@ class CartProductViewHolder(
                 onFavoriteCheckedChange(view.id, isChecked) { isSuccess ->
                     isFavorite.isChecked = if (isSuccess) isChecked else !isChecked
                 }
+            }
+
+            delete.setOnClickListener {
+                delete(view.id)
             }
 
             root.setOnClickListener {
