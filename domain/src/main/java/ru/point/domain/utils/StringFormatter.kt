@@ -7,6 +7,8 @@ object StringFormatter {
 
     fun formatPrice(price: Price): String {
         var priceInt = price.money.toInt()
+        if (priceInt == 0) return "0 ${currencyFormatter(price.currency)}"
+
         val stringPriceBuilder = StringBuilder()
 
         var counter = 1

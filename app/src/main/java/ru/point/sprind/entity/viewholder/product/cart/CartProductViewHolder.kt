@@ -18,7 +18,7 @@ class CartProductViewHolder(
                 scale(Scale.FIT)
             }
             name.text = view.name
-            price.text = view.price.money.toString()
+            price.text = view.price
         }
     }
 }

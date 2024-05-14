@@ -10,6 +10,7 @@ import ru.point.domain.entity.view.cart.CartEmptyVo
 import ru.point.domain.usecase.interfaces.cart.GetProductsInCartUseCase
 import ru.point.domain.usecase.interfaces.cart.MakeOrderUseCase
 import ru.point.sprind.entity.deletage.product.cart.CartEmptyDelegate
+import ru.point.sprind.entity.deletage.product.cart.CartHeaderDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartProductDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartPromocodeDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartSummaryDelegate
@@ -25,6 +26,7 @@ class CartPresenter @Inject constructor(
         CartProductDelegate(),
         CartEmptyDelegate(),
         CartPromocodeDelegate(),
+        CartHeaderDelegate(),
         CartSummaryDelegate()
     )
 

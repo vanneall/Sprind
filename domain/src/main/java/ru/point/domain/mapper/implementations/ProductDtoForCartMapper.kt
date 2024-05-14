@@ -1,12 +1,14 @@
 package ru.point.domain.mapper.implementations
 
-import ru.point.domain.entity.utils.Price
 import ru.point.domain.entity.dto.product.ProductFeedDto
+import ru.point.domain.entity.utils.Price
+import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.entity.view.cart.CartEmptyVo
+import ru.point.domain.entity.view.cart.CartHeaderVo
 import ru.point.domain.entity.view.cart.CartProductVo
 import ru.point.domain.entity.view.cart.CartPromocodeVo
 import ru.point.domain.entity.view.cart.CartSummaryVo
-import ru.point.domain.entity.view.ViewObject
+import ru.point.domain.utils.StringFormatter
 
 class ProductDtoForCartMapper : FeedProductListViewMapper {
     override fun map(productFeedDto: List<ProductFeedDto>): List<ViewObject> {
@@ -18,28 +20,28 @@ class ProductDtoForCartMapper : FeedProductListViewMapper {
                 id = dto.id,
                 name = dto.name,
                 url = dto.photosUrl[0],
-                price = dto.price
+                price = StringFormatter.formatPrice(dto.price)
             )
         }
 
-        val deliveryPrice = 0 //TODO make delivery
-        val productsPrice = sumPrice(products)
-        val discountPrice = 0 //TODO make discount
-        val promocodePrice = 0 //TODO make promocode
-        val summaryPrice = deliveryPrice + productsPrice.money + discountPrice + promocodePrice
+        val deliveryPrice = Price() //TODO make delivery
+        val productsPrice = sumPrice(productFeedDto)
+        val discountPrice = Price() //TODO make discount
+        val promocodePrice = Price() //TODO make promocode
+        val summaryPrice = deliveryPrice + productsPrice + discountPrice + promocodePrice
 
-        // TODO make price formatter
-        return products + listOf(
-            CartPromocodeVo(),
-
-            CartSummaryVo(
-                delivery = deliveryPrice.toString(),
-                products = productsPrice.money.toString(),
-                discount = discountPrice.toString(),
-                promocode = promocodePrice.toString(),
-                summary = summaryPrice.toString()
-            )
-        )
+        return listOf(CartHeaderVo()) +
+                products +
+                listOf(
+                    CartPromocodeVo(),
+                    CartSummaryVo(
+                        delivery = StringFormatter.formatPrice(deliveryPrice),
+                        products = StringFormatter.formatPrice(productsPrice),
+                        discount = StringFormatter.formatPrice(discountPrice),
+                        promocode = StringFormatter.formatPrice(promocodePrice),
+                        summary = StringFormatter.formatPrice(summaryPrice)
+                    )
+                )
     }
 }
 
@@ -50,7 +52,7 @@ interface FeedProductListViewMapper {
 fun sumPrice(collection: Collection<*>): Price {
     var price = Price()
     collection.forEach { value ->
-        (value as? CartProductVo)?.let { price += value.price }
+        (value as? ProductFeedDto)?.let { price += value.price }
     }
     return price
 }
