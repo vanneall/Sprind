@@ -13,7 +13,7 @@ data class ProductInfoDto(
     @SerializedName("price")
     val price: Price,
     @SerializedName("isFavorite")
-    val isFavorite: Boolean = false,
+    val isFavorite: Boolean,
     @SerializedName("description")
     val description: String? = null,
     @SerializedName("characteristics")

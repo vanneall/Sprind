@@ -6,5 +6,6 @@ data class CartProductVo(
     val id: Long,
     val name: String,
     val url: String,
-    val price: String
+    val price: String,
+    val isFavorite: Boolean
 ): ViewObject

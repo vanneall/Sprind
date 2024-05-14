@@ -9,6 +9,7 @@ import retrofit2.HttpException
 import ru.point.domain.entity.view.cart.CartEmptyVo
 import ru.point.domain.usecase.interfaces.cart.GetProductsInCartUseCase
 import ru.point.domain.usecase.interfaces.cart.MakeOrderUseCase
+import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
 import ru.point.sprind.entity.deletage.product.cart.CartEmptyDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartHeaderDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartProductDelegate
@@ -20,10 +21,14 @@ import javax.inject.Inject
 class CartPresenter @Inject constructor(
     private val getProductsInCartUseCase: GetProductsInCartUseCase,
     private val makeOrderUseCase: Lazy<MakeOrderUseCase>,
+    private val changeFavoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
 ) : MvpPresenter<CartView>() {
 
     val delegates = listOf(
-        CartProductDelegate(viewState::openCard),
+        CartProductDelegate(
+            onClick = viewState::openCard,
+            onFavoriteCheckedChange = ::onCheckedFavoriteStateChange
+        ),
         CartEmptyDelegate(),
         CartPromocodeDelegate(),
         CartHeaderDelegate(),
@@ -53,6 +58,30 @@ class CartPresenter @Inject constructor(
                     }
                 } else {
                     viewState.displayBadConnectionScreen(show = true)
+                }
+            })
+
+        compositeDisposable.add(disposable)
+    }
+
+    private fun onCheckedFavoriteStateChange(
+        productId: Long,
+        isChecked: Boolean,
+        isSuccessfulCallback: (Boolean) -> Unit,
+    ) {
+        val disposable = changeFavoriteStateUseCase.get()
+            .handle(id = productId, isFavorite = isChecked)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                isSuccessfulCallback(true)
+            }, { ex ->
+                ex.printStackTrace()
+                isSuccessfulCallback(false)
+                if (ex is HttpException) {
+                    when (ex.code()) {
+                        403 -> viewState.requireAuthorization()
+                        else -> viewState.displaySomethingGoesWrongError()
+                    }
                 }
             })
 

@@ -11,10 +11,8 @@ class AuthorizationInterceptor @Inject constructor(
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val path = chain.request().url().url().path
-        var requireAuthorizationHeader = authorizationRequiredEndpoints
-            .any { endpoint -> path.endsWith(endpoint) }
 
-        if (requireAuthorizationHeader && manager.token.value.isNotEmpty()) {
+        if (manager.token.value.isNotEmpty()) {
             val handledRequest = chain.request()
                 .newBuilder()
                 .addHeader("Authorization", manager.token.value)
@@ -25,13 +23,4 @@ class AuthorizationInterceptor @Inject constructor(
 
         return chain.proceed(chain.request())
     }
-
-    private val authorizationRequiredEndpoints = listOf(
-        "/cart",
-        "/cart/order",
-        "/feed",
-        "/favorites",
-        "/reviews",
-        "/user"
-    )
 }

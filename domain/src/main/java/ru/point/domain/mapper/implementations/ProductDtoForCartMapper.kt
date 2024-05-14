@@ -20,7 +20,8 @@ class ProductDtoForCartMapper : FeedProductListViewMapper {
                 id = dto.id,
                 name = dto.name,
                 url = dto.photosUrl[0],
-                price = StringFormatter.formatPrice(dto.price)
+                price = StringFormatter.formatPrice(dto.price),
+                isFavorite = dto.isFavorite
             )
         }
 

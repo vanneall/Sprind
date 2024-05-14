@@ -29,6 +29,20 @@
         app:layout_constraintTop_toTopOf="@id/image"
         tools:text="59 990" />
 
+    <CheckBox
+        android:id="@+id/is_favorite"
+        style="@style/checkbox_favorite_overlay"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:button="@drawable/selector_favorite"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/image"
+        app:layout_constraintStart_toEndOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintVertical_bias="1" />
+
     <TextView
         android:id="@+id/name"
         style="@style/regular_14"
