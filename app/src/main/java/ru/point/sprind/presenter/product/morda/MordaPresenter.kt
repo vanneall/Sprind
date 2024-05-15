@@ -38,6 +38,7 @@ class MordaPresenter @Inject constructor(
                 viewState.setAddress(vo.addressVo.address)
                 viewState.setAdapter(views = vo.productsVo)
             }, { ex ->
+                println("АХАХАХАХА ОШИБКА НА МОРДЕ")
                 viewState.displayLoadingScreen(show = false)
                 viewState.displayBadConnectionScreen(show = true)
                 ex.printStackTrace()

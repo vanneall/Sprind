@@ -9,7 +9,8 @@ class ComplexDtoToCartVoMapper {
 
     fun map(complexProductDto: ComplexProductDto): ComplexProductCartVoContainer {
         return ComplexProductCartVoContainer(
-            productsVo = mapper.map(complexProductDto)
+            productsVo = mapper.map(complexProductDto),
+            isAddressEmpty = complexProductDto.addressDto == null
         )
     }
 }

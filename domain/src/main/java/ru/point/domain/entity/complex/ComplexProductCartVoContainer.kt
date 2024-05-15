@@ -4,7 +4,8 @@ import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.entity.view.cart.CartEmptyVo
 
 data class ComplexProductCartVoContainer(
-    val productsVo: List<ViewObject>
+    val productsVo: List<ViewObject>,
+    val isAddressEmpty: Boolean
 ) {
     val isEmptyCartVo get() = if (productsVo.isEmpty()) CartEmptyVo() else null
 }

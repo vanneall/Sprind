@@ -46,6 +46,9 @@ dependencies {
     implementation(libs.moxy.androidx)
     implementation(libs.moxy.ktx)
     implementation(libs.moxy)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.moxy.material)
     kapt(libs.moxy.compiler)
 
     //Dagger2
@@ -67,7 +70,10 @@ dependencies {
     //RxJava3
     implementation(libs.rxjava)
     implementation(libs.rxandroid)
-    
+
+    //Yandex maps
+    implementation ("com.yandex.android:maps.mobile:4.6.1-lite")
+
     //Modules
     implementation(project(":data"))
     implementation(project(":domain"))

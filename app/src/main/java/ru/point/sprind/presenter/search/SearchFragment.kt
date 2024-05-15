@@ -48,6 +48,8 @@ class SearchFragment : MvpAppCompatFragment() {
                 findNavController().popBackStack()
             }
 
+            address.visibility = View.GONE
+
             search.addTextChangedListener { text ->
                 if (!text.isNullOrEmpty()) {
                     clearButton.visibility = View.VISIBLE

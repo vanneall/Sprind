@@ -6,6 +6,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.point.domain.entity.dto.user.AuthUserDto
 import ru.point.domain.entity.dto.user.RegisterUserDto
 import ru.point.domain.entity.dto.user.UserDto
+import ru.point.domain.entity.utils.AddressDto
 import ru.point.domain.entity.utils.Token
 import ru.point.domain.repository.UserRepository
 import ru.point.retrofit.api.UserApi
@@ -25,5 +26,9 @@ class RemoteUserRepository @Inject constructor(
 
     override fun get(): Single<UserDto> {
         return api.getUserInfo().subscribeOn(Schedulers.io())
+    }
+
+    override fun setNewAddress(address: AddressDto): Completable {
+        return api.setNewAddress(address = address).subscribeOn(Schedulers.io())
     }
 }

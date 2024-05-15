@@ -171,4 +171,28 @@
         android:name="ru.point.sprind.presenter.thanks.ThanksFragment"
         android:label="fragment_thanks"
         tools:layout="@layout/fragment_thanks" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="ru.point.sprind.presenter.maps.map.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment2_to_addressSelectionDialogFragment"
+            app:destination="@id/addressSelectionDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/addressSelectionDialogFragment"
+        android:name="ru.point.sprind.presenter.maps.popup.select.AddressSelectionDialogFragment"
+        android:label="AddressSelectionDialogFragment" >
+        <argument
+            android:name="city"
+            app:argType="string" />
+        <argument
+            android:name="street"
+            app:argType="string" />
+        <argument
+            android:name="house"
+            app:argType="string" />
+    </dialog>
+    <action android:id="@+id/action_global_mapFragment" app:destination="@id/mapFragment" />
 </navigation>

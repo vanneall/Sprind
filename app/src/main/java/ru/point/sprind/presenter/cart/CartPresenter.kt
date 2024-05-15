@@ -34,7 +34,7 @@ class CartPresenter @Inject constructor(
         ),
         CartEmptyDelegate(),
         CartPromocodeDelegate(),
-        CartHeaderDelegate(),
+        CartHeaderDelegate(viewState::changeAddress),
         CartSummaryDelegate()
     )
 
@@ -50,12 +50,12 @@ class CartPresenter @Inject constructor(
 
                 if (dto.isEmptyCartVo == null) {
                     viewState.setAdapter(dto.productsVo)
-                    viewState.displayPayButton(true)
+
+                    if (!dto.isAddressEmpty) viewState.displayPayButton(true)
                 } else {
                     viewState.displayPayButton(false)
                     viewState.setAdapter(listOf(dto.isEmptyCartVo!!))
                 }
-
             }, { ex ->
                 viewState.displayLoadingScreen(show = false)
                 ex.printStackTrace()

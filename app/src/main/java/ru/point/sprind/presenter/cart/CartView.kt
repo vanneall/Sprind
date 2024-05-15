@@ -15,4 +15,6 @@ interface CartView : ConnectionRequiredView, UsingAdapterView {
     fun openThanksScreen()
     @StateStrategyType(SkipStrategy::class)
     fun openCard(id: Long)
+    @StateStrategyType(SkipStrategy::class)
+    fun changeAddress()
 }

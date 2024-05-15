@@ -119,6 +119,11 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         }
     }
 
+    override fun changeAddress() {
+        val destination = CartFragmentDirections.actionGlobalMapFragment()
+        findNavController().navigate(destination)
+    }
+
     override fun openThanksScreen() {
         val destination = CartFragmentDirections.actionCartFragmentToThanksFragment()
         findNavController().navigate(destination)

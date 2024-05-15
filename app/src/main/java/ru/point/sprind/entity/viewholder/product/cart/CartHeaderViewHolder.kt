@@ -7,15 +7,23 @@ import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class CartHeaderViewHolder(
     private val binding: CartDeliveryHeaderBinding,
+    private val onChangeAddressClick: () -> Unit,
 ) : ViewHolderV2<CartHeaderVo>(binding.root) {
+
     override fun bind(view: CartHeaderVo) {
         if (view.address.address != null) {
-            binding.address.text = view.address.address
-            binding.address.setTextColor(
-                binding.root.resources.getColor(
-                    R.color.brown_orange
+            binding.address.apply {
+                text = view.address.address
+                setTextColor(
+                    binding.root.resources.getColor(
+                        R.color.brown_orange
+                    )
                 )
-            )
+
+                setOnClickListener {
+                    onChangeAddressClick()
+                }
+            }
         }
     }
 }

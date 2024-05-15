@@ -66,6 +66,11 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
                     MordaFragmentDirections.actionMordaFragmentToSearchFragment(request = null)
                 findNavController().navigate(destination)
             }
+
+            address.setOnClickListener {
+                val destination = MordaFragmentDirections.actionGlobalMapFragment()
+                findNavController().navigate(destination)
+            }
         }
     }
 

@@ -75,4 +75,10 @@
     <string name="advantage">Достоинства:</string>
     <string name="disadvantage">Недостатки:</string>
     <string name="commentary">Комментарий:</string>
+    <string name="city">Город</string>
+    <string name="address_selection">Выбор адреса</string>
+    <string name="input_street_hint">Улица</string>
+    <string name="input_house_hint">Дом</string>
+    <string name="input_flat_hint">Квартира</string>
+    <string name="podverdit">Подвтердить</string>
 </resources>

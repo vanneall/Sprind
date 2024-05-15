@@ -9,11 +9,14 @@ import ru.point.di.RepositoryModule
 import ru.point.di.RetrofitModule
 import ru.point.domain.factory.di.FactoryModule
 import ru.point.domain.usecase.di.UseCaseModule
+import ru.point.sprind.di.MapUtilsModule
 import ru.point.sprind.presenter.auth.authorization.AuthorizationFragment
 import ru.point.sprind.presenter.auth.registration.credentials.CredentialsFragment
 import ru.point.sprind.presenter.auth.registration.password.RegistrationFragment
 import ru.point.sprind.presenter.cart.CartFragment
 import ru.point.sprind.presenter.favorites.FavoritesFragment
+import ru.point.sprind.presenter.maps.map.MapFragment
+import ru.point.sprind.presenter.maps.popup.select.AddressSelectionDialogFragment
 import ru.point.sprind.presenter.product.card.ProductCardFragment
 import ru.point.sprind.presenter.product.morda.MordaFragment
 import ru.point.sprind.presenter.product.result.ResultFragment
@@ -28,6 +31,7 @@ import javax.inject.Singleton
         UseCaseModule::class, FactoryModule::class,
         RepositoryModule::class, RetrofitModule::class,
         InterceptorModule::class, ManagerModule::class,
+        MapUtilsModule::class,
     ]
 )
 interface AppComponent {
@@ -55,6 +59,10 @@ interface AppComponent {
     fun inject(fragment: CreateReviewFragment)
 
     fun inject(fragment: ProfileFragment)
+
+    fun inject(fragment: MapFragment)
+
+    fun inject(fragment: AddressSelectionDialogFragment)
 
     @Component.Factory
     interface AppComponentFactory {

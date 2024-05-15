@@ -9,7 +9,9 @@ import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 import ru.point.sprind.entity.viewholder.product.cart.CartHeaderViewHolder
 
-class CartHeaderDelegate : Delegate<CartHeaderVo> {
+class CartHeaderDelegate(
+    private val onChangeAddressClick: () -> Unit
+) : Delegate<CartHeaderVo> {
 
     override fun isSupported(view: ViewObject) = view is CartHeaderVo
 
@@ -20,6 +22,6 @@ class CartHeaderDelegate : Delegate<CartHeaderVo> {
             false
         )
 
-        return CartHeaderViewHolder(binding = binding)
+        return CartHeaderViewHolder(binding = binding, onChangeAddressClick = onChangeAddressClick)
     }
 }
