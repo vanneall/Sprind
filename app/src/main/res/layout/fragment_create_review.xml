@@ -1,142 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_theme_surface"
-    android:paddingHorizontal="32dp"
     tools:context=".presenter.review.create.CreateReviewFragment">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar_title"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/rating_layout"
-        style="@style/CustomTextInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/rating"
-            style="@style/regular_16"
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/rating_hint"
-            android:inputType="numberDecimal"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="20dp" />
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/advantages_layout"
-        style="@style/CustomTextInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rating_layout">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/advantages"
-            style="@style/regular_16"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/rating_layout"
+            style="@style/CustomTextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/advantage"
-            android:inputType="text"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="20dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/rating"
+                style="@style/regular_16"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/rating_hint"
+                android:inputType="numberDecimal"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="20dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/disadvantages_layout"
-        style="@style/CustomTextInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/advantages_layout">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/disadvantages"
-            style="@style/regular_16"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/advantages_layout"
+            style="@style/CustomTextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/disadvantage"
-            android:inputType="text"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="20dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rating_layout">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/advantages"
+                style="@style/regular_16"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/advantage"
+                android:inputType="textMultiLine"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="20dp"
+                android:singleLine="false" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/commentary_layout"
-        style="@style/CustomTextInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/disadvantages_layout">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/commentary"
-            style="@style/regular_16"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/disadvantages_layout"
+            style="@style/CustomTextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/commentary"
-            android:inputType="text"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="20dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/advantages_layout">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/disadvantages"
+                style="@style/regular_16"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/disadvantage"
+                android:inputType="textMultiLine"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="20dp"
+                android:singleLine="false" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/save"
-        style="@style/MaterialButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/commentary_layout"
-        app:layout_constraintVertical_bias="0.9" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <include
-        android:id="@+id/loading_screen"
-        layout="@layout/loading_screen"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/commentary_layout"
+            style="@style/CustomTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/disadvantages_layout">
 
-    <include
-        android:id="@+id/bad_connection"
-        layout="@layout/no_connection_screen"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/commentary"
+                style="@style/regular_16"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/commentary"
+                android:imeOptions="normal"
+                android:inputType="textMultiLine"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="20dp"
+                android:singleLine="false" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/save"
+            style="@style/MaterialButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:text="@string/add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/commentary_layout"
+            app:layout_constraintVertical_bias="0.9" />
+
+
+        <include
+            android:id="@+id/loading_screen"
+            layout="@layout/loading_screen"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        <include
+            android:id="@+id/bad_connection"
+            layout="@layout/no_connection_screen"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    </LinearLayout>
+
+</ScrollView>

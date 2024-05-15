@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import ru.point.sprind.R
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentCreateReviewBinding
 import javax.inject.Inject
@@ -40,6 +41,8 @@ class CreateReviewFragment : MvpAppCompatFragment(), CreateReviewView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.toolbar.title.text = getString(R.string.create_review_title)
+
         binding.save.setOnClickListener {
             presenter.addReview(binding.rating.text.toString(), binding.commentary.text.toString())
         }

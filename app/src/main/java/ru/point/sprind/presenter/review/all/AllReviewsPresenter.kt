@@ -12,7 +12,8 @@ import ru.point.sprind.presenter.review.all.AllReviewsPresenterFactory.Companion
 
 @InjectViewState
 class AllReviewsPresenter @AssistedInject constructor(
-    @Assisted(ID) id: Long,
+    @Assisted(ID)
+    private val id: Long,
     private val getReviewsByProductIdUseCase: GetReviewsByProductIdUseCase,
 ) : MvpPresenter<AllReviewsView>() {
 
@@ -22,7 +23,7 @@ class AllReviewsPresenter @AssistedInject constructor(
         ReviewDelegate()
     )
 
-    init {
+    fun init() {
         viewState.displayLoadingScreen(show = true)
         val disposable = getReviewsByProductIdUseCase.handle(id)
             .observeOn(AndroidSchedulers.mainThread())

@@ -61,6 +61,11 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.init()
+    }
+
     override fun displayBadConnectionScreen(show: Boolean) {
         binding.badConnection.root.visibility = if (show) {
             View.VISIBLE
