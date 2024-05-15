@@ -154,12 +154,14 @@ class MapFragment : MvpAppCompatFragment() {
             if (!task.isSuccessful) return@addOnCompleteListener
 
             val location = task.result
-            val latitude = location.latitude
-            val longitude = location.longitude
+
+            val latitude = location?.latitude ?: MOSCOW_LATITUDE
+            val longitude = location?.longitude ?: MOSCOW_LONGITUDE
             val startLocation = Point(latitude, longitude)
 
+            val zoom =  if (location != null) 17.0f else 10f
             binding.mapView.mapWindow.map.move(
-                CameraPosition(startLocation, 17.0f, 150.0f, 30.0f),
+                CameraPosition(startLocation, zoom, 150.0f, 30.0f),
                 Animation(Animation.Type.SMOOTH, 1f),
                 null
             )
@@ -183,6 +185,7 @@ class MapFragment : MvpAppCompatFragment() {
         return isLocationPermGranted && isLocationAccessPermGranted
     }
 
+
     override fun onStart() {
         super.onStart()
         MapKitFactory.getInstance().onStart()
@@ -200,3 +203,6 @@ class MapFragment : MvpAppCompatFragment() {
         _binding = null
     }
 }
+
+private const val MOSCOW_LATITUDE = 55.758021
+private const val MOSCOW_LONGITUDE = 37.617638

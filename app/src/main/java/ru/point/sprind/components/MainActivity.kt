@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        MapKitFactory.setApiKey("f425d115-72d7-4ff9-bff7-20f64fbd8769")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -28,14 +29,12 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor =
             ContextCompat.getColor(this, ru.point.sprind.R.color.md_theme_surfaceVariant)
 
-        MapKitFactory.setApiKey("f425d115-72d7-4ff9-bff7-20f64fbd8769")
-        MapKitFactory.initialize(this)
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(ru.point.sprind.R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
+        MapKitFactory.initialize(this)
     }
 
     override fun onStart() {
