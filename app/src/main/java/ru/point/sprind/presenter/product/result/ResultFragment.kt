@@ -120,6 +120,13 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
         ).show()
     }
 
+    override fun setAddress(address: String?) {
+        if (address != null) {
+            binding.toolbar.address.text = address
+            binding.toolbar.address.setTextColor(resources.getColor(R.color.brown_orange))
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding.recyclerView.adapter = null

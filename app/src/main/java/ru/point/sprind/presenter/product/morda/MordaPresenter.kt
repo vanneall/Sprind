@@ -33,9 +33,10 @@ class MordaPresenter @Inject constructor(
         viewState.displayLoadingScreen(show = true)
         val disposable = getProductsUseCase.handle()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ list ->
+            .subscribe({ vo ->
                 viewState.displayLoadingScreen(show = false)
-                viewState.setAdapter(views = list)
+                viewState.setAddress(vo.addressVo.address)
+                viewState.setAdapter(views = vo.productsVo)
             }, { ex ->
                 viewState.displayLoadingScreen(show = false)
                 viewState.displayBadConnectionScreen(show = true)

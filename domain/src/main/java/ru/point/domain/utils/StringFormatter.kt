@@ -1,5 +1,6 @@
 package ru.point.domain.utils
 
+import ru.point.domain.entity.utils.AddressDto
 import ru.point.domain.entity.utils.Currency
 import ru.point.domain.entity.utils.Price
 
@@ -24,6 +25,18 @@ object StringFormatter {
         val formattedPrice = stringPriceBuilder.reverse().toString()
         val formattedCurrency = currencyFormatter(price.currency)
         return "$formattedPrice $formattedCurrency"
+    }
+
+    fun formatAddress(addressDto: AddressDto?): String? {
+        if (addressDto == null || isAnyFromAddressIsNull(addressDto)) return null
+        return "${addressDto.street}, д.${addressDto.house}, кв.${addressDto.flat}"
+    }
+
+    private fun isAnyFromAddressIsNull(addressDto: AddressDto): Boolean {
+        return addressDto.city == null ||
+                addressDto.street == null ||
+                addressDto.house == null ||
+                addressDto.flat == null
     }
 
 

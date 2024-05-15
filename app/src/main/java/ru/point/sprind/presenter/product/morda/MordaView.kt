@@ -1,5 +1,6 @@
 package ru.point.sprind.presenter.product.morda
 
+import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
 import ru.point.sprind.presenter.general.ConnectionRequiredView
@@ -11,4 +12,6 @@ interface MordaView : ConnectionRequiredView, UsingAdapterView {
     fun openCard(id: Long)
     @StateStrategyType(SkipStrategy::class)
     fun requireAuthorization()
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun setAddress(address: String?)
 }

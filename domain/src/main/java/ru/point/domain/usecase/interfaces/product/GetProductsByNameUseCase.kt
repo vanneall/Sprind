@@ -1,8 +1,8 @@
 package ru.point.domain.usecase.interfaces.product
 
 import io.reactivex.rxjava3.core.Observable
-import ru.point.domain.entity.dto.product.ProductFeedDto
+import ru.point.domain.entity.complex.ComplexProductFeedVoContainer
 
 interface GetProductsByNameUseCase {
-    fun handle(search: String): Observable<List<ProductFeedDto>>
+    fun handle(search: String): Observable<ComplexProductFeedVoContainer>
 }

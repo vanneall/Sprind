@@ -45,15 +45,17 @@ class CartPresenter @Inject constructor(
         val disposable = getProductsInCartUseCase
             .handle()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ list ->
+            .subscribe({ dto ->
                 viewState.displayLoadingScreen(show = false)
 
-                if (list.first() !is CartEmptyVo) {
+                if (dto.isEmptyCartVo == null) {
+                    viewState.setAdapter(dto.productsVo)
                     viewState.displayPayButton(true)
                 } else {
                     viewState.displayPayButton(false)
+                    viewState.setAdapter(listOf(dto.isEmptyCartVo!!))
                 }
-                viewState.setAdapter(list)
+
             }, { ex ->
                 viewState.displayLoadingScreen(show = false)
                 ex.printStackTrace()

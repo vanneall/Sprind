@@ -3,7 +3,7 @@ package ru.point.repository.remote
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import ru.point.domain.entity.dto.product.ProductFeedDto
+import ru.point.domain.entity.dto.complex.ComplexProductDto
 import ru.point.domain.repository.CartRepository
 import ru.point.retrofit.api.CartApi
 import javax.inject.Inject
@@ -12,7 +12,7 @@ class RemoteCartRepository @Inject constructor(
     private val api: CartApi,
 ) : CartRepository {
 
-    override fun getProducts(): Observable<List<ProductFeedDto>> {
+    override fun getProducts(): Observable<ComplexProductDto> {
         return api.getProductsFromCart().subscribeOn(Schedulers.io())
     }
 

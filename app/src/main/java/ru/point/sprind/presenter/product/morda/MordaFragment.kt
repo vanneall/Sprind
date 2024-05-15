@@ -103,6 +103,13 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
         }
     }
 
+    override fun setAddress(address: String?) {
+        if (address != null) {
+            binding.toolbar.address.text = address
+            binding.toolbar.address.setTextColor(resources.getColor(R.color.brown_orange))
+        }
+    }
+
     override fun setAdapter(views: List<ViewObject>) {
         adapter.views = views
     }

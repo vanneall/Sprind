@@ -37,9 +37,10 @@ class ResultPresenter @AssistedInject constructor(
         viewState.displayLoadingScreen(show = true)
         val disposable = getProductsByNameUseCase.handle(query)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ list ->
+            .subscribe({ vo ->
                 viewState.displayLoadingScreen(show = false)
-                viewState.setAdapter(views = list)
+                viewState.setAddress(vo.addressVo.address)
+                viewState.setAdapter(views = vo.productsVo)
             }, { ex ->
                 viewState.displayLoadingScreen(show = false)
                 viewState.displayBadConnectionScreen(show = true)
