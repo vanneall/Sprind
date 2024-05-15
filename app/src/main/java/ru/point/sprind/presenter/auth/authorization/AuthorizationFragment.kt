@@ -46,12 +46,10 @@ class AuthorizationFragment : MvpAppCompatFragment(), AuthView {
 
     private fun initializeLogInButton() {
         binding.buttonEnter.setOnClickListener {
-            with(binding) {
-                presenter.auth(
-                    inputLogin.text.toString(),
-                    inputPassword.text.toString()
-                )
-            }
+            presenter.auth(
+                binding.inputLogin.text.toString(),
+                binding.inputPassword.text.toString()
+            )
         }
     }
 
