@@ -48,6 +48,10 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         binding.favorites.setOnClickListener {
             findNavController().navigate(R.id.action_profile_fragment_to_favorites_fragment)
         }
+
+        binding.aboutApp.setOnClickListener {
+            findNavController().navigate(R.id.action_profile_fragment_to_aboutAppFragment)
+        }
     }
 
     override fun setUsername(name: String) {

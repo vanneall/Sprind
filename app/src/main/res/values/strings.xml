@@ -81,4 +81,7 @@
     <string name="input_house_hint">Дом</string>
     <string name="input_flat_hint">Квартира</string>
     <string name="podverdit">Подвтердить</string>
+    <string name="about_app">О приложении</string>
+    <string name="about_sprind"><b>Sprind</b> - некоммерчиский пет проект в сфере маркетплейсов, является проектом с открытым исходным кодом и доступом.\n\nПолный функционал приложения доступен только при установке и настройке дополнительного компонента - <b>SprindServer</b>\n\nРегистрация, использующаяся в приложении, работает вместе с другим проектом с открытым исходным кодом и доступом на сервере <b>SprindServer</b>.</string>
+    <string name="yandex_maps_terms"><a href="https://yandex.ru/legal/maps_termsofuse/">Ссылка на «Условия использование Яндекс.Карт»</a></string>
 </resources>
