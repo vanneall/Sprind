@@ -23,7 +23,6 @@ import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.map.GeoObjectSelectionMetadata
 import com.yandex.mapkit.map.InputListener
 import com.yandex.mapkit.map.Map
-import com.yandex.runtime.image.ImageProvider
 import moxy.MvpAppCompatFragment
 import ru.point.sprind.R
 import ru.point.sprind.components.SprindApplication
@@ -39,9 +38,6 @@ class MapFragment : MvpAppCompatFragment() {
 
     @Inject
     lateinit var fusedLocationClient: FusedLocationProviderClient
-
-    @Inject
-    lateinit var bitmapMarkerProvider: ImageProvider
 
     private val onObjectTap = GeoObjectTapListener { geoObjectTapEvent ->
         val selectionMetadata = geoObjectTapEvent

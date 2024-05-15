@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="32dp"
+    android:background="@color/md_theme_surface"
     tools:context=".presenter.auth.password.change.ChangePasswordFragment">
 
     <com.google.android.material.textview.MaterialTextView

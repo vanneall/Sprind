@@ -2,6 +2,7 @@ package ru.point.sprind.entity.viewholder.product.cart
 
 import coil.load
 import coil.size.Scale
+import coil.transform.RoundedCornersTransformation
 import ru.point.domain.entity.view.cart.CartProductVo
 import ru.point.sprind.databinding.CartProductCardBinding
 import ru.point.sprind.entity.viewholder.ViewHolderV2
@@ -15,10 +16,9 @@ class CartProductViewHolder(
 
     override fun bind(view: CartProductVo) {
         with(binding) {
-            image.load(
-                view.url
-            ) {
+            image.load(view.url) {
                 scale(Scale.FIT)
+                transformations(RoundedCornersTransformation(30f))
             }
             name.text = view.name
             price.text = view.price

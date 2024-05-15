@@ -16,7 +16,7 @@ class CharacteristicSectionViewHolder(
         binding.root.setOnClickListener {
             isExpanded = !isExpanded
             if (isExpanded) {
-                binding.root.setBackgroundResource(R.drawable.card_background_full)
+                binding.root.setBackgroundResource(R.drawable.card_background_top)
                 binding.dropdownArrow.rotation = 180f
             } else {
                 binding.root.setBackgroundResource(R.drawable.card_background_full)

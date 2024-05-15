@@ -2,6 +2,7 @@ package ru.point.sprind.entity.viewholder.product.feed
 
 import coil.load
 import coil.size.Scale
+import coil.transform.RoundedCornersTransformation
 import ru.point.domain.entity.view.product.card.ProductFeedVo
 import ru.point.sprind.databinding.VerticalCardItemBinding
 import ru.point.sprind.entity.viewholder.ViewHolderV2
@@ -18,6 +19,7 @@ class ProductViewHolder(
             view.photosUrl[0]
         ) {
             scale(Scale.FIT)
+            transformations(RoundedCornersTransformation(50f, 50f))
         }
         name.text = view.name
         price.text = view.price

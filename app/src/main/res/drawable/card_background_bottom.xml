@@ -5,6 +5,7 @@
     <corners
         android:bottomLeftRadius="20dp"
         android:bottomRightRadius="20dp" />
-    <solid android:color="@color/design_default_color_surface" />
+
+    <solid android:color="@color/md_theme_surfaceContainerHigh" />
 
 </shape>

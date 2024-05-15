@@ -111,7 +111,7 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
     override fun setAddress(address: String?) {
         if (address != null) {
             binding.toolbar.address.text = address
-            binding.toolbar.address.setTextColor(resources.getColor(R.color.brown_orange))
+            binding.toolbar.address.setTextColor(resources.getColor(R.color.md_theme_tertiaryContainer))
         }
     }
 

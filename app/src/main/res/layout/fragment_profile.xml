@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/md_theme_surface"
     tools:context=".presenter.profile.main.ProfileFragment">
 
     <include
@@ -34,6 +34,7 @@
         style="@style/regular_16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="26dp"
         android:background="@drawable/card_background_full"
         android:paddingHorizontal="12dp"
@@ -49,6 +50,7 @@
         style="@style/regular_16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/card_background_full"
         android:paddingHorizontal="12dp"
@@ -64,6 +66,7 @@
         style="@style/regular_16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/card_background_full"
         android:paddingHorizontal="12dp"
@@ -79,6 +82,7 @@
         style="@style/regular_16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/card_background_full"
         android:paddingHorizontal="12dp"
@@ -94,6 +98,7 @@
         style="@style/regular_16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/card_background_full"
         android:paddingHorizontal="12dp"
