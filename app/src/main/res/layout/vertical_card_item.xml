@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <CheckBox
+    <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/is_favorite"
         style="@style/checkbox_favorite_overlay"
         android:layout_width="30dp"
@@ -27,11 +27,10 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:button="@drawable/selector_favorite"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/price"
         style="@style/medium_14"
         android:layout_width="0dp"
@@ -43,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@id/image"
         tools:text="59 990 ₽" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/name"
         style="@style/regular_12"
         android:layout_width="0dp"
@@ -57,6 +56,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buy_button"
         style="@style/medium_14"
+        app:cornerRadius="20dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/buy"

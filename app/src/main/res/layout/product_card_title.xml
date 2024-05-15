@@ -8,7 +8,7 @@
     android:paddingHorizontal="20dp"
     android:paddingVertical="10dp">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title"
         style="@style/regular_20"
         android:layout_width="wrap_content"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Google pixel 8 Обсидиан" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/price"
         style="@style/regular_20"
         android:layout_width="wrap_content"
@@ -42,30 +42,5 @@
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toEndOf="@id/title"
         app:layout_constraintTop_toTopOf="@id/title" />
-
-    <TextView
-        android:id="@+id/rating"
-        style="@style/regular_12"
-        android:layout_width="26dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/price"
-        tools:text="5.0" />
-
-    <androidx.appcompat.widget.AppCompatRatingBar
-        style="@style/Widget.AppCompat.RatingBar.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxWidth="25dp"
-        android:maxHeight="25dp"
-        android:numStars="1"
-        android:rating="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toEndOf="@id/rating"
-        app:layout_constraintTop_toBottomOf="@id/price" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

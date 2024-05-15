@@ -13,7 +13,6 @@ class ProductTitleViewHolder(
         with(binding) {
             title.text = view.title
             price.text = view.price
-            rating.text = view.rating
             favoriteCheckbox.isChecked = view.isFavorite
 
             favoriteCheckbox.setOnClickListener {

@@ -12,7 +12,7 @@ class AuthorizationInterceptor @Inject constructor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val path = chain.request().url().url().path
 
-        if (manager.token.value.isNotEmpty()) {
+        if (manager.token.value.isNotEmpty() || !path.endsWith("auth")) {
             val handledRequest = chain.request()
                 .newBuilder()
                 .addHeader("Authorization", manager.token.value)

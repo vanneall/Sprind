@@ -7,7 +7,7 @@
     android:paddingHorizontal="44dp"
     tools:context=".presenter.auth.registration.password.RegistrationFragment">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/registration_title"
         style="@style/medium_20"
         android:layout_width="wrap_content"
@@ -18,58 +18,75 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <EditText
-        android:id="@+id/input_login"
-        style="@style/regular_16"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_login_layout"
+        style="@style/CustomTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
-        android:autofillHints=""
-        android:background="@drawable/authorization_input_background"
-        android:hint="@string/input_login_hint"
-        android:inputType="text"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="20dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/registration_title" />
+        app:layout_constraintTop_toBottomOf="@id/registration_title">
 
-    <EditText
-        android:id="@+id/input_secret"
-        style="@style/regular_16"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_login"
+            style="@style/regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/input_login_hint"
+            android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_secret_layout"
+        style="@style/CustomTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:autofillHints=""
-        android:background="@drawable/authorization_input_background"
-        android:hint="@string/input_secret_hint"
-        android:inputType="text"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="20dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_login" />
+        app:layout_constraintTop_toBottomOf="@id/input_login_layout">
 
-    <EditText
-        android:id="@+id/input_password"
-        style="@style/regular_16"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_secret"
+            style="@style/regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/input_secret_hint"
+            android:inputType="textPassword"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_password_layout"
+        style="@style/CustomTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:autofillHints=""
-        android:background="@drawable/authorization_input_background"
-        android:hint="@string/input_password_hint"
-        android:inputType="textPassword"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="20dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_secret" />
+        app:layout_constraintTop_toBottomOf="@id/input_login_layout">
 
-    <Button
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_password"
+            style="@style/regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/input_password_hint"
+            android:inputType="textPassword"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_start_registration"
-        style="@style/regular_18"
+        style="@style/MaterialButtonOutlinedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -79,9 +96,9 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_password" />
+        app:layout_constraintTop_toBottomOf="@id/input_password_layout" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_reset_password"
         style="@style/regular_14"
         android:layout_width="wrap_content"

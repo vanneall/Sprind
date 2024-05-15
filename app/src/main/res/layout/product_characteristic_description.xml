@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/design_default_color_surface"
-    android:paddingVertical="8dp"
-    android:paddingHorizontal="20dp">
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="8dp">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -17,10 +17,11 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Код товара" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent"

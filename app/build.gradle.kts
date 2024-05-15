@@ -78,6 +78,7 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
 
+    implementation ("com.google.android.material:material:1.6.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

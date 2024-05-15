@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/no_product"
         style="@style/bold_20"
         android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/not_found_illustration" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/no_product_description"
         style="@style/regular_14"
         android:layout_width="wrap_content"

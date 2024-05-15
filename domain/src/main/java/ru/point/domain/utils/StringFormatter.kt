@@ -32,6 +32,10 @@ object StringFormatter {
         return "${addressDto.street}, д.${addressDto.house}, кв.${addressDto.flat}"
     }
 
+    fun checkStringsNotEmpty(vararg values: String): Boolean {
+        return values.all { value -> value.isNotEmpty() }
+    }
+
     private fun isAnyFromAddressIsNull(addressDto: AddressDto): Boolean {
         return addressDto.city == null ||
                 addressDto.street == null ||

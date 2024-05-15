@@ -8,7 +8,7 @@
     android:paddingHorizontal="16dp"
     android:paddingVertical="16dp">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/delivery_title"
         style="@style/regular_14"
         android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/delivery_price"
         style="@style/medium_14"
         android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="@id/delivery_title"
         tools:text="0" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/products_sum_title"
         style="@style/regular_14"
         android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/delivery_title" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/products_sum_price"
         style="@style/medium_14"
         android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="@id/products_sum_title"
         tools:text="0" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/discount_title"
         style="@style/regular_14"
         android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/products_sum_title" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/discount_price"
         style="@style/medium_14"
         android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
         app:layout_constraintTop_toTopOf="@id/discount_title"
         tools:text="0" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/promocode_title"
         style="@style/regular_14"
         android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/discount_title" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/promocode_price"
         style="@style/medium_14"
         android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
         app:layout_constraintTop_toTopOf="@id/promocode_title"
         tools:text="0" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/summary_title"
         style="@style/bold_20"
         android:layout_width="wrap_content"
@@ -93,7 +93,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/promocode_title" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/summary_price"
         style="@style/bold_20"
         android:layout_width="wrap_content"

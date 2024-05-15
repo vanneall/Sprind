@@ -56,29 +56,43 @@ class AddressSelectionDialogFragment : MvpBottomSheetDialogFragment(), AddressSe
     private fun initializeCommitButton() {
         with(binding) {
             selectButton.setOnClickListener {
-                if (isAllAddressFieldNotEmpty()) {
-                    presenter.commit(
-                        city = binding.inputCity.text.toString(),
-                        street = binding.inputStreet.text.toString(),
-                        house = binding.inputHouse.text.toString(),
-                        flat = binding.inputFlat.text.toString()
-                    )
-                }
+                presenter.commit(
+                    city = binding.inputCity.text.toString(),
+                    street = binding.inputStreet.text.toString(),
+                    house = binding.inputHouse.text.toString(),
+                    flat = binding.inputFlat.text.toString()
+                )
             }
-        }
-    }
-
-    private fun isAllAddressFieldNotEmpty(): Boolean {
-        return with(binding) {
-            inputCity.text.isNotEmpty() &&
-                    inputStreet.text.isNotEmpty() &&
-                    inputHouse.text.isNotEmpty() &&
-                    inputFlat.text.isNotEmpty()
         }
     }
 
     override fun closeAddressSelectionStack() {
         findNavController().popBackStack(R.id.mapFragment, true)
+    }
+
+    override fun displayErrorOnInputLayout(
+        isCityError: Boolean,
+        isStreetError: Boolean,
+        isHouseError: Boolean,
+        isFlatError: Boolean,
+    ) {
+        with(binding) {
+            if (isCityError) {
+                inputCityLayout.error = getString(R.string.field_can_not_be_empty)
+            }
+
+            if (isStreetError) {
+                inputStreetLayout.error = getString(R.string.field_can_not_be_empty)
+            }
+
+            if (isHouseError) {
+                inputHouseLayout.error = getString(R.string.field_can_not_be_empty)
+            }
+
+            if (isFlatError) {
+                inputFlatLayout.error = getString(R.string.field_can_not_be_empty)
+            }
+        }
     }
 
     override fun displaySomethingGoesWrongError() {

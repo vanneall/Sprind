@@ -13,7 +13,7 @@ import javax.inject.Inject
 @InjectViewState
 class AuthPresenter @Inject constructor(
     private val authorizeUseCase: Lazy<AuthorizeUseCase>,
-    private val settingsManager: SettingsManager
+    private val settingsManager: SettingsManager,
 ) : MvpPresenter<AuthView>() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -23,15 +23,24 @@ class AuthPresenter @Inject constructor(
     }
 
     fun auth(username: String, password: String) {
+        if (username.isEmpty() || password.isEmpty()) {
+            viewState.displayErrorOnInputLayout()
+            return
+        }
+
         val disposable = authorizeUseCase.get().handle(username = username, password = password)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 Log.v("Auth", it.value)
                 viewState.successfulAuthorization()
                 settingsManager.token = it
-                Log.i("Token", "Token in data store after getting token: ${settingsManager.token?.value}")
+                Log.i(
+                    "Token",
+                    "Token in data store after getting token: ${settingsManager.token.value}"
+                )
             }, {
                 it.printStackTrace()
+                viewState.displayWrongCredentials()
             })
 
         compositeDisposable.add(disposable)
