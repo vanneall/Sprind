@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/bad_connection"
         style="@style/bold_20"
         android:layout_width="wrap_content"
@@ -26,15 +26,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bad_connection_illustration" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/bad_connection_desc"
         style="@style/regular_14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:paddingHorizontal="20dp"
         android:text="@string/bad_connection_description"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bad_connection" />
 

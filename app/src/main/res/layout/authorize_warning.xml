@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     android:background="@drawable/card_background_full">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_warning"
-        style="@style/bold_16"
+        style="@style/bold_20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -20,6 +20,7 @@
         android:id="@+id/authorize_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/MaterialButtonStyle"
         android:text="@string/authorize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

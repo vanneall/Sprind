@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import ru.point.sprind.R
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentAuthorizationBinding
 import javax.inject.Inject
@@ -45,10 +46,12 @@ class AuthorizationFragment : MvpAppCompatFragment(), AuthView {
 
     private fun initializeLogInButton() {
         binding.buttonEnter.setOnClickListener {
-            presenter.auth(
-                binding.inputLogin.text.toString(),
-                binding.inputPassword.text.toString()
-            )
+            with(binding) {
+                presenter.auth(
+                    inputLogin.toString(),
+                    inputPassword.text.toString()
+                )
+            }
         }
     }
 
@@ -67,6 +70,18 @@ class AuthorizationFragment : MvpAppCompatFragment(), AuthView {
                 directions = AuthorizationFragmentDirections
                     .actionAuthorizationFragmentToVerifyUserFragment()
             )
+        }
+    }
+
+    override fun displayErrorOnInputLayout() {
+        with(binding) {
+            if (inputLogin.text.isNullOrEmpty()) {
+                inputLoginLayout.error = getString(R.string.field_can_not_be_empty)
+            }
+
+            if (inputPassword.text.isNullOrEmpty()) {
+                inputPasswordLayout.error = getString(R.string.field_can_not_be_empty)
+            }
         }
     }
 

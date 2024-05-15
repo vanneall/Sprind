@@ -7,7 +7,7 @@
     android:paddingHorizontal="40dp"
     android:paddingVertical="44dp">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title"
         style="@style/bold_20"
         android:layout_width="wrap_content"
@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/description"
         style="@style/regular_14"
         android:layout_width="wrap_content"

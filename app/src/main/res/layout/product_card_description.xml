@@ -8,7 +8,7 @@
     android:paddingHorizontal="20dp"
     android:paddingVertical="10dp">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/about"
         style="@style/bold_16"
         android:layout_width="wrap_content"
@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@id/about"
         tools:text="Pixel 8 — умный смартфон от Google с впечатляющей камерой, мощными функциями безопасности и аккумулятором, которого хватает на целый день." />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/shop"
         style="@style/bold_16"
         android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/shop_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@id/shop"
         tools:text="Google store" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/category"
         style="@style/bold_16"
         android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/shop_name" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/category_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

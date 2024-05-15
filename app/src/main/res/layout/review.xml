@@ -8,7 +8,7 @@
     android:paddingHorizontal="20dp"
     android:paddingVertical="10dp">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_username"
         style="@style/regular_16"
         android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Иван Демин" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         app:layout_constraintStart_toEndOf="@id/text_rating"
         app:layout_constraintTop_toTopOf="@id/text_rating" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/advantage_title"
         style="@style/bold_14"
         android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_username" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/advantage_text"
         style="@style/regular_14"
         android:layout_width="0dp"
@@ -59,7 +59,7 @@
         app:layout_constraintTop_toTopOf="@id/advantage_title"
         tools:text="Телефон просто бомба" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/disadvantage_title"
         style="@style/bold_14"
         android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/advantage_text" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/disadvantage_text"
         style="@style/regular_14"
         android:layout_width="0dp"
@@ -80,7 +80,7 @@
         app:layout_constraintTop_toTopOf="@id/disadvantage_title"
         tools:text="Телефон просто бомба" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/description_title"
         style="@style/bold_14"
         android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/disadvantage_text" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/description_text"
         style="@style/regular_14"
         android:layout_width="0dp"

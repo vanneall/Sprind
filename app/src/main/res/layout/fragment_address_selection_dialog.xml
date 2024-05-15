@@ -5,94 +5,120 @@
     android:id="@+id/list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingHorizontal="32dp"
     android:paddingTop="20dp"
-    android:paddingHorizontal="44dp"
     android:paddingBottom="60dp">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/address_selection"
+        style="@style/bold_18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/address_selection"
         app:layout_constraintEnd_toEndOf="parent"
-        style="@style/bold_18"
-        android:text="@string/address_selection"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/input_city"
-        style="@style/regular_16"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_city_layout"
+        style="@style/CustomTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:autofillHints=""
-        android:background="@drawable/authorization_input_background"
-        android:hint="@string/city"
-        android:inputType="text"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="20dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/address_selection" />
+        app:layout_constraintTop_toBottomOf="@id/address_selection">
 
-    <EditText
-        android:id="@+id/input_street"
-        style="@style/regular_16"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_city"
+            style="@style/regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/city"
+            android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_street_layout"
+        style="@style/CustomTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:autofillHints=""
-        android:background="@drawable/authorization_input_background"
-        android:hint="@string/input_street_hint"
-        android:inputType="text"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="20dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_city" />
+        app:layout_constraintTop_toBottomOf="@id/input_city_layout">
 
-    <EditText
-        android:id="@+id/input_house"
-        style="@style/regular_16"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_street"
+            style="@style/regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/input_street_hint"
+            android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_house_layout"
+        style="@style/CustomTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:autofillHints=""
-        android:background="@drawable/authorization_input_background"
-        android:hint="@string/input_house_hint"
-        android:inputType="text"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="20dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_street" />
+        app:layout_constraintTop_toBottomOf="@id/input_street_layout">
 
-    <EditText
-        android:id="@+id/input_flat"
-        style="@style/regular_16"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_house"
+            style="@style/regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/input_house_hint"
+            android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_flat_layout"
+        style="@style/CustomTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:autofillHints=""
-        android:background="@drawable/authorization_input_background"
-        android:hint="@string/input_flat_hint"
-        android:inputType="text"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="20dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_house" />
+        app:layout_constraintTop_toBottomOf="@id/input_house_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_flat"
+            style="@style/regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/input_flat_hint"
+            android:inputType="number"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/select_button"
+        style="@style/MaterialButtonStyle"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textSize="16sp"
         android:text="@string/podverdit"
-        app:layout_constraintTop_toBottomOf="@id/input_flat"/>
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_flat_layout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

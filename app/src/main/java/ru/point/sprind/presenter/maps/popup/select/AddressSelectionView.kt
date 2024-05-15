@@ -8,6 +8,15 @@ import moxy.viewstate.strategy.StateStrategyType
 interface AddressSelectionView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun closeAddressSelectionStack()
+
     @StateStrategyType(SkipStrategy::class)
     fun displaySomethingGoesWrongError()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun displayErrorOnInputLayout(
+        isCityError: Boolean,
+        isStreetError: Boolean,
+        isHouseError: Boolean,
+        isFlatError: Boolean,
+    )
 }

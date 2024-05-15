@@ -126,7 +126,7 @@
         android:id="@+id/changePasswordFragment"
         android:name="ru.point.sprind.presenter.auth.password.change.ChangePasswordFragment"
         android:label="fragment_change_passowrd"
-        tools:layout="@layout/fragment_change_passowrd" />
+        tools:layout="@layout/fragment_change_passoword" />
     <fragment
         android:id="@+id/verifyUserFragment"
         android:name="ru.point.sprind.presenter.auth.password.verify.VerifyUserFragment"

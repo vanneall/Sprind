@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:paddingHorizontal="32dp"
     tools:context=".presenter.review.create.CreateReviewFragment">
 
     <include
@@ -16,40 +17,104 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/rating"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/rating_layout"
+        style="@style/CustomTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/card_background_full"
-        android:hint="Введите рейтинг"
-        android:minHeight="60dp"
-        android:paddingHorizontal="10dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-    <EditText
-        android:id="@+id/commentary"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/rating"
+            style="@style/regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/rating_hint"
+            android:inputType="numberDecimal"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/advantages_layout"
+        style="@style/CustomTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/card_background_full"
-        android:hint="Введите комментарий"
-        android:minHeight="60dp"
-        android:paddingHorizontal="10dp"
-        app:layout_constraintTop_toBottomOf="@id/rating" />
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rating_layout">
 
-    <Button
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/advantages"
+            style="@style/regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/advantage"
+            android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/disadvantages_layout"
+        style="@style/CustomTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/advantages_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/disadvantages"
+            style="@style/regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/disadvantage"
+            android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/commentary_layout"
+        style="@style/CustomTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/disadvantages_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/commentary"
+            style="@style/regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/commentary"
+            android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="20dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/save"
+        style="@style/MaterialButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:text="Сохранить"
+        android:text="@string/add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/commentary"
+        app:layout_constraintTop_toBottomOf="@id/commentary_layout"
         app:layout_constraintVertical_bias="0.9" />
 
     <include

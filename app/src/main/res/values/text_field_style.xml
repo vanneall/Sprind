@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomTextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="shapeAppearance">@style/ShapeAppearance.CustomTextInputLayout</item>
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="errorTextColor">@color/red</item>
+        <item name="errorEnabled">true</item>
+    </style>
+
+    <style name="ShapeAppearance.CustomTextInputLayout" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
+</resources>

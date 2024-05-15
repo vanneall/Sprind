@@ -5,58 +5,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="32dp"
-    tools:context=".presenter.auth.authorization.AuthorizationFragment">
+    tools:context=".presenter.auth.password.change.ChangePasswordFragment">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/authorization_title"
+        android:id="@+id/new_password_title"
         style="@style/medium_20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"
-        android:text="@string/authorization_screen_title"
+        android:text="@string/new_password_screen_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_login_layout"
+        android:id="@+id/input_new_password_layout"
         style="@style/CustomTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="140dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/authorization_title">
+        app:layout_constraintTop_toBottomOf="@id/new_password_title">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_login"
+            android:id="@+id/input_new_password"
             style="@style/regular_16"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/input_login_hint"
-            android:inputType="text"
+            android:hint="@string/input_new_password_hint"
+            android:inputType="textPassword"
             android:paddingHorizontal="10dp"
             android:paddingVertical="20dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_password_layout"
+        android:id="@+id/input_verify_new_password_layout"
         style="@style/CustomTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:hint="@string/input_password_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_login_layout">
+        app:layout_constraintTop_toBottomOf="@id/input_new_password_layout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_password"
+            android:id="@+id/input_verify_new_password"
             style="@style/regular_16"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:hint="@string/input_verify_new_password_hint"
             android:inputType="textPassword"
             android:paddingHorizontal="10dp"
             android:paddingVertical="20dp" />
@@ -69,33 +69,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="@string/enter_to_account"
+        android:text="@string/change_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_password_layout" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_start_registration"
-        style="@style/MaterialButtonOutlinedStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/start_registration"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_enter" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/text_reset_password"
-        style="@style/regular_14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/reset_password"
-        android:textColor="@color/brown_orange"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_start_registration" />
+        app:layout_constraintTop_toBottomOf="@id/input_verify_new_password_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
