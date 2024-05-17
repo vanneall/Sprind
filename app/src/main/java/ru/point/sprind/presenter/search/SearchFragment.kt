@@ -12,16 +12,33 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
+import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.adapters.MordaAdapter
+import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentSearchBinding
+import javax.inject.Inject
 
-class SearchFragment : MvpAppCompatFragment() {
+class SearchFragment : MvpAppCompatFragment(), SearchRequestView {
 
     private var _binding: FragmentSearchBinding? = null
 
     private val binding get() = _binding!!
 
+    @Inject
+    lateinit var provider: SearchPresenter
+
+    private val presenter by moxyPresenter { provider }
+
     private val args by navArgs<SearchFragmentArgs>()
+
+
+    private lateinit var adapter: MordaAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        SprindApplication.component.inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +52,7 @@ class SearchFragment : MvpAppCompatFragment() {
         super.onViewCreated(view, savedInstanceState)
         initializeToolbar()
         initializeRecyclerView()
+        presenter.getRequests()
     }
 
     private fun initializeToolbar() {
@@ -79,33 +97,34 @@ class SearchFragment : MvpAppCompatFragment() {
     }
 
     private fun initializeRecyclerView() {
-        with(binding.recyclerView) {
-            adapter = MordaAdapter(
-                delegates = emptyList()
-            )
+        adapter = MordaAdapter(presenter.delegates)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.addItemDecoration(object : ItemDecoration() {
+            override fun getItemOffsets(
+                outRect: Rect,
+                view: View,
+                parent: RecyclerView,
+                state: RecyclerView.State,
+            ) {
+                super.getItemOffsets(outRect, view, parent, state)
+                outRect.bottom = 16
+            }
+        })
+    }
 
-            addItemDecoration(object : ItemDecoration() {
-                override fun getItemOffsets(
-                    outRect: Rect,
-                    view: View,
-                    parent: RecyclerView,
-                    state: RecyclerView.State,
-                ) {
-                    super.getItemOffsets(outRect, view, parent, state)
-                    outRect.bottom = 16
-                }
-            })
-        }
+    override fun setAdapter(list: List<ViewObject>) {
+        adapter.views = list
     }
 
     private fun navigateToResult() {
         val request = binding.toolbar.search.text.toString()
         if (request.isEmpty()) return
 
+        presenter.addRequestToHistory(request)
+
         val args = SearchFragmentDirections.actionSearchFragmentToResultFragment(
             request = request
         )
-
         findNavController().navigate(args)
     }
 

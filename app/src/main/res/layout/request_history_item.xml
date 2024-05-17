@@ -21,18 +21,9 @@
         android:layout_width="0dp"
         style="@style/regular_14"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/delete"
         app:layout_constraintStart_toEndOf="@id/recent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Какой-то запрос" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/delete_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
