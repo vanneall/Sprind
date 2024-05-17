@@ -22,7 +22,7 @@
             style="@style/regular_16"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/promocode_input_hint"
+            android:hint="@string/promocode"
             android:inputType="text"
             android:lines="1"
             android:paddingHorizontal="10dp"

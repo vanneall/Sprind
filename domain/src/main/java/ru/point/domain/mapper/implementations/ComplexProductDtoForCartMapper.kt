@@ -1,6 +1,5 @@
 package ru.point.domain.mapper.implementations
 
-import ru.point.domain.entity.dto.complex.ComplexProductDto
 import ru.point.domain.entity.dto.product.ProductFeedDto
 import ru.point.domain.entity.utils.Price
 import ru.point.domain.entity.view.ViewObject
@@ -12,12 +11,9 @@ import ru.point.domain.entity.view.cart.CartPromocodeVo
 import ru.point.domain.entity.view.cart.CartSummaryVo
 import ru.point.domain.utils.StringFormatter
 
-class ComplexProductDtoForCartMapper : FeedProductListViewMapper {
+object ComplexProductDtoForCartMapper {
 
-
-    override fun map(complexDto: ComplexProductDto): List<ViewObject> {
-
-        val productFeedDto = complexDto.productDto
+    fun map(productFeedDto: List<ProductFeedDto>): List<ViewObject> {
 
         if (productFeedDto.isEmpty()) return listOf(CartEmptyVo())
 
@@ -38,7 +34,7 @@ class ComplexProductDtoForCartMapper : FeedProductListViewMapper {
         val summaryPrice = deliveryPrice + productsPrice + discountPrice + promocodePrice
 
         return listOf(
-            CartHeaderVo(AddressVo(StringFormatter.formatAddress(addressDto = complexDto.addressDto)))
+            CartHeaderVo(AddressVo(""))
         ) + products + listOf(
             CartPromocodeVo(),
             CartSummaryVo(
@@ -50,10 +46,6 @@ class ComplexProductDtoForCartMapper : FeedProductListViewMapper {
             )
         )
     }
-}
-
-interface FeedProductListViewMapper {
-    fun map(complexDto: ComplexProductDto): List<ViewObject>
 }
 
 fun sumPrice(collection: Collection<*>): Price {

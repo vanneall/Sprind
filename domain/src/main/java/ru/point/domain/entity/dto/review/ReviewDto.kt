@@ -1,6 +1,7 @@
 package ru.point.domain.entity.dto.review
 
 import com.google.gson.annotations.SerializedName
+import ru.point.domain.entity.view.review.ReviewVo
 
 data class ReviewDto(
     @SerializedName("id")
@@ -16,3 +17,14 @@ data class ReviewDto(
     @SerializedName("rating")
     val rating: Float,
 )
+
+fun ReviewDto.toReviewVo(): ReviewVo {
+    return ReviewVo(
+        id = id,
+        username = username,
+        rating = rating,
+        description = description,
+        advantages = advantage,
+        disadvantages = disadvantage
+    )
+}

@@ -12,7 +12,6 @@ import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.entity.view.product.info.AllCharacteristicsVo
 import ru.point.domain.entity.view.product.info.CharacteristicDescriptionVo
 import ru.point.domain.entity.view.product.info.CharacteristicTitleVo
-import ru.point.domain.mapper.implementations.ProductDtoToListViewMapperImpl
 import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
 import ru.point.domain.usecase.interfaces.product.GetProductByIdUseCase
@@ -50,7 +49,7 @@ class ProductPresenter @AssistedInject constructor(
     fun init() {
         viewState.displayLoadingScreen(show = true)
         val disposable = getProductByIdUseCase
-            .invoke(id = productId, ProductDtoToListViewMapperImpl())
+            .invoke(id = productId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
                 productViewObject = list
