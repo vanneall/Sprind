@@ -1,6 +1,7 @@
 package ru.point.manager
 
 import android.content.Context
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,24 +15,37 @@ import javax.inject.Inject
 class SettingsManager @Inject constructor(
     private val context: Context,
 ) {
-    private lateinit var settings: Settings
+    private var settings: Settings? = null
 
     init {
         read()
     }
 
     var token: Token
-        get() = settings.token ?: Token("")
+        get() = settings?.token ?: Token("")
         set(value) {
-            settings = settings.copy(token = value)
-            write(settings)
+            settings?.let { settings ->
+                this.settings = settings.copy(token = value)
+                write(settings)
+            }
+
         }
 
+    var isDarkThemeEnabled: Boolean
+        get() = settings?.isDarkThemeEnabled ?: false
+        set(value) {
+            settings?.let { settings ->
+                this.settings = settings.copy(isDarkThemeEnabled = value)
+                write(this.settings!!)
+            }
+        }
 
     private fun read() {
         CoroutineScope(Dispatchers.IO).launch {
             context.dataStore.data.collect { dataStoreSettings ->
+                Log.d("Settings manager", "Settings manager initialized")
                 settings = dataStoreSettings
+
             }
         }
     }
@@ -47,5 +61,6 @@ class SettingsManager @Inject constructor(
 data class Settings(
     @Contextual
     val token: Token? = null,
+    val isDarkThemeEnabled: Boolean = false
 )
 

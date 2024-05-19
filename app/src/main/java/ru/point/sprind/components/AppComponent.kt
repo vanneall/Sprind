@@ -40,6 +40,8 @@ interface AppComponent {
 
     fun inject(application: SprindApplication)
 
+    fun inject(activity: MainActivity)
+
     fun inject(fragment: MordaFragment)
 
     fun inject(fragment: ResultFragment)

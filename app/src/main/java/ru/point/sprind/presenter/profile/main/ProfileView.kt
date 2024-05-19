@@ -7,4 +7,6 @@ import moxy.viewstate.strategy.StateStrategyType
 interface ProfileView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun setUsername(name: String)
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun setIsDarkThemeEnabled(isEnabled: Boolean)
 }

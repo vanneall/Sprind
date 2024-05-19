@@ -23,11 +23,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        tools:text="Добрый день, Иван Демин" />
+        tools:text="Добрый день, Иван Демин"
+        tools:visibility="visible" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/orders"
@@ -46,22 +48,6 @@
         app:layout_constraintTop_toBottomOf="@id/greetings" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/reviews"
-        style="@style/regular_16"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/card_background_full"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="20dp"
-        android:paddingStart="20dp"
-        android:text="@string/reviews"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/orders" />
-
-    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/favorites"
         style="@style/regular_16"
         android:layout_width="match_parent"
@@ -75,7 +61,7 @@
         android:text="@string/favorites"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reviews" />
+        app:layout_constraintTop_toBottomOf="@id/orders" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/about_app"
@@ -93,6 +79,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/favorites" />
 
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/theme_switch"
+        style="@style/regular_16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/card_background_full"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="20dp"
+
+        android:text="@string/use_dark_theme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/about_app" />
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/logout"
         style="@style/regular_16"
@@ -108,6 +110,6 @@
         android:textColor="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/about_app" />
+        app:layout_constraintTop_toBottomOf="@id/theme_switch" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

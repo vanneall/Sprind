@@ -27,10 +27,16 @@ class ProfilePresenter @Inject constructor(
             })
 
         compositeDisposable.add(disposable)
+        viewState.setIsDarkThemeEnabled(settingsManager.isDarkThemeEnabled)
     }
 
     fun logout() {
         settingsManager.token = Token("")
+    }
+
+    fun switchTheme(isDark: Boolean) {
+        settingsManager.isDarkThemeEnabled = isDark
+        viewState.setIsDarkThemeEnabled(isDark)
     }
 
     override fun onDestroy() {

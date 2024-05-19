@@ -1,7 +1,6 @@
 package ru.point.repository.settings
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.core.Serializer
 import androidx.datastore.dataStore
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +18,6 @@ internal class SettingsSerializer : Serializer<Settings> {
 
     override suspend fun readFrom(input: InputStream): Settings {
         return try {
-            Log.i("Datastore", "initializing started")
             Json.decodeFromString(
                 deserializer = Settings.serializer(),
                 string = input.readBytes().decodeToString()

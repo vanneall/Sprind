@@ -52,16 +52,25 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         binding.aboutApp.setOnClickListener {
             findNavController().navigate(R.id.action_profile_fragment_to_aboutAppFragment)
         }
+
+        binding.themeSwitch.setOnClickListener {
+            val isChecked = binding.themeSwitch.isChecked
+            presenter.switchTheme(isChecked)
+            (requireActivity().application as? SprindApplication)?.applyTheme(isChecked)
+        }
     }
 
     override fun setUsername(name: String) {
         with(binding.greetings) {
             if (name.isNotEmpty()) {
+                visibility = View.VISIBLE
                 text = resources.getString(R.string.greetings, name)
-            } else {
-                visibility = View.GONE
             }
         }
+    }
+
+    override fun setIsDarkThemeEnabled(isEnabled: Boolean) {
+        binding.themeSwitch.isChecked = isEnabled
     }
 
     override fun onDestroyView() {

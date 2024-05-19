@@ -9,18 +9,22 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
-import com.yandex.mapkit.MapKitFactory
+import ru.point.manager.SettingsManager
 import ru.point.sprind.databinding.ActivityMainBinding
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
 
+    @Inject
+    lateinit var settingsManager: SettingsManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        MapKitFactory.setApiKey("f425d115-72d7-4ff9-bff7-20f64fbd8769")
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -34,7 +38,11 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
-        MapKitFactory.initialize(this)
+
+        if (savedInstanceState == null) {
+            SprindApplication.component.inject(this)
+            (application as? SprindApplication)?.applyTheme(settingsManager.isDarkThemeEnabled)
+        }
     }
 
     override fun onStart() {
