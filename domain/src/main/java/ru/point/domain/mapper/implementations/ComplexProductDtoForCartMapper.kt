@@ -10,6 +10,7 @@ import ru.point.domain.entity.view.cart.CartProductVo
 import ru.point.domain.entity.view.cart.CartPromocodeVo
 import ru.point.domain.entity.view.cart.CartSummaryVo
 import ru.point.domain.utils.StringFormatter
+import ru.point.domain.utils.UtilsConst.PICTURE_NOT_FOUND
 
 object ComplexProductDtoForCartMapper {
 
@@ -18,10 +19,14 @@ object ComplexProductDtoForCartMapper {
         if (productFeedDto.isEmpty()) return listOf(CartEmptyVo())
 
         val products = productFeedDto.map { dto ->
+
+            val photoUrl = if (dto.photosUrl.isNotEmpty()) dto.photosUrl.first()
+            else PICTURE_NOT_FOUND
+
             CartProductVo(
                 id = dto.id,
                 name = dto.name,
-                url = dto.photosUrl[0],
+                url = photoUrl,
                 price = StringFormatter.formatPrice(dto.price),
                 isFavorite = dto.isFavorite
             )

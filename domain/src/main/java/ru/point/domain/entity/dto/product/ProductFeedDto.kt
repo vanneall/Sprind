@@ -6,6 +6,7 @@ import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.entity.view.cart.CartProductVo
 import ru.point.domain.entity.view.product.card.ProductFeedVo
 import ru.point.domain.utils.StringFormatter
+import ru.point.domain.utils.UtilsConst.PICTURE_NOT_FOUND
 
 data class ProductFeedDto(
     @SerializedName("id")
@@ -39,6 +40,7 @@ fun ProductFeedDto.toCartProductVo(): CartProductVo {
         name = name,
         price = StringFormatter.formatPrice(price),
         isFavorite = isFavorite,
-        url = photosUrl.first()
+        url = if (photosUrl.isNotEmpty()) photosUrl.first()
+        else PICTURE_NOT_FOUND
     )
 }

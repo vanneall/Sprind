@@ -4,6 +4,7 @@ import coil.load
 import coil.size.Scale
 import coil.transform.RoundedCornersTransformation
 import ru.point.domain.entity.view.product.card.ProductFeedVo
+import ru.point.domain.utils.UtilsConst.PICTURE_NOT_FOUND
 import ru.point.sprind.databinding.VerticalCardItemBinding
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 
@@ -16,7 +17,8 @@ class ProductViewHolder(
 
     override fun bind(view: ProductFeedVo) = with(binding) {
         image.load(
-            view.photosUrl[0]
+            if (view.photosUrl.isNotEmpty()) view.photosUrl.first()
+            else PICTURE_NOT_FOUND
         ) {
             scale(Scale.FIT)
             transformations(RoundedCornersTransformation(50f, 50f))

@@ -29,7 +29,7 @@ object StringFormatter {
 
     fun formatAddress(addressDto: AddressDto?): String? {
         if (addressDto == null || isAnyFromAddressIsNull(addressDto)) return null
-        return "${addressDto.street}, д.${addressDto.house}, кв.${addressDto.flat}"
+        return "${addressDto.street?.replaceFirstChar { char -> char.uppercase() }}, д.${addressDto.house}, кв.${addressDto.flat}"
     }
 
     fun checkStringsNotEmpty(vararg values: String): Boolean {
@@ -37,10 +37,7 @@ object StringFormatter {
     }
 
     private fun isAnyFromAddressIsNull(addressDto: AddressDto): Boolean {
-        return addressDto.city == null ||
-                addressDto.street == null ||
-                addressDto.house == null ||
-                addressDto.flat == null
+        return addressDto.city == null || addressDto.street == null || addressDto.house == null || addressDto.flat == null
     }
 
 
