@@ -49,6 +49,10 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
             findNavController().navigate(R.id.action_profile_fragment_to_favorites_fragment)
         }
 
+        binding.orders.setOnClickListener {
+            findNavController().navigate(R.id.action_profile_fragment_to_ordersFragment)
+        }
+
         binding.aboutApp.setOnClickListener {
             findNavController().navigate(R.id.action_profile_fragment_to_aboutAppFragment)
         }

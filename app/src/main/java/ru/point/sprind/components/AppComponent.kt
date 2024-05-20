@@ -22,6 +22,7 @@ import ru.point.sprind.presenter.product.card.ProductCardFragment
 import ru.point.sprind.presenter.product.morda.MordaFragment
 import ru.point.sprind.presenter.product.result.ResultFragment
 import ru.point.sprind.presenter.profile.main.ProfileFragment
+import ru.point.sprind.presenter.profile.orders.OrdersFragment
 import ru.point.sprind.presenter.review.all.AllReviewsFragment
 import ru.point.sprind.presenter.review.create.CreateReviewFragment
 import ru.point.sprind.presenter.search.SearchFragment
@@ -69,6 +70,8 @@ interface AppComponent {
     fun inject(fragment: AddressSelectionDialogFragment)
 
     fun inject(fragment: SearchFragment)
+
+    fun inject(fragment: OrdersFragment)
 
     @Component.Factory
     interface AppComponentFactory {

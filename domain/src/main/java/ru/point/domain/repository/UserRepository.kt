@@ -2,6 +2,7 @@ package ru.point.domain.repository
 
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
+import ru.point.domain.entity.dto.order.OrderDto
 import ru.point.domain.entity.dto.user.AuthUserDto
 import ru.point.domain.entity.dto.user.RegisterUserDto
 import ru.point.domain.entity.dto.user.UserDto
@@ -17,4 +18,6 @@ interface UserRepository {
     fun get(): Single<UserDto>
 
     fun setNewAddress(address: AddressDto): Completable
+
+    fun getOrders(): Single<List<OrderDto>>
 }

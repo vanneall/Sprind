@@ -91,6 +91,9 @@
         <action
             android:id="@+id/action_profile_fragment_to_aboutAppFragment"
             app:destination="@id/aboutAppFragment" />
+        <action
+            android:id="@+id/action_profile_fragment_to_ordersFragment"
+            app:destination="@id/ordersFragment" />
     </fragment>
     <fragment
         android:id="@+id/authorizationFragment"
@@ -216,4 +219,9 @@
             android:name="url"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="ru.point.sprind.presenter.profile.orders.OrdersFragment"
+        android:label="fragment_orders"
+        tools:layout="@layout/fragment_orders" />
 </navigation>

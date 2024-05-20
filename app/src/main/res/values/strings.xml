@@ -90,4 +90,8 @@
     <string name="wrong_credentials">Неправильный логин или пароль</string>
     <string name="create_review_title">Создайте отзыв</string>
     <string name="use_dark_theme">Использовать темную тему</string>
+    <string name="order_summary_price">Цена заказа: %s</string>
+    <string name="order_products_price">Цена товаров: %s</string>
+    <string name="orders_delivery_price">Цена доставки: %S</string>
+    <string name="order_id">Заказ #%s</string>
 </resources>

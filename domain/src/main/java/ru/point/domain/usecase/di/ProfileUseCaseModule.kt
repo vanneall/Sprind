@@ -6,9 +6,11 @@ import ru.point.domain.factory.interfaces.RegisterUserFactory
 import ru.point.domain.repository.UserRepository
 import ru.point.domain.usecase.implementation.auth.AuthorizeUseCaseImpl
 import ru.point.domain.usecase.implementation.auth.RegisterUserUseCaseImpl
+import ru.point.domain.usecase.implementation.profile.GetOrdersUseCaseImpl
 import ru.point.domain.usecase.implementation.profile.GetUserInfoUseCaseImpl
 import ru.point.domain.usecase.interfaces.auth.AuthorizeUseCase
 import ru.point.domain.usecase.interfaces.auth.RegisterUserUseCase
+import ru.point.domain.usecase.interfaces.profile.GetOrdersUseCase
 import ru.point.domain.usecase.interfaces.profile.GetUserInfoUseCase
 
 @Module
@@ -30,5 +32,10 @@ class ProfileUseCaseModule {
     @Provides
     fun provideGetUserInfoUseCase(repository: UserRepository): GetUserInfoUseCase {
         return GetUserInfoUseCaseImpl(repository = repository)
+    }
+
+    @Provides
+    fun provideGetOrdersUseCase(repository: UserRepository): GetOrdersUseCase {
+        return GetOrdersUseCaseImpl(repository = repository)
     }
 }

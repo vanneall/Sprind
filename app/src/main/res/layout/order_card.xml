@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/card_background_full"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="10dp">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/order_id"
+        style="@style/bold_16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/order_id" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/delivery_cost"
+        style="@style/regular_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/order_id"
+        tools:text="@string/orders_delivery_price" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/products_cost"
+        style="@style/regular_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/delivery_cost"
+        tools:text="@string/order_products_price" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/summary_cost"
+        style="@style/regular_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/products_cost"
+        tools:text="@string/order_summary_price" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
