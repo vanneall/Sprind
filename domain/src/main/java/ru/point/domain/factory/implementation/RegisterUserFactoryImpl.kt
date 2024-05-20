@@ -17,7 +17,6 @@ class RegisterUserFactoryImpl @Inject constructor(): RegisterUserFactory {
         return RegisterUserDto(
             name = name,
             secondName = secondName,
-            telephone = telephone,
             email = email,
             username = username,
             secret = secret,

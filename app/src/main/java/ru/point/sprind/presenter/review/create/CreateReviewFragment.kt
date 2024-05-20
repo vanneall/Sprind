@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -44,8 +45,19 @@ class CreateReviewFragment : MvpAppCompatFragment(), CreateReviewView {
         binding.toolbar.title.text = getString(R.string.create_review_title)
 
         binding.save.setOnClickListener {
-            presenter.addReview(binding.rating.text.toString(), binding.commentary.text.toString())
+            with(binding) {
+                presenter.addReview(
+                    rating = rating.text.toString(),
+                    description = commentary.text.toString(),
+                    advantage = advantages.text.toString(),
+                    disadvantage = disadvantages.text.toString()
+                )
+            }
         }
+    }
+
+    override fun exit() {
+        findNavController().popBackStack()
     }
 
     override fun onDestroyView() {

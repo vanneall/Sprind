@@ -26,9 +26,8 @@ class SettingsManager @Inject constructor(
         set(value) {
             settings?.let { settings ->
                 this.settings = settings.copy(token = value)
-                write(settings)
+                write(this.settings!!)
             }
-
         }
 
     var isDarkThemeEnabled: Boolean

@@ -10,7 +10,16 @@ class AddReviewUseCaseImpl @Inject constructor(
     private val repository: ReviewRepository,
 ) : AddReviewUseCase {
 
-    override fun handle(productId: Long, rating: Float, description: String): Completable {
-        return repository.addReview(productId, CreatedReviewDto(rating, description))
+    override fun handle(
+        productId: Long,
+        rating: Float,
+        description: String,
+        advantage: String?,
+        disadvantage: String?
+    ): Completable {
+        return repository.addReview(
+            productId,
+            CreatedReviewDto(rating, description, advantage, disadvantage)
+        )
     }
 }

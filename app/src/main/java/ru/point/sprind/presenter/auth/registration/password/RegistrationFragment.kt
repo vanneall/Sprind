@@ -72,7 +72,11 @@ class RegistrationFragment : MvpAppCompatFragment(), RegistrationView {
     }
 
     override fun showError() {
-        Toast.makeText(binding.root.context, "Something goes wrong...", Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            requireContext(),
+            R.string.someting_goes_wrong_hint,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun exitFromRegistration() {

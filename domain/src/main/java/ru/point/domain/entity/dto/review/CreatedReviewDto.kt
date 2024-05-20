@@ -6,5 +6,9 @@ data class CreatedReviewDto(
     @SerializedName("rating")
     val rating: Float,
     @SerializedName("description")
-    val description: String
+    val description: String,
+    @SerializedName("advantage")
+    val advantage: String?,
+    @SerializedName("disadvantage")
+    val disadvantage: String?,
 )

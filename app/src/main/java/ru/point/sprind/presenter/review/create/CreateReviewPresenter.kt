@@ -19,10 +19,20 @@ class CreateReviewPresenter @AssistedInject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    fun addReview(rating: String, description: String) {
-        val disposable = addReviewUseCase.get().handle(productId = productId, rating.toFloat(), description = description)
+    fun addReview(rating: String, description: String, advantage: String?, disadvantage: String?) {
+        val disposable = addReviewUseCase.get().handle(
+            productId = productId,
+            rating = rating.toFloat(),
+            description = description,
+            advantage = advantage,
+            disadvantage = disadvantage
+        )
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({}, {it.printStackTrace()})
+            .subscribe({
+                viewState.exit()
+            }, { ex ->
+                ex.printStackTrace()
+            })
 
         compositeDisposable.add(disposable)
     }
@@ -31,5 +41,4 @@ class CreateReviewPresenter @AssistedInject constructor(
         super.onDestroy()
         compositeDisposable.clear()
     }
-
 }
