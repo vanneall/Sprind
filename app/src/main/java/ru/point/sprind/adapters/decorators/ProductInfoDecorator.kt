@@ -16,20 +16,11 @@ class ProductInfoDecorator : RecyclerView.ItemDecoration() {
     ) {
         super.getItemOffsets(outRect, view, parent, state)
 
-        parent.adapter?.let { adapter ->
-            if (parent.getChildLayoutPosition(view) == adapter.itemCount - 1) {
-                outRect.bottom = 70.toDp(view)
-            }
-        }
-
-
         when (val viewHolder = parent.getChildViewHolder(view)) {
             is NestedRecyclerViewViewHolder -> {}
             is CharacteristicViewHolder -> {}
             is CharacteristicTitleViewHolder -> {}
-            else -> {
-                outRect.top = 8.toDp(view)
-            }
+            else -> { outRect.top = 8.toDp(view) }
         }
     }
 }

@@ -16,7 +16,9 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
+    private var _binding: ActivityMainBinding? = null
+
+    private val binding get() = _binding!!
 
     @Inject
     lateinit var settingsManager: SettingsManager
@@ -25,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val window = window
@@ -44,12 +46,17 @@ class MainActivity : AppCompatActivity() {
             (application as? SprindApplication)?.applyTheme(settingsManager.isDarkThemeEnabled)
         }
     }
-
+    
     override fun onStart() {
         super.onStart()
         NavigationUI.setupWithNavController(
             navigationBarView = binding.bottomNavigation,
             navController = Navigation.findNavController(this, binding.frame.id)
         )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
