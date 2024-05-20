@@ -38,10 +38,8 @@ class AuthorizationFragment : MvpAppCompatFragment(), AuthView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initializeLogInButton()
         initializeRegInButton()
-        initializeResetPasswordButton()
     }
 
     private fun initializeLogInButton() {
@@ -63,15 +61,6 @@ class AuthorizationFragment : MvpAppCompatFragment(), AuthView {
             findNavController().navigate(
                 directions = AuthorizationFragmentDirections
                     .actionAuthorizationFragmentToCredentialsFragment()
-            )
-        }
-    }
-
-    private fun initializeResetPasswordButton() {
-        binding.textResetPassword.setOnClickListener {
-            findNavController().navigate(
-                directions = AuthorizationFragmentDirections
-                    .actionAuthorizationFragmentToVerifyUserFragment()
             )
         }
     }
