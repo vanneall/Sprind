@@ -94,4 +94,6 @@
     <string name="order_products_price">Цена товаров: %s</string>
     <string name="orders_delivery_price">Цена доставки: %S</string>
     <string name="order_id">Заказ #%s</string>
+    <string name="delete">Удалить</string>
+    <string name="to_cart">В корзину</string>
 </resources>

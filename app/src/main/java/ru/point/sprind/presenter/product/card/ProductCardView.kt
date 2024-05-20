@@ -1,5 +1,6 @@
 package ru.point.sprind.presenter.product.card
 
+import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
 import ru.point.sprind.presenter.general.ConnectionRequiredView
@@ -10,4 +11,6 @@ interface ProductCardView : ConnectionRequiredView, UsingAdapterView {
     fun openReviews()
     @StateStrategyType(SkipStrategy::class)
     fun requireAuthorization()
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun displayProductInCartButtonGroup(show: Boolean)
 }

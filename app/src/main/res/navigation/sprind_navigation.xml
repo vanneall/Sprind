@@ -58,6 +58,11 @@
         <action
             android:id="@+id/action_product_card_fragment_to_allReviewsFragment"
             app:destination="@id/allReviewsFragment" />
+        <action
+            android:id="@+id/action_product_card_fragment_to_cart_fragment"
+            app:destination="@id/cart_fragment"
+            app:popUpTo="@id/cart_fragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/cart_fragment"

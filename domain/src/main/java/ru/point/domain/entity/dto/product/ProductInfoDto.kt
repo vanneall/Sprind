@@ -21,6 +21,8 @@ data class ProductInfoDto(
     val price: Price,
     @SerializedName("isFavorite")
     val isFavorite: Boolean,
+    @SerializedName("isInCart")
+    val isInCart: Boolean,
     @SerializedName("description")
     val description: String? = null,
     @SerializedName("characteristics")
@@ -43,6 +45,7 @@ fun ProductInfoDto.toProductTitleVo(): ProductTitleVo {
     return ProductTitleVo(
         title = name,
         isFavorite = isFavorite,
+        isInCart = isInCart,
         price = StringFormatter.formatPrice(price),
     )
 }

@@ -51,10 +51,7 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeRecyclerView()
-
-        binding.payButton.setOnClickListener {
-            presenter.addToCart()
-        }
+        initializePayButtons()
     }
 
     override fun onResume() {
@@ -68,14 +65,29 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
         binding.recyclerView.addItemDecoration(ProductInfoDecorator())
     }
 
+    private fun initializePayButtons() {
+        with(binding) {
+            deleteFromCartButton.setOnClickListener { presenter.deleteFromCart() }
+
+            payButton.setOnClickListener { presenter.addToCart() }
+
+            goToCartButton.setOnClickListener {
+                val destination =
+                    ProductCardFragmentDirections.actionProductCardFragmentToCartFragment()
+                findNavController().navigate(destination)
+            }
+        }
+    }
+
     override fun openReviews() {
-        val destination = ProductCardFragmentDirections.actionProductCardFragmentToAllReviewsFragment(args.productId)
+        val destination =
+            ProductCardFragmentDirections.actionProductCardFragmentToAllReviewsFragment(args.productId)
         findNavController().navigate(destination)
     }
 
     override fun displaySomethingGoesWrongError() {
         Toast.makeText(
-            this@ProductCardFragment.context,
+            requireContext(),
             getString(R.string.someting_goes_wrong_hint),
             Toast.LENGTH_SHORT
         ).show()
@@ -99,6 +111,20 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
 
     override fun setAdapter(views: List<ViewObject>) {
         adapter.views = views
+    }
+
+    override fun displayProductInCartButtonGroup(show: Boolean) {
+        with(binding) {
+            if (show) {
+                productInCartGroup.visibility = View.VISIBLE
+                payButton.visibility = View.GONE
+            } else {
+                productInCartGroup.visibility = View.GONE
+                payButton.visibility = View.VISIBLE
+            }
+        }
+
+
     }
 
     override fun requireAuthorization() {

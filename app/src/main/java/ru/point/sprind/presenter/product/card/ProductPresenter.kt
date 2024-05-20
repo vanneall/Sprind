@@ -12,7 +12,9 @@ import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.entity.view.product.info.AllCharacteristicsVo
 import ru.point.domain.entity.view.product.info.CharacteristicDescriptionVo
 import ru.point.domain.entity.view.product.info.CharacteristicTitleVo
+import ru.point.domain.entity.view.product.info.ProductTitleVo
 import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
+import ru.point.domain.usecase.interfaces.cart.DeleteProductFromCartUseCase
 import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
 import ru.point.domain.usecase.interfaces.product.GetProductByIdUseCase
 import ru.point.sprind.entity.deletage.product.card.AllCharacteristicsDelegate
@@ -31,10 +33,14 @@ class ProductPresenter @AssistedInject constructor(
     private val getProductByIdUseCase: GetProductByIdUseCase,
     private val favoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
     private val addProductToCartUseCase: Lazy<AddProductToCartUseCase>,
+    private val deleteFromCartUseCase: Lazy<DeleteProductFromCartUseCase>
 ) : MvpPresenter<ProductCardView>() {
 
     val delegates = listOf(
-        NestedRecyclerViewDelegate(delegates = listOf(ProductImageDelegate()), useViewPagerEffect = true),
+        NestedRecyclerViewDelegate(
+            delegates = listOf(ProductImageDelegate()),
+            useViewPagerEffect = true
+        ),
         ProductTitleDelegate(::onCheckedFavoriteStateChange),
         ProductDescriptionDelegate(),
         AllCharacteristicsDelegate(::expandCharacteristics),
@@ -55,6 +61,14 @@ class ProductPresenter @AssistedInject constructor(
                 productViewObject = list
                 viewState.displayLoadingScreen(show = false)
 
+                val index = productViewObject.indexOfFirst { vo -> vo is ProductTitleVo }
+
+                if (index != -1) {
+                    val vo = productViewObject[index] as ProductTitleVo
+                    if (vo.isInCart) viewState.displayProductInCartButtonGroup(show = true)
+                    else viewState.displayProductInCartButtonGroup(show = false)
+                }
+
                 viewState.setAdapter(productViewObject)
             }, { ex ->
                 ex.printStackTrace()
@@ -66,10 +80,25 @@ class ProductPresenter @AssistedInject constructor(
         compositeDisposable.add(disposable)
     }
 
+    fun deleteFromCart() {
+        val disposable = deleteFromCartUseCase.get().handle(productId)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                viewState.displayProductInCartButtonGroup(show = true)
+            }, { ex ->
+                viewState.displaySomethingGoesWrongError()
+                ex.printStackTrace()
+            })
+
+        compositeDisposable.add(disposable)
+    }
+
     fun addToCart() {
         val disposable = addProductToCartUseCase.get()
             .handle(productId)
-            .subscribe({ }, { ex ->
+            .subscribe({
+                viewState.displayProductInCartButtonGroup(show = true)
+            }, { ex ->
                 ex.printStackTrace()
                 viewState.displaySomethingGoesWrongError()
             })
