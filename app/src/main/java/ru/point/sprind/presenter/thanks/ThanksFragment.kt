@@ -11,7 +11,6 @@ import ru.point.sprind.databinding.FragmentThanksBinding
 class ThanksFragment : Fragment() {
 
     private var _binding: FragmentThanksBinding? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(

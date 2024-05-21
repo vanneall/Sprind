@@ -19,16 +19,15 @@ import javax.inject.Inject
 
 class CartFragment : MvpAppCompatFragment(), CartView {
 
-    private var _binding: FragmentCartBinding? = null
-
-    private val binding get() = _binding!!
-
-    private lateinit var adapter: MordaAdapter
-
     @Inject
     lateinit var presenterProvider: CartPresenter
-
     private val presenter: CartPresenter by moxyPresenter { presenterProvider }
+
+    private var _binding: FragmentCartBinding? = null
+    private val binding get() = _binding!!
+
+    private var _adapter: MordaAdapter? = null
+    private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
@@ -60,9 +59,10 @@ class CartFragment : MvpAppCompatFragment(), CartView {
     }
 
     private fun initializeRecyclerView() {
-        adapter = MordaAdapter(delegates = presenter.delegates)
+        _adapter = MordaAdapter(delegates = presenter.delegates)
         binding.cartRecyclerView.adapter = adapter
         binding.cartRecyclerView.addItemDecoration(CartItemDecorator())
+        lifecycle.addObserver(adapter)
     }
 
     override fun requireAuthorization() {
@@ -131,7 +131,11 @@ class CartFragment : MvpAppCompatFragment(), CartView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.cartRecyclerView.adapter = null
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _adapter = null
     }
 }

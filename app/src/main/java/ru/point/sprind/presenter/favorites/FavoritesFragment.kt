@@ -21,16 +21,15 @@ import javax.inject.Inject
 
 class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
 
-    private var _binding: FragmentFavoritesBinding? = null
-
-    private val binding get() = _binding!!
-
-    private lateinit var adapter: MordaAdapter
-
     @Inject
     lateinit var presenterProvider: FavoritePresenter
-
     private val presenter by moxyPresenter { presenterProvider }
+
+    private var _binding: FragmentFavoritesBinding? = null
+    private val binding get() = _binding!!
+
+    private var _adapter: MordaAdapter? = null
+    private val adapter get() = _adapter!!
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,13 +63,14 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
     }
 
     private fun initializeRecyclerView() {
-        binding.let {
-            adapter = MordaAdapter(delegates = presenter.delegates)
-            it.favoritesRecyclerView.adapter = adapter
+        with(binding) {
+            _adapter = MordaAdapter(delegates = presenter.delegates)
+            favoritesRecyclerView.adapter = adapter
+            lifecycle.addObserver(adapter)
 
-            val layoutManager = it.favoritesRecyclerView.layoutManager as GridLayoutManager
+            val layoutManager = favoritesRecyclerView.layoutManager as GridLayoutManager
             layoutManager.spanSizeLookup = FavoriteSpanSizeLookup(presenter.delegates, adapter)
-            it.favoritesRecyclerView.addItemDecoration(FavoritesItemDecorator())
+            favoritesRecyclerView.addItemDecoration(FavoritesItemDecorator())
         }
     }
 
@@ -119,7 +119,11 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.favoritesRecyclerView.adapter = null
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _adapter = null
     }
 }

@@ -17,15 +17,14 @@ import javax.inject.Inject
 
 class AddressSelectionDialogFragment : MvpBottomSheetDialogFragment(), AddressSelectionView {
 
+    @Inject
+    lateinit var provider: AddressSelectionPresenter
+    private val presenter by moxyPresenter { provider }
+
     private var _binding: FragmentAddressSelectionDialogBinding? = null
     private val binding get() = _binding!!
 
     private val args by navArgs<AddressSelectionDialogFragmentArgs>()
-
-    @Inject
-    lateinit var provider: AddressSelectionPresenter
-
-    private val presenter by moxyPresenter { provider }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)

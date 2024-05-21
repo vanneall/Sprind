@@ -2,6 +2,9 @@ package ru.point.sprind.adapters
 
 import android.util.Log
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -11,11 +14,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.viewholder.ViewHolderV2
-import ru.point.sprind.entity.viewholder.product.card.NestedRecyclerViewViewHolder
 
 class MordaAdapter(
     private val delegates: List<Delegate<*>>,
-) : RecyclerView.Adapter<ViewHolderV2<ViewObject>>() {
+) : RecyclerView.Adapter<ViewHolderV2<ViewObject>>(), LifecycleEventObserver {
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -54,16 +56,10 @@ class MordaAdapter(
 
     override fun getItemCount(): Int = views.size
 
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        Log.d("RecyclerView with tag ${recyclerView.tag}", "cleared ${compositeDisposable.size()}")
-        compositeDisposable.clear()
-
-        for (i in 0 until recyclerView.childCount) {
-            val viewHolder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i))
-            if (viewHolder is NestedRecyclerViewViewHolder) {
-                viewHolder.clear()
-            }
+    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+        if (event == Lifecycle.Event.ON_DESTROY) {
+            Log.d("Adapter", "cleared ${compositeDisposable.size()}")
+            compositeDisposable.clear()
         }
     }
 }

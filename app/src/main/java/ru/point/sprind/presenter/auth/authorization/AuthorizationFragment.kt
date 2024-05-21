@@ -14,14 +14,12 @@ import javax.inject.Inject
 
 class AuthorizationFragment : MvpAppCompatFragment(), AuthView {
 
-    private var _binding: FragmentAuthorizationBinding? = null
-
-    private val binding get() = _binding!!
-
     @Inject
     lateinit var provider: AuthPresenter
-
     private val presenter: AuthPresenter by moxyPresenter { provider }
+
+    private var _binding: FragmentAuthorizationBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)

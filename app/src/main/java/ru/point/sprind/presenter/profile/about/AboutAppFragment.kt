@@ -12,7 +12,6 @@ import ru.point.sprind.databinding.FragmentAboutAppBinding
 class AboutAppFragment : Fragment() {
 
     private var _binding: FragmentAboutAppBinding? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(

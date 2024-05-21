@@ -32,12 +32,11 @@ import javax.inject.Inject
 
 class MapFragment : MvpAppCompatFragment() {
 
-    private var _binding: FragmentMapBinding? = null
-
-    private val binding get() = _binding!!
-
     @Inject
     lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private var _binding: FragmentMapBinding? = null
+    private val binding get() = _binding!!
 
     private val onObjectTap = GeoObjectTapListener { geoObjectTapEvent ->
         val selectionMetadata = geoObjectTapEvent

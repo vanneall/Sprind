@@ -20,20 +20,20 @@ import javax.inject.Inject
 
 class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
 
-    private var _binding: FragmentProductCardBinding? = null
-
-    private val binding get() = _binding!!
+    private val args: ProductCardFragmentArgs by navArgs()
 
     @Inject
     lateinit var presenterProvider: ProductPresenterAssistedFactory
-
     private val presenter: ProductPresenter by moxyPresenter {
-        presenterProvider.create(productId = args.productId)
+        presenterProvider.create(productId = args.productId, lifecycle = lifecycle)
     }
 
-    private lateinit var adapter: MordaAdapter
+    private var _binding: FragmentProductCardBinding? = null
+    private val binding get() = _binding!!
 
-    private val args: ProductCardFragmentArgs by navArgs()
+
+    private var _adapter: MordaAdapter? = null
+    private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(fragment = this)
@@ -60,9 +60,11 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
     }
 
     private fun initializeRecyclerView() {
-        adapter = MordaAdapter(delegates = presenter.delegates)
+        _adapter = MordaAdapter(delegates = presenter.delegates)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(ProductInfoDecorator())
+
+        lifecycle.addObserver(adapter)
     }
 
     private fun initializePayButtons() {
@@ -123,8 +125,6 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
                 payButton.visibility = View.VISIBLE
             }
         }
-
-
     }
 
     override fun requireAuthorization() {
@@ -133,7 +133,11 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.recyclerView.adapter = null
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _adapter = null
     }
 }

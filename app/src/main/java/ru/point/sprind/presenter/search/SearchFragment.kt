@@ -21,19 +21,17 @@ import javax.inject.Inject
 
 class SearchFragment : MvpAppCompatFragment(), SearchRequestView {
 
-    private var _binding: FragmentSearchBinding? = null
-
-    private val binding get() = _binding!!
+    private val args by navArgs<SearchFragmentArgs>()
 
     @Inject
     lateinit var provider: SearchPresenter
-
     private val presenter by moxyPresenter { provider }
 
-    private val args by navArgs<SearchFragmentArgs>()
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
 
-
-    private lateinit var adapter: MordaAdapter
+    private var _adapter: MordaAdapter? = null
+    private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
@@ -97,8 +95,10 @@ class SearchFragment : MvpAppCompatFragment(), SearchRequestView {
     }
 
     private fun initializeRecyclerView() {
-        adapter = MordaAdapter(presenter.delegates)
+        _adapter = MordaAdapter(presenter.delegates)
         binding.recyclerView.adapter = adapter
+
+        lifecycle.addObserver(adapter)
         binding.recyclerView.addItemDecoration(object : ItemDecoration() {
             override fun getItemOffsets(
                 outRect: Rect,
@@ -130,7 +130,11 @@ class SearchFragment : MvpAppCompatFragment(), SearchRequestView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.recyclerView.adapter = null
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _adapter = null
     }
 }

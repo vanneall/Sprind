@@ -18,16 +18,15 @@ import javax.inject.Inject
 
 class OrdersFragment : MvpAppCompatFragment(), OrdersView {
 
-    private var _binding: FragmentOrdersBinding? = null
-
-    private val binding get() = _binding!!
-
     @Inject
     lateinit var provider: OrdersPresenter
-
     private val presenter by moxyPresenter { provider }
 
-    private var adapter: MordaAdapter? = null
+    private var _binding: FragmentOrdersBinding? = null
+    private val binding get() = _binding!!
+
+    private var _adapter: MordaAdapter? = null
+    private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
@@ -53,9 +52,11 @@ class OrdersFragment : MvpAppCompatFragment(), OrdersView {
     }
 
     private fun initializeRecyclerView() {
-        adapter = MordaAdapter(presenter.delegates)
+        _adapter = MordaAdapter(presenter.delegates)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(ProductInfoDecorator())
+
+        lifecycle.addObserver(adapter)
     }
 
     override fun requireAuthorization() {
@@ -63,7 +64,7 @@ class OrdersFragment : MvpAppCompatFragment(), OrdersView {
     }
 
     override fun setAdapter(views: List<ViewObject>) {
-        adapter?.views = views
+        adapter.views = views
     }
 
     override fun displayBadConnectionScreen(show: Boolean) {
@@ -84,8 +85,11 @@ class OrdersFragment : MvpAppCompatFragment(), OrdersView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        adapter = null
-        binding.recyclerView.adapter = null
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _adapter = null
     }
 }

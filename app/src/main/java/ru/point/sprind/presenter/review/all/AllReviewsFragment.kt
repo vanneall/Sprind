@@ -18,18 +18,17 @@ import javax.inject.Inject
 
 class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
 
-    private var _binding: FragmentAllReviewsBinding? = null
-
-    private val binding get() = _binding!!
-
-    private lateinit var adapter: MordaAdapter
-
     private val args by navArgs<AllReviewsFragmentArgs>()
 
     @Inject
     lateinit var provider: AllReviewsPresenterFactory
-
     private val presenter by moxyPresenter { provider.create(args.id) }
+
+    private var _binding: FragmentAllReviewsBinding? = null
+    private val binding get() = _binding!!
+
+    private var _adapter: MordaAdapter? = null
+    private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
@@ -46,11 +45,8 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MordaAdapter(presenter.delegates)
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.addItemDecoration(ProductInfoDecorator())
-
         binding.toolbar.title.text = resources.getText(R.string.reviews)
+        initializeRecyclerView()
 
         binding.addReview.setOnClickListener {
             val destination =
@@ -59,6 +55,14 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
                 )
             findNavController().navigate(destination)
         }
+    }
+
+    private fun initializeRecyclerView() {
+        _adapter = MordaAdapter(presenter.delegates)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.addItemDecoration(ProductInfoDecorator())
+
+        lifecycle.addObserver(adapter)
     }
 
     override fun onResume() {
@@ -88,7 +92,11 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.recyclerView.adapter = null
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _adapter = null
     }
 }

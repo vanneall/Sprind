@@ -1,5 +1,6 @@
 package ru.point.sprind.presenter.product.card
 
+import androidx.lifecycle.Lifecycle
 import dagger.Lazy
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -27,10 +28,12 @@ import ru.point.sprind.entity.deletage.product.card.ProductImageDelegate
 import ru.point.sprind.entity.deletage.product.card.ProductTitleDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import ru.point.sprind.presenter.product.card.ProductPresenterAssistedFactory.Companion.ID
+import ru.point.sprind.presenter.product.card.ProductPresenterAssistedFactory.Companion.LIFECYCLE
 
 @InjectViewState
 class ProductPresenter @AssistedInject constructor(
     @Assisted(ID) private val productId: Long,
+    @Assisted(LIFECYCLE) lifecycle: Lifecycle,
     private val getProductByIdUseCase: GetProductByIdUseCase,
     private val favoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
     private val addProductToCartUseCase: Lazy<AddProductToCartUseCase>,
@@ -46,7 +49,8 @@ class ProductPresenter @AssistedInject constructor(
     val delegates = listOf(
         NestedRecyclerViewDelegate(
             delegates = listOf(ProductImageDelegate()),
-            useViewPagerEffect = true
+            useViewPagerEffect = true,
+            lifecycle = lifecycle
         ),
         ProductTitleDelegate(::onCheckedFavoriteStateChange),
         ProductDescriptionDelegate(),

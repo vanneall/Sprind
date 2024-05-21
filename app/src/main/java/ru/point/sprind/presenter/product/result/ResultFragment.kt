@@ -22,20 +22,19 @@ import javax.inject.Inject
 
 class ResultFragment : MvpAppCompatFragment(), MordaView {
 
-    private var _binding: FragmentResultBinding? = null
-
-    private val binding get() = _binding!!
-
-    private lateinit var adapter: MordaAdapter
+    private val args: ResultFragmentArgs by navArgs()
 
     @Inject
     lateinit var presenterProvider: ResultPresenterAssistedFactory
-
     private val presenter: ResultPresenter by moxyPresenter {
         presenterProvider.create(request = args.request)
     }
 
-    private val args: ResultFragmentArgs by navArgs()
+    private var _binding: FragmentResultBinding? = null
+    private val binding get() = _binding!!
+
+    private var _adapter: MordaAdapter? = null
+    private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
@@ -52,7 +51,6 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initializeToolbar()
         initializeRecyclerView()
     }
@@ -80,9 +78,11 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
     }
 
     private fun initializeRecyclerView() {
-        adapter = MordaAdapter(presenter.delegates)
+        _adapter = MordaAdapter(presenter.delegates)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(FeedProductDecorator())
+
+        lifecycle.addObserver(adapter)
     }
 
     override fun displayBadConnectionScreen(show: Boolean) {
@@ -134,7 +134,11 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.recyclerView.adapter = null
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _adapter = null
     }
 }

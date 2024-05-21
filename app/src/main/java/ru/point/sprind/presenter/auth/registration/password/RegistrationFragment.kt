@@ -16,15 +16,8 @@ import javax.inject.Inject
 
 class RegistrationFragment : MvpAppCompatFragment(), RegistrationView {
 
-    private var _binding: FragmentRegistrationBinding? = null
-
-    private val binding get() = _binding!!
-
-    private val args by navArgs<RegistrationFragmentArgs>()
-
     @Inject
     lateinit var provider: RegistrationPresenterFactory
-
     private val presenter by moxyPresenter {
         provider.create(
             name = args.name,
@@ -33,6 +26,11 @@ class RegistrationFragment : MvpAppCompatFragment(), RegistrationView {
             email = args.email
         )
     }
+
+    private var _binding: FragmentRegistrationBinding? = null
+    private val binding get() = _binding!!
+
+    private val args by navArgs<RegistrationFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)

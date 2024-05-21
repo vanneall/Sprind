@@ -11,7 +11,6 @@ import ru.point.sprind.databinding.FragmentChangePassowordBinding
 class ChangePasswordFragment : Fragment() {
 
     private var _binding: FragmentChangePassowordBinding? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(

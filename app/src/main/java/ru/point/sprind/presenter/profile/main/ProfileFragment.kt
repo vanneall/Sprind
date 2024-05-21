@@ -14,14 +14,12 @@ import javax.inject.Inject
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
-    private var _binding: FragmentProfileBinding? = null
-
-    private val binding get() = _binding!!
-
     @Inject
     lateinit var provider: ProfilePresenter
-
     private val presenter by moxyPresenter { provider }
+
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)

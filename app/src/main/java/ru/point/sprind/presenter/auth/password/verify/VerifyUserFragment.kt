@@ -10,7 +10,6 @@ import ru.point.sprind.databinding.FragmentVerifyUserBinding
 class VerifyUserFragment : Fragment() {
 
     private var _binding: FragmentVerifyUserBinding? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(

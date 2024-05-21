@@ -20,17 +20,15 @@ import javax.inject.Inject
 
 class MordaFragment : MvpAppCompatFragment(), MordaView {
 
-    private var _binding: FragmentMordaBinding? = null
-
-    private val binding get() = _binding!!
-
-    private lateinit var adapter: MordaAdapter
-
     @Inject
     lateinit var presenterProvider: MordaPresenter
-
     private val presenter: MordaPresenter by moxyPresenter { presenterProvider }
 
+    private var _binding: FragmentMordaBinding? = null
+    private val binding get() = _binding!!
+
+    private var _adapter: MordaAdapter? = null
+    private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(fragment = this)
@@ -47,7 +45,6 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initializeToolbar()
         initializeRecyclerView()
     }
@@ -75,9 +72,11 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
     }
 
     private fun initializeRecyclerView() {
-        adapter = MordaAdapter(presenter.delegates)
+        _adapter = MordaAdapter(delegates = presenter.delegates)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(FeedProductDecorator())
+
+        lifecycle.addObserver(adapter)
     }
 
     override fun openCard(id: Long) {
@@ -116,7 +115,7 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
     }
 
     override fun setAdapter(views: List<ViewObject>) {
-        adapter.views = views
+        adapter?.views = views
     }
 
     override fun displaySomethingGoesWrongError() {
@@ -129,7 +128,11 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.recyclerView.adapter = null
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _adapter = null
     }
 }
