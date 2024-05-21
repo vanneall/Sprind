@@ -7,5 +7,5 @@ data class ComplexProductCartVoContainer(
     val productsVo: List<ViewObject>,
     val isAddressEmpty: Boolean
 ) {
-    val isEmptyCartVo get() = if (productsVo.isEmpty()) CartEmptyVo() else null
+    val isCartEmpty get() = productsVo.first() != CartEmptyVo()
 }
