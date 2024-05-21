@@ -84,7 +84,7 @@ class ProductPresenter @AssistedInject constructor(
         val disposable = deleteFromCartUseCase.get().handle(productId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                viewState.displayProductInCartButtonGroup(show = true)
+                viewState.displayProductInCartButtonGroup(show = false)
             }, { ex ->
                 viewState.displaySomethingGoesWrongError()
                 ex.printStackTrace()
@@ -96,6 +96,7 @@ class ProductPresenter @AssistedInject constructor(
     fun addToCart() {
         val disposable = addProductToCartUseCase.get()
             .handle(productId)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 viewState.displayProductInCartButtonGroup(show = true)
             }, { ex ->

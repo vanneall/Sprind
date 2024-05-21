@@ -28,7 +28,7 @@ fun ComplexProductDto.toComplexProductFeedVo(): ComplexProductFeedVoContainer {
 
 fun ComplexProductDto.toComplexProductCartVoContainer() : ComplexProductCartVoContainer {
     return ComplexProductCartVoContainer(
-        productsVo = ComplexProductDtoForCartMapper.map(productDto),
+        productsVo = ComplexProductDtoForCartMapper.map(this),
         isAddressEmpty = addressDto == null
     )
 }

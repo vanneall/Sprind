@@ -7,6 +7,7 @@ data class ProductFeedVo(
     val name: String,
     val price: String,
     val isFavorite: Boolean,
+    val isInCart: Boolean,
     val description: String? = null,
     val photosUrl: List<String>
 ) : ViewObject

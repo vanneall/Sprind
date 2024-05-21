@@ -17,6 +17,8 @@ data class ProductFeedDto(
     val price: Price,
     @SerializedName("isFavorite")
     val isFavorite: Boolean,
+    @SerializedName("isInCart")
+    val isInCart: Boolean,
     @SerializedName("description")
     val description: String? = null,
     @SerializedName("photosUrl")
@@ -29,6 +31,7 @@ fun ProductFeedDto.toProductFeedVo(): ProductFeedVo {
         name = name,
         price = StringFormatter.formatPrice(price),
         isFavorite = isFavorite,
+        isInCart = isInCart,
         description = description,
         photosUrl = photosUrl
     )

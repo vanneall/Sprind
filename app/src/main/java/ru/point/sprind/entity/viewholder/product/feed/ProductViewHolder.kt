@@ -38,6 +38,10 @@ class ProductViewHolder(
             onClickCard(view.id)
         }
 
+        if (view.isInCart) {
+            buyButton.isEnabled = false
+        }
+
         buyButton.setOnClickListener {
             onBuyClick(view.id)
         }
