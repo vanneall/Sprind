@@ -10,6 +10,7 @@ import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
 import ru.point.domain.usecase.interfaces.product.GetProductsUseCase
 import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
+import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import javax.inject.Inject
 
 @InjectViewState
@@ -18,6 +19,12 @@ class MordaPresenter @Inject constructor(
     private val getProductsUseCase: GetProductsUseCase,
     private val changeFavoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
 ) : MvpPresenter<MordaView>() {
+
+    private val httpManager = HttpExceptionStatusManager
+        .Builder()
+        .add403ExceptionHandler { viewState.requireAuthorization() }
+        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }
+        .build()
 
     val delegates = listOf(
         ProductDelegate(
@@ -50,13 +57,7 @@ class MordaPresenter @Inject constructor(
         val disposable = addProductToCartUseCase.get().handle(id = productId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({}, { ex ->
-                ex.printStackTrace()
-                if (ex is HttpException) {
-                    when (ex.code()) {
-                        403 -> viewState.requireAuthorization()
-                        else -> viewState.displaySomethingGoesWrongError()
-                    }
-                }
+                if (ex is HttpException) httpManager.handle(ex)
             })
 
         compositeDisposable.add(disposable);
@@ -73,14 +74,8 @@ class MordaPresenter @Inject constructor(
             .subscribe({
                 isSuccessfulCallback(true)
             }, { ex ->
-                ex.printStackTrace()
                 isSuccessfulCallback(false)
-                if (ex is HttpException) {
-                    when (ex.code()) {
-                        403 -> viewState.requireAuthorization()
-                        else -> viewState.displaySomethingGoesWrongError()
-                    }
-                }
+                if (ex is HttpException) httpManager.handle(ex)
             })
 
         compositeDisposable.add(disposable)

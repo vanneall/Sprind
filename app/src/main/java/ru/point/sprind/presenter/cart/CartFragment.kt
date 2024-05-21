@@ -97,7 +97,7 @@ class CartFragment : MvpAppCompatFragment(), CartView {
 
     override fun displaySomethingGoesWrongError() {
         Toast.makeText(
-            this@CartFragment.context,
+            requireContext(),
             getString(R.string.someting_goes_wrong_hint),
             Toast.LENGTH_SHORT
         ).show()

@@ -111,7 +111,7 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
 
     override fun displaySomethingGoesWrongError() {
         Toast.makeText(
-            this@FavoritesFragment.context,
+            requireContext(),
             getString(R.string.someting_goes_wrong_hint),
             Toast.LENGTH_SHORT
         ).show()

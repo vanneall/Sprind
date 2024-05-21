@@ -11,6 +11,7 @@ import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
 import ru.point.domain.usecase.interfaces.favorite.GetFavoritesUseCase
 import ru.point.sprind.entity.deletage.product.favorites.EmptyFavoritesDelegate
 import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
+import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import javax.inject.Inject
 
 @InjectViewState
@@ -19,6 +20,12 @@ class FavoritePresenter @Inject constructor(
     private val getFavoritesUseCase: GetFavoritesUseCase,
     private val changeFavoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
 ) : MvpPresenter<FavoriteView>() {
+
+    private val httpManager = HttpExceptionStatusManager
+        .Builder()
+        .add403ExceptionHandler { viewState.requireAuthorization() }
+        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }
+        .build()
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -32,21 +39,14 @@ class FavoritePresenter @Inject constructor(
     )
 
     fun getFavorites() {
-        //viewState.displayLoadingScreen(show = true)
         val disposable = getFavoritesUseCase.handle()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
                 viewState.displayLoadingScreen(show = false)
                 viewState.setAdapter(list)
             }, { ex ->
-                if (ex is HttpException) {
-                    when (ex.code()) {
-                        403 -> viewState.requireAuthorization()
-                        else -> viewState.displayBadConnectionScreen(show = true)
-                    }
-                } else {
-                    viewState.displayBadConnectionScreen(show = true)
-                }
+                if (ex is HttpException) httpManager.handle(ex)
+                else viewState.displayBadConnectionScreen(show = true)
             })
         compositeDisposable.add(disposable)
     }
@@ -55,8 +55,7 @@ class FavoritePresenter @Inject constructor(
         val disposable = addProductToCartUseCase.get().handle(id = productId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({}, { ex ->
-                ex.printStackTrace()
-                viewState.displaySomethingGoesWrongError()
+                if (ex is HttpException) httpManager.handle(ex)
             })
 
         compositeDisposable.add(disposable);
@@ -73,9 +72,8 @@ class FavoritePresenter @Inject constructor(
             .subscribe({
                 isSuccessfulCallback(true)
             }, { ex ->
-                ex.printStackTrace()
                 isSuccessfulCallback(false)
-                viewState.displaySomethingGoesWrongError()
+                if (ex is HttpException) httpManager.handle(ex)
             })
 
         compositeDisposable.add(disposable)
@@ -85,5 +83,4 @@ class FavoritePresenter @Inject constructor(
         super.onDestroy()
         compositeDisposable.clear()
     }
-
 }

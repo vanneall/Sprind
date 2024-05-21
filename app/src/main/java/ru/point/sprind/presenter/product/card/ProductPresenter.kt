@@ -25,6 +25,7 @@ import ru.point.sprind.entity.deletage.product.card.ProductCardReviewDelegate
 import ru.point.sprind.entity.deletage.product.card.ProductDescriptionDelegate
 import ru.point.sprind.entity.deletage.product.card.ProductImageDelegate
 import ru.point.sprind.entity.deletage.product.card.ProductTitleDelegate
+import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import ru.point.sprind.presenter.product.card.ProductPresenterAssistedFactory.Companion.ID
 
 @InjectViewState
@@ -35,6 +36,12 @@ class ProductPresenter @AssistedInject constructor(
     private val addProductToCartUseCase: Lazy<AddProductToCartUseCase>,
     private val deleteFromCartUseCase: Lazy<DeleteProductFromCartUseCase>
 ) : MvpPresenter<ProductCardView>() {
+
+    private val httpManager = HttpExceptionStatusManager
+        .Builder()
+        .add403ExceptionHandler { viewState.requireAuthorization() }
+        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }
+        .build()
 
     val delegates = listOf(
         NestedRecyclerViewDelegate(
@@ -71,9 +78,9 @@ class ProductPresenter @AssistedInject constructor(
 
                 viewState.setAdapter(productViewObject)
             }, { ex ->
-                ex.printStackTrace()
                 viewState.displayLoadingScreen(show = false)
                 viewState.displayBadConnectionScreen(show = true)
+                if (ex is HttpException) httpManager.handle(ex)
             }
             )
 
@@ -86,8 +93,7 @@ class ProductPresenter @AssistedInject constructor(
             .subscribe({
                 viewState.displayProductInCartButtonGroup(show = false)
             }, { ex ->
-                viewState.displaySomethingGoesWrongError()
-                ex.printStackTrace()
+                if (ex is HttpException) httpManager.handle(ex)
             })
 
         compositeDisposable.add(disposable)
@@ -100,8 +106,7 @@ class ProductPresenter @AssistedInject constructor(
             .subscribe({
                 viewState.displayProductInCartButtonGroup(show = true)
             }, { ex ->
-                ex.printStackTrace()
-                viewState.displaySomethingGoesWrongError()
+                if (ex is HttpException) httpManager.handle(ex)
             })
 
         compositeDisposable.add(disposable)
@@ -117,14 +122,8 @@ class ProductPresenter @AssistedInject constructor(
             .subscribe({
                 isSuccessfulCallback(true)
             }, { ex ->
-                ex.printStackTrace()
                 isSuccessfulCallback(false)
-                if (ex is HttpException) {
-                    when (ex.code()) {
-                        403 -> viewState.requireAuthorization()
-                        else -> viewState.displaySomethingGoesWrongError()
-                    }
-                }
+                if (ex is HttpException) httpManager.handle(ex)
             })
 
         compositeDisposable.add(disposable)

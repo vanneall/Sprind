@@ -119,7 +119,7 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
 
     override fun displaySomethingGoesWrongError() {
         Toast.makeText(
-            this@ResultFragment.context,
+            requireContext(),
             getString(R.string.someting_goes_wrong_hint),
             Toast.LENGTH_SHORT
         ).show()

@@ -16,6 +16,7 @@ import ru.point.sprind.entity.deletage.product.cart.CartHeaderDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartProductDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartPromocodeDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartSummaryDelegate
+import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import javax.inject.Inject
 
 @InjectViewState
@@ -25,6 +26,12 @@ class CartPresenter @Inject constructor(
     private val changeFavoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
     private val deleteProductFromCartUseCase: Lazy<DeleteProductFromCartUseCase>,
 ) : MvpPresenter<CartView>() {
+
+    private val httpManager = HttpExceptionStatusManager
+        .Builder()
+        .add403ExceptionHandler { viewState.requireAuthorization() }
+        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }
+        .build()
 
     val delegates = listOf(
         CartProductDelegate(
@@ -59,13 +66,8 @@ class CartPresenter @Inject constructor(
             }, { ex ->
                 viewState.displayLoadingScreen(show = false)
                 ex.printStackTrace()
-                if (ex is HttpException) {
-                    when (ex.code()) {
-                        403 -> viewState.requireAuthorization()
-                    }
-                } else {
-                    viewState.displayBadConnectionScreen(show = true)
-                }
+                if (ex is HttpException) httpManager.handle(ex)
+                else viewState.displayBadConnectionScreen(show = true)
             })
 
         compositeDisposable.add(disposable)
@@ -77,8 +79,7 @@ class CartPresenter @Inject constructor(
             .subscribeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {}, { ex ->
-                    ex.printStackTrace()
-                    viewState.displaySomethingGoesWrongError()
+                    if (ex is HttpException) httpManager.handle(ex)
                 })
 
         compositeDisposable.add(disposable)
@@ -95,14 +96,8 @@ class CartPresenter @Inject constructor(
             .subscribe({
                 isSuccessfulCallback(true)
             }, { ex ->
-                ex.printStackTrace()
                 isSuccessfulCallback(false)
-                if (ex is HttpException) {
-                    when (ex.code()) {
-                        403 -> viewState.requireAuthorization()
-                        else -> viewState.displaySomethingGoesWrongError()
-                    }
-                }
+                if (ex is HttpException) httpManager.handle(ex)
             })
 
         compositeDisposable.add(disposable)
@@ -116,8 +111,7 @@ class CartPresenter @Inject constructor(
                 viewState.setAdapter(listOf(CartEmptyVo()))
                 viewState.displayPayButton(false)
             }, { ex ->
-                viewState.displaySomethingGoesWrongError()
-                ex.printStackTrace()
+                if (ex is HttpException) httpManager.handle(ex)
             })
 
         compositeDisposable.add(disposable)

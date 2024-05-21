@@ -12,6 +12,7 @@ import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
 import ru.point.domain.usecase.interfaces.product.GetProductsByNameUseCase
 import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
+import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import ru.point.sprind.presenter.product.morda.MordaView
 import ru.point.sprind.presenter.product.result.ResultPresenterAssistedFactory.Companion.QUERY
 
@@ -22,6 +23,12 @@ class ResultPresenter @AssistedInject constructor(
     private val getProductsByNameUseCase: GetProductsByNameUseCase,
     private val changeFavoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
 ) : MvpPresenter<MordaView>() {
+
+    private val httpManager = HttpExceptionStatusManager
+        .Builder()
+        .add403ExceptionHandler { viewState.requireAuthorization() }
+        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }
+        .build()
 
     val delegates = listOf(
         ProductDelegate(
@@ -44,7 +51,7 @@ class ResultPresenter @AssistedInject constructor(
             }, { ex ->
                 viewState.displayLoadingScreen(show = false)
                 viewState.displayBadConnectionScreen(show = true)
-                ex.printStackTrace()
+                if (ex is HttpException) httpManager.handle(ex)
             })
         compositeDisposable.add(disposable)
     }
@@ -56,10 +63,7 @@ class ResultPresenter @AssistedInject constructor(
             .subscribe({}, { ex ->
                 ex.printStackTrace()
                 if (ex is HttpException) {
-                    when (ex.code()) {
-                        403 -> viewState.requireAuthorization()
-                        else -> viewState.displaySomethingGoesWrongError()
-                    }
+                    httpManager.handle(ex)
                 }
             })
 
@@ -77,13 +81,9 @@ class ResultPresenter @AssistedInject constructor(
                 .subscribe({
                     isSuccessfulCallback(true)
                 }, { ex ->
-                    ex.printStackTrace()
                     isSuccessfulCallback(false)
                     if (ex is HttpException) {
-                        when (ex.code()) {
-                            403 -> viewState.requireAuthorization()
-                            else -> viewState.displaySomethingGoesWrongError()
-                        }
+                        httpManager.handle(ex)
                     }
                 })
 

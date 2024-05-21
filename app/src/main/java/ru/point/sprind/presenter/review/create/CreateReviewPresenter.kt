@@ -8,6 +8,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import ru.point.domain.usecase.interfaces.review.AddReviewUseCase
+import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import ru.point.sprind.presenter.review.create.CreateReviewPresenterFactory.Companion.ID
 
 @InjectViewState
@@ -16,6 +17,12 @@ class CreateReviewPresenter @AssistedInject constructor(
     private val productId: Long,
     private val addReviewUseCase: Lazy<AddReviewUseCase>,
 ) : MvpPresenter<CreateReviewView>() {
+
+    private val httpManager = HttpExceptionStatusManager
+        .Builder()
+        .add403ExceptionHandler { viewState.requireAuthorization() }
+        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }
+        .build()
 
     private val compositeDisposable = CompositeDisposable()
 

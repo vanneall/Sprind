@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import moxy.MvpAppCompatFragment
@@ -54,6 +55,18 @@ class CreateReviewFragment : MvpAppCompatFragment(), CreateReviewView {
                 )
             }
         }
+    }
+
+    override fun requireAuthorization() {
+        findNavController().navigate(CreateReviewFragmentDirections.actionGlobalAuthorizationFragment())
+    }
+
+    override fun displaySomethingGoesWrongError() {
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.someting_goes_wrong_hint),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun exit() {
