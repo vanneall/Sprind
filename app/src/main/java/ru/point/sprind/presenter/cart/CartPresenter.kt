@@ -55,14 +55,12 @@ class CartPresenter @Inject constructor(
             .subscribe({ dto ->
                 viewState.displayLoadingScreen(show = false)
 
-                if (!dto.isCartEmpty) {
-                    viewState.setAdapter(dto.productsVo)
-
-                    if (!dto.isAddressEmpty) viewState.displayPayButton(true)
-                } else {
+                if (dto.isCartEmpty) {
                     viewState.displayPayButton(false)
-                    viewState.setAdapter(dto.productsVo)
+                } else {
+                    if (!dto.isAddressEmpty) viewState.displayPayButton(true)
                 }
+                viewState.setAdapter(dto.productsVo)
             }, { ex ->
                 viewState.displayLoadingScreen(show = false)
                 ex.printStackTrace()
