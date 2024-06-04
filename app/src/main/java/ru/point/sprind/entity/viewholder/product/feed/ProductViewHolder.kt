@@ -15,35 +15,37 @@ class ProductViewHolder(
     private val onFavoriteCheckedChange: (Long, Boolean, (Boolean) -> Unit) -> Unit,
 ) : ViewHolderV2<ProductFeedVo>(binding.root) {
 
-    override fun bind(view: ProductFeedVo) = with(binding) {
-        image.load(
-            if (view.photosUrl.isNotEmpty()) view.photosUrl.first()
-            else PICTURE_NOT_FOUND
-        ) {
-            scale(Scale.FIT)
-            transformations(RoundedCornersTransformation(50f, 50f))
-        }
-        name.text = view.name
-        price.text = view.price
-        isFavorite.isChecked = view.isFavorite
+    override fun bind(view: ProductFeedVo) {
+        binding.apply {
 
-        isFavorite.setOnClickListener {
-            val isChecked = isFavorite.isChecked
-            onFavoriteCheckedChange(view.id, isChecked) { isSuccess ->
-                isFavorite.isChecked = if (isSuccess) isChecked else !isChecked
+            image.load(
+                if (view.photosUrl.isNotEmpty()) view.photosUrl.first()
+                else PICTURE_NOT_FOUND
+            ) {
+                scale(Scale.FIT)
+                transformations(RoundedCornersTransformation(50f, 50f))
             }
-        }
 
-        root.setOnClickListener {
-            onClickCard(view.id)
-        }
+            name.text = view.name
+            price.text = view.price
+            isFavorite.isChecked = view.isFavorite
 
-        if (view.isInCart) {
-            buyButton.isEnabled = false
-        }
+            isFavorite.setOnClickListener {
+                val isChecked = isFavorite.isChecked
+                onFavoriteCheckedChange(view.id, isChecked) { isSuccess ->
+                    isFavorite.isChecked = if (isSuccess) isChecked else !isChecked
+                }
+            }
 
-        buyButton.setOnClickListener {
-            onBuyClick(view.id)
+            root.setOnClickListener {
+                onClickCard(view.id)
+            }
+
+            if (view.isInCart) {
+                buyButton.isEnabled = false
+            }
+
+            buyButton.setOnClickListener { onBuyClick(view.id) }
         }
     }
 }

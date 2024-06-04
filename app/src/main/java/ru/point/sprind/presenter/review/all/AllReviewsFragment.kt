@@ -33,6 +33,8 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
+        _adapter = MordaAdapter(delegates = presenter.delegates)
+        lifecycle.addObserver(adapter)
     }
 
     override fun onCreateView(
@@ -58,11 +60,8 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
     }
 
     private fun initializeRecyclerView() {
-        _adapter = MordaAdapter(presenter.delegates)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(ProductInfoDecorator())
-
-        lifecycle.addObserver(adapter)
     }
 
     override fun onResume() {

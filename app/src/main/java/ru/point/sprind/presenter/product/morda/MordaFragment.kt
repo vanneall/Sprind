@@ -33,6 +33,8 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(fragment = this)
         super.onCreate(savedInstanceState)
+        _adapter = MordaAdapter(presenter.delegates)
+        lifecycle.addObserver(adapter)
     }
 
     override fun onCreateView(
@@ -72,11 +74,8 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
     }
 
     private fun initializeRecyclerView() {
-        _adapter = MordaAdapter(delegates = presenter.delegates)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(FeedProductDecorator())
-
-        lifecycle.addObserver(adapter)
     }
 
     override fun openCard(id: Long) {
@@ -115,14 +114,12 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
     }
 
     override fun setAdapter(views: List<ViewObject>) {
-        adapter?.views = views
+        adapter.views = views
     }
 
     override fun displaySomethingGoesWrongError() {
         Toast.makeText(
-            requireContext(),
-            getString(R.string.someting_goes_wrong_hint),
-            Toast.LENGTH_SHORT
+            requireContext(), getString(R.string.someting_goes_wrong_hint), Toast.LENGTH_SHORT
         ).show()
     }
 

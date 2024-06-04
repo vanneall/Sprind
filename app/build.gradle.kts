@@ -51,6 +51,9 @@ dependencies {
     implementation(libs.moxy.material)
     kapt(libs.moxy.compiler)
 
+    //LeakCanary
+    //debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
+
     //Dagger2
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)

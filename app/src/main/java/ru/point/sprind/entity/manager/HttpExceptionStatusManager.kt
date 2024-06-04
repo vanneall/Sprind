@@ -3,29 +3,27 @@ package ru.point.sprind.entity.manager
 import android.util.Log
 import retrofit2.HttpException
 
+@JvmInline
+value class Code(val code: Int)
+
 class HttpExceptionStatusManager private constructor() {
-
-    private var handle400: (() -> Unit)? = null
-
-    private var handle403: (() -> Unit)? = null
-
-    private var handle404: (() -> Unit)? = null
 
     private var default: (() -> Unit) = {
         Log.e("HttpExceptionStatusManager", "Handler for this exception not implemented")
     }
 
-    fun handle(exception: HttpException) {
-        when {
-            exception.code() == 404 && handle404 != null -> handle404?.invoke()
-            exception.code() == 400 && handle400 != null -> handle400?.invoke()
-            exception.code() == 403 && handle403 != null -> handle403?.invoke()
+    private val handlerMap = mutableMapOf(Code(DEFAULT) to default)
 
-            else -> {
-                default()
-                exception.printStackTrace()
-            }
-        }
+    fun handle(exception: HttpException) {
+        val code = Code(exception.code())
+        if (handlerMap.containsKey(code)) handlerMap[code]?.invoke()
+        else handlerMap[Code(DEFAULT)]?.invoke()
+
+        exception.printStackTrace()
+    }
+
+    private companion object {
+        const val DEFAULT = -1
     }
 
     class Builder {
@@ -33,22 +31,22 @@ class HttpExceptionStatusManager private constructor() {
         private val manager: HttpExceptionStatusManager = HttpExceptionStatusManager()
 
         fun add400ExceptionHandler(handler: () -> Unit): Builder {
-            manager.handle400 = handler
+            manager.handlerMap[Code(400)] = handler
             return this
         }
 
         fun add403ExceptionHandler(handler: () -> Unit): Builder {
-            manager.handle403 = handler
+            manager.handlerMap[Code(403)] = handler
             return this
         }
 
         fun add404ExceptionHandler(handler: () -> Unit): Builder {
-            manager.handle404 = handler
+            manager.handlerMap[Code(404)] = handler
             return this
         }
 
         fun addDefaultExceptionHandler(handler: () -> Unit): Builder {
-            manager.default = handler
+            manager.handlerMap[Code(DEFAULT)] = handler
             return this
         }
 

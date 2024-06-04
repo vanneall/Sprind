@@ -21,7 +21,7 @@ class AllReviewsPresenter @AssistedInject constructor(
 
     private val httpManager = HttpExceptionStatusManager
         .Builder()
-        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }
+        .addDefaultExceptionHandler { viewState::displaySomethingGoesWrongError }
         .build()
 
     private val compositeDisposable = CompositeDisposable()

@@ -32,6 +32,8 @@ class CartFragment : MvpAppCompatFragment(), CartView {
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
+        _adapter = MordaAdapter(delegates = presenter.delegates)
+        lifecycle.addObserver(adapter)
     }
 
     override fun onCreateView(
@@ -59,10 +61,8 @@ class CartFragment : MvpAppCompatFragment(), CartView {
     }
 
     private fun initializeRecyclerView() {
-        _adapter = MordaAdapter(delegates = presenter.delegates)
         binding.cartRecyclerView.adapter = adapter
         binding.cartRecyclerView.addItemDecoration(CartItemDecorator())
-        lifecycle.addObserver(adapter)
     }
 
     override fun requireAuthorization() {

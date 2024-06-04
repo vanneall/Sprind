@@ -63,7 +63,6 @@ class CartPresenter @Inject constructor(
                 viewState.setAdapter(dto.productsVo)
             }, { ex ->
                 viewState.displayLoadingScreen(show = false)
-                ex.printStackTrace()
                 if (ex is HttpException) httpManager.handle(ex)
                 else viewState.displayBadConnectionScreen(show = true)
             })

@@ -57,7 +57,7 @@ class MordaAdapter(
     override fun getItemCount(): Int = views.size
 
     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-        if (event == Lifecycle.Event.ON_DESTROY) {
+        if (event == Lifecycle.Event.ON_STOP) {
             Log.d("Adapter", "cleared ${compositeDisposable.size()}")
             compositeDisposable.clear()
         }
