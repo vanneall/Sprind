@@ -35,6 +35,8 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
+        _adapter = MordaAdapter(delegates = presenter.delegates)
+        lifecycle.addObserver(adapter)
     }
 
     override fun onCreateView(
@@ -64,10 +66,7 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
 
     private fun initializeRecyclerView() {
         with(binding) {
-            _adapter = MordaAdapter(delegates = presenter.delegates)
             favoritesRecyclerView.adapter = adapter
-            lifecycle.addObserver(adapter)
-
             val layoutManager = favoritesRecyclerView.layoutManager as GridLayoutManager
             layoutManager.spanSizeLookup = FavoriteSpanSizeLookup(presenter.delegates, adapter)
             favoritesRecyclerView.addItemDecoration(FavoritesItemDecorator())

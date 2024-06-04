@@ -10,14 +10,15 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image"
-        android:background="@drawable/card_background_full"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="192dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_launcher_foreground"
+        android:paddingTop="4dp"
+        app:layout_constraintBottom_toTopOf="@id/price"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/is_favorite"
@@ -47,6 +48,9 @@
         style="@style/regular_12"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="2"
+        app:layout_constraintBottom_toTopOf="@id/buy_button"
         app:layout_constraintEnd_toEndOf="@id/end_guideline"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -56,10 +60,10 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buy_button"
         style="@style/medium_14"
-        app:cornerRadius="20dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/buy"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/end_guideline"
         app:layout_constraintStart_toStartOf="@id/start_guideline" />

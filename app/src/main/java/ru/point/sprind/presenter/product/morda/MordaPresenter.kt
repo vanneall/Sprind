@@ -22,8 +22,8 @@ class MordaPresenter @Inject constructor(
 
     private val httpManager = HttpExceptionStatusManager
         .Builder()
-        .add403ExceptionHandler { viewState.requireAuthorization() }
-        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }
+        .add403ExceptionHandler { viewState::requireAuthorization }
+        .addDefaultExceptionHandler { viewState::displaySomethingGoesWrongError }
         .build()
 
     val delegates = listOf(
@@ -45,10 +45,11 @@ class MordaPresenter @Inject constructor(
                 viewState.setAddress(vo.addressVo.address)
                 viewState.setAdapter(views = vo.productsVo)
             }, { ex ->
-                println("АХАХАХАХА ОШИБКА НА МОРДЕ")
                 viewState.displayLoadingScreen(show = false)
                 viewState.displayBadConnectionScreen(show = true)
-                ex.printStackTrace()
+                if (ex is HttpException) {
+                    httpManager.handle(ex)
+                }
             })
         compositeDisposable.add(disposable)
     }

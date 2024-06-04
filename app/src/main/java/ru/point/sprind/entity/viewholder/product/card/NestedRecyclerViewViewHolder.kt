@@ -33,8 +33,4 @@ class NestedRecyclerViewViewHolder(
     override fun bind(view: NestedRecyclerViewVo) {
         adapter.views = view.viewObjects
     }
-
-    fun clear() {
-        binding.nestedRecyclerview.adapter = null
-    }
 }

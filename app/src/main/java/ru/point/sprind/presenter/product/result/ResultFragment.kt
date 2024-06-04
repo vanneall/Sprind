@@ -39,6 +39,8 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
+        _adapter = MordaAdapter(delegates = presenter.delegates)
+        lifecycle.addObserver(adapter)
     }
 
     override fun onCreateView(
@@ -78,11 +80,8 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
     }
 
     private fun initializeRecyclerView() {
-        _adapter = MordaAdapter(presenter.delegates)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(FeedProductDecorator())
-
-        lifecycle.addObserver(adapter)
     }
 
     override fun displayBadConnectionScreen(show: Boolean) {

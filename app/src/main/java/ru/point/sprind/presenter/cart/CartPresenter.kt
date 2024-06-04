@@ -29,8 +29,8 @@ class CartPresenter @Inject constructor(
 
     private val httpManager = HttpExceptionStatusManager
         .Builder()
-        .add403ExceptionHandler { viewState.requireAuthorization() }
-        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }
+        .add403ExceptionHandler { viewState::requireAuthorization }
+        .addDefaultExceptionHandler { viewState::displaySomethingGoesWrongError }
         .build()
 
     val delegates = listOf(
@@ -63,7 +63,6 @@ class CartPresenter @Inject constructor(
                 viewState.setAdapter(dto.productsVo)
             }, { ex ->
                 viewState.displayLoadingScreen(show = false)
-                ex.printStackTrace()
                 if (ex is HttpException) httpManager.handle(ex)
                 else viewState.displayBadConnectionScreen(show = true)
             })

@@ -38,6 +38,8 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(fragment = this)
         super.onCreate(savedInstanceState)
+        _adapter = MordaAdapter(delegates = presenter.delegates)
+        lifecycle.addObserver(adapter)
     }
 
     override fun onCreateView(
@@ -60,11 +62,8 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
     }
 
     private fun initializeRecyclerView() {
-        _adapter = MordaAdapter(delegates = presenter.delegates)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(ProductInfoDecorator())
-
-        lifecycle.addObserver(adapter)
     }
 
     private fun initializePayButtons() {
@@ -131,13 +130,9 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
         findNavController().navigate(CartFragmentDirections.actionGlobalAuthorizationFragment())
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     override fun onDestroy() {
         super.onDestroy()
+        _binding = null
         _adapter = null
     }
 }
