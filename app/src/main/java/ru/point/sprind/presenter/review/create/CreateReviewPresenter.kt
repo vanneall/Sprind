@@ -20,8 +20,8 @@ class CreateReviewPresenter @AssistedInject constructor(
 
     private val httpManager = HttpExceptionStatusManager
         .Builder()
-        .add403ExceptionHandler { viewState.requireAuthorization() }
-        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }
+        .add403ExceptionHandler { viewState::requireAuthorization }
+        .addDefaultExceptionHandler { viewState::displaySomethingGoesWrongError }
         .build()
 
     private val compositeDisposable = CompositeDisposable()

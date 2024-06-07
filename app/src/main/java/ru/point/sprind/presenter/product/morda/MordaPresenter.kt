@@ -22,8 +22,8 @@ class MordaPresenter @Inject constructor(
 
     private val httpManager = HttpExceptionStatusManager
         .Builder()
-        .add403ExceptionHandler { viewState.requireAuthorization() }
-        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }
+        .add403ExceptionHandler { viewState::requireAuthorization }
+        .addDefaultExceptionHandler { viewState::displaySomethingGoesWrongError }
         .build()
 
     val delegates = listOf(
