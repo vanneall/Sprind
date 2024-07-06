@@ -14,9 +14,8 @@ import ru.point.domain.entity.dto.product.ProductInfoDto
 import ru.point.domain.repository.ProductRepository
 import ru.point.repository.paging.FeedPagingSource
 import ru.point.retrofit.api.ProductApi
-import javax.inject.Inject
 
-class RemoteProductRepository @Inject constructor(
+class RemoteProductRepository(
     private val api: ProductApi,
     private val pagingSourceFactory: FeedPagingSource.Factory
 ) : ProductRepository {

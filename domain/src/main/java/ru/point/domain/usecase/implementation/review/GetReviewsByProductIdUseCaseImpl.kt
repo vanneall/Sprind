@@ -5,9 +5,8 @@ import ru.point.domain.entity.dto.review.toReviewVo
 import ru.point.domain.entity.view.review.ReviewVo
 import ru.point.domain.repository.ReviewRepository
 import ru.point.domain.usecase.interfaces.review.GetReviewsByProductIdUseCase
-import javax.inject.Inject
 
-class GetReviewsByProductIdUseCaseImpl @Inject constructor(
+class GetReviewsByProductIdUseCaseImpl(
     private val repository: ReviewRepository,
 ) : GetReviewsByProductIdUseCase {
     override fun handle(id: Long): Observable<List<ReviewVo>> {

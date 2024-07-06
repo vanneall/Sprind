@@ -6,9 +6,8 @@ import ru.point.domain.entity.complex.ComplexProductFeedVo
 import ru.point.domain.entity.dto.complex.toComplexProductFeedVo
 import ru.point.domain.repository.ProductRepository
 import ru.point.domain.usecase.interfaces.product.GetMainProductsPageInfoUseCase
-import javax.inject.Inject
 
-class GetMainProductsPageInfoUseCaseImpl @Inject constructor(
+class GetMainProductsPageInfoUseCaseImpl(
     private val remoteRepository: ProductRepository
 ) : GetMainProductsPageInfoUseCase {
     override fun handle(): Single<ComplexProductFeedVo> {

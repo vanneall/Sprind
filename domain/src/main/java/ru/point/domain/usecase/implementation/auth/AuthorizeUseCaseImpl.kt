@@ -5,9 +5,8 @@ import ru.point.domain.entity.dto.user.AuthUserDto
 import ru.point.domain.entity.utils.Token
 import ru.point.domain.repository.UserRepository
 import ru.point.domain.usecase.interfaces.auth.AuthorizeUseCase
-import javax.inject.Inject
 
-class AuthorizeUseCaseImpl @Inject constructor(
+class AuthorizeUseCaseImpl(
     private val repository: UserRepository,
 ) : AuthorizeUseCase {
     override fun handle(username: String, password: String): Single<Token> {

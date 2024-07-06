@@ -1,4 +1,4 @@
-package ru.point.di
+package ru.point.room.di
 
 import dagger.Module
 import dagger.Provides

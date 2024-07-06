@@ -8,9 +8,8 @@ import ru.point.domain.entity.dto.product.toCartProductVo
 import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.repository.CartRepository
 import ru.point.domain.usecase.interfaces.cart.GetProductsInCartUseCase
-import javax.inject.Inject
 
-class GetProductsInCartUseCaseImpl @Inject constructor(
+class GetProductsInCartUseCaseImpl(
     private val repository: CartRepository,
 ) : GetProductsInCartUseCase {
     override fun handle(): Observable<PagingData<ViewObject>> {

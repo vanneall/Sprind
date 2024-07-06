@@ -1,4 +1,4 @@
-package ru.point.domain.usecase.di
+package ru.point.sprind.di.usecases
 
 import dagger.Module
 import dagger.Provides

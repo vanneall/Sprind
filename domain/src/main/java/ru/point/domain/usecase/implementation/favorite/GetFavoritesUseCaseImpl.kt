@@ -8,9 +8,8 @@ import ru.point.domain.entity.dto.product.toProductFeedVo
 import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.repository.FavoriteRepository
 import ru.point.domain.usecase.interfaces.favorite.GetFavoritesUseCase
-import javax.inject.Inject
 
-class GetFavoritesUseCaseImpl @Inject constructor(
+class GetFavoritesUseCaseImpl(
     private val repository: FavoriteRepository,
 ) : GetFavoritesUseCase {
 

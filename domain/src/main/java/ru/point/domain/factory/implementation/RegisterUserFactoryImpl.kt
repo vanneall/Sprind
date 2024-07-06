@@ -2,9 +2,8 @@ package ru.point.domain.factory.implementation
 
 import ru.point.domain.entity.dto.user.RegisterUserDto
 import ru.point.domain.factory.interfaces.RegisterUserFactory
-import javax.inject.Inject
 
-class RegisterUserFactoryImpl @Inject constructor(): RegisterUserFactory {
+class RegisterUserFactoryImpl: RegisterUserFactory {
     override fun create(
         name: String,
         secondName: String,

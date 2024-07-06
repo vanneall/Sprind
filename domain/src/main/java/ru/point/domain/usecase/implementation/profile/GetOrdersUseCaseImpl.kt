@@ -5,9 +5,8 @@ import ru.point.domain.entity.dto.order.toOrderVo
 import ru.point.domain.entity.view.order.OrderVo
 import ru.point.domain.repository.UserRepository
 import ru.point.domain.usecase.interfaces.profile.GetOrdersUseCase
-import javax.inject.Inject
 
-class GetOrdersUseCaseImpl @Inject constructor(
+class GetOrdersUseCaseImpl(
     private val repository: UserRepository
 ) : GetOrdersUseCase {
 

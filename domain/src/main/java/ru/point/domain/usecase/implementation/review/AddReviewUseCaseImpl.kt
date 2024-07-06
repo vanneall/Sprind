@@ -4,9 +4,8 @@ import io.reactivex.rxjava3.core.Completable
 import ru.point.domain.entity.dto.review.CreatedReviewDto
 import ru.point.domain.repository.ReviewRepository
 import ru.point.domain.usecase.interfaces.review.AddReviewUseCase
-import javax.inject.Inject
 
-class AddReviewUseCaseImpl @Inject constructor(
+class AddReviewUseCaseImpl(
     private val repository: ReviewRepository,
 ) : AddReviewUseCase {
 

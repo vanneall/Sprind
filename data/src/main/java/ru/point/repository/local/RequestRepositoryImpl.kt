@@ -6,9 +6,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.point.domain.repository.RequestRepository
 import ru.point.room.RequestDao
 import ru.point.room.RequestEntity
-import javax.inject.Inject
 
-class RequestRepositoryImpl @Inject constructor(
+class RequestRepositoryImpl(
     private val dao: RequestDao,
 ) : RequestRepository {
 

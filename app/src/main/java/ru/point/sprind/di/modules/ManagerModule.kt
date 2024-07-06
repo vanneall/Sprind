@@ -1,4 +1,4 @@
-package ru.point.di
+package ru.point.sprind.di.modules
 
 import android.content.Context
 import dagger.Module

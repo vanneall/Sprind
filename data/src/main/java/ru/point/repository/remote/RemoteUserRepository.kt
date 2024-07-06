@@ -11,9 +11,8 @@ import ru.point.domain.entity.utils.AddressDto
 import ru.point.domain.entity.utils.Token
 import ru.point.domain.repository.UserRepository
 import ru.point.retrofit.api.UserApi
-import javax.inject.Inject
 
-class RemoteUserRepository @Inject constructor(
+class RemoteUserRepository(
     private val api: UserApi,
 ) : UserRepository {
 

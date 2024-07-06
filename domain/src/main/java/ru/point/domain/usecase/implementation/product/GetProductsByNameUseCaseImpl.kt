@@ -8,9 +8,8 @@ import ru.point.domain.entity.dto.product.toProductFeedVo
 import ru.point.domain.entity.view.product.card.ProductFeedVo
 import ru.point.domain.repository.ProductRepository
 import ru.point.domain.usecase.interfaces.product.GetProductsByNameUseCase
-import javax.inject.Inject
 
-class GetProductsByNameUseCaseImpl @Inject constructor(
+class GetProductsByNameUseCaseImpl(
     private val repository: ProductRepository,
 ) : GetProductsByNameUseCase {
 

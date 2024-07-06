@@ -7,9 +7,8 @@ import ru.point.domain.entity.dto.review.CreatedReviewDto
 import ru.point.domain.entity.dto.review.ReviewDto
 import ru.point.domain.repository.ReviewRepository
 import ru.point.retrofit.api.ReviewApi
-import javax.inject.Inject
 
-class RemoteReviewRepository @Inject constructor(
+class RemoteReviewRepository(
     private val api: ReviewApi,
 ) : ReviewRepository {
 

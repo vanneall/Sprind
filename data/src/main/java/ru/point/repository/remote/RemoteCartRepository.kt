@@ -11,9 +11,8 @@ import ru.point.domain.entity.dto.product.ProductFeedDto
 import ru.point.domain.repository.CartRepository
 import ru.point.repository.paging.CartPagingSource
 import ru.point.retrofit.api.CartApi
-import javax.inject.Inject
 
-class RemoteCartRepository @Inject constructor(
+class RemoteCartRepository(
     private val api: CartApi,
     private val cartPagingSource: CartPagingSource
 ) : CartRepository {

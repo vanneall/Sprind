@@ -3,9 +3,8 @@ package ru.point.retrofit.interceptor
 import okhttp3.Interceptor
 import okhttp3.Response
 import ru.point.manager.SettingsManager
-import javax.inject.Inject
 
-class AuthorizationInterceptor @Inject constructor(
+class AuthorizationInterceptor(
     private val manager: SettingsManager,
 ) : Interceptor {
 

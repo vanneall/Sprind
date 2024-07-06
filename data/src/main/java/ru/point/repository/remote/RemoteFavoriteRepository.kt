@@ -11,9 +11,8 @@ import ru.point.domain.entity.dto.product.ProductFeedDto
 import ru.point.domain.repository.FavoriteRepository
 import ru.point.repository.paging.FavoritePagingSource
 import ru.point.retrofit.api.FavoriteApi
-import javax.inject.Inject
 
-class RemoteFavoriteRepository @Inject constructor(
+class RemoteFavoriteRepository(
     private val api: FavoriteApi,
     private val favoritePagingSource: FavoritePagingSource
 ) : FavoriteRepository {

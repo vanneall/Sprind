@@ -9,9 +9,8 @@ import ru.point.domain.entity.dto.product.toProductTitleVo
 import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.repository.ProductRepository
 import ru.point.domain.usecase.interfaces.product.GetProductByIdUseCase
-import javax.inject.Inject
 
-class GetProductByIdUseCaseImpl @Inject constructor(
+class GetProductByIdUseCaseImpl(
     private val repository: ProductRepository,
 ) : GetProductByIdUseCase {
     override fun invoke(id: Long): Single<List<ViewObject>> {
