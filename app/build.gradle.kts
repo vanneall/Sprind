@@ -70,6 +70,11 @@ dependencies {
     implementation(libs.converter.gson.v250)
     implementation(libs.adapter.rxjava3)
 
+    //Paging 3
+    val paging_version = "3.3.0"
+    implementation("androidx.paging:paging-runtime:$paging_version")
+    implementation("androidx.paging:paging-rxjava3:$paging_version")
+
     //RxJava3
     implementation(libs.rxjava)
     implementation(libs.rxandroid)

@@ -39,6 +39,11 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 
+    //Paging 3
+    val paging_version = "3.3.0"
+    implementation("androidx.paging:paging-runtime:$paging_version")
+    implementation("androidx.paging:paging-rxjava3:$paging_version")
+
     //Dagger2
     val dagger2Version = "2.51"
     implementation(libs.dagger)

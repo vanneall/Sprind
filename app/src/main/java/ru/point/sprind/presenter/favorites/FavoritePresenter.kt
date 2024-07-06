@@ -23,8 +23,8 @@ class FavoritePresenter @Inject constructor(
 
     private val httpManager = HttpExceptionStatusManager
         .Builder()
-        .add403ExceptionHandler { viewState::requireAuthorization }
-        .addDefaultExceptionHandler { viewState::displaySomethingGoesWrongError }
+        .add403ExceptionHandler { viewState.requireAuthorization() }
+        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }
         .build()
 
     private val compositeDisposable = CompositeDisposable()
@@ -41,9 +41,9 @@ class FavoritePresenter @Inject constructor(
     fun getFavorites() {
         val disposable = getFavoritesUseCase.handle()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ list ->
+            .subscribe({ loadResult ->
                 viewState.displayLoadingScreen(show = false)
-                viewState.setAdapter(list)
+                viewState.setAdapter(loadResult)
             }, { ex ->
                 if (ex is HttpException) httpManager.handle(ex)
                 else viewState.displayBadConnectionScreen(show = true)

@@ -7,13 +7,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
-import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.FavoritesItemDecorator
+import ru.point.sprind.adapters.MordaAdapterPaging
 import ru.point.sprind.adapters.decorators.spans.FavoriteSpanSizeLookup
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentFavoritesBinding
@@ -28,14 +29,14 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
-    private var _adapter: MordaAdapter? = null
+    private var _adapter: MordaAdapterPaging? = null
     private val adapter get() = _adapter!!
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
-        _adapter = MordaAdapter(delegates = presenter.delegates)
+        _adapter = MordaAdapterPaging(delegates = presenter.delegates)
         lifecycle.addObserver(adapter)
     }
 
@@ -73,8 +74,8 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
         }
     }
 
-    override fun setAdapter(views: List<ViewObject>) {
-        adapter.views = views
+    override fun setAdapter(views: PagingData<ViewObject>?) {
+        views?.let { adapter.submitData(lifecycle, views) }
     }
 
     override fun openCard(id: Long) {

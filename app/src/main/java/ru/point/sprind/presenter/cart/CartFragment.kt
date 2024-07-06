@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingData
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
-import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.CartItemDecorator
+import ru.point.sprind.adapters.MordaAdapterPaging
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentCartBinding
 import javax.inject.Inject
@@ -26,13 +27,13 @@ class CartFragment : MvpAppCompatFragment(), CartView {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
 
-    private var _adapter: MordaAdapter? = null
+    private var _adapter: MordaAdapterPaging? = null
     private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
-        _adapter = MordaAdapter(delegates = presenter.delegates)
+        _adapter = MordaAdapterPaging(delegates = presenter.delegates)
         lifecycle.addObserver(adapter)
     }
 
@@ -72,8 +73,8 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         }
     }
 
-    override fun setAdapter(views: List<ViewObject>) {
-        adapter.views = views
+    override fun setAdapter(views: PagingData<ViewObject>?) {
+        views?.let { adapter.submitData(lifecycle, views) }
     }
 
     override fun openCard(id: Long) {

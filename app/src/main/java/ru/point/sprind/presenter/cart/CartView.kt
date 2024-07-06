@@ -4,9 +4,9 @@ import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
 import ru.point.sprind.presenter.general.ConnectionRequiredView
-import ru.point.sprind.presenter.general.UsingAdapterView
+import ru.point.sprind.presenter.general.UsingPagingAdapter
 
-interface CartView : ConnectionRequiredView, UsingAdapterView {
+interface CartView : ConnectionRequiredView, UsingPagingAdapter {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun displayPayButton(show: Boolean = false)
     @StateStrategyType(SkipStrategy::class)

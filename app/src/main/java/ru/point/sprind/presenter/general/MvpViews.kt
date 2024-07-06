@@ -1,5 +1,6 @@
 package ru.point.sprind.presenter.general
 
+import androidx.paging.PagingData
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.SkipStrategy
@@ -20,4 +21,9 @@ interface ConnectionRequiredView : MvpView {
 interface UsingAdapterView: MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun setAdapter(views: List<ViewObject>)
+}
+
+interface UsingPagingAdapter: MvpView {
+    @StateStrategyType(SkipStrategy::class)
+    fun setAdapter(views: PagingData<ViewObject>?)
 }

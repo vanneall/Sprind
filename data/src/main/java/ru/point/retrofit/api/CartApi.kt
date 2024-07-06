@@ -2,17 +2,24 @@ package ru.point.retrofit.api
 
 
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.Query
 import ru.point.domain.entity.dto.complex.ComplexProductDto
+import ru.point.domain.entity.dto.product.ProductFeedDto
 
 interface CartApi {
 
+    @GET("cart/info")
+    fun getPageInfo(): Single<ComplexProductDto>
+
     @GET("cart")
-    fun getProductsFromCart(): Observable<ComplexProductDto>
+    fun getProductsFromCart(
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int
+    ): Single<List<ProductFeedDto>>
 
     @PATCH("cart")
     fun addProduct(@Query("id") id: Long): Completable

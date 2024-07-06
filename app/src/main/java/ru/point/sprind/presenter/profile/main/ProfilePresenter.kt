@@ -16,6 +16,7 @@ class ProfilePresenter @Inject constructor(
 ) : MvpPresenter<ProfileView>() {
 
     private val compositeDisposable = CompositeDisposable()
+    
 
     init {
         val disposable = getUserInfoUseCase.handle()

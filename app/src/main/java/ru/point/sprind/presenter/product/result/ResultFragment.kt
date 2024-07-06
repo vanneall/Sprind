@@ -8,19 +8,19 @@ import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.PagingData
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
-import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.FeedProductDecorator
+import ru.point.sprind.adapters.MordaAdapterPaging
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentResultBinding
 import ru.point.sprind.presenter.cart.CartFragmentDirections
-import ru.point.sprind.presenter.product.morda.MordaView
 import javax.inject.Inject
 
-class ResultFragment : MvpAppCompatFragment(), MordaView {
+class ResultFragment : MvpAppCompatFragment(), ResultView {
 
     private val args: ResultFragmentArgs by navArgs()
 
@@ -33,13 +33,13 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
     private var _binding: FragmentResultBinding? = null
     private val binding get() = _binding!!
 
-    private var _adapter: MordaAdapter? = null
+    private var _adapter: MordaAdapterPaging? = null
     private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
-        _adapter = MordaAdapter(delegates = presenter.delegates)
+        _adapter = MordaAdapterPaging(delegates = presenter.delegates)
         lifecycle.addObserver(adapter)
     }
 
@@ -100,10 +100,6 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
         }
     }
 
-    override fun setAdapter(views: List<ViewObject>) {
-        adapter.views = views
-    }
-
     override fun openCard(id: Long) {
         val args = ResultFragmentDirections.actionResultFragmentToProductCardFragment(
             productId = id
@@ -122,6 +118,10 @@ class ResultFragment : MvpAppCompatFragment(), MordaView {
             getString(R.string.someting_goes_wrong_hint),
             Toast.LENGTH_SHORT
         ).show()
+    }
+
+    override fun setAdapter(views: PagingData<ViewObject>?) {
+        views?.let { adapter.submitData(lifecycle, views) }
     }
 
     override fun setAddress(address: String?) {

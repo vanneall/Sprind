@@ -1,13 +1,16 @@
 package ru.point.sprind.presenter.product.morda
 
+import androidx.paging.PagingData
 import dagger.Lazy
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import retrofit2.HttpException
+import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
+import ru.point.domain.usecase.interfaces.product.GetMainProductsPageInfoUseCase
 import ru.point.domain.usecase.interfaces.product.GetProductsUseCase
 import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
@@ -18,12 +21,13 @@ class MordaPresenter @Inject constructor(
     private val addProductToCartUseCase: Lazy<AddProductToCartUseCase>,
     private val getProductsUseCase: GetProductsUseCase,
     private val changeFavoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
+    private val getMainProductsPageInfoUseCase: GetMainProductsPageInfoUseCase
 ) : MvpPresenter<MordaView>() {
 
     private val httpManager = HttpExceptionStatusManager
         .Builder()
-        .add403ExceptionHandler { viewState::requireAuthorization }
-        .addDefaultExceptionHandler { viewState::displaySomethingGoesWrongError }
+        .add403ExceptionHandler { viewState.requireAuthorization() }
+        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }
         .build()
 
     val delegates = listOf(
@@ -38,12 +42,22 @@ class MordaPresenter @Inject constructor(
 
     fun init() {
         viewState.displayLoadingScreen(show = true)
-        val disposable = getProductsUseCase.handle()
+
+        val pageInfoDisposable = getMainProductsPageInfoUseCase.handle()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ info ->
+                viewState.setAddress(info.addressVo.address)
+            }, { ex ->
+                if (ex is HttpException) {
+                    httpManager.handle(ex)
+                }
+            })
+
+        val pagingProductsDisposable = getProductsUseCase.handle()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ vo ->
                 viewState.displayLoadingScreen(show = false)
-                viewState.setAddress(vo.addressVo.address)
-                viewState.setAdapter(views = vo.productsVo)
+                viewState.setAdapter(views = vo as PagingData<ViewObject>)
             }, { ex ->
                 viewState.displayLoadingScreen(show = false)
                 viewState.displayBadConnectionScreen(show = true)
@@ -51,7 +65,9 @@ class MordaPresenter @Inject constructor(
                     httpManager.handle(ex)
                 }
             })
-        compositeDisposable.add(disposable)
+
+        compositeDisposable.add(pagingProductsDisposable)
+        compositeDisposable.add(pageInfoDisposable)
     }
 
     private fun onAddProductToCart(productId: Long) {

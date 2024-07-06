@@ -1,9 +1,11 @@
 package ru.point.domain.usecase.implementation.product
 
+import androidx.paging.PagingData
+import androidx.paging.map
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import ru.point.domain.entity.complex.ComplexProductFeedVoContainer
-import ru.point.domain.entity.dto.complex.toComplexProductFeedVo
+import ru.point.domain.entity.dto.product.toProductFeedVo
+import ru.point.domain.entity.view.product.card.ProductFeedVo
 import ru.point.domain.repository.ProductRepository
 import ru.point.domain.usecase.interfaces.product.GetProductsByNameUseCase
 import javax.inject.Inject
@@ -12,9 +14,13 @@ class GetProductsByNameUseCaseImpl @Inject constructor(
     private val repository: ProductRepository,
 ) : GetProductsByNameUseCase {
 
-    override fun handle(search: String): Observable<ComplexProductFeedVoContainer> {
+    override fun handle(search: String): Observable<PagingData<ProductFeedVo>> {
         return repository.getProductsByName(name = search)
             .observeOn(Schedulers.computation())
-            .map { dto -> dto.toComplexProductFeedVo() }
+            .map { pagingData ->
+                pagingData.map { response ->
+                    response.toProductFeedVo()
+                }
+            }
     }
 }

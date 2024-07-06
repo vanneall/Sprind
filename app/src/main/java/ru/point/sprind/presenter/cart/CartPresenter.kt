@@ -1,12 +1,12 @@
 package ru.point.sprind.presenter.cart
 
+import androidx.paging.PagingData
 import dagger.Lazy
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import retrofit2.HttpException
-import ru.point.domain.entity.view.cart.CartEmptyVo
 import ru.point.domain.usecase.interfaces.cart.DeleteProductFromCartUseCase
 import ru.point.domain.usecase.interfaces.cart.GetProductsInCartUseCase
 import ru.point.domain.usecase.interfaces.cart.MakeOrderUseCase
@@ -29,8 +29,8 @@ class CartPresenter @Inject constructor(
 
     private val httpManager = HttpExceptionStatusManager
         .Builder()
-        .add403ExceptionHandler { viewState::requireAuthorization }
-        .addDefaultExceptionHandler { viewState::displaySomethingGoesWrongError }
+        .add403ExceptionHandler { viewState.requireAuthorization() }
+        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }
         .build()
 
     val delegates = listOf(
@@ -54,13 +54,8 @@ class CartPresenter @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ dto ->
                 viewState.displayLoadingScreen(show = false)
-
-                if (dto.isCartEmpty) {
-                    viewState.displayPayButton(false)
-                } else {
-                    if (!dto.isAddressEmpty) viewState.displayPayButton(true)
-                }
-                viewState.setAdapter(dto.productsVo)
+                viewState.displayPayButton(true)
+                viewState.setAdapter(dto)
             }, { ex ->
                 viewState.displayLoadingScreen(show = false)
                 if (ex is HttpException) httpManager.handle(ex)
@@ -105,7 +100,7 @@ class CartPresenter @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 viewState.openThanksScreen()
-                viewState.setAdapter(listOf(CartEmptyVo()))
+                viewState.setAdapter(PagingData.empty())
                 viewState.displayPayButton(false)
             }, { ex ->
                 if (ex is HttpException) httpManager.handle(ex)

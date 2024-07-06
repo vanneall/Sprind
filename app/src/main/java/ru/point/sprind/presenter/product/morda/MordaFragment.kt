@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingData
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
-import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.FeedProductDecorator
+import ru.point.sprind.adapters.MordaAdapterPaging
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentMordaBinding
 import ru.point.sprind.presenter.cart.CartFragmentDirections
@@ -27,13 +28,13 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
     private var _binding: FragmentMordaBinding? = null
     private val binding get() = _binding!!
 
-    private var _adapter: MordaAdapter? = null
+    private var _adapter: MordaAdapterPaging? = null
     private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(fragment = this)
         super.onCreate(savedInstanceState)
-        _adapter = MordaAdapter(presenter.delegates)
+        _adapter = MordaAdapterPaging(presenter.delegates)
         lifecycle.addObserver(adapter)
     }
 
@@ -113,8 +114,8 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
         }
     }
 
-    override fun setAdapter(views: List<ViewObject>) {
-        adapter.views = views
+    override fun setAdapter(views: PagingData<ViewObject>?) {
+        views?.let { adapter.submitData(lifecycle, views) }
     }
 
     override fun displaySomethingGoesWrongError() {

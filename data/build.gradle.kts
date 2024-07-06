@@ -54,6 +54,10 @@ dependencies {
     //RxJava3
     implementation(libs.rxjava)
 
+    //Paging 3
+    val paging_version = "3.3.0"
+    implementation("androidx.paging:paging-runtime:$paging_version")
+    implementation("androidx.paging:paging-rxjava3:$paging_version")
 
     //Room
     val room_version = "2.6.1"
