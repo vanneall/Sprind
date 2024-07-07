@@ -16,6 +16,7 @@ import ru.point.sprind.adapters.MordaAdapterPaging
 import ru.point.sprind.adapters.decorators.CartItemDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentCartBinding
+import ru.point.sprind.view.ConnectableLayout
 import javax.inject.Inject
 
 class CartFragment : MvpAppCompatFragment(), CartView {
@@ -67,8 +68,9 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         }
     }
 
-    override fun setAdapter(views: PagingData<ViewObject>?) {
-        views?.let { adapter.submitData(lifecycle, views) }
+    override fun setAdapter(views: PagingData<ViewObject>) {
+        adapter.submitData(lifecycle, views)
+        binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
     }
 
     override fun openCard(id: Long) {
@@ -90,7 +92,7 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         }
     }
 
-    override fun displaySomethingGoesWrongError() {
+    override fun showSomethingGoesWrongError() {
         Toast.makeText(
             requireContext(),
             getString(R.string.someting_goes_wrong_hint),
@@ -98,20 +100,12 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         ).show()
     }
 
-    override fun displayBadConnectionScreen(show: Boolean) {
-        binding.badConnection.root.visibility = if (show) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+    override fun showBadConnection(show: Boolean) {
+        binding.root.currentState = ConnectableLayout.ConnectionState.BAD_CONNECTION
     }
 
-    override fun displayLoadingScreen(show: Boolean) {
-        binding.loadingScreen.root.visibility = if (show) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+    override fun showLoading(show: Boolean) {
+        binding.root.currentState = ConnectableLayout.ConnectionState.LOADING
     }
 
     override fun changeAddress() {

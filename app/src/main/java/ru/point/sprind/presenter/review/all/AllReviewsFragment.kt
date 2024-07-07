@@ -14,9 +14,10 @@ import ru.point.sprind.adapters.MordaAdapter
 import ru.point.sprind.adapters.decorators.ProductInfoDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentAllReviewsBinding
+import ru.point.sprind.view.ConnectableLayout
 import javax.inject.Inject
 
-class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
+class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsViewDefault {
 
     private val args by navArgs<AllReviewsFragmentArgs>()
 
@@ -69,24 +70,17 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsView {
         presenter.init()
     }
 
-    override fun displayBadConnectionScreen(show: Boolean) {
-        binding.badConnection.root.visibility = if (show) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+    override fun showBadConnection(show: Boolean) {
+        binding.root.currentState = ConnectableLayout.ConnectionState.BAD_CONNECTION
     }
 
-    override fun displayLoadingScreen(show: Boolean) {
-        binding.loadingScreen.root.visibility = if (show) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+    override fun showLoading(show: Boolean) {
+        binding.root.currentState = ConnectableLayout.ConnectionState.LOADING
     }
 
     override fun setAdapter(views: List<ViewObject>) {
         adapter.views = views
+        binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
     }
 
     override fun onDestroyView() {

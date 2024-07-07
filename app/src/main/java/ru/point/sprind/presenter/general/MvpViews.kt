@@ -9,21 +9,21 @@ import ru.point.domain.entity.view.ViewObject
 
 interface ConnectionRequiredView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun displayBadConnectionScreen(show: Boolean = false)
+    fun showBadConnection(show: Boolean = false)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun displayLoadingScreen(show: Boolean = false)
+    fun showLoading(show: Boolean = false)
 
     @StateStrategyType(SkipStrategy::class)
-    fun displaySomethingGoesWrongError() {}
+    fun showSomethingGoesWrongError() {}
 }
 
-interface UsingAdapterView: MvpView {
+interface UsingDefaultAdapterView: MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun setAdapter(views: List<ViewObject>)
 }
 
 interface UsingPagingAdapter: MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun setAdapter(views: PagingData<ViewObject>?)
+    fun setAdapter(views: PagingData<ViewObject>)
 }

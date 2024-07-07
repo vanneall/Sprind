@@ -13,12 +13,12 @@ import javax.inject.Inject
 @InjectViewState
 class OrdersPresenter @Inject constructor(
     getOrdersUseCase: GetOrdersUseCase
-) : MvpPresenter<OrdersView>() {
+) : MvpPresenter<OrdersViewDefault>() {
 
     private val httpManager = HttpExceptionStatusManager
         .Builder()
         .add403ExceptionHandler { viewState::requireAuthorization }
-        .addDefaultExceptionHandler { viewState::displaySomethingGoesWrongError }
+        .addDefaultExceptionHandler { viewState::showSomethingGoesWrongError }
         .build()
 
     val delegates = listOf(
@@ -28,15 +28,15 @@ class OrdersPresenter @Inject constructor(
     private val compositeDisposable = CompositeDisposable()
 
     init {
-        viewState.displayLoadingScreen(show = true)
+        viewState.showLoading(show = true)
         val disposable = getOrdersUseCase.handle()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
-                viewState.displayLoadingScreen(show = false)
+                viewState.showLoading(show = false)
                 viewState.setAdapter(views = list)
             }, { ex ->
-                viewState.displayLoadingScreen(show = false)
-                viewState.displayBadConnectionScreen(show = true)
+                viewState.showLoading(show = false)
+                viewState.showBadConnection(show = true)
                 if (ex is HttpException) httpManager.handle(ex)
             })
 

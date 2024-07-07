@@ -38,12 +38,12 @@ class ProductPresenter @AssistedInject constructor(
     private val favoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
     private val addProductToCartUseCase: Lazy<AddProductToCartUseCase>,
     private val deleteFromCartUseCase: Lazy<DeleteProductFromCartUseCase>
-) : MvpPresenter<ProductCardView>() {
+) : MvpPresenter<ProductCardViewDefault>() {
 
     private val httpManager = HttpExceptionStatusManager
         .Builder()
         .add403ExceptionHandler { viewState::requireAuthorization }
-        .addDefaultExceptionHandler { viewState::displaySomethingGoesWrongError }
+        .addDefaultExceptionHandler { viewState::showSomethingGoesWrongError }
         .build()
 
     val delegates = listOf(
@@ -64,13 +64,13 @@ class ProductPresenter @AssistedInject constructor(
     private val compositeDisposable = CompositeDisposable()
 
     fun init() {
-        viewState.displayLoadingScreen(show = true)
+        viewState.showLoading(show = true)
         val disposable = getProductByIdUseCase
             .invoke(id = productId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
                 productViewObject = list
-                viewState.displayLoadingScreen(show = false)
+                viewState.showLoading(show = false)
 
                 val index = productViewObject.indexOfFirst { vo -> vo is ProductTitleVo }
 
@@ -82,8 +82,8 @@ class ProductPresenter @AssistedInject constructor(
 
                 viewState.setAdapter(productViewObject)
             }, { ex ->
-                viewState.displayLoadingScreen(show = false)
-                viewState.displayBadConnectionScreen(show = true)
+                viewState.showLoading(show = false)
+                viewState.showBadConnection(show = true)
                 if (ex is HttpException) httpManager.handle(ex)
             }
             )

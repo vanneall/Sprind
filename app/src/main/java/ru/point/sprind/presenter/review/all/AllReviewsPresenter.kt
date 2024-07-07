@@ -17,11 +17,11 @@ class AllReviewsPresenter @AssistedInject constructor(
     @Assisted(ID)
     private val id: Long,
     private val getReviewsByProductIdUseCase: GetReviewsByProductIdUseCase,
-) : MvpPresenter<AllReviewsView>() {
+) : MvpPresenter<AllReviewsViewDefault>() {
 
     private val httpManager = HttpExceptionStatusManager
         .Builder()
-        .addDefaultExceptionHandler { viewState::displaySomethingGoesWrongError }
+        .addDefaultExceptionHandler { viewState::showSomethingGoesWrongError }
         .build()
 
     private val compositeDisposable = CompositeDisposable()
@@ -31,15 +31,15 @@ class AllReviewsPresenter @AssistedInject constructor(
     )
 
     fun init() {
-        viewState.displayLoadingScreen(show = true)
+        viewState.showLoading(show = true)
         val disposable = getReviewsByProductIdUseCase.handle(id)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
-                viewState.displayLoadingScreen(show = false)
+                viewState.showLoading(show = false)
                 viewState.setAdapter(list)
             }, { ex ->
-                viewState.displayLoadingScreen(show = false)
-                viewState.displayBadConnectionScreen(show = true)
+                viewState.showLoading(show = false)
+                viewState.showBadConnection(show = true)
                 if (ex is HttpException) httpManager.handle(ex)
             })
 

@@ -16,9 +16,10 @@ import ru.point.sprind.adapters.decorators.ProductInfoDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentProductCardBinding
 import ru.point.sprind.presenter.cart.CartFragmentDirections
+import ru.point.sprind.view.ConnectableLayout
 import javax.inject.Inject
 
-class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
+class ProductCardFragment : MvpAppCompatFragment(), ProductCardViewDefault {
 
     private val args: ProductCardFragmentArgs by navArgs()
 
@@ -86,7 +87,7 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
         findNavController().navigate(destination)
     }
 
-    override fun displaySomethingGoesWrongError() {
+    override fun showSomethingGoesWrongError() {
         Toast.makeText(
             requireContext(),
             getString(R.string.someting_goes_wrong_hint),
@@ -94,24 +95,17 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardView {
         ).show()
     }
 
-    override fun displayBadConnectionScreen(show: Boolean) {
-        binding.badConnection.root.visibility = if (show) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+    override fun showBadConnection(show: Boolean) {
+        binding.root.currentState = ConnectableLayout.ConnectionState.BAD_CONNECTION
     }
 
-    override fun displayLoadingScreen(show: Boolean) {
-        binding.loadingScreen.root.visibility = if (show) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+    override fun showLoading(show: Boolean) {
+        binding.root.currentState = ConnectableLayout.ConnectionState.LOADING
     }
 
     override fun setAdapter(views: List<ViewObject>) {
         adapter.views = views
+        binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
     }
 
     override fun displayProductInCartButtonGroup(show: Boolean) {

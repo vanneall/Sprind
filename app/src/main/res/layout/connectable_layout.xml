@@ -1,43 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ru.point.sprind.view.ConnectableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/md_theme_surface"
-    tools:context=".presenter.favorites.FavoritesFragment">
+    android:layout_height="match_parent">
 
     <include
-        android:id="@+id/favorites_toolbar"
-        layout="@layout/toolbar_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/favorites_recycler_view"
+        android:id="@+id/bad_connection"
+        layout="@layout/no_connection_screen"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingTop="16dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/favorites_toolbar"
-        tools:listitem="@layout/vertical_card_item"
-        app:spanCount="2" />
-
-    <include
-        android:id="@+id/authorize_warning"
-        layout="@layout/authorize_warning"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-</ru.point.sprind.view.ConnectableLayout>
+    <include
+        android:id="@+id/not_found_screen"
+        layout="@layout/not_found_screen"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/loading_screen"
+        layout="@layout/loading_screen"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</merge>

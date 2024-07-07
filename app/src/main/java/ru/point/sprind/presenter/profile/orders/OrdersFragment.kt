@@ -14,9 +14,10 @@ import ru.point.sprind.adapters.decorators.ProductInfoDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentOrdersBinding
 import ru.point.sprind.presenter.cart.CartFragmentDirections
+import ru.point.sprind.view.ConnectableLayout
 import javax.inject.Inject
 
-class OrdersFragment : MvpAppCompatFragment(), OrdersView {
+class OrdersFragment : MvpAppCompatFragment(), OrdersViewDefault {
 
     @Inject
     lateinit var provider: OrdersPresenter
@@ -55,7 +56,6 @@ class OrdersFragment : MvpAppCompatFragment(), OrdersView {
         _adapter = MordaAdapter(presenter.delegates)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(ProductInfoDecorator())
-
         lifecycle.addObserver(adapter)
     }
 
@@ -65,22 +65,15 @@ class OrdersFragment : MvpAppCompatFragment(), OrdersView {
 
     override fun setAdapter(views: List<ViewObject>) {
         adapter.views = views
+        binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
     }
 
-    override fun displayBadConnectionScreen(show: Boolean) {
-        binding.badConnection.root.visibility = if (show) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+    override fun showBadConnection(show: Boolean) {
+        binding.root.currentState = ConnectableLayout.ConnectionState.BAD_CONNECTION
     }
 
-    override fun displayLoadingScreen(show: Boolean) {
-        binding.loadingScreen.root.visibility = if (show) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+    override fun showLoading(show: Boolean) {
+        binding.root.currentState = ConnectableLayout.ConnectionState.LOADING
     }
 
     override fun onDestroyView() {

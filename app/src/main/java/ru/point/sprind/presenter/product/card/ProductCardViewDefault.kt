@@ -4,9 +4,9 @@ import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
 import ru.point.sprind.presenter.general.ConnectionRequiredView
-import ru.point.sprind.presenter.general.UsingAdapterView
+import ru.point.sprind.presenter.general.UsingDefaultAdapterView
 
-interface ProductCardView : ConnectionRequiredView, UsingAdapterView {
+interface ProductCardViewDefault : ConnectionRequiredView, UsingDefaultAdapterView {
     @StateStrategyType(SkipStrategy::class)
     fun openReviews()
 

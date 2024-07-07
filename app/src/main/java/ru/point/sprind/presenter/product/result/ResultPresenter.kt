@@ -35,7 +35,7 @@ class ResultPresenter @AssistedInject constructor(
     private val httpManager = HttpExceptionStatusManager
         .Builder()
         .add403ExceptionHandler { viewState::requireAuthorization }
-        .addDefaultExceptionHandler { viewState::displaySomethingGoesWrongError }
+        .addDefaultExceptionHandler { viewState::showSomethingGoesWrongError }
         .build()
 
     val delegates = listOf(
@@ -61,11 +61,11 @@ class ResultPresenter @AssistedInject constructor(
             .cachedIn(presenterScope)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ data ->
-                viewState.displayLoadingScreen(show = false)
+                viewState.showLoading(show = false)
                 viewState.setAdapter(data)
             }, { ex ->
                 if (ex is HttpException) httpManager.handle(ex)
-                else viewState.displayBadConnectionScreen(show = true)
+                else viewState.showBadConnection(show = true)
             })
         compositeDisposable.add(disposable)
     }

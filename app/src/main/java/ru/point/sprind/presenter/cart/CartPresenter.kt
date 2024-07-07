@@ -38,7 +38,7 @@ class CartPresenter @Inject constructor(
 
     private val httpManager = HttpExceptionStatusManager.Builder()
         .add403ExceptionHandler { viewState.requireAuthorization() }
-        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }.build()
+        .addDefaultExceptionHandler { viewState.showSomethingGoesWrongError() }.build()
 
     val delegates = listOf(
         CartProductDelegate(
@@ -55,7 +55,7 @@ class CartPresenter @Inject constructor(
     private val compositeDisposable = CompositeDisposable()
 
     init {
-        viewState.displayLoadingScreen(show = true)
+        viewState.showLoading(show = true)
         val pagingDisposable = Pager(
             config = PagingConfig(
                 pageSize = 25,
@@ -68,13 +68,13 @@ class CartPresenter @Inject constructor(
             .cachedIn(presenterScope)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ data ->
-                viewState.displayLoadingScreen(show = false)
+                viewState.showLoading(show = false)
                 viewState.displayPayButton(true)
                 viewState.setAdapter(data)
             }, { ex ->
-                viewState.displayLoadingScreen(show = false)
+                viewState.showLoading(show = false)
                 if (ex is HttpException) httpManager.handle(ex)
-                else viewState.displayBadConnectionScreen(show = true)
+                else viewState.showBadConnection(show = true)
             })
 
         compositeDisposable.add(pagingDisposable)
