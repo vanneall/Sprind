@@ -11,7 +11,7 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
-import ru.point.sprind.adapters.MordaAdapter
+import ru.point.sprind.adapters.SprindDefaultAdapter
 import ru.point.sprind.adapters.decorators.ProductInfoDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentProductCardBinding
@@ -33,14 +33,13 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardViewDefault {
     private val binding get() = _binding!!
 
 
-    private var _adapter: MordaAdapter? = null
+    private var _adapter: SprindDefaultAdapter? = null
     private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(fragment = this)
         super.onCreate(savedInstanceState)
-        _adapter = MordaAdapter(delegates = presenter.delegates)
-        lifecycle.addObserver(adapter)
+        _adapter = SprindDefaultAdapter(delegates = presenter.delegates)
     }
 
     override fun onCreateView(
@@ -104,7 +103,7 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardViewDefault {
     }
 
     override fun setAdapter(views: List<ViewObject>) {
-        adapter.views = views
+        adapter.submitList(views)
         binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
     }
 
@@ -124,9 +123,13 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardViewDefault {
         findNavController().navigate(CartFragmentDirections.actionGlobalAuthorizationFragment())
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
         _adapter = null
     }
 }

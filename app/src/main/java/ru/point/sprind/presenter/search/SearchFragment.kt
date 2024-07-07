@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
-import ru.point.sprind.adapters.MordaAdapter
+import ru.point.sprind.adapters.SprindDefaultAdapter
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentSearchBinding
 import javax.inject.Inject
@@ -30,7 +30,7 @@ class SearchFragment : MvpAppCompatFragment(), SearchRequestView {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
-    private var _adapter: MordaAdapter? = null
+    private var _adapter: SprindDefaultAdapter? = null
     private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,10 +95,9 @@ class SearchFragment : MvpAppCompatFragment(), SearchRequestView {
     }
 
     private fun initializeRecyclerView() {
-        _adapter = MordaAdapter(presenter.delegates)
+        _adapter = SprindDefaultAdapter(presenter.delegates)
         binding.recyclerView.adapter = adapter
 
-        lifecycle.addObserver(adapter)
         binding.recyclerView.addItemDecoration(object : ItemDecoration() {
             override fun getItemOffsets(
                 outRect: Rect,
@@ -113,7 +112,7 @@ class SearchFragment : MvpAppCompatFragment(), SearchRequestView {
     }
 
     override fun setAdapter(list: List<ViewObject>) {
-        adapter.views = list
+        adapter.submitList(list)
     }
 
     private fun navigateToResult() {

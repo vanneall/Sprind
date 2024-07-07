@@ -12,7 +12,7 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
-import ru.point.sprind.adapters.MordaAdapterPaging
+import ru.point.sprind.adapters.SprindPagingAdapter
 import ru.point.sprind.adapters.decorators.FeedProductDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentMordaBinding
@@ -29,13 +29,13 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
     private var _binding: FragmentMordaBinding? = null
     private val binding get() = _binding!!
 
-    private var _adapter: MordaAdapterPaging? = null
+    private var _adapter: SprindPagingAdapter? = null
     private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(fragment = this)
         super.onCreate(savedInstanceState)
-        _adapter = MordaAdapterPaging(presenter.delegates)
+        _adapter = SprindPagingAdapter(presenter.delegates)
     }
 
     override fun onCreateView(
@@ -75,10 +75,7 @@ class MordaFragment : MvpAppCompatFragment(), MordaView {
     }
 
     override fun openCard(id: Long) {
-        val args = MordaFragmentDirections.actionMordaFragmentToProductCardFragment(
-            productId = id
-        )
-
+        val args = MordaFragmentDirections.actionMordaFragmentToProductCardFragment(productId = id)
         binding.root.findNavController().navigate(args)
     }
 

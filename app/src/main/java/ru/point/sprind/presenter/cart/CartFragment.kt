@@ -12,7 +12,7 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
-import ru.point.sprind.adapters.MordaAdapterPaging
+import ru.point.sprind.adapters.SprindPagingAdapter
 import ru.point.sprind.adapters.decorators.CartItemDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentCartBinding
@@ -28,13 +28,13 @@ class CartFragment : MvpAppCompatFragment(), CartView {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
 
-    private var _adapter: MordaAdapterPaging? = null
+    private var _adapter: SprindPagingAdapter? = null
     private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
-        _adapter = MordaAdapterPaging(delegates = presenter.delegates)
+        _adapter = SprindPagingAdapter(delegates = presenter.delegates)
     }
 
     override fun onCreateView(

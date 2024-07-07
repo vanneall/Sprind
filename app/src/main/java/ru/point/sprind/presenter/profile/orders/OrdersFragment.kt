@@ -9,7 +9,7 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
-import ru.point.sprind.adapters.MordaAdapter
+import ru.point.sprind.adapters.SprindDefaultAdapter
 import ru.point.sprind.adapters.decorators.ProductInfoDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentOrdersBinding
@@ -26,7 +26,7 @@ class OrdersFragment : MvpAppCompatFragment(), OrdersViewDefault {
     private var _binding: FragmentOrdersBinding? = null
     private val binding get() = _binding!!
 
-    private var _adapter: MordaAdapter? = null
+    private var _adapter: SprindDefaultAdapter? = null
     private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,10 +53,9 @@ class OrdersFragment : MvpAppCompatFragment(), OrdersViewDefault {
     }
 
     private fun initializeRecyclerView() {
-        _adapter = MordaAdapter(presenter.delegates)
+        _adapter = SprindDefaultAdapter(presenter.delegates)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(ProductInfoDecorator())
-        lifecycle.addObserver(adapter)
     }
 
     override fun requireAuthorization() {
@@ -64,7 +63,7 @@ class OrdersFragment : MvpAppCompatFragment(), OrdersViewDefault {
     }
 
     override fun setAdapter(views: List<ViewObject>) {
-        adapter.views = views
+        adapter.submitList(views)
         binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
     }
 

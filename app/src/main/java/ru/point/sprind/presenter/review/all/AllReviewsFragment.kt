@@ -10,7 +10,7 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
-import ru.point.sprind.adapters.MordaAdapter
+import ru.point.sprind.adapters.SprindDefaultAdapter
 import ru.point.sprind.adapters.decorators.ProductInfoDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentAllReviewsBinding
@@ -28,14 +28,13 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsViewDefault {
     private var _binding: FragmentAllReviewsBinding? = null
     private val binding get() = _binding!!
 
-    private var _adapter: MordaAdapter? = null
+    private var _adapter: SprindDefaultAdapter? = null
     private val adapter get() = _adapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
-        _adapter = MordaAdapter(delegates = presenter.delegates)
-        lifecycle.addObserver(adapter)
+        _adapter = SprindDefaultAdapter(delegates = presenter.delegates)
     }
 
     override fun onCreateView(
@@ -79,7 +78,7 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsViewDefault {
     }
 
     override fun setAdapter(views: List<ViewObject>) {
-        adapter.views = views
+        adapter.submitList(views)
         binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
     }
 

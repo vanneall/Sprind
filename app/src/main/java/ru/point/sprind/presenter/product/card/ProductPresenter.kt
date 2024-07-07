@@ -49,8 +49,7 @@ class ProductPresenter @AssistedInject constructor(
     val delegates = listOf(
         NestedRecyclerViewDelegate(
             delegates = listOf(ProductImageDelegate()),
-            useViewPagerEffect = true,
-            lifecycle = lifecycle
+            useViewPagerEffect = true
         ),
         ProductTitleDelegate(::onCheckedFavoriteStateChange),
         ProductDescriptionDelegate(),
