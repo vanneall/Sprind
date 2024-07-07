@@ -2,7 +2,7 @@ package ru.point.domain.entity.view.product.card
 
 import ru.point.domain.entity.view.ViewObject
 
-data class ProductFeedVo(
+data class FeedProductVo(
     val id: Long,
     val name: String,
     val price: String,

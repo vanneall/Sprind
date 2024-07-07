@@ -6,7 +6,7 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.Query
-import ru.point.domain.entity.dto.product.ProductFeedDto
+import ru.point.domain.entity.dto.product.FeedProductResponse
 
 
 interface FavoriteApi {
@@ -15,7 +15,7 @@ interface FavoriteApi {
     fun getFavorites(
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
-    ): Single<List<ProductFeedDto>>
+    ): Single<List<FeedProductResponse>>
 
     @PATCH("favorites")
     fun putFavorites(@Query(value = "id") id: Long): Completable

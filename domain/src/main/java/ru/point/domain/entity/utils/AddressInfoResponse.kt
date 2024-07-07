@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName
 import ru.point.domain.entity.view.address.AddressVo
 import ru.point.domain.utils.StringFormatter
 
-data class AddressDto(
+interface ResponseItem
+
+data class AddressInfoResponse(
     @SerializedName(value = "city")
     val city: String?,
     @SerializedName(value = "street")
@@ -13,8 +15,8 @@ data class AddressDto(
     val house: String?,
     @SerializedName(value = "flat")
     val flat: String?,
-)
+): ResponseItem
 
-fun AddressDto?.toAddressVo(): AddressVo {
-    return AddressVo(StringFormatter.formatAddress(addressDto = this))
+fun AddressInfoResponse?.toAddressVo(): AddressVo {
+    return AddressVo(StringFormatter.formatAddress(addressInfoResponse = this))
 }

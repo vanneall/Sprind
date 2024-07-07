@@ -5,10 +5,12 @@ import dagger.Provides
 import ru.point.domain.repository.CartRepository
 import ru.point.domain.usecase.implementation.cart.AddProductToCartUseCaseImpl
 import ru.point.domain.usecase.implementation.cart.DeleteProductFromCartUseCaseImpl
+import ru.point.domain.usecase.implementation.cart.GetCartPageInfoUseCaseImpl
 import ru.point.domain.usecase.implementation.cart.GetProductsInCartUseCaseImpl
 import ru.point.domain.usecase.implementation.cart.MakeOrderUseCaseImpl
 import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.cart.DeleteProductFromCartUseCase
+import ru.point.domain.usecase.interfaces.cart.GetCartPageInfoUseCase
 import ru.point.domain.usecase.interfaces.cart.GetProductsInCartUseCase
 import ru.point.domain.usecase.interfaces.cart.MakeOrderUseCase
 
@@ -33,5 +35,10 @@ class CartUseCaseModule {
     @Provides
     fun provideDeleteProductFromCartUseCase(repository: CartRepository): DeleteProductFromCartUseCase {
         return DeleteProductFromCartUseCaseImpl(repository = repository)
+    }
+
+    @Provides
+    fun provideGetCartPageInfoUseCase(repository: CartRepository): GetCartPageInfoUseCase {
+        return GetCartPageInfoUseCaseImpl(repository = repository)
     }
 }

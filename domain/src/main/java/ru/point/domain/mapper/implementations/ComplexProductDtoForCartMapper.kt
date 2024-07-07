@@ -1,7 +1,7 @@
 package ru.point.domain.mapper.implementations
 
 import ru.point.domain.entity.dto.complex.ComplexProductDto
-import ru.point.domain.entity.dto.product.ProductFeedDto
+import ru.point.domain.entity.dto.product.FeedProductResponse
 import ru.point.domain.entity.utils.Price
 import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.entity.view.address.AddressVo
@@ -41,7 +41,7 @@ object ComplexProductDtoForCartMapper {
         val summaryPrice = deliveryPrice + productsPrice + discountPrice + promocodePrice
 
         return listOf(
-            CartHeaderVo(AddressVo(StringFormatter.formatAddress(complexDto.addressDto)))
+            CartHeaderVo(AddressVo(StringFormatter.formatAddress(complexDto.addressInfoResponse)))
         ) + products + listOf(
             CartPromocodeVo(),
             CartSummaryVo(
@@ -58,7 +58,7 @@ object ComplexProductDtoForCartMapper {
 fun sumPrice(collection: Collection<*>): Price {
     var price = Price()
     collection.forEach { value ->
-        (value as? ProductFeedDto)?.let { price += value.price }
+        (value as? FeedProductResponse)?.let { price += value.price }
     }
     return price
 }

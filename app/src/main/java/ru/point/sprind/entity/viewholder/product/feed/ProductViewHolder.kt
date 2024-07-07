@@ -3,7 +3,7 @@ package ru.point.sprind.entity.viewholder.product.feed
 import coil.load
 import coil.size.Scale
 import coil.transform.RoundedCornersTransformation
-import ru.point.domain.entity.view.product.card.ProductFeedVo
+import ru.point.domain.entity.view.product.card.FeedProductVo
 import ru.point.domain.utils.UtilsConst.PICTURE_NOT_FOUND
 import ru.point.sprind.databinding.VerticalCardItemBinding
 import ru.point.sprind.entity.viewholder.ViewHolderV2
@@ -13,9 +13,9 @@ class ProductViewHolder(
     private val onClickCard: (Long) -> Unit,
     private val onBuyClick: (Long) -> Unit,
     private val onFavoriteCheckedChange: (Long, Boolean, (Boolean) -> Unit) -> Unit,
-) : ViewHolderV2<ProductFeedVo>(binding.root) {
+) : ViewHolderV2<FeedProductVo>(binding.root) {
 
-    override fun bind(view: ProductFeedVo) {
+    override fun bind(view: FeedProductVo) {
         binding.apply {
 
             image.load(

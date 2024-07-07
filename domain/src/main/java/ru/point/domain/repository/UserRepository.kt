@@ -6,7 +6,7 @@ import ru.point.domain.entity.dto.order.OrderDto
 import ru.point.domain.entity.dto.user.AuthUserDto
 import ru.point.domain.entity.dto.user.RegisterUserDto
 import ru.point.domain.entity.dto.user.UserDto
-import ru.point.domain.entity.utils.AddressDto
+import ru.point.domain.entity.utils.AddressInfoResponse
 import ru.point.domain.entity.utils.Token
 
 interface UserRepository {
@@ -17,7 +17,7 @@ interface UserRepository {
 
     fun get(): Single<UserDto>
 
-    fun setNewAddress(address: AddressDto): Completable
+    fun setNewAddress(address: AddressInfoResponse): Completable
 
     fun getOrders(): Single<List<OrderDto>>
 }

@@ -8,6 +8,7 @@ import moxy.InjectViewState
 import moxy.MvpPresenter
 import retrofit2.HttpException
 import ru.point.domain.usecase.interfaces.cart.DeleteProductFromCartUseCase
+import ru.point.domain.usecase.interfaces.cart.GetCartPageInfoUseCase
 import ru.point.domain.usecase.interfaces.cart.GetProductsInCartUseCase
 import ru.point.domain.usecase.interfaces.cart.MakeOrderUseCase
 import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
@@ -23,15 +24,14 @@ import javax.inject.Inject
 class CartPresenter @Inject constructor(
     private val getProductsInCartUseCase: GetProductsInCartUseCase,
     private val makeOrderUseCase: Lazy<MakeOrderUseCase>,
+    private val getCartPageInfoUseCase: GetCartPageInfoUseCase,
     private val changeFavoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
     private val deleteProductFromCartUseCase: Lazy<DeleteProductFromCartUseCase>,
 ) : MvpPresenter<CartView>() {
 
-    private val httpManager = HttpExceptionStatusManager
-        .Builder()
+    private val httpManager = HttpExceptionStatusManager.Builder()
         .add403ExceptionHandler { viewState.requireAuthorization() }
-        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }
-        .build()
+        .addDefaultExceptionHandler { viewState.displaySomethingGoesWrongError() }.build()
 
     val delegates = listOf(
         CartProductDelegate(
@@ -49,8 +49,7 @@ class CartPresenter @Inject constructor(
 
     fun getCartProducts() {
         viewState.displayLoadingScreen(show = true)
-        val disposable = getProductsInCartUseCase
-            .handle()
+        val disposable = getProductsInCartUseCase.handle()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ dto ->
                 viewState.displayLoadingScreen(show = false)
@@ -66,13 +65,10 @@ class CartPresenter @Inject constructor(
     }
 
     private fun deleteFromCart(id: Long) {
-        val disposable = deleteProductFromCartUseCase.get()
-            .handle(id)
-            .subscribeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {}, { ex ->
-                    if (ex is HttpException) httpManager.handle(ex)
-                })
+        val disposable = deleteProductFromCartUseCase.get().handle(id)
+            .subscribeOn(AndroidSchedulers.mainThread()).subscribe({}, { ex ->
+                if (ex is HttpException) httpManager.handle(ex)
+            })
 
         compositeDisposable.add(disposable)
     }
@@ -82,23 +78,21 @@ class CartPresenter @Inject constructor(
         isChecked: Boolean,
         isSuccessfulCallback: (Boolean) -> Unit,
     ) {
-        val disposable = changeFavoriteStateUseCase.get()
-            .handle(id = productId, isFavorite = isChecked)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                isSuccessfulCallback(true)
-            }, { ex ->
-                isSuccessfulCallback(false)
-                if (ex is HttpException) httpManager.handle(ex)
-            })
+        val disposable =
+            changeFavoriteStateUseCase.get().handle(id = productId, isFavorite = isChecked)
+                .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                    isSuccessfulCallback(true)
+                }, { ex ->
+                    isSuccessfulCallback(false)
+                    if (ex is HttpException) httpManager.handle(ex)
+                })
 
         compositeDisposable.add(disposable)
     }
 
     fun makeOrder() {
-        val disposable = makeOrderUseCase.get().handle()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
+        val disposable =
+            makeOrderUseCase.get().handle().observeOn(AndroidSchedulers.mainThread()).subscribe({
                 viewState.openThanksScreen()
                 viewState.setAdapter(PagingData.empty())
                 viewState.displayPayButton(false)

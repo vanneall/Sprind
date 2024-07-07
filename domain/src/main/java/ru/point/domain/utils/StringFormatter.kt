@@ -1,6 +1,6 @@
 package ru.point.domain.utils
 
-import ru.point.domain.entity.utils.AddressDto
+import ru.point.domain.entity.utils.AddressInfoResponse
 import ru.point.domain.entity.utils.Currency
 import ru.point.domain.entity.utils.Price
 
@@ -27,17 +27,20 @@ object StringFormatter {
         return "$formattedPrice $formattedCurrency"
     }
 
-    fun formatAddress(addressDto: AddressDto?): String? {
-        if (addressDto == null || isAnyFromAddressIsNull(addressDto)) return null
-        return "${addressDto.street?.replaceFirstChar { char -> char.uppercase() }}, д.${addressDto.house}, кв.${addressDto.flat}"
+    fun formatAddress(addressInfoResponse: AddressInfoResponse?): String? {
+        if (addressInfoResponse == null || isAnyFromAddressIsNull(addressInfoResponse)) return null
+        return "${addressInfoResponse.street?.replaceFirstChar { char -> char.uppercase() }}, д.${addressInfoResponse.house}, кв.${addressInfoResponse.flat}"
     }
 
     fun checkStringsNotEmpty(vararg values: String): Boolean {
         return values.all { value -> value.isNotEmpty() }
     }
 
-    private fun isAnyFromAddressIsNull(addressDto: AddressDto): Boolean {
-        return addressDto.city == null || addressDto.street == null || addressDto.house == null || addressDto.flat == null
+    private fun isAnyFromAddressIsNull(addressInfoResponse: AddressInfoResponse): Boolean {
+        return addressInfoResponse.city == null ||
+                addressInfoResponse.street == null ||
+                addressInfoResponse.house == null ||
+                addressInfoResponse.flat == null
     }
 
 

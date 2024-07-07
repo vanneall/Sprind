@@ -7,7 +7,7 @@ import androidx.paging.rxjava3.observable
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import ru.point.domain.entity.dto.product.ProductFeedDto
+import ru.point.domain.entity.dto.product.FeedProductResponse
 import ru.point.domain.repository.FavoriteRepository
 import ru.point.repository.paging.FavoritePagingSource
 import ru.point.retrofit.api.FavoriteApi
@@ -16,7 +16,7 @@ class RemoteFavoriteRepository(
     private val api: FavoriteApi,
     private val favoritePagingSource: FavoritePagingSource
 ) : FavoriteRepository {
-    override fun getFavorite(): Observable<PagingData<ProductFeedDto>> {
+    override fun getFavorite(): Observable<PagingData<FeedProductResponse>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 25,

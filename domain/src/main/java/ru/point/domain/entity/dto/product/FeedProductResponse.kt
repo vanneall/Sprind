@@ -2,13 +2,13 @@ package ru.point.domain.entity.dto.product
 
 import com.google.gson.annotations.SerializedName
 import ru.point.domain.entity.utils.Price
-import ru.point.domain.entity.view.ViewObject
+import ru.point.domain.entity.utils.ResponseItem
 import ru.point.domain.entity.view.cart.CartProductVo
-import ru.point.domain.entity.view.product.card.ProductFeedVo
+import ru.point.domain.entity.view.product.card.FeedProductVo
 import ru.point.domain.utils.StringFormatter
 import ru.point.domain.utils.UtilsConst.PICTURE_NOT_FOUND
 
-data class ProductFeedDto(
+data class FeedProductResponse(
     @SerializedName("id")
     val id: Long,
     @SerializedName("name")
@@ -23,10 +23,10 @@ data class ProductFeedDto(
     val description: String? = null,
     @SerializedName("photosUrl")
     val photosUrl: List<String>
-) : ViewObject
+) : ResponseItem
 
-fun ProductFeedDto.toProductFeedVo(): ProductFeedVo {
-    return ProductFeedVo(
+fun FeedProductResponse.toProductFeedVo(): FeedProductVo {
+    return FeedProductVo(
         id = id,
         name = name,
         price = StringFormatter.formatPrice(price),
@@ -37,13 +37,12 @@ fun ProductFeedDto.toProductFeedVo(): ProductFeedVo {
     )
 }
 
-fun ProductFeedDto.toCartProductVo(): CartProductVo {
+fun FeedProductResponse.toCartProductVo(): CartProductVo {
     return CartProductVo(
         id = id,
         name = name,
         price = StringFormatter.formatPrice(price),
         isFavorite = isFavorite,
-        url = if (photosUrl.isNotEmpty()) photosUrl.first()
-        else PICTURE_NOT_FOUND
+        url = if (photosUrl.isNotEmpty()) photosUrl.first() else PICTURE_NOT_FOUND
     )
 }

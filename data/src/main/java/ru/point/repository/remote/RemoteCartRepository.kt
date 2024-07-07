@@ -6,8 +6,10 @@ import androidx.paging.PagingData
 import androidx.paging.rxjava3.observable
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
-import ru.point.domain.entity.dto.product.ProductFeedDto
+import ru.point.domain.entity.dto.complex.CartPageInfoDto
+import ru.point.domain.entity.utils.ResponseItem
 import ru.point.domain.repository.CartRepository
 import ru.point.repository.paging.CartPagingSource
 import ru.point.retrofit.api.CartApi
@@ -17,7 +19,11 @@ class RemoteCartRepository(
     private val cartPagingSource: CartPagingSource
 ) : CartRepository {
 
-    override fun getProducts(): Observable<PagingData<ProductFeedDto>> {
+    override fun getPageInfo(): Single<CartPageInfoDto> {
+        return api.getPageInfo().subscribeOn(Schedulers.io())
+    }
+
+    override fun getProducts(): Observable<PagingData<ResponseItem>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 25,
@@ -26,7 +32,7 @@ class RemoteCartRepository(
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { cartPagingSource }
-        ).observable
+        ).observable.subscribeOn(Schedulers.io())
     }
 
     override fun addProduct(id: Long): Completable {

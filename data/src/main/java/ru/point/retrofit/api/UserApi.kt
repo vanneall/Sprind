@@ -10,7 +10,7 @@ import retrofit2.http.Query
 import ru.point.domain.entity.dto.order.OrderDto
 import ru.point.domain.entity.dto.user.RegisterUserDto
 import ru.point.domain.entity.dto.user.UserDto
-import ru.point.domain.entity.utils.AddressDto
+import ru.point.domain.entity.utils.AddressInfoResponse
 import ru.point.domain.entity.utils.Token
 
 interface UserApi {
@@ -28,7 +28,7 @@ interface UserApi {
     fun getUserInfo(): Single<UserDto>
 
     @PATCH("user/address")
-    fun setNewAddress(@Body address: AddressDto): Completable
+    fun setNewAddress(@Body address: AddressInfoResponse): Completable
 
     @GET("user/orders")
     fun getOrders(): Single<List<OrderDto>>

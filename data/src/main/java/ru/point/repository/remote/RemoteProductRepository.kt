@@ -9,7 +9,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.point.domain.entity.dto.complex.ComplexProductDto
-import ru.point.domain.entity.dto.product.ProductFeedDto
+import ru.point.domain.entity.dto.product.FeedProductResponse
 import ru.point.domain.entity.dto.product.ProductInfoDto
 import ru.point.domain.repository.ProductRepository
 import ru.point.repository.paging.FeedPagingSource
@@ -24,7 +24,7 @@ class RemoteProductRepository(
         return api.getPageInfo().subscribeOn(Schedulers.io())
     }
 
-    override fun getProductsPaging(): Observable<PagingData<ProductFeedDto>> {
+    override fun getProductsPaging(): Observable<PagingData<FeedProductResponse>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 25,
@@ -36,7 +36,7 @@ class RemoteProductRepository(
         ).observable
     }
 
-    override fun getProductsByName(name: String): Observable<PagingData<ProductFeedDto>> {
+    override fun getProductsByName(name: String): Observable<PagingData<FeedProductResponse>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 25,
