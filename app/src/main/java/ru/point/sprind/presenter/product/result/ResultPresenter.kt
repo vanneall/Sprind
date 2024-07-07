@@ -1,15 +1,19 @@
 package ru.point.sprind.presenter.product.result
 
-import androidx.paging.PagingData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.rxjava3.cachedIn
+import androidx.paging.rxjava3.observable
 import dagger.Lazy
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import moxy.InjectViewState
 import moxy.MvpPresenter
+import moxy.presenterScope
 import retrofit2.HttpException
-import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
 import ru.point.domain.usecase.interfaces.product.GetMainProductsPageInfoUseCase
@@ -18,6 +22,7 @@ import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import ru.point.sprind.presenter.product.result.ResultPresenterAssistedFactory.Companion.QUERY
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @InjectViewState
 class ResultPresenter @AssistedInject constructor(
     @Assisted(QUERY) private val query: String,
@@ -43,33 +48,27 @@ class ResultPresenter @AssistedInject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    fun init() {
-        viewState.displayLoadingScreen(show = true)
-        val pageInfoDisposable = getMainProductsPageInfoUseCase.handle()
+    init {
+        val disposable = Pager(
+            config = PagingConfig(
+                pageSize = 25,
+                prefetchDistance = 10,
+                maxSize = 45,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { getProductsByNameUseCase.handle(query) }
+        ).observable
+            .cachedIn(presenterScope)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ info ->
-                viewState.setAddress(info.addressVo.address)
-            }, { ex ->
-                if (ex is HttpException) {
-                    httpManager.handle(ex)
-                }
-            })
-
-        val disposable = getProductsByNameUseCase.handle(query)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ vo ->
+            .subscribe({ data ->
                 viewState.displayLoadingScreen(show = false)
-                viewState.setAdapter(views = vo as? PagingData<ViewObject>)
+                viewState.setAdapter(data)
             }, { ex ->
-                viewState.displayLoadingScreen(show = false)
-                viewState.displayBadConnectionScreen(show = true)
                 if (ex is HttpException) httpManager.handle(ex)
+                else viewState.displayBadConnectionScreen(show = true)
             })
-
         compositeDisposable.add(disposable)
-        compositeDisposable.add(pageInfoDisposable)
     }
-
 
     private fun onAddProductToCart(productId: Long) {
         val disposable = addProductToCartUseCase.get().handle(id = productId)

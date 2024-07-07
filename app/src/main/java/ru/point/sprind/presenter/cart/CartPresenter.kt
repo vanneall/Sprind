@@ -1,11 +1,17 @@
 package ru.point.sprind.presenter.cart
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.rxjava3.cachedIn
+import androidx.paging.rxjava3.observable
 import dagger.Lazy
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import moxy.InjectViewState
 import moxy.MvpPresenter
+import moxy.presenterScope
 import retrofit2.HttpException
 import ru.point.domain.usecase.interfaces.cart.DeleteProductFromCartUseCase
 import ru.point.domain.usecase.interfaces.cart.GetCartPageInfoUseCase
@@ -20,6 +26,7 @@ import ru.point.sprind.entity.deletage.product.cart.CartSummaryDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @InjectViewState
 class CartPresenter @Inject constructor(
     private val getProductsInCartUseCase: GetProductsInCartUseCase,
@@ -47,21 +54,30 @@ class CartPresenter @Inject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    fun getCartProducts() {
+    init {
         viewState.displayLoadingScreen(show = true)
-        val disposable = getProductsInCartUseCase.handle()
+        val pagingDisposable = Pager(
+            config = PagingConfig(
+                pageSize = 25,
+                prefetchDistance = 10,
+                maxSize = 45,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { getProductsInCartUseCase.handle() }
+        ).observable
+            .cachedIn(presenterScope)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ dto ->
+            .subscribe({ data ->
                 viewState.displayLoadingScreen(show = false)
                 viewState.displayPayButton(true)
-                viewState.setAdapter(dto)
+                viewState.setAdapter(data)
             }, { ex ->
                 viewState.displayLoadingScreen(show = false)
                 if (ex is HttpException) httpManager.handle(ex)
                 else viewState.displayBadConnectionScreen(show = true)
             })
 
-        compositeDisposable.add(disposable)
+        compositeDisposable.add(pagingDisposable)
     }
 
     private fun deleteFromCart(id: Long) {

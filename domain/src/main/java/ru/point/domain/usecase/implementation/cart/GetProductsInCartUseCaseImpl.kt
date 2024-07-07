@@ -1,9 +1,8 @@
 package ru.point.domain.usecase.implementation.cart
 
-import androidx.paging.PagingData
-import androidx.paging.map
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import androidx.paging.PagingState
+import androidx.paging.rxjava3.RxPagingSource
+import io.reactivex.rxjava3.core.Single
 import ru.point.domain.entity.dto.complex.SummaryPriceInfoResponse
 import ru.point.domain.entity.dto.complex.toCartSummaryVo
 import ru.point.domain.entity.dto.product.FeedProductResponse
@@ -14,18 +13,74 @@ import ru.point.domain.entity.utils.toAddressVo
 import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.entity.view.cart.CartHeaderVo
 import ru.point.domain.exceptions.ViewObjectMapRuleNotFoundException
+import ru.point.domain.paging.addNotNull
 import ru.point.domain.repository.CartRepository
 import ru.point.domain.usecase.interfaces.cart.GetProductsInCartUseCase
 
 class GetProductsInCartUseCaseImpl(
     private val repository: CartRepository,
 ) : GetProductsInCartUseCase {
-    override fun handle(): Observable<PagingData<ViewObject>> {
-        return repository.getProducts()
-            .observeOn(Schedulers.computation())
-            .map { pagingData ->
-                pagingData.map { item -> mapResponseItem(item) }
+    override fun handle(): RxPagingSource<Int, ViewObject> {
+        return object : RxPagingSource<Int, ViewObject>() {
+
+            override fun getRefreshKey(state: PagingState<Int, ViewObject>): Int? = null
+
+            override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, ViewObject>> {
+                val startPage = params.key ?: 0
+                val pageSize = params.loadSize
+
+                return repository.getProducts(startPage, pageSize)
+                    .map<LoadResult<Int, ViewObject>> { response ->
+                        val prevKey = if (startPage == 0) null else startPage - pageSize
+                        val nextKey = if (response.size < pageSize) null else pageSize
+
+                        val headerItems = mutableListOf<ResponseItem>()
+                        val footerItems = mutableListOf<ResponseItem>()
+                        if (prevKey == null || nextKey == null) {
+                            getPageInfoResponse(
+                                isAddressRequired = prevKey == null,
+                                isOrderSummaryRequired = nextKey == null,
+                                addressItemContainer = headerItems,
+                                summaryItemContainer = footerItems
+                            )
+                        }
+
+                        val resultPageData =
+                            (headerItems + response + footerItems).map { mapResponseItem(it) }
+
+                        LoadResult.Page(
+                            data = resultPageData,
+                            prevKey = prevKey,
+                            nextKey = nextKey
+                        )
+                    }
+                    .onErrorReturn { throwable ->
+                        LoadResult.Error(throwable)
+                    }
             }
+
+            private fun getPageInfoResponse(
+                isAddressRequired: Boolean,
+                isOrderSummaryRequired: Boolean,
+                addressItemContainer: MutableList<ResponseItem>,
+                summaryItemContainer: MutableList<ResponseItem>
+            ) {
+                val pageInfoResponse = repository.getPageInfo()
+                    .blockingGet()
+
+                if (isAddressRequired && pageInfoResponse.summaryPriceResponse != null)
+                    addressItemContainer.add(
+                        pageInfoResponse.addressInfoResponse ?: AddressInfoResponse(
+                            null,
+                            null,
+                            null,
+                            null
+                        )
+                    )
+                if (isOrderSummaryRequired)
+                    summaryItemContainer.addNotNull(pageInfoResponse.summaryPriceResponse)
+            }
+        }
     }
 
     private fun mapResponseItem(responseItem: ResponseItem): ViewObject {

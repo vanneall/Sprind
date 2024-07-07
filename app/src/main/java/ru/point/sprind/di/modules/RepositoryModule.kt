@@ -2,6 +2,8 @@ package ru.point.sprind.di.modules
 
 import dagger.Module
 import dagger.Provides
+import ru.point.domain.paging.CartPagingSource
+import ru.point.domain.paging.FavoritePagingSource
 import ru.point.domain.repository.CartRepository
 import ru.point.domain.repository.FavoriteRepository
 import ru.point.domain.repository.ProductRepository
@@ -9,9 +11,6 @@ import ru.point.domain.repository.RequestRepository
 import ru.point.domain.repository.ReviewRepository
 import ru.point.domain.repository.UserRepository
 import ru.point.repository.local.RequestRepositoryImpl
-import ru.point.repository.paging.CartPagingSource
-import ru.point.repository.paging.FavoritePagingSource
-import ru.point.repository.paging.FeedPagingSource
 import ru.point.repository.remote.RemoteCartRepository
 import ru.point.repository.remote.RemoteFavoriteRepository
 import ru.point.repository.remote.RemoteProductRepository
@@ -27,27 +26,18 @@ import ru.point.room.RequestDao
 @Module(includes = [ApiModule::class, PagingSourceModule::class])
 class RepositoryModule {
     @Provides
-    fun provideRemoteProductRepository(
-        api: ProductApi,
-        pagingSource: FeedPagingSource.Factory
-    ): ProductRepository {
-        return RemoteProductRepository(api = api, pagingSource)
+    fun provideRemoteProductRepository(api: ProductApi): ProductRepository {
+        return RemoteProductRepository(api = api)
     }
 
     @Provides
-    fun provideRemoteCartRepository(
-        api: CartApi,
-        cartPagingSource: CartPagingSource
-    ): CartRepository {
-        return RemoteCartRepository(api = api, cartPagingSource = cartPagingSource)
+    fun provideRemoteCartRepository(api: CartApi): CartRepository {
+        return RemoteCartRepository(api = api)
     }
 
     @Provides
-    fun provideRemoteFavoriteRepository(
-        api: FavoriteApi,
-        favoritePagingSource: FavoritePagingSource
-    ): FavoriteRepository {
-        return RemoteFavoriteRepository(api = api, favoritePagingSource = favoritePagingSource)
+    fun provideRemoteFavoriteRepository(api: FavoriteApi): FavoriteRepository {
+        return RemoteFavoriteRepository(api = api)
     }
 
     @Provides
@@ -69,12 +59,12 @@ class RepositoryModule {
 @Module
 class PagingSourceModule {
     @Provides
-    fun provideFavoritePagingSource(api: FavoriteApi): FavoritePagingSource {
-        return FavoritePagingSource(api = api)
+    fun provideFavoritePagingSource(repository: FavoriteRepository): FavoritePagingSource {
+        return FavoritePagingSource(repository = repository)
     }
 
     @Provides
-    fun provideCartPagingSource(api: CartApi): CartPagingSource {
-        return CartPagingSource(api = api)
+    fun provideCartPagingSource(repository: CartRepository): CartPagingSource {
+        return CartPagingSource(repository = repository)
     }
 }

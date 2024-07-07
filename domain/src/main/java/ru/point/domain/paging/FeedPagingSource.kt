@@ -1,4 +1,4 @@
-package ru.point.repository.paging
+package ru.point.domain.paging
 
 import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxPagingSource
@@ -7,11 +7,11 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import io.reactivex.rxjava3.core.Single
 import ru.point.domain.entity.dto.product.FeedProductResponse
-import ru.point.repository.paging.FeedPagingSource.Factory.Companion.REQUEST
-import ru.point.retrofit.api.ProductApi
+import ru.point.domain.paging.FeedPagingSource.Factory.Companion.REQUEST
+import ru.point.domain.repository.ProductRepository
 
 class FeedPagingSource @AssistedInject constructor(
-    private val api: ProductApi,
+    private val repository: ProductRepository,
     @Assisted(REQUEST) private val request: String?
 ) : RxPagingSource<Int, FeedProductResponse>() {
     override fun getRefreshKey(state: PagingState<Int, FeedProductResponse>): Int? = null
@@ -20,7 +20,7 @@ class FeedPagingSource @AssistedInject constructor(
         val page = params.key ?: 0
         val pageSize = params.loadSize
 
-        return api.getProductDto(page, pageSize, request)
+        return repository.getProductsPaging(page, pageSize, request)
             .map<LoadResult<Int, FeedProductResponse>> { products ->
                 val nextKey = if (products.size < pageSize) null else page + 1
                 val prevKey = if (page == 0) null else page - 1

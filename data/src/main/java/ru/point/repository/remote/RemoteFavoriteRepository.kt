@@ -1,38 +1,25 @@
 package ru.point.repository.remote
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.rxjava3.observable
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.point.domain.entity.dto.product.FeedProductResponse
 import ru.point.domain.repository.FavoriteRepository
-import ru.point.repository.paging.FavoritePagingSource
 import ru.point.retrofit.api.FavoriteApi
 
-class RemoteFavoriteRepository(
-    private val api: FavoriteApi,
-    private val favoritePagingSource: FavoritePagingSource
-) : FavoriteRepository {
-    override fun getFavorite(): Observable<PagingData<FeedProductResponse>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = 25,
-                prefetchDistance = 10,
-                maxSize = 45,
-                enablePlaceholders = false
-            ),
-            pagingSourceFactory = { favoritePagingSource }
-        ).observable
+class RemoteFavoriteRepository(private val api: FavoriteApi) : FavoriteRepository {
+    override fun getFavorite(offset: Int, limit: Int): Single<List<FeedProductResponse>> {
+        return api.getFavorites(offset = offset, limit = limit)
+            .subscribeOn(Schedulers.io())
     }
 
     override fun addFavorite(id: Long): Completable {
-        return api.putFavorites(id = id).subscribeOn(Schedulers.io())
+        return api.putFavorites(id = id)
+            .subscribeOn(Schedulers.io())
     }
 
     override fun deleteFavorite(id: Long): Completable {
-        return api.deleteFavorites(id = id).subscribeOn(Schedulers.io())
+        return api.deleteFavorites(id = id)
+            .subscribeOn(Schedulers.io())
     }
 }

@@ -13,8 +13,8 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
-import ru.point.sprind.adapters.decorators.FavoritesItemDecorator
 import ru.point.sprind.adapters.MordaAdapterPaging
+import ru.point.sprind.adapters.decorators.FavoritesItemDecorator
 import ru.point.sprind.adapters.decorators.spans.FavoriteSpanSizeLookup
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentFavoritesBinding
@@ -37,7 +37,6 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
         _adapter = MordaAdapterPaging(delegates = presenter.delegates)
-        lifecycle.addObserver(adapter)
     }
 
     override fun onCreateView(
@@ -52,11 +51,6 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
         super.onViewCreated(view, savedInstanceState)
         initializeToolbar()
         initializeRecyclerView()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        presenter.getFavorites()
     }
 
     private fun initializeToolbar() {

@@ -1,10 +1,11 @@
 package ru.point.domain.entity.utils
 
 import com.google.gson.annotations.SerializedName
+import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.entity.view.address.AddressVo
 import ru.point.domain.utils.StringFormatter
 
-interface ResponseItem
+interface ResponseItem : ViewObject
 
 data class AddressInfoResponse(
     @SerializedName(value = "city")

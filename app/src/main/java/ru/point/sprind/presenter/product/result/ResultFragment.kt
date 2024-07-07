@@ -13,8 +13,8 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
-import ru.point.sprind.adapters.decorators.FeedProductDecorator
 import ru.point.sprind.adapters.MordaAdapterPaging
+import ru.point.sprind.adapters.decorators.FeedProductDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentResultBinding
 import ru.point.sprind.presenter.cart.CartFragmentDirections
@@ -40,7 +40,6 @@ class ResultFragment : MvpAppCompatFragment(), ResultView {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
         _adapter = MordaAdapterPaging(delegates = presenter.delegates)
-        lifecycle.addObserver(adapter)
     }
 
     override fun onCreateView(
@@ -55,11 +54,6 @@ class ResultFragment : MvpAppCompatFragment(), ResultView {
         super.onViewCreated(view, savedInstanceState)
         initializeToolbar()
         initializeRecyclerView()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        presenter.init()
     }
 
     private fun initializeToolbar() {

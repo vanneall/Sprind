@@ -1,13 +1,17 @@
 package ru.point.sprind.presenter.product.morda
 
-import androidx.paging.PagingData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.rxjava3.cachedIn
+import androidx.paging.rxjava3.observable
 import dagger.Lazy
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import moxy.InjectViewState
 import moxy.MvpPresenter
+import moxy.presenterScope
 import retrofit2.HttpException
-import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
 import ru.point.domain.usecase.interfaces.product.GetMainProductsPageInfoUseCase
@@ -16,6 +20,7 @@ import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @InjectViewState
 class MordaPresenter @Inject constructor(
     private val addProductToCartUseCase: Lazy<AddProductToCartUseCase>,
@@ -40,9 +45,7 @@ class MordaPresenter @Inject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    fun init() {
-        viewState.displayLoadingScreen(show = true)
-
+    init {
         val pageInfoDisposable = getMainProductsPageInfoUseCase.handle()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ info ->
@@ -53,20 +56,25 @@ class MordaPresenter @Inject constructor(
                 }
             })
 
-        val pagingProductsDisposable = getProductsUseCase.handle()
+        val disposable = Pager(
+            config = PagingConfig(
+                pageSize = 25,
+                prefetchDistance = 10,
+                maxSize = 45,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { getProductsUseCase.handle() }
+        ).observable
+            .cachedIn(presenterScope)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ vo ->
+            .subscribe({ data ->
                 viewState.displayLoadingScreen(show = false)
-                viewState.setAdapter(views = vo as PagingData<ViewObject>)
+                viewState.setAdapter(data)
             }, { ex ->
-                viewState.displayLoadingScreen(show = false)
-                viewState.displayBadConnectionScreen(show = true)
-                if (ex is HttpException) {
-                    httpManager.handle(ex)
-                }
+                if (ex is HttpException) httpManager.handle(ex)
+                else viewState.displayBadConnectionScreen(show = true)
             })
-
-        compositeDisposable.add(pagingProductsDisposable)
+        compositeDisposable.add(disposable)
         compositeDisposable.add(pageInfoDisposable)
     }
 

@@ -34,7 +34,6 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
         _adapter = MordaAdapterPaging(delegates = presenter.delegates)
-        lifecycle.addObserver(adapter)
     }
 
     override fun onCreateView(
@@ -50,11 +49,6 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         initializeToolbar()
         initializeRecyclerView()
         binding.payButton.visibility = View.GONE
-    }
-
-    override fun onStart() {
-        super.onStart()
-        presenter.getCartProducts()
     }
 
     private fun initializeToolbar() {

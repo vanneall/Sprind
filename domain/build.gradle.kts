@@ -35,6 +35,10 @@ android {
 }
 
 dependencies {
+    val dagger2Version = "2.51"
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
+
     //Paging 3
     val paging_version = "3.3.0"
     implementation("androidx.paging:paging-runtime:$paging_version")

@@ -24,6 +24,6 @@ interface UsingAdapterView: MvpView {
 }
 
 interface UsingPagingAdapter: MvpView {
-    @StateStrategyType(SkipStrategy::class)
+    @StateStrategyType(AddToEndSingleStrategy::class)
     fun setAdapter(views: PagingData<ViewObject>?)
 }

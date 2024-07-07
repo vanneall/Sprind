@@ -1,9 +1,8 @@
 package ru.point.domain.usecase.implementation.favorite
 
-import androidx.paging.PagingData
-import androidx.paging.map
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import androidx.paging.PagingState
+import androidx.paging.rxjava3.RxPagingSource
+import io.reactivex.rxjava3.core.Single
 import ru.point.domain.entity.dto.product.toProductFeedVo
 import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.repository.FavoriteRepository
@@ -12,12 +11,31 @@ import ru.point.domain.usecase.interfaces.favorite.GetFavoritesUseCase
 class GetFavoritesUseCaseImpl(
     private val repository: FavoriteRepository,
 ) : GetFavoritesUseCase {
+    override fun handle(): RxPagingSource<Int, ViewObject> {
+        return object : RxPagingSource<Int, ViewObject>() {
+            override fun getRefreshKey(state: PagingState<Int, ViewObject>): Int? = null
 
-    override fun handle(): Observable<PagingData<ViewObject>> {
-        return repository.getFavorite()
-            .observeOn(Schedulers.computation())
-            .map { pagingData ->
-                pagingData.map { product -> product.toProductFeedVo() }
+            override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, ViewObject>> {
+                val startPage = params.key ?: 0
+                val pageSize = params.loadSize
+
+                return repository.getFavorite(startPage, pageSize)
+                    .map<LoadResult<Int, ViewObject>> { response ->
+                        val prevKey = if (startPage == 0) null else startPage - pageSize
+                        val nextKey = if (response.size < pageSize) null else pageSize
+
+                        val resultPageData = response.map { it.toProductFeedVo() }
+
+                        LoadResult.Page(
+                            data = resultPageData,
+                            prevKey = prevKey,
+                            nextKey = nextKey
+                        )
+                    }
+                    .onErrorReturn { throwable ->
+                        LoadResult.Error(throwable)
+                    }
             }
+        }
     }
 }

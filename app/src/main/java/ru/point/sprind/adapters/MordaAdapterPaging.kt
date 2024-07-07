@@ -1,22 +1,15 @@
 package ru.point.sprind.adapters
 
-import android.util.Log
 import android.view.ViewGroup
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.LifecycleOwner
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class MordaAdapterPaging(
     private val delegates: List<Delegate<*>>,
-) : PagingDataAdapter<ViewObject, ViewHolderV2<ViewObject>>(COMPARATOR), LifecycleEventObserver {
-
-    private val compositeDisposable = CompositeDisposable()
+) : PagingDataAdapter<ViewObject, ViewHolderV2<ViewObject>>(COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderV2<ViewObject> {
         return delegates[viewType]
@@ -31,13 +24,6 @@ class MordaAdapterPaging(
     override fun getItemViewType(position: Int): Int {
         return delegates.indexOfFirst { delegate ->
             getItem(position)?.let { delegate.isSupported(it) } ?: false
-        }
-    }
-
-    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-        if (event == Lifecycle.Event.ON_STOP) {
-            Log.d("Adapter", "cleared ${compositeDisposable.size()}")
-            compositeDisposable.clear()
         }
     }
 

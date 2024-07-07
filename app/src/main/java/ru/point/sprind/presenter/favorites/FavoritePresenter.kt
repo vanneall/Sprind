@@ -1,10 +1,16 @@
 package ru.point.sprind.presenter.favorites
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.rxjava3.cachedIn
+import androidx.paging.rxjava3.observable
 import dagger.Lazy
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import moxy.InjectViewState
 import moxy.MvpPresenter
+import moxy.presenterScope
 import retrofit2.HttpException
 import ru.point.domain.usecase.interfaces.cart.AddProductToCartUseCase
 import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
@@ -14,6 +20,7 @@ import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @InjectViewState
 class FavoritePresenter @Inject constructor(
     private val addProductToCartUseCase: Lazy<AddProductToCartUseCase>,
@@ -38,18 +45,29 @@ class FavoritePresenter @Inject constructor(
         EmptyFavoritesDelegate()
     )
 
-    fun getFavorites() {
-        val disposable = getFavoritesUseCase.handle()
+    init {
+        val disposable = Pager(
+            config = PagingConfig(
+                pageSize = 25,
+                prefetchDistance = 10,
+                maxSize = 45,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { getFavoritesUseCase.handle() }
+        ).observable
+            .cachedIn(presenterScope)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ loadResult ->
+            .subscribe({ data ->
                 viewState.displayLoadingScreen(show = false)
-                viewState.setAdapter(loadResult)
+                viewState.setAdapter(data)
             }, { ex ->
                 if (ex is HttpException) httpManager.handle(ex)
                 else viewState.displayBadConnectionScreen(show = true)
             })
         compositeDisposable.add(disposable)
     }
+
+
 
     private fun onAddProductToCart(productId: Long) {
         val disposable = addProductToCartUseCase.get().handle(id = productId)

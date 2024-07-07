@@ -1,4 +1,4 @@
-package ru.point.repository.paging
+package ru.point.domain.paging
 
 import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxPagingSource
@@ -6,10 +6,10 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.point.domain.entity.utils.AddressInfoResponse
 import ru.point.domain.entity.utils.ResponseItem
-import ru.point.retrofit.api.CartApi
+import ru.point.domain.repository.CartRepository
 
 class CartPagingSource(
-    private val api: CartApi
+    private val repository: CartRepository
 ) : RxPagingSource<Int, ResponseItem>() {
     override fun getRefreshKey(state: PagingState<Int, ResponseItem>): Int? = null
 
@@ -17,7 +17,7 @@ class CartPagingSource(
         val startPage = params.key ?: 0
         val pageSize = params.loadSize
 
-        return api.getProductsFromCart(startPage, pageSize)
+        return repository.getProducts(startPage, pageSize)
             .map<LoadResult<Int, ResponseItem>> { response ->
                 val prevKey = if (startPage == 0) null else startPage - pageSize
                 val nextKey = if (response.size < pageSize) null else pageSize
@@ -52,7 +52,7 @@ class CartPagingSource(
         addressItemContainer: MutableList<ResponseItem>,
         summaryItemContainer: MutableList<ResponseItem>
     ) {
-        val pageInfoResponse = api.getPageInfo()
+        val pageInfoResponse = repository.getPageInfo()
             .subscribeOn(Schedulers.io())
             .blockingGet()
 

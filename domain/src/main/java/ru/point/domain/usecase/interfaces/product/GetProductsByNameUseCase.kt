@@ -1,9 +1,8 @@
 package ru.point.domain.usecase.interfaces.product
 
-import androidx.paging.PagingData
-import io.reactivex.rxjava3.core.Observable
-import ru.point.domain.entity.view.product.card.FeedProductVo
+import androidx.paging.rxjava3.RxPagingSource
+import ru.point.domain.entity.view.ViewObject
 
 interface GetProductsByNameUseCase {
-    fun handle(search: String): Observable<PagingData<FeedProductVo>>
+    fun handle(search: String): RxPagingSource<Int, ViewObject>
 }
