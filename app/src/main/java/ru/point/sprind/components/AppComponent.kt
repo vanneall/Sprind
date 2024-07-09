@@ -15,7 +15,7 @@ import ru.point.sprind.presenter.auth.authorization.AuthorizationFragment
 import ru.point.sprind.presenter.auth.registration.credentials.CredentialsFragment
 import ru.point.sprind.presenter.auth.registration.password.RegistrationFragment
 import ru.point.sprind.presenter.cart.CartFragment
-import ru.point.sprind.presenter.favorites.FavoritesFragment
+import ru.point.sprind.presenter.favorites.FavoriteProductsFragment
 import ru.point.sprind.presenter.maps.map.MapFragment
 import ru.point.sprind.presenter.maps.popup.select.AddressSelectionDialogFragment
 import ru.point.sprind.presenter.product.card.ProductCardFragment
@@ -51,7 +51,7 @@ interface AppComponent {
 
     fun inject(fragment: CartFragment)
 
-    fun inject(fragment: FavoritesFragment)
+    fun inject(fragment: FavoriteProductsFragment)
 
     fun inject(fragment: AuthorizationFragment)
 

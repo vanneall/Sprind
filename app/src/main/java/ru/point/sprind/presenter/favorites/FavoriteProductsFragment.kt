@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,23 +20,23 @@ import ru.point.sprind.databinding.FragmentFavoritesBinding
 import ru.point.sprind.view.ConnectableLayout
 import javax.inject.Inject
 
-class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
+class FavoriteProductsFragment : MvpAppCompatFragment(), FavoriteView {
 
     @Inject
-    lateinit var presenterProvider: FavoritePresenter
+    lateinit var presenterProvider: FavoriteProductsPresenter
     private val presenter by moxyPresenter { presenterProvider }
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
-    private var _adapter: SprindPagingAdapter? = null
-    private val adapter get() = _adapter!!
+    private var _pagingAdapter: SprindPagingAdapter? = null
+    private val pagingAdapter get() = _pagingAdapter!!
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
-        _adapter = SprindPagingAdapter(delegates = presenter.delegates)
+        _pagingAdapter = SprindPagingAdapter(delegates = presenter.viewDelegates)
     }
 
     override fun onCreateView(
@@ -50,42 +49,47 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeToolbar()
-        initializeRecyclerView()
+        initToolbar()
+        initRecyclerView()
     }
 
-    private fun initializeToolbar() {
-        with(binding) {
-            favoritesToolbar.title.text = resources.getString(R.string.favorites_screen_title)
+    private fun initToolbar() {
+        binding.favoritesToolbar.apply {
+            title.text = resources.getString(R.string.favorites_screen_title)
         }
     }
 
-    private fun initializeRecyclerView() {
-        with(binding) {
-            favoritesRecyclerView.adapter = adapter
-            val layoutManager = favoritesRecyclerView.layoutManager as GridLayoutManager
-            layoutManager.spanSizeLookup = FavoriteSpanSizeLookup(presenter.delegates, adapter)
-            favoritesRecyclerView.addItemDecoration(FavoritesItemDecorator())
+    private fun initRecyclerView() {
+        binding.favoritesRecyclerView.apply {
+            adapter = pagingAdapter
+
+            val layoutManager = layoutManager as GridLayoutManager
+            layoutManager.spanSizeLookup =
+                FavoriteSpanSizeLookup(presenter.viewDelegates, pagingAdapter)
+            addItemDecoration(FavoritesItemDecorator())
         }
     }
 
     override fun setAdapter(views: PagingData<ViewObject>) {
-        adapter.submitData(lifecycle, views)
+        pagingAdapter.submitData(lifecycle, views)
         binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
     }
 
-    override fun openCard(id: Long) {
-        val args = FavoritesFragmentDirections.actionFavoritesFragmentToProductCardFragment(
-            productId = id
-        )
+    override fun navigateToProductCard(productId: Long) {
+        val direction =
+            FavoriteProductsFragmentDirections.actionFavoritesFragmentToProductCardFragment(
+                productId = productId
+            )
 
-        binding.root.findNavController().navigate(args)
+        findNavController().navigate(directions = direction)
     }
 
-    override fun requireAuthorization() {
-        binding.authorizeWarning.root.visibility = View.VISIBLE
-        binding.authorizeWarning.authorizeButton.setOnClickListener {
-            findNavController().navigate(FavoritesFragmentDirections.actionGlobalAuthorizationFragment())
+    override fun navigateToAuthorization() {
+        binding.authorizeWarning.apply {
+            root.visibility = View.VISIBLE
+            authorizeButton.setOnClickListener {
+                findNavController().navigate(FavoriteProductsFragmentDirections.actionGlobalAuthorizationFragment())
+            }
         }
     }
 
@@ -98,11 +102,9 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
     }
 
     override fun showSomethingGoesWrongError() {
-        Toast.makeText(
-            requireContext(),
-            getString(R.string.someting_goes_wrong_hint),
-            Toast.LENGTH_SHORT
-        ).show()
+        Toast
+            .makeText(context, getString(R.string.someting_goes_wrong_hint), Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun onDestroyView() {
@@ -112,6 +114,6 @@ class FavoritesFragment : MvpAppCompatFragment(), FavoriteView {
 
     override fun onDestroy() {
         super.onDestroy()
-        _adapter = null
+        _pagingAdapter = null
     }
 }

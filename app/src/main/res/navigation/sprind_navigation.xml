@@ -78,7 +78,7 @@
     </fragment>
     <fragment
         android:id="@+id/favorites_fragment"
-        android:name="ru.point.sprind.presenter.favorites.FavoritesFragment"
+        android:name="ru.point.sprind.presenter.favorites.FavoriteProductsFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites">
         <action
