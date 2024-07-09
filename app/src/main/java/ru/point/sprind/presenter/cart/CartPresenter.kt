@@ -13,7 +13,7 @@ import moxy.InjectViewState
 import moxy.MvpPresenter
 import moxy.presenterScope
 import retrofit2.HttpException
-import ru.point.domain.usecase.interfaces.cart.DeleteProductFromCartUseCase
+import ru.point.domain.usecase.interfaces.cart.RemoveProductFromCartUseCase
 import ru.point.domain.usecase.interfaces.cart.GetCartPageInfoUseCase
 import ru.point.domain.usecase.interfaces.cart.GetProductsInCartUseCase
 import ru.point.domain.usecase.interfaces.cart.MakeOrderUseCase
@@ -33,7 +33,7 @@ class CartPresenter @Inject constructor(
     private val makeOrderUseCase: Lazy<MakeOrderUseCase>,
     private val getCartPageInfoUseCase: GetCartPageInfoUseCase,
     private val changeFavoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
-    private val deleteProductFromCartUseCase: Lazy<DeleteProductFromCartUseCase>,
+    private val removeProductFromCartUseCase: Lazy<RemoveProductFromCartUseCase>,
 ) : MvpPresenter<CartView>() {
 
     private val httpManager = HttpExceptionStatusManager.Builder()
@@ -81,7 +81,7 @@ class CartPresenter @Inject constructor(
     }
 
     private fun deleteFromCart(id: Long) {
-        val disposable = deleteProductFromCartUseCase.get().handle(id)
+        val disposable = removeProductFromCartUseCase.get().handle(id)
             .subscribeOn(AndroidSchedulers.mainThread()).subscribe({}, { ex ->
                 if (ex is HttpException) httpManager.handle(ex)
             })

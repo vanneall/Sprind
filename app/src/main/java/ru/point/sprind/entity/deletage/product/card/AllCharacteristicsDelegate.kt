@@ -10,7 +10,8 @@ import ru.point.sprind.entity.viewholder.ViewHolderV2
 import ru.point.sprind.entity.viewholder.product.card.CharacteristicSectionViewHolder
 
 class AllCharacteristicsDelegate(
-    private val onClick: (Boolean) -> Unit,
+    private val onExpand: () -> Unit,
+    private val onCollapse: () -> Unit
 ) : Delegate<AllCharacteristicsVo> {
 
     override fun isSupported(view: ViewObject) = view is AllCharacteristicsVo
@@ -22,6 +23,6 @@ class AllCharacteristicsDelegate(
             false
         )
 
-        return CharacteristicSectionViewHolder(binding, onClick);
+        return CharacteristicSectionViewHolder(binding, onExpand, onCollapse);
     }
 }

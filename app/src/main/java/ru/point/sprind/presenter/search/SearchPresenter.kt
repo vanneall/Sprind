@@ -17,6 +17,7 @@ class SearchPresenter @Inject constructor(
     val delegates = listOf(RequestDelegate())
 
     private val compositeDisposable = CompositeDisposable()
+
     fun addRequestToHistory(request: String) {
         manager.insert(request = request)
     }
@@ -24,7 +25,7 @@ class SearchPresenter @Inject constructor(
 
     fun getRequests() {
         val disposable = manager.getAll()
-            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
                 val views = list.mapIndexed { index, entity -> RequestVo(index.toLong(), entity) }
                 viewState.setAdapter(views.reversed())

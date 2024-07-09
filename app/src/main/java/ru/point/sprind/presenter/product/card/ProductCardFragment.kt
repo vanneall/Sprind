@@ -15,7 +15,6 @@ import ru.point.sprind.adapters.SprindDefaultAdapter
 import ru.point.sprind.adapters.decorators.ProductInfoDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentProductCardBinding
-import ru.point.sprind.presenter.cart.CartFragmentDirections
 import ru.point.sprind.view.ConnectableLayout
 import javax.inject.Inject
 
@@ -24,22 +23,22 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardViewDefault {
     private val args: ProductCardFragmentArgs by navArgs()
 
     @Inject
-    lateinit var presenterProvider: ProductPresenterAssistedFactory
-    private val presenter: ProductPresenter by moxyPresenter {
-        presenterProvider.create(productId = args.productId, lifecycle = lifecycle)
+    lateinit var presenterProvider: ProductCardPresenter.Factory
+    private val presenter: ProductCardPresenter by moxyPresenter {
+        presenterProvider.create(productId = args.productId)
     }
 
     private var _binding: FragmentProductCardBinding? = null
     private val binding get() = _binding!!
 
 
-    private var _adapter: SprindDefaultAdapter? = null
-    private val adapter get() = _adapter!!
+    private var _defaultAdapter: SprindDefaultAdapter? = null
+    private val defaultAdapter get() = _defaultAdapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(fragment = this)
         super.onCreate(savedInstanceState)
-        _adapter = SprindDefaultAdapter(delegates = presenter.delegates)
+        _defaultAdapter = SprindDefaultAdapter(delegates = presenter.viewDelegates)
     }
 
     override fun onCreateView(
@@ -52,8 +51,8 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardViewDefault {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeRecyclerView()
-        initializePayButtons()
+        initRecyclerView()
+        initPayButtons()
     }
 
     override fun onResume() {
@@ -61,34 +60,43 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardViewDefault {
         presenter.init()
     }
 
-    private fun initializeRecyclerView() {
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.addItemDecoration(ProductInfoDecorator())
+    private fun initRecyclerView() {
+        binding.recyclerView.apply {
+            adapter = defaultAdapter
+            addItemDecoration(ProductInfoDecorator())
+        }
     }
 
-    private fun initializePayButtons() {
-        with(binding) {
-            deleteFromCartButton.setOnClickListener { presenter.deleteFromCart() }
+    private fun initPayButtons() {
+        binding.apply {
+            deleteFromCartButton.setOnClickListener { presenter.removeFromCart() }
 
             payButton.setOnClickListener { presenter.addToCart() }
 
             goToCartButton.setOnClickListener {
                 val destination =
                     ProductCardFragmentDirections.actionProductCardFragmentToCartFragment()
-                findNavController().navigate(destination)
+                findNavController().navigate(directions = destination)
             }
         }
     }
 
-    override fun openReviews() {
-        val destination =
-            ProductCardFragmentDirections.actionProductCardFragmentToAllReviewsFragment(args.productId)
-        findNavController().navigate(destination)
+    override fun navigateToReviews() {
+        val direction = ProductCardFragmentDirections.actionProductCardFragmentToAllReviewsFragment(
+            id = args.productId
+        )
+
+        findNavController().navigate(directions = direction)
+    }
+
+    override fun navigateToAuthorization() {
+        val direction = ProductCardFragmentDirections.actionGlobalAuthorizationFragment()
+        findNavController().navigate(directions = direction)
     }
 
     override fun showSomethingGoesWrongError() {
         Toast.makeText(
-            requireContext(),
+            context,
             getString(R.string.someting_goes_wrong_hint),
             Toast.LENGTH_SHORT
         ).show()
@@ -103,12 +111,12 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardViewDefault {
     }
 
     override fun setAdapter(views: List<ViewObject>) {
-        adapter.submitList(views)
+        defaultAdapter.submitList(views)
         binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
     }
 
     override fun displayProductInCartButtonGroup(show: Boolean) {
-        with(binding) {
+        binding.apply {
             if (show) {
                 productInCartGroup.visibility = View.VISIBLE
                 payButton.visibility = View.GONE
@@ -119,10 +127,6 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardViewDefault {
         }
     }
 
-    override fun requireAuthorization() {
-        findNavController().navigate(CartFragmentDirections.actionGlobalAuthorizationFragment())
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -130,6 +134,6 @@ class ProductCardFragment : MvpAppCompatFragment(), ProductCardViewDefault {
 
     override fun onDestroy() {
         super.onDestroy()
-        _adapter = null
+        _defaultAdapter = null
     }
 }

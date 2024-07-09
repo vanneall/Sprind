@@ -7,7 +7,8 @@ import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class CharacteristicSectionViewHolder(
     val binding: ProductCharacteristicStartBinding,
-    private val onClick: (Boolean) -> Unit,
+    private val onExpand: () -> Unit,
+    private val onCollapse: () -> Unit
 ) : ViewHolderV2<AllCharacteristicsVo>(binding.root) {
 
     private var isExpanded = false
@@ -18,11 +19,12 @@ class CharacteristicSectionViewHolder(
             if (isExpanded) {
                 binding.root.setBackgroundResource(R.drawable.card_background_top)
                 binding.dropdownArrow.rotation = 180f
+                onExpand()
             } else {
                 binding.root.setBackgroundResource(R.drawable.card_background_full)
                 binding.dropdownArrow.rotation = 0f
+                onCollapse()
             }
-            onClick(isExpanded)
         }
     }
 }

@@ -2,11 +2,11 @@ package ru.point.domain.usecase.implementation.cart
 
 import io.reactivex.rxjava3.core.Completable
 import ru.point.domain.repository.CartRepository
-import ru.point.domain.usecase.interfaces.cart.DeleteProductFromCartUseCase
+import ru.point.domain.usecase.interfaces.cart.RemoveProductFromCartUseCase
 
-class DeleteProductFromCartUseCaseImpl(
+class RemoveProductFromCartUseCaseImpl(
     private val repository: CartRepository
-) : DeleteProductFromCartUseCase {
+) : RemoveProductFromCartUseCase {
     override fun handle(id: Long): Completable {
         return repository.deleteFromCart(id)
     }

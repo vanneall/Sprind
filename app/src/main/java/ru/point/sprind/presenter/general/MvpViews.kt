@@ -27,3 +27,13 @@ interface UsingPagingAdapter: MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun setAdapter(views: PagingData<ViewObject>)
 }
+
+interface NavigableView: MvpView {
+    @StateStrategyType(SkipStrategy::class)
+    fun navigateToProductCard(productId: Long) {}
+    @StateStrategyType(SkipStrategy::class)
+    fun navigateToAuthorization() {}
+    @StateStrategyType(SkipStrategy::class)
+    fun navigateToReviews() {}
+
+}

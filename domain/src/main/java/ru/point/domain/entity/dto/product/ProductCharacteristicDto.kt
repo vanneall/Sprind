@@ -4,14 +4,14 @@ import com.google.gson.annotations.SerializedName
 
 data class ProductCharacteristicDto(
     @SerializedName("name")
-    val name: String,
+    val sectionTitle: String,
     @SerializedName("description")
-    private val description: String,
+    private val allDescriptions: String,
 ) {
-    val elements: List<Pair<String, String>>
+    val descriptions: List<Pair<String, String>>
         get() {
             val list = mutableListOf<Pair<String, String>>()
-            description
+            allDescriptions
                 .split(";")
                 .filter { s -> s.isNotEmpty() }
                 .forEach { s ->

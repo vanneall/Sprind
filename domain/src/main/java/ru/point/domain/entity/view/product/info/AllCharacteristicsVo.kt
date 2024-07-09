@@ -7,3 +7,9 @@ import ru.point.domain.entity.view.ViewObject
 data class AllCharacteristicsVo(
     val productCharacteristicDtos: List<ProductCharacteristicDto>,
 ) : ViewObject
+
+
+val AllCharacteristicsVo.firstCharacteristicIndex: Int?
+    get() {
+        return firstCharacteristicIndex.takeIf { productCharacteristicDtos.isNotEmpty() }
+    }

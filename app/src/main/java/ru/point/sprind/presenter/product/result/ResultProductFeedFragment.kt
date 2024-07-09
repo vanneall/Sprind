@@ -17,30 +17,29 @@ import ru.point.sprind.adapters.SprindPagingAdapter
 import ru.point.sprind.adapters.decorators.FeedProductDecorator
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentResultBinding
-import ru.point.sprind.presenter.cart.CartFragmentDirections
 import ru.point.sprind.view.ConnectableLayout
 import javax.inject.Inject
 
-class ResultFragment : MvpAppCompatFragment(), ResultView {
+class ResultProductFeedFragment : MvpAppCompatFragment(), ResultProductFeedView {
 
-    private val args: ResultFragmentArgs by navArgs()
+    private val args: ResultProductFeedFragmentArgs by navArgs()
 
     @Inject
-    lateinit var presenterProvider: ResultPresenterAssistedFactory
-    private val presenter: ResultPresenter by moxyPresenter {
+    lateinit var presenterProvider: ResultProductFeedPresenter.Factory
+    private val presenter: ResultProductFeedPresenter by moxyPresenter {
         presenterProvider.create(request = args.request)
     }
 
     private var _binding: FragmentResultBinding? = null
     private val binding get() = _binding!!
 
-    private var _adapter: SprindPagingAdapter? = null
-    private val adapter get() = _adapter!!
+    private var _pagingAdapter: SprindPagingAdapter? = null
+    private val pagingAdapter get() = _pagingAdapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
-        _adapter = SprindPagingAdapter(delegates = presenter.delegates)
+        _pagingAdapter = SprindPagingAdapter(delegates = presenter.viewDelegates)
     }
 
     override fun onCreateView(
@@ -53,30 +52,37 @@ class ResultFragment : MvpAppCompatFragment(), ResultView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeToolbar()
-        initializeRecyclerView()
+        initToolbar()
+        initRecyclerView()
     }
 
-    private fun initializeToolbar() {
-        with(binding.toolbar) {
-            search.isFocusable = false
-            search.setText(args.request)
-            search.setOnClickListener {
-                val destination = ResultFragmentDirections
-                    .actionResultFragmentToSearchFragment(request = args.request)
-                findNavController().navigate(destination)
-            }
+    private fun initToolbar() {
+        binding.toolbar.search.apply {
+            isFocusable = false
+            isClickable = false
+            isCursorVisible = false
 
-            address.setOnClickListener {
-                val destination = ResultFragmentDirections.actionGlobalMapFragment()
-                findNavController().navigate(destination)
+            setText(args.request)
+            setOnClickListener {
+                val direction =
+                    ResultProductFeedFragmentDirections.actionResultFragmentToSearchFragment(request = args.request)
+                findNavController().navigate(directions = direction)
+            }
+        }
+
+        binding.toolbar.address.apply {
+            setOnClickListener {
+                val direction = ResultProductFeedFragmentDirections.actionGlobalMapFragment()
+                findNavController().navigate(directions = direction)
             }
         }
     }
 
-    private fun initializeRecyclerView() {
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.addItemDecoration(FeedProductDecorator())
+    private fun initRecyclerView() {
+        binding.recyclerView.apply {
+            adapter = pagingAdapter
+            addItemDecoration(FeedProductDecorator())
+        }
     }
 
     override fun showBadConnection(show: Boolean) {
@@ -87,35 +93,36 @@ class ResultFragment : MvpAppCompatFragment(), ResultView {
         binding.root.currentState = ConnectableLayout.ConnectionState.LOADING
     }
 
-    override fun openCard(id: Long) {
-        val args = ResultFragmentDirections.actionResultFragmentToProductCardFragment(
-            productId = id
+    override fun navigateToProductCard(productId: Long) {
+        val direction = ResultProductFeedFragmentDirections.actionResultFragmentToProductCardFragment(
+            productId = productId
         )
 
-        binding.root.findNavController().navigate(args)
+        findNavController().navigate(directions = direction)
     }
 
-    override fun requireAuthorization() {
-        findNavController().navigate(CartFragmentDirections.actionGlobalAuthorizationFragment())
+    override fun navigateToAuthorization() {
+        val direction = ResultProductFeedFragmentDirections.actionGlobalAuthorizationFragment()
+        findNavController().navigate(directions = direction)
     }
 
     override fun showSomethingGoesWrongError() {
-        Toast.makeText(
-            requireContext(),
-            getString(R.string.someting_goes_wrong_hint),
-            Toast.LENGTH_SHORT
-        ).show()
+        Toast
+            .makeText(context, getString(R.string.someting_goes_wrong_hint), Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun setAdapter(views: PagingData<ViewObject>) {
-        adapter.submitData(lifecycle, views)
+        pagingAdapter.submitData(lifecycle, views)
         binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
     }
 
     override fun setAddress(address: String?) {
-        if (address != null) {
-            binding.toolbar.address.text = address
-            binding.toolbar.address.setTextColor(resources.getColor(R.color.md_theme_tertiaryContainer))
+        if (address == null) return
+
+        binding.toolbar.address.apply {
+            text = address
+            setTextColor(resources.getColor(R.color.md_theme_tertiaryContainer, null))
         }
     }
 
@@ -126,6 +133,6 @@ class ResultFragment : MvpAppCompatFragment(), ResultView {
 
     override fun onDestroy() {
         super.onDestroy()
-        _adapter = null
+        _pagingAdapter = null
     }
 }

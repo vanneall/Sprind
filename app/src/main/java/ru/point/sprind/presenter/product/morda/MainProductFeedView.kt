@@ -1,16 +1,13 @@
-package ru.point.sprind.presenter.product.result
+package ru.point.sprind.presenter.product.morda
 
 import moxy.viewstate.strategy.AddToEndSingleStrategy
-import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
 import ru.point.sprind.presenter.general.ConnectionRequiredView
+import ru.point.sprind.presenter.general.NavigableView
 import ru.point.sprind.presenter.general.UsingPagingAdapter
 
-interface ResultView: ConnectionRequiredView, UsingPagingAdapter {
-    @StateStrategyType(SkipStrategy::class)
-    fun openCard(id: Long)
-    @StateStrategyType(SkipStrategy::class)
-    fun requireAuthorization()
+
+interface MainProductFeedView : ConnectionRequiredView, UsingPagingAdapter, NavigableView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun setAddress(address: String?)
 }

@@ -19,8 +19,8 @@ import ru.point.sprind.presenter.favorites.FavoritesFragment
 import ru.point.sprind.presenter.maps.map.MapFragment
 import ru.point.sprind.presenter.maps.popup.select.AddressSelectionDialogFragment
 import ru.point.sprind.presenter.product.card.ProductCardFragment
-import ru.point.sprind.presenter.product.morda.MordaFragment
-import ru.point.sprind.presenter.product.result.ResultFragment
+import ru.point.sprind.presenter.product.morda.MainProductFeedFragment
+import ru.point.sprind.presenter.product.result.ResultProductFeedFragment
 import ru.point.sprind.presenter.profile.main.ProfileFragment
 import ru.point.sprind.presenter.profile.orders.OrdersFragment
 import ru.point.sprind.presenter.review.all.AllReviewsFragment
@@ -43,9 +43,9 @@ interface AppComponent {
 
     fun inject(activity: MainActivity)
 
-    fun inject(fragment: MordaFragment)
+    fun inject(fragment: MainProductFeedFragment)
 
-    fun inject(fragment: ResultFragment)
+    fun inject(fragment: ResultProductFeedFragment)
 
     fun inject(fragment: ProductCardFragment)
 

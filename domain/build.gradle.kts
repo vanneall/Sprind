@@ -50,6 +50,7 @@ dependencies {
 
     //RxJava3
     implementation(libs.rxjava)
+    implementation(libs.rxandroid)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
