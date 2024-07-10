@@ -1,4 +1,4 @@
-package ru.point.sprind.presenter.favorites
+package ru.point.sprind.presenter.product.favorites
 
 import ru.point.sprind.presenter.general.ConnectionRequiredView
 import ru.point.sprind.presenter.general.NavigableView

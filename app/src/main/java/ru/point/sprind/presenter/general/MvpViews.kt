@@ -35,5 +35,7 @@ interface NavigableView: MvpView {
     fun navigateToAuthorization() {}
     @StateStrategyType(SkipStrategy::class)
     fun navigateToReviews() {}
+    @StateStrategyType(SkipStrategy::class)
+    fun navigateToThanksScreen() {}
 
 }

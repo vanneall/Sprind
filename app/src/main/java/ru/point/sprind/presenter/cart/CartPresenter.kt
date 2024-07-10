@@ -1,7 +1,7 @@
 package ru.point.sprind.presenter.cart
 
+import android.util.Log
 import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava3.cachedIn
 import androidx.paging.rxjava3.observable
@@ -13,17 +13,16 @@ import moxy.InjectViewState
 import moxy.MvpPresenter
 import moxy.presenterScope
 import retrofit2.HttpException
-import ru.point.domain.usecase.interfaces.cart.RemoveProductFromCartUseCase
-import ru.point.domain.usecase.interfaces.cart.GetCartPageInfoUseCase
+import ru.point.domain.manager.ProductManager
 import ru.point.domain.usecase.interfaces.cart.GetProductsInCartUseCase
 import ru.point.domain.usecase.interfaces.cart.MakeOrderUseCase
-import ru.point.domain.usecase.interfaces.favorite.ChangeFavoriteStateUseCase
 import ru.point.sprind.entity.deletage.product.cart.CartEmptyDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartHeaderDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartProductDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartPromocodeDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartSummaryDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
+import ru.point.sprind.utils.pagerConfig
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -31,20 +30,20 @@ import javax.inject.Inject
 class CartPresenter @Inject constructor(
     private val getProductsInCartUseCase: GetProductsInCartUseCase,
     private val makeOrderUseCase: Lazy<MakeOrderUseCase>,
-    private val getCartPageInfoUseCase: GetCartPageInfoUseCase,
-    private val changeFavoriteStateUseCase: Lazy<ChangeFavoriteStateUseCase>,
-    private val removeProductFromCartUseCase: Lazy<RemoveProductFromCartUseCase>,
+    private val productManager: Lazy<ProductManager>
 ) : MvpPresenter<CartView>() {
 
-    private val httpManager = HttpExceptionStatusManager.Builder()
-        .add403ExceptionHandler { viewState.requireAuthorization() }
-        .addDefaultExceptionHandler { viewState.showSomethingGoesWrongError() }.build()
+    private val httpExceptionManager = HttpExceptionStatusManager
+        .Builder()
+        .add403ExceptionHandler { viewState.navigateToAuthorization() }
+        .addDefaultExceptionHandler { viewState.showSomethingGoesWrongError() }
+        .build()
 
-    val delegates = listOf(
+    val viewDelegates = listOf(
         CartProductDelegate(
-            onClick = viewState::openCard,
-            onFavoriteCheckedChange = ::onCheckedFavoriteStateChange,
-            delete = ::deleteFromCart
+            onClick = viewState::navigateToProductCard,
+            onFavoriteCheckedChange = ::changeProductFavoriteState,
+            delete = ::removeProductFromCart
         ),
         CartEmptyDelegate(),
         CartPromocodeDelegate(),
@@ -57,70 +56,72 @@ class CartPresenter @Inject constructor(
     init {
         viewState.showLoading(show = true)
         val pagingDisposable = Pager(
-            config = PagingConfig(
-                pageSize = 25,
-                prefetchDistance = 10,
-                maxSize = 45,
-                enablePlaceholders = false
-            ),
+            config = pagerConfig,
             pagingSourceFactory = { getProductsInCartUseCase.handle() }
         ).observable
             .cachedIn(presenterScope)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ data ->
-                viewState.showLoading(show = false)
-                viewState.displayPayButton(true)
-                viewState.setAdapter(data)
-            }, { ex ->
-                viewState.showLoading(show = false)
-                if (ex is HttpException) httpManager.handle(ex)
-                else viewState.showBadConnection(show = true)
-            })
+            .subscribe(
+                { data ->
+                    viewState.showLoading(show = false)
+                    viewState.showPayButton()
+                    viewState.setAdapter(data)
+                },
+                { ex -> handleException(exception = ex) }
+            )
 
         compositeDisposable.add(pagingDisposable)
     }
 
-    private fun deleteFromCart(id: Long) {
-        val disposable = removeProductFromCartUseCase.get().handle(id)
-            .subscribeOn(AndroidSchedulers.mainThread()).subscribe({}, { ex ->
-                if (ex is HttpException) httpManager.handle(ex)
-            })
-
-        compositeDisposable.add(disposable)
+    private fun handleException(exception: Throwable) {
+        if (exception is HttpException) {
+            httpExceptionManager.handle(exception = exception)
+        } else {
+            viewState.showBadConnection(show = true)
+            Log.e("Exception", exception.stackTraceToString())
+        }
     }
 
-    private fun onCheckedFavoriteStateChange(
+    private fun removeProductFromCart(id: Long) {
+        productManager.get().removeFromCart(
+            productId = id,
+            onError = ::handleException
+        )
+    }
+
+    private fun changeProductFavoriteState(
         productId: Long,
         isChecked: Boolean,
         isSuccessfulCallback: (Boolean) -> Unit,
     ) {
-        val disposable =
-            changeFavoriteStateUseCase.get().handle(id = productId, isFavorite = isChecked)
-                .observeOn(AndroidSchedulers.mainThread()).subscribe({
-                    isSuccessfulCallback(true)
-                }, { ex ->
-                    isSuccessfulCallback(false)
-                    if (ex is HttpException) httpManager.handle(ex)
-                })
-
-        compositeDisposable.add(disposable)
+        productManager.get().changeProductInFavoriteState(
+            productId = productId,
+            isInFavorite = isChecked,
+            onComplete = { isSuccessfulCallback(true) },
+            onError = { ex ->
+                isSuccessfulCallback(false)
+                handleException(exception = ex)
+            }
+        )
     }
 
     fun makeOrder() {
-        val disposable =
-            makeOrderUseCase.get().handle().observeOn(AndroidSchedulers.mainThread()).subscribe({
-                viewState.openThanksScreen()
+        val makeOrderDisposable = makeOrderUseCase.get().handle()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                viewState.navigateToThanksScreen()
+                viewState.hidePayButton()
                 viewState.setAdapter(PagingData.empty())
-                viewState.displayPayButton(false)
             }, { ex ->
-                if (ex is HttpException) httpManager.handle(ex)
+                handleException(exception = ex)
             })
 
-        compositeDisposable.add(disposable)
+        compositeDisposable.add(makeOrderDisposable)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.clear()
+        productManager.get().clearActiveRequests()
     }
 }

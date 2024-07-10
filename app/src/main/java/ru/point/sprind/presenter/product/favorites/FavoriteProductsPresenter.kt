@@ -1,4 +1,4 @@
-package ru.point.sprind.presenter.favorites
+package ru.point.sprind.presenter.product.favorites
 
 import android.util.Log
 import androidx.paging.Pager

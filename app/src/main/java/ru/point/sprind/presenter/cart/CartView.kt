@@ -4,17 +4,14 @@ import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.SkipStrategy
 import moxy.viewstate.strategy.StateStrategyType
 import ru.point.sprind.presenter.general.ConnectionRequiredView
+import ru.point.sprind.presenter.general.NavigableView
 import ru.point.sprind.presenter.general.UsingPagingAdapter
 
-interface CartView : ConnectionRequiredView, UsingPagingAdapter {
+interface CartView : ConnectionRequiredView, UsingPagingAdapter, NavigableView {
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun displayPayButton(show: Boolean = false)
-    @StateStrategyType(SkipStrategy::class)
-    fun requireAuthorization()
-    @StateStrategyType(SkipStrategy::class)
-    fun openThanksScreen()
-    @StateStrategyType(SkipStrategy::class)
-    fun openCard(id: Long)
+    fun showPayButton()
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun hidePayButton()
     @StateStrategyType(SkipStrategy::class)
     fun changeAddress()
 }

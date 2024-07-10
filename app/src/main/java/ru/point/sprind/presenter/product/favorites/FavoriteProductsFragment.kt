@@ -1,4 +1,4 @@
-package ru.point.sprind.presenter.favorites
+package ru.point.sprind.presenter.product.favorites
 
 import android.os.Bundle
 import android.view.LayoutInflater

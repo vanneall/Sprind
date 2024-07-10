@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import moxy.MvpAppCompatFragment
@@ -28,13 +27,13 @@ class CartFragment : MvpAppCompatFragment(), CartView {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
 
-    private var _adapter: SprindPagingAdapter? = null
-    private val adapter get() = _adapter!!
+    private var _pagingAdapter: SprindPagingAdapter? = null
+    private val pagingAdapter get() = _pagingAdapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
-        _adapter = SprindPagingAdapter(delegates = presenter.delegates)
+        _pagingAdapter = SprindPagingAdapter(delegates = presenter.viewDelegates)
     }
 
     override fun onCreateView(
@@ -47,54 +46,67 @@ class CartFragment : MvpAppCompatFragment(), CartView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeToolbar()
-        initializeRecyclerView()
-        binding.payButton.visibility = View.GONE
+        initToolbar()
+        initRecyclerView()
     }
 
-    private fun initializeToolbar() {
+    private fun initToolbar() {
         binding.cartToolbar.title.text = resources.getText(R.string.cart_screen_title)
     }
 
-    private fun initializeRecyclerView() {
-        binding.cartRecyclerView.adapter = adapter
-        binding.cartRecyclerView.addItemDecoration(CartItemDecorator())
-    }
-
-    override fun requireAuthorization() {
-        binding.authorizeWarning.root.visibility = View.VISIBLE
-        binding.authorizeWarning.authorizeButton.setOnClickListener {
-            findNavController().navigate(CartFragmentDirections.actionGlobalAuthorizationFragment())
+    private fun initRecyclerView() {
+        binding.cartRecyclerView.apply {
+            adapter = pagingAdapter
+            addItemDecoration(CartItemDecorator())
         }
     }
 
     override fun setAdapter(views: PagingData<ViewObject>) {
-        adapter.submitData(lifecycle, views)
+        pagingAdapter.submitData(lifecycle = lifecycle, pagingData = views)
         binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
     }
 
-    override fun openCard(id: Long) {
-        val args = CartFragmentDirections.actionCartFragmentToProductCardFragment(
-            productId = id
-        )
-
-        binding.root.findNavController().navigate(args)
+    override fun changeAddress() {
+        val direction = CartFragmentDirections.actionGlobalMapFragment()
+        findNavController().navigate(directions = direction)
     }
 
-    override fun displayPayButton(show: Boolean) {
-        with(binding.payButton) {
-            if (show) {
-                visibility = View.VISIBLE
-                setOnClickListener { presenter.makeOrder() }
-            } else {
-                visibility = View.GONE
+    override fun navigateToAuthorization() {
+        binding.authorizeWarning.apply {
+            root.visibility = View.VISIBLE
+            authorizeButton.setOnClickListener {
+                val direction = CartFragmentDirections.actionGlobalAuthorizationFragment()
+                findNavController().navigate(directions = direction)
             }
         }
     }
 
+    override fun navigateToProductCard(productId: Long) {
+        val direction = CartFragmentDirections.actionCartFragmentToProductCardFragment(
+            productId = productId
+        )
+        findNavController().navigate(directions = direction)
+    }
+
+    override fun navigateToThanksScreen() {
+        val direction = CartFragmentDirections.actionCartFragmentToThanksFragment()
+        findNavController().navigate(directions = direction)
+    }
+
+    override fun showPayButton() {
+        binding.payButton.apply {
+            visibility = View.VISIBLE
+            setOnClickListener { presenter.makeOrder() }
+        }
+    }
+
+    override fun hidePayButton() {
+        binding.payButton.visibility = View.GONE
+    }
+
     override fun showSomethingGoesWrongError() {
         Toast.makeText(
-            requireContext(),
+            context,
             getString(R.string.someting_goes_wrong_hint),
             Toast.LENGTH_SHORT
         ).show()
@@ -108,16 +120,6 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         binding.root.currentState = ConnectableLayout.ConnectionState.LOADING
     }
 
-    override fun changeAddress() {
-        val destination = CartFragmentDirections.actionGlobalMapFragment()
-        findNavController().navigate(destination)
-    }
-
-    override fun openThanksScreen() {
-        val destination = CartFragmentDirections.actionCartFragmentToThanksFragment()
-        findNavController().navigate(destination)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -125,6 +127,6 @@ class CartFragment : MvpAppCompatFragment(), CartView {
 
     override fun onDestroy() {
         super.onDestroy()
-        _adapter = null
+        _pagingAdapter = null
     }
 }
