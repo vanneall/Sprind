@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="ConnectableLayout">
+    <declare-styleable name="ConnectableLayout"></declare-styleable>
 
+    <declare-styleable name="SearchToolbar">
+        <attr name="isEditable" format="boolean" />
+        <attr name="android:hint" format="string" />
+        <attr name="backVisibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
+        </attr>
+        <attr name="backIcon" format="reference" />
+
+        <attr name="trailingVisibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
+        </attr>
+        <attr name="trailingIcon" format="reference" />
+
+        <attr name="showAddress" format="boolean"/>
+        <attr name="isAddressSelected" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="TitleToolbar">
+        <attr name="text" format="string"/>
     </declare-styleable>
 
 </resources>

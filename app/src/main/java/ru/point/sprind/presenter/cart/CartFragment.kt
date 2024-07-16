@@ -46,12 +46,7 @@ class CartFragment : MvpAppCompatFragment(), CartView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initToolbar()
         initRecyclerView()
-    }
-
-    private fun initToolbar() {
-        binding.cartToolbar.title.text = resources.getText(R.string.cart_screen_title)
     }
 
     private fun initRecyclerView() {

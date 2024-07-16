@@ -48,27 +48,22 @@ class MainProductFeedFragment : MvpAppCompatFragment(), MainProductFeedView {
         super.onViewCreated(view, savedInstanceState)
         initToolbar()
         initRecyclerView()
+
     }
 
     private fun initToolbar() {
-        binding.toolbar.search.apply {
-            isFocusable = false
-            isClickable = false
-            isCursorVisible = false
-
-            setOnClickListener {
-                val direction =
-                    MainProductFeedFragmentDirections.actionMordaFragmentToSearchFragment(request = null)
-                findNavController().navigate(directions = direction)
-            }
+        binding.toolbar.setOnSearchbarClickListener {
+            val direction = MainProductFeedFragmentDirections.actionMordaFragmentToSearchFragment(
+                request = null
+            )
+            findNavController().navigate(directions = direction)
         }
 
-        binding.toolbar.address.setOnClickListener {
+        binding.toolbar.setOnAddressClickListener {
             val direction = MainProductFeedFragmentDirections.actionGlobalMapFragment()
             findNavController().navigate(directions = direction)
         }
     }
-
 
     private fun initRecyclerView() {
         binding.recyclerView.apply {
@@ -81,7 +76,6 @@ class MainProductFeedFragment : MvpAppCompatFragment(), MainProductFeedView {
         val direction = MainProductFeedFragmentDirections.actionMordaFragmentToProductCardFragment(
             productId = productId
         )
-
         findNavController().navigate(directions = direction)
     }
 
@@ -99,12 +93,7 @@ class MainProductFeedFragment : MvpAppCompatFragment(), MainProductFeedView {
     }
 
     override fun setAddress(address: String?) {
-        if (address == null) return
-
-        binding.toolbar.address.apply {
-            text = address
-            setTextColor(resources.getColor(R.color.md_theme_tertiaryContainer, null))
-        }
+        binding.toolbar.address = address
     }
 
     override fun setAdapter(views: PagingData<ViewObject>) {

@@ -7,14 +7,14 @@
     android:background="@color/md_theme_surface"
     tools:context=".presenter.thanks.ThanksFragment">
 
-    <include
+    <ru.point.sprind.view.TitleToolbar
         android:id="@+id/toolbar"
-        layout="@layout/toolbar_title"
+        app:text="@string/thanks_screen_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_thanks"

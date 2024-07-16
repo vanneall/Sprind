@@ -7,9 +7,14 @@
     android:background="@color/md_theme_surface"
     tools:context=".presenter.search.SearchFragment">
 
-    <include
+    <ru.point.sprind.view.SearchToolbar
         android:id="@+id/toolbar"
-        layout="@layout/toolbar_search"
+        android:hint="@string/search"
+        app:isEditable="true"
+        app:showAddress="false"
+        app:backVisibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

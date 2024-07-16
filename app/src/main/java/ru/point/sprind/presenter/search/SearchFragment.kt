@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
@@ -49,52 +48,41 @@ class SearchFragment : MvpAppCompatFragment(), SearchRequestView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeToolbar()
-        initializeRecyclerView()
+        initRecyclerView()
         presenter.getRequests()
     }
 
     private fun initializeToolbar() {
-        with(binding.toolbar) {
-            back.visibility = View.VISIBLE
-            searchButton.visibility = View.GONE
+        binding.toolbar.apply {
+            setOnBackClickListener { findNavController().popBackStack() }
 
-            args.request?.let { request -> search.setText(request) }
-
-            back.setOnClickListener {
-                findNavController().popBackStack()
-            }
-
-            address.visibility = View.GONE
-
-            search.addTextChangedListener { text ->
+            args.request?.let { request -> searchText = request }
+            setOnSearchTextChangedListener { text ->
                 if (!text.isNullOrEmpty()) {
-                    clearButton.visibility = View.VISIBLE
-                    searchButton.visibility = View.VISIBLE
+                    clearButtonVisibility = View.VISIBLE
+                    trailingIconVisibility = View.VISIBLE
                 } else {
-                    clearButton.visibility = View.GONE
-                    searchButton.visibility = View.GONE
+                    clearButtonVisibility = View.GONE
+                    trailingIconVisibility = View.GONE
                 }
             }
 
-            clearButton.setOnClickListener {
-                search.setText("")
-            }
+            trailingIconVisibility = View.GONE
+            setOnTrailingIconClickListener { navigateToResult() }
 
-            searchButton.setOnClickListener {
-                navigateToResult()
-            }
+            setOnClearButtonClickListener { searchText = "" }
 
-            search.setOnEditorActionListener { _, actionId, _ ->
+            setOnEditorClickListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     navigateToResult()
-                    return@setOnEditorActionListener true
+                    return@setOnEditorClickListener true
                 }
-                return@setOnEditorActionListener false
+                return@setOnEditorClickListener false
             }
         }
     }
 
-    private fun initializeRecyclerView() {
+    private fun initRecyclerView() {
         _adapter = SprindDefaultAdapter(presenter.delegates)
         binding.recyclerView.adapter = adapter
 
@@ -116,7 +104,7 @@ class SearchFragment : MvpAppCompatFragment(), SearchRequestView {
     }
 
     private fun navigateToResult() {
-        val request = binding.toolbar.search.text.toString()
+        val request = binding.toolbar.searchText.toString()
         if (request.isEmpty()) return
 
         presenter.addRequestToHistory(request)

@@ -9,7 +9,6 @@ import androidx.navigation.fragment.navArgs
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
-import ru.point.sprind.R
 import ru.point.sprind.adapters.SprindDefaultAdapter
 import ru.point.sprind.adapters.decorators.ProductInfoDecorator
 import ru.point.sprind.components.SprindApplication
@@ -47,7 +46,6 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsViewDefault {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.toolbar.title.text = resources.getText(R.string.reviews)
         initializeRecyclerView()
 
         binding.addReview.setOnClickListener {

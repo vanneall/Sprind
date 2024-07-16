@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import ru.point.sprind.R
 import ru.point.sprind.databinding.FragmentAboutAppBinding
 
 class AboutAppFragment : Fragment() {
@@ -24,8 +23,6 @@ class AboutAppFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.toolbar.title.text = resources.getString(R.string.about_app)
-
         binding.yandexMapsTerms.setOnClickListener {
             val destination = AboutAppFragmentDirections.actionAboutAppFragmentToWebViewFragment(
                 url = "https://yandex.ru/legal/maps_termsofuse/"

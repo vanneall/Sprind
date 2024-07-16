@@ -8,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
-import ru.point.sprind.R
 import ru.point.sprind.adapters.SprindDefaultAdapter
 import ru.point.sprind.adapters.decorators.ProductInfoDecorator
 import ru.point.sprind.components.SprindApplication
@@ -43,13 +42,7 @@ class OrdersFragment : MvpAppCompatFragment(), OrdersViewDefault {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initializeToolbar()
         initializeRecyclerView()
-    }
-
-    private fun initializeToolbar() {
-        binding.toolbar.title.text = resources.getString(R.string.orders)
     }
 
     private fun initializeRecyclerView() {

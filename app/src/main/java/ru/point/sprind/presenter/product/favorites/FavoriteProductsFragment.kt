@@ -49,14 +49,7 @@ class FavoriteProductsFragment : MvpAppCompatFragment(), FavoriteView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initToolbar()
         initRecyclerView()
-    }
-
-    private fun initToolbar() {
-        binding.favoritesToolbar.apply {
-            title.text = resources.getString(R.string.favorites_screen_title)
-        }
     }
 
     private fun initRecyclerView() {
@@ -80,7 +73,6 @@ class FavoriteProductsFragment : MvpAppCompatFragment(), FavoriteView {
             FavoriteProductsFragmentDirections.actionFavoritesFragmentToProductCardFragment(
                 productId = productId
             )
-
         findNavController().navigate(directions = direction)
     }
 

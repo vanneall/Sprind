@@ -35,9 +35,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.toolbar.title.text = resources.getString(R.string.profile)
-
         binding.logout.setOnClickListener {
             presenter.logout()
             activity?.finish()

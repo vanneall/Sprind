@@ -7,14 +7,14 @@
     android:background="@color/md_theme_surface"
     tools:context=".presenter.cart.CartFragment">
 
-    <include
+    <ru.point.sprind.view.TitleToolbar
         android:id="@+id/cart_toolbar"
-        layout="@layout/toolbar_title"
+        app:text="@string/cart_screen_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cart_recycler_view"

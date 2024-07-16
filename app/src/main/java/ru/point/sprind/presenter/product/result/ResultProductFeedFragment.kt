@@ -57,21 +57,15 @@ class ResultProductFeedFragment : MvpAppCompatFragment(), ResultProductFeedView 
     }
 
     private fun initToolbar() {
-        binding.toolbar.search.apply {
-            isFocusable = false
-            isClickable = false
-            isCursorVisible = false
-
-            setText(args.request)
-            setOnClickListener {
+        binding.toolbar.apply {
+            searchText = args.request
+            setOnSearchbarClickListener {
                 val direction =
                     ResultProductFeedFragmentDirections.actionResultFragmentToSearchFragment(request = args.request)
                 findNavController().navigate(directions = direction)
             }
-        }
 
-        binding.toolbar.address.apply {
-            setOnClickListener {
+            setOnAddressClickListener {
                 val direction = ResultProductFeedFragmentDirections.actionGlobalMapFragment()
                 findNavController().navigate(directions = direction)
             }
@@ -94,9 +88,10 @@ class ResultProductFeedFragment : MvpAppCompatFragment(), ResultProductFeedView 
     }
 
     override fun navigateToProductCard(productId: Long) {
-        val direction = ResultProductFeedFragmentDirections.actionResultFragmentToProductCardFragment(
-            productId = productId
-        )
+        val direction =
+            ResultProductFeedFragmentDirections.actionResultFragmentToProductCardFragment(
+                productId = productId
+            )
 
         findNavController().navigate(directions = direction)
     }
@@ -107,8 +102,7 @@ class ResultProductFeedFragment : MvpAppCompatFragment(), ResultProductFeedView 
     }
 
     override fun showSomethingGoesWrongError() {
-        Toast
-            .makeText(context, getString(R.string.someting_goes_wrong_hint), Toast.LENGTH_SHORT)
+        Toast.makeText(context, getString(R.string.someting_goes_wrong_hint), Toast.LENGTH_SHORT)
             .show()
     }
 
@@ -118,12 +112,7 @@ class ResultProductFeedFragment : MvpAppCompatFragment(), ResultProductFeedView 
     }
 
     override fun setAddress(address: String?) {
-        if (address == null) return
-
-        binding.toolbar.address.apply {
-            text = address
-            setTextColor(resources.getColor(R.color.md_theme_tertiaryContainer, null))
-        }
+        binding.toolbar.address = address
     }
 
     override fun onDestroyView() {

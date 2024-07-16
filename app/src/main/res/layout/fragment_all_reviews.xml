@@ -7,14 +7,14 @@
     android:background="@color/md_theme_surface"
     tools:context=".presenter.review.all.AllReviewsFragment">
 
-    <include
+    <ru.point.sprind.view.TitleToolbar
         android:id="@+id/toolbar"
-        layout="@layout/toolbar_title"
+        app:text="@string/all_reviews"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/add_review"
