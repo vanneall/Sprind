@@ -34,7 +34,7 @@
     <color name="md_theme_onErrorContainer">#410002</color>
     <color name="md_theme_background">#FCFAEC</color>
     <color name="md_theme_onBackground">#1C1C14</color>
-    <color name="md_theme_surface">#F8F8F8</color>
+    <color name="md_theme_surface">#F2F2F2</color>
     <color name="md_theme_onSurface">#1C1C14</color>
     <color name="md_theme_surfaceVariant">#FFFFFF</color>
     <color name="md_theme_onSurfaceVariant">#474740</color>

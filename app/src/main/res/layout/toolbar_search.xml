@@ -2,14 +2,14 @@
 <com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="com.google.android.material.appbar.MaterialToolbar"
+    android:id="@id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@id/toolbar"
     android:background="@color/md_theme_surfaceVariant"
     android:paddingBottom="8dp"
     app:contentInsetEnd="20dp"
-    app:contentInsetStart="20dp">
+    app:contentInsetStart="20dp"
+    tools:parentTag="com.google.android.material.appbar.MaterialToolbar">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,15 +28,25 @@
             app:layout_constraintRight_toLeftOf="@id/search"
             app:layout_constraintTop_toTopOf="@id/search" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/edit_address_icon"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:src="@drawable/edit_address_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/address"
+            app:layout_constraintBottom_toBottomOf="@id/address"/>
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/address"
             style="@style/regular_14"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:layout_marginStart="4dp"
             android:text="@string/select_address"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/edit_address_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
@@ -53,6 +63,8 @@
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:lines="1"
+            android:textSize="14sp"
+            android:textColor="@color/gray"
             android:paddingHorizontal="10dp"
             android:paddingStart="12dp"
             app:layout_constraintEnd_toEndOf="parent"

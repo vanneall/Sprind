@@ -27,13 +27,15 @@ class SearchToolbar(
 
     var address: String? = null
         set(value) {
-            binding.address.apply {
+            binding.apply {
                 if (value == null) {
-                    text = resources.getText(R.string.address_selection)
-                    setTextColor(resources.getColor(R.color.gray, null))
+                    address.text = resources.getText(R.string.select_address)
+                    address.setTextColor(resources.getColor(R.color.gray, null))
+                    editAddressIcon.setColorFilter(resources.getColor(R.color.gray, null))
                 } else {
-                    text = value
-                    setTextColor(resources.getColor(R.color.md_theme_primary, null))
+                    address.text = value
+                    address.setTextColor(resources.getColor(R.color.md_theme_primary, null))
+                    editAddressIcon.setColorFilter(resources.getColor(R.color.md_theme_primary, null))
                 }
             }
             field = value
@@ -125,11 +127,14 @@ class SearchToolbar(
         val isAddressShowed = typedArray.getBoolean(R.styleable.SearchToolbar_showAddress, true)
         val isAddressSelected =
             typedArray.getBoolean(R.styleable.SearchToolbar_isAddressSelected, false)
-        binding.address.apply {
-            visibility = if (isAddressShowed) View.VISIBLE else View.GONE
+        binding.apply {
+            val isVisible = if (isAddressShowed) View.VISIBLE else View.GONE
+            address.visibility = isVisible
+            editAddressIcon.visibility = isVisible
 
             val color = if (isAddressSelected) R.color.md_theme_primary else R.color.gray
-            setTextColor(resources.getColor(color, null))
+            address.setTextColor(resources.getColor(color))
+            editAddressIcon.setColorFilter(resources.getColor(color, null))
         }
     }
 
