@@ -1,6 +1,7 @@
 package ru.point.sprind.components
 
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -53,6 +54,14 @@ class MainActivity : AppCompatActivity() {
             navigationBarView = binding.bottomNavigation,
             navController = Navigation.findNavController(this, binding.frame.id)
         )
+    }
+
+    fun hideBottomNavigation() {
+        binding.bottomNavigation.visibility = View.GONE
+    }
+
+    fun showBottomNavigation() {
+        binding.bottomNavigation.visibility = View.VISIBLE
     }
 
     override fun onDestroy() {

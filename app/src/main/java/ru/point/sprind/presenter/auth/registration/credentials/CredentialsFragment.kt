@@ -35,6 +35,7 @@ class CredentialsFragment : MvpAppCompatFragment(), CredentialsView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initToolbar()
 
         binding.buttonStartRegistration.setOnClickListener {
             val name: String
@@ -66,6 +67,12 @@ class CredentialsFragment : MvpAppCompatFragment(), CredentialsView {
                 )
 
             findNavController().navigate(destination)
+        }
+    }
+
+    private fun initToolbar() {
+        binding.registrationTitle.setOnBackClickListener {
+            findNavController().popBackStack()
         }
     }
 

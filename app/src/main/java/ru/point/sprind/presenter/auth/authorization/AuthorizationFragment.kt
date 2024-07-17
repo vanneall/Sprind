@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.sprind.R
+import ru.point.sprind.components.MainActivity
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentAuthorizationBinding
 import javax.inject.Inject
@@ -36,8 +37,28 @@ class AuthorizationFragment : MvpAppCompatFragment(), AuthView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        prepareScreen()
+        initToolbar()
         initializeLogInButton()
         initializeRegInButton()
+    }
+
+    private fun initToolbar() {
+        binding.authorizationTitle.setOnBackClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun prepareScreen() {
+        (activity as? MainActivity)?.let { activity ->
+            activity.hideBottomNavigation()
+        }
+    }
+
+    private fun finalizeScreen() {
+        (activity as? MainActivity)?.let { activity ->
+            activity.showBottomNavigation()
+        }
     }
 
     private fun initializeLogInButton() {
@@ -82,5 +103,10 @@ class AuthorizationFragment : MvpAppCompatFragment(), AuthView {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        finalizeScreen()
     }
 }

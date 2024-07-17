@@ -4,20 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_surface"
-    android:paddingHorizontal="44dp"
+    android:background="@color/md_theme_surfaceVariant"
     tools:context=".presenter.auth.registration.password.RegistrationFragment">
 
-    <com.google.android.material.textview.MaterialTextView
+    <ru.point.sprind.view.TitleToolbar
         android:id="@+id/registration_title"
-        style="@style/medium_20"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:text="@string/registration_screen_title"
+        app:backButtonVisibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:text="@string/registration_screen_title" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_login_layout"
@@ -25,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
+        android:layout_marginHorizontal="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/registration_title">
@@ -47,9 +46,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_marginHorizontal="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_login_layout">
+        app:layout_constraintTop_toBottomOf="@id/input_password_layout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_secret"
@@ -69,9 +69,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_marginHorizontal="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_secret_layout">
+        app:layout_constraintTop_toBottomOf="@id/input_login_layout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_password"
@@ -93,21 +94,22 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/authorization_input_background"
         android:paddingVertical="12dp"
+        android:layout_marginHorizontal="32dp"
         android:text="@string/start_registration"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_password_layout" />
+        app:layout_constraintTop_toBottomOf="@id/input_secret_layout" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_reset_password"
         style="@style/regular_14"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/registration_term_warning"
         android:textAlignment="center"
-        android:textColor="@color/brown_orange"
+        android:textColor="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button_start_registration" />

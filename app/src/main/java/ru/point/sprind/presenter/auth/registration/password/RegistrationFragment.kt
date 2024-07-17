@@ -47,9 +47,9 @@ class RegistrationFragment : MvpAppCompatFragment(), RegistrationView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initToolbar()
 
         binding.buttonStartRegistration.setOnClickListener {
-
             val username: String
             val secret: String
             val password: String
@@ -66,7 +66,12 @@ class RegistrationFragment : MvpAppCompatFragment(), RegistrationView {
                 password = password
             )
         }
+    }
 
+    private fun initToolbar() {
+        binding.registrationTitle.setOnBackClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     override fun showError() {
