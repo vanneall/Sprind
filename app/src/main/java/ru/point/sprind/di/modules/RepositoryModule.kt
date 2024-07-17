@@ -17,6 +17,7 @@ import ru.point.repository.remote.RemoteProductRepository
 import ru.point.repository.remote.RemoteReviewRepository
 import ru.point.repository.remote.RemoteUserRepository
 import ru.point.retrofit.api.CartApi
+import ru.point.retrofit.api.CategoryApi
 import ru.point.retrofit.api.FavoriteApi
 import ru.point.retrofit.api.ProductApi
 import ru.point.retrofit.api.ReviewApi
@@ -26,8 +27,11 @@ import ru.point.room.RequestDao
 @Module(includes = [ApiModule::class, PagingSourceModule::class])
 class RepositoryModule {
     @Provides
-    fun provideRemoteProductRepository(api: ProductApi): ProductRepository {
-        return RemoteProductRepository(api = api)
+    fun provideRemoteProductRepository(
+        productApi: ProductApi,
+        categoryApi: CategoryApi
+    ): ProductRepository {
+        return RemoteProductRepository(productApi = productApi, categoriesApi = categoryApi)
     }
 
     @Provides

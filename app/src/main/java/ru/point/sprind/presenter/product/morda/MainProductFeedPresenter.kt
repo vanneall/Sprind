@@ -15,6 +15,9 @@ import retrofit2.HttpException
 import ru.point.domain.manager.ProductManager
 import ru.point.domain.usecase.interfaces.product.GetMainProductsPageInfoUseCase
 import ru.point.domain.usecase.interfaces.product.GetProductsUseCase
+import ru.point.sprind.adapters.decorators.AvailableCategoriesItemDecorator
+import ru.point.sprind.entity.deletage.category.CategoryDelegate
+import ru.point.sprind.entity.deletage.product.card.NestedRecyclerViewDelegate
 import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import ru.point.sprind.utils.pagerConfig
@@ -39,6 +42,10 @@ class MainProductFeedPresenter @Inject constructor(
             onClickCard = viewState::navigateToProductCard,
             onBuyClick = ::addProductToCart,
             onFavoriteCheckedChange = ::changeProductInFavoriteState
+        ),
+        NestedRecyclerViewDelegate(
+            delegates = listOf(CategoryDelegate()),
+            itemDecoration = AvailableCategoriesItemDecorator()
         )
     )
 

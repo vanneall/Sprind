@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import ru.point.retrofit.api.CartApi
+import ru.point.retrofit.api.CategoryApi
 import ru.point.retrofit.api.FavoriteApi
 import ru.point.retrofit.api.ProductApi
 import ru.point.retrofit.api.ReviewApi
@@ -35,5 +36,10 @@ class ApiModule {
     @Provides
     fun provideReviewApi(retrofit: Retrofit): ReviewApi {
         return retrofit.create(ReviewApi::class.java)
+    }
+
+    @Provides
+    fun provideCategoryApi(retrofit: Retrofit): CategoryApi {
+        return retrofit.create(CategoryApi::class.java)
     }
 }

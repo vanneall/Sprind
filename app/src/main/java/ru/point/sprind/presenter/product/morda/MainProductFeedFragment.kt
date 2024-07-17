@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
+import androidx.recyclerview.widget.GridLayoutManager
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
 import ru.point.sprind.adapters.SprindPagingAdapter
 import ru.point.sprind.adapters.decorators.FeedProductDecorator
+import ru.point.sprind.adapters.decorators.spans.MordaSpanSizeLookup
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentMordaBinding
 import ru.point.sprind.view.ConnectableLayout
@@ -69,6 +71,12 @@ class MainProductFeedFragment : MvpAppCompatFragment(), MainProductFeedView {
         binding.recyclerView.apply {
             adapter = pagingAdapter
             addItemDecoration(FeedProductDecorator())
+
+            val layoutManager = layoutManager as GridLayoutManager
+            layoutManager.spanSizeLookup = MordaSpanSizeLookup(
+                delegates = presenter.viewDelegates,
+                adapter = pagingAdapter
+            )
         }
     }
 
