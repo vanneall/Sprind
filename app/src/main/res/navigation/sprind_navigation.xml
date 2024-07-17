@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_mordaFragment_to_productCardFragment"
             app:destination="@id/product_card_fragment" />
+        <action
+            android:id="@+id/action_morda_fragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/search_fragment"
@@ -229,4 +232,19 @@
         android:name="ru.point.sprind.presenter.profile.orders.OrdersFragment"
         android:label="fragment_orders"
         tools:layout="@layout/fragment_orders" />
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="ru.point.sprind.presenter.category.CategoryFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" >
+        <argument
+            android:name="categoryId"
+            app:argType="long" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_categoryFragment_to_product_card_fragment"
+            app:destination="@id/product_card_fragment" />
+    </fragment>
 </navigation>

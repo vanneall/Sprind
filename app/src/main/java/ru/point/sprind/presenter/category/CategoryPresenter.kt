@@ -1,10 +1,13 @@
-package ru.point.sprind.presenter.product.morda
+package ru.point.sprind.presenter.category
 
 import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.rxjava3.cachedIn
 import androidx.paging.rxjava3.observable
 import dagger.Lazy
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,23 +16,22 @@ import moxy.MvpPresenter
 import moxy.presenterScope
 import retrofit2.HttpException
 import ru.point.domain.manager.ProductManager
-import ru.point.domain.usecase.interfaces.product.GetMainProductsPageInfoUseCase
-import ru.point.domain.usecase.interfaces.product.GetProductsUseCase
+import ru.point.domain.usecase.interfaces.category.GetCategoryProductsPageUseCase
 import ru.point.sprind.adapters.decorators.AvailableCategoriesItemDecorator
-import ru.point.sprind.entity.deletage.category.CategoryDelegate
 import ru.point.sprind.entity.deletage.product.card.NestedRecyclerViewDelegate
 import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
+import ru.point.sprind.entity.deletage.shop.ShopDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
+import ru.point.sprind.presenter.category.CategoryPresenter.Factory.Companion.ID
 import ru.point.sprind.utils.pagerConfig
-import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @InjectViewState
-class MainProductFeedPresenter @Inject constructor(
-    getProductsUseCase: GetProductsUseCase,
-    getMainProductsPageInfoUseCase: GetMainProductsPageInfoUseCase,
+class CategoryPresenter @AssistedInject constructor(
+    @Assisted(ID) categoryId: Long,
+    getCategoryProductsPageUseCase: GetCategoryProductsPageUseCase,
     private val productManager: Lazy<ProductManager>
-) : MvpPresenter<MainProductFeedView>() {
+) : MvpPresenter<CategoryView>() {
 
     private val httpExceptionManager = HttpExceptionStatusManager
         .Builder()
@@ -44,7 +46,7 @@ class MainProductFeedPresenter @Inject constructor(
             onFavoriteCheckedChange = ::changeProductInFavoriteState
         ),
         NestedRecyclerViewDelegate(
-            delegates = listOf(CategoryDelegate(viewState::navigateToCategoryScreen)),
+            delegates = listOf(ShopDelegate()),
             itemDecoration = AvailableCategoriesItemDecorator()
         )
     )
@@ -52,17 +54,9 @@ class MainProductFeedPresenter @Inject constructor(
     private val mainCompositeDisposable = CompositeDisposable()
 
     init {
-        viewState.showLoading(show = true)
-        val pageInfoDisposable = getMainProductsPageInfoUseCase.handle()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { info -> viewState.setAddress(info.addressVo.address) },
-                { ex -> handleException(exception = ex) }
-            )
-
-        val pagingDisposable = Pager(
+        val mainDisposable = Pager(
             config = pagerConfig,
-            pagingSourceFactory = getProductsUseCase::handle
+            pagingSourceFactory = { getCategoryProductsPageUseCase.handle(categoryId = categoryId) }
         ).observable
             .cachedIn(presenterScope)
             .observeOn(AndroidSchedulers.mainThread())
@@ -71,8 +65,7 @@ class MainProductFeedPresenter @Inject constructor(
                 { ex -> handleException(exception = ex) }
             )
 
-        mainCompositeDisposable.add(pagingDisposable)
-        mainCompositeDisposable.add(pageInfoDisposable)
+        mainCompositeDisposable.add(mainDisposable)
     }
 
     private fun handleException(exception: Throwable) {
@@ -105,6 +98,15 @@ class MainProductFeedPresenter @Inject constructor(
                 handleException(exception = ex)
             }
         )
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(@Assisted(ID) categoryId: Long): CategoryPresenter
+
+        companion object {
+            const val ID = "ru.point.sprind.presenter.category.ID"
+        }
     }
 
     override fun onDestroy() {

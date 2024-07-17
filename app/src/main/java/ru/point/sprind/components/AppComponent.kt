@@ -3,22 +3,23 @@ package ru.point.sprind.components
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
+import ru.point.room.di.RoomModule
+import ru.point.sprind.di.MapUtilsModule
+import ru.point.sprind.di.factories.FactoryModule
 import ru.point.sprind.di.modules.InterceptorModule
 import ru.point.sprind.di.modules.ManagerModule
 import ru.point.sprind.di.modules.RepositoryModule
 import ru.point.sprind.di.modules.RetrofitModule
-import ru.point.room.di.RoomModule
-import ru.point.sprind.di.factories.FactoryModule
 import ru.point.sprind.di.usecases.UseCaseModule
-import ru.point.sprind.di.MapUtilsModule
 import ru.point.sprind.presenter.auth.authorization.AuthorizationFragment
 import ru.point.sprind.presenter.auth.registration.credentials.CredentialsFragment
 import ru.point.sprind.presenter.auth.registration.password.RegistrationFragment
 import ru.point.sprind.presenter.cart.CartFragment
-import ru.point.sprind.presenter.product.favorites.FavoriteProductsFragment
+import ru.point.sprind.presenter.category.CategoryFragment
 import ru.point.sprind.presenter.maps.map.MapFragment
 import ru.point.sprind.presenter.maps.popup.select.AddressSelectionDialogFragment
 import ru.point.sprind.presenter.product.card.ProductCardFragment
+import ru.point.sprind.presenter.product.favorites.FavoriteProductsFragment
 import ru.point.sprind.presenter.product.morda.MainProductFeedFragment
 import ru.point.sprind.presenter.product.result.ResultProductFeedFragment
 import ru.point.sprind.presenter.profile.main.ProfileFragment
@@ -72,6 +73,8 @@ interface AppComponent {
     fun inject(fragment: SearchFragment)
 
     fun inject(fragment: OrdersFragment)
+
+    fun inject(fragment: CategoryFragment)
 
     @Component.Factory
     interface AppComponentFactory {

@@ -3,7 +3,7 @@ package ru.point.repository.remote
 
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
-import ru.point.domain.entity.dto.category.CategoryResponse
+import ru.point.domain.entity.dto.category.CategoryItemResponse
 import ru.point.domain.entity.dto.complex.ComplexProductDto
 import ru.point.domain.entity.dto.product.FeedProductResponse
 import ru.point.domain.entity.dto.product.ProductInfoDto
@@ -39,7 +39,7 @@ class RemoteProductRepository(
             .subscribeOn(Schedulers.io())
     }
 
-    override fun getAvailableCategories(): Single<List<CategoryResponse>> {
+    override fun getAvailableCategories(): Single<List<CategoryItemResponse>> {
         return categoriesApi.getAvailableCategories()
     }
 }

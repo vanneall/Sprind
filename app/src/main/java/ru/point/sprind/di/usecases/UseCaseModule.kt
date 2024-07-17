@@ -6,6 +6,8 @@ import dagger.Module
     includes = [
         ProfileUseCaseModule::class, CartUseCaseModule::class,
         FavoriteUseCaseModule::class, ProductUseCaseModule::class,
-        ReviewUseCaseModule::class, MapUseCaseModule::class]
+        ReviewUseCaseModule::class, MapUseCaseModule::class,
+        CategoryUseCaseModule::class
+    ]
 )
 class UseCaseModule

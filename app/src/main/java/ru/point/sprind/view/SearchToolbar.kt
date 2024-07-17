@@ -3,6 +3,7 @@ package ru.point.sprind.view
 import android.content.Context
 import android.content.res.TypedArray
 import android.text.Editable
+import android.text.InputType
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -99,10 +100,11 @@ class SearchToolbar(
 
             this@SearchToolbar.isSearchbarClickable = isFieldClickable
             setHint(hint)
+            inputType = InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
         }
 
         val backButton = typedArray.getDrawable(R.styleable.SearchToolbar_backIcon)
-            ?: ResourcesCompat.getDrawable(resources, R.drawable.back_arrow_icon, null)
+            ?: ResourcesCompat.getDrawable(resources, R.drawable.arrow_back , null)
         val backButtonVisibility = typedArray
             .getInt(R.styleable.SearchToolbar_backVisibility, View.GONE)
         binding.back.apply {

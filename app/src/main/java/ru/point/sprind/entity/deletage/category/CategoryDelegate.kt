@@ -9,7 +9,9 @@ import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 import ru.point.sprind.entity.viewholder.category.CategoryViewHolder
 
-class CategoryDelegate : Delegate<CategoryVo> {
+class CategoryDelegate(
+    private val onClick: (Long, String) -> Unit
+) : Delegate<CategoryVo> {
     override fun isSupported(view: ViewObject) = view is CategoryVo
 
     override fun createViewHolder(parent: ViewGroup): ViewHolderV2<CategoryVo> {
@@ -19,6 +21,9 @@ class CategoryDelegate : Delegate<CategoryVo> {
             false
         )
 
-        return CategoryViewHolder(binding = binding)
+        return CategoryViewHolder(
+            binding = binding,
+            onClick = onClick
+        )
     }
 }

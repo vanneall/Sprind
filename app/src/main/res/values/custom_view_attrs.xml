@@ -26,6 +26,11 @@
 
     <declare-styleable name="TitleToolbar">
         <attr name="text" format="string"/>
+        <attr name="backButtonVisibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
+        </attr>
     </declare-styleable>
 
 </resources>

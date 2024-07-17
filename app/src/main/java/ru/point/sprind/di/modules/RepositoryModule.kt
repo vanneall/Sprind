@@ -5,12 +5,14 @@ import dagger.Provides
 import ru.point.domain.paging.CartPagingSource
 import ru.point.domain.paging.FavoritePagingSource
 import ru.point.domain.repository.CartRepository
+import ru.point.domain.repository.CategoryRepository
 import ru.point.domain.repository.FavoriteRepository
 import ru.point.domain.repository.ProductRepository
 import ru.point.domain.repository.RequestRepository
 import ru.point.domain.repository.ReviewRepository
 import ru.point.domain.repository.UserRepository
 import ru.point.repository.local.RequestRepositoryImpl
+import ru.point.repository.remote.CategoryRepositoryImpl
 import ru.point.repository.remote.RemoteCartRepository
 import ru.point.repository.remote.RemoteFavoriteRepository
 import ru.point.repository.remote.RemoteProductRepository
@@ -58,6 +60,11 @@ class RepositoryModule {
     fun provideRequestRepository(dao: RequestDao): RequestRepository {
         return RequestRepositoryImpl(dao = dao)
     }
+
+    @Provides
+    fun provideCategoryRepository(api: CategoryApi): CategoryRepository {
+        return CategoryRepositoryImpl(api = api)
+    }
 }
 
 @Module
@@ -71,4 +78,6 @@ class PagingSourceModule {
     fun provideCartPagingSource(repository: CartRepository): CartPagingSource {
         return CartPagingSource(repository = repository)
     }
+
+
 }

@@ -31,11 +31,16 @@ interface UsingPagingAdapter: MvpView {
 interface NavigableView: MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun navigateToProductCard(productId: Long) {}
+
     @StateStrategyType(SkipStrategy::class)
     fun navigateToAuthorization() {}
+
     @StateStrategyType(SkipStrategy::class)
     fun navigateToReviews() {}
+
     @StateStrategyType(SkipStrategy::class)
     fun navigateToThanksScreen() {}
 
+    @StateStrategyType(SkipStrategy::class)
+    fun navigateToCategoryScreen(categoryId: Long, title: String) {}
 }
