@@ -3,7 +3,7 @@ package ru.point.repository.remote
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
-import ru.point.domain.entity.dto.product.FeedProductResponse
+import ru.point.domain.entity.response.product.FeedProductResponse
 import ru.point.domain.repository.FavoriteRepository
 import ru.point.retrofit.api.FavoriteApi
 

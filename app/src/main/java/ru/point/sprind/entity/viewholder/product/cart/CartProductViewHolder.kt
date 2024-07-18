@@ -16,7 +16,7 @@ class CartProductViewHolder(
 
     override fun bind(view: CartProductVo) {
         with(binding) {
-            image.load(view.url) {
+            image.load(view.imageUrl) {
                 scale(Scale.FIT)
                 transformations(RoundedCornersTransformation(30f))
             }

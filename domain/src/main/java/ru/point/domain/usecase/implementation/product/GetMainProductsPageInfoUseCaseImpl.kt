@@ -3,7 +3,7 @@ package ru.point.domain.usecase.implementation.product
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.point.domain.entity.complex.ComplexProductFeedVo
-import ru.point.domain.entity.dto.complex.toComplexProductFeedVo
+import ru.point.domain.entity.response.mappers.toComplexProductFeedVo
 import ru.point.domain.repository.ProductRepository
 import ru.point.domain.usecase.interfaces.product.GetMainProductsPageInfoUseCase
 

@@ -18,9 +18,9 @@ class OrderViewHolder(
 
         with(binding.root.resources) {
             orderId = getString(R.string.order_id, view.id.toString())
-            deliveryPrice = getString(R.string.orders_delivery_price, view.deliveryCost)
-            productsCost = getString(R.string.order_products_price, view.productsCost)
-            summaryCost = getString(R.string.order_summary_price, view.summaryCost)
+            deliveryPrice = getString(R.string.orders_delivery_price, view.deliveryPrice)
+            productsCost = getString(R.string.order_products_price, view.productsPrice)
+            summaryCost = getString(R.string.order_summary_price, view.summaryPrice)
         }
 
         with(binding) {

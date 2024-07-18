@@ -4,9 +4,9 @@ import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.point.domain.entity.dto.category.CategoryItemResponse
-import ru.point.domain.entity.dto.category.CategoryResponse
-import ru.point.domain.entity.dto.product.FeedProductResponse
+import ru.point.domain.entity.response.category.CategoryItemResponse
+import ru.point.domain.entity.response.category.CategoryResponse
+import ru.point.domain.entity.response.product.FeedProductResponse
 
 interface CategoryApi {
     @GET("categories/available")

@@ -1,8 +1,8 @@
 package ru.point.domain.utils
 
-import ru.point.domain.entity.utils.AddressInfoResponse
+import ru.point.domain.entity.response.address.AddressInfoResponse
 import ru.point.domain.entity.utils.Currency
-import ru.point.domain.entity.utils.Price
+import ru.point.domain.entity.utils.price.Price
 
 object StringFormatter {
 

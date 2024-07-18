@@ -1,8 +1,8 @@
 package ru.point.domain.repository
 
 import io.reactivex.rxjava3.core.Single
-import ru.point.domain.entity.dto.category.CategoryResponse
-import ru.point.domain.entity.dto.product.FeedProductResponse
+import ru.point.domain.entity.response.category.CategoryResponse
+import ru.point.domain.entity.response.product.FeedProductResponse
 
 interface CategoryRepository {
     fun getProductsByCategoryId(

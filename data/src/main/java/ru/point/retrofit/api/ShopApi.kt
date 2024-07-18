@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.point.domain.entity.dto.product.FeedProductResponse
+import ru.point.domain.entity.response.product.FeedProductResponse
 
 interface ShopApi {
     @GET("shops/{id}")

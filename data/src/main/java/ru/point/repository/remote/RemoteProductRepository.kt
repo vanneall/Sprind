@@ -3,10 +3,10 @@ package ru.point.repository.remote
 
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
-import ru.point.domain.entity.dto.category.CategoryItemResponse
-import ru.point.domain.entity.dto.complex.ComplexProductDto
-import ru.point.domain.entity.dto.product.FeedProductResponse
-import ru.point.domain.entity.dto.product.ProductInfoDto
+import ru.point.domain.entity.response.category.CategoryItemResponse
+import ru.point.domain.entity.response.complex.ComplexProductResponse
+import ru.point.domain.entity.response.product.FeedProductResponse
+import ru.point.domain.entity.response.product.ProductInfoResponse
 import ru.point.domain.repository.ProductRepository
 import ru.point.retrofit.api.CategoryApi
 import ru.point.retrofit.api.ProductApi
@@ -16,7 +16,7 @@ class RemoteProductRepository(
     private val categoriesApi: CategoryApi
 ) : ProductRepository {
 
-    override fun getMainPageInfo(): Single<ComplexProductDto> {
+    override fun getMainPageInfo(): Single<ComplexProductResponse> {
         return productApi.getPageInfo().subscribeOn(Schedulers.io())
     }
 
@@ -34,7 +34,7 @@ class RemoteProductRepository(
             .subscribeOn(Schedulers.io())
     }
 
-    override fun getProductById(id: Long): Single<ProductInfoDto> {
+    override fun getProductById(id: Long): Single<ProductInfoResponse> {
         return productApi.getProductDtoById(id = id)
             .subscribeOn(Schedulers.io())
     }

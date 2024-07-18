@@ -6,7 +6,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import io.reactivex.rxjava3.core.Single
-import ru.point.domain.entity.dto.product.FeedProductResponse
+import ru.point.domain.entity.response.product.FeedProductResponse
 import ru.point.domain.paging.FeedPagingSource.Factory.Companion.REQUEST
 import ru.point.domain.repository.ProductRepository
 

@@ -3,7 +3,7 @@ package ru.point.domain.paging
 import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxPagingSource
 import io.reactivex.rxjava3.core.Single
-import ru.point.domain.entity.dto.product.FeedProductResponse
+import ru.point.domain.entity.response.product.FeedProductResponse
 import ru.point.domain.repository.FavoriteRepository
 
 class FavoritePagingSource(

@@ -11,7 +11,7 @@ import moxy.InjectViewState
 import moxy.MvpPresenter
 import retrofit2.HttpException
 import ru.point.domain.entity.view.ViewObject
-import ru.point.domain.entity.view.product.info.AllCharacteristicsVo
+import ru.point.domain.entity.view.product.info.ProductCharacteristicsVo
 import ru.point.domain.entity.view.product.info.CharacteristicDescriptionVo
 import ru.point.domain.entity.view.product.info.CharacteristicTitleVo
 import ru.point.domain.entity.view.product.info.ProductTitleVo
@@ -122,13 +122,13 @@ class ProductCardPresenter @AssistedInject constructor(
 
     private fun expandCharacteristics() {
         val charactersSectionStart = productsVo
-            .indexOfFirst { vo -> vo is AllCharacteristicsVo }
+            .indexOfFirst { vo -> vo is ProductCharacteristicsVo }
             .takeIf { index -> index != -1 }
             ?: return
 
-        val allCharacteristicsVo = productsVo[charactersSectionStart] as AllCharacteristicsVo
+        val productCharacteristicsVo = productsVo[charactersSectionStart] as ProductCharacteristicsVo
 
-        val characteristics = allCharacteristicsVo.productCharacteristicDtos.map { section ->
+        val characteristics = productCharacteristicsVo.characteristicsResponse.map { section ->
             val sectionTitle = CharacteristicTitleVo(section.sectionTitle)
 
             val sectionDescriptions = section.descriptions.map { description ->
@@ -165,7 +165,7 @@ class ProductCardPresenter @AssistedInject constructor(
 
     private fun collapseCharacteristics() {
         val charactersSectionStart = productsVo
-            .indexOfFirst { vo -> vo is AllCharacteristicsVo }
+            .indexOfFirst { vo -> vo is ProductCharacteristicsVo }
             .takeIf { index -> index != -1 }
             ?: return
 

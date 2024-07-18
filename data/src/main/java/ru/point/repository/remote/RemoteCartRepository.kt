@@ -3,13 +3,13 @@ package ru.point.repository.remote
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
-import ru.point.domain.entity.dto.complex.CartPageInfoDto
-import ru.point.domain.entity.dto.product.FeedProductResponse
+import ru.point.domain.entity.response.cart.CartPageInfoResponse
+import ru.point.domain.entity.response.product.FeedProductResponse
 import ru.point.domain.repository.CartRepository
 import ru.point.retrofit.api.CartApi
 
 class RemoteCartRepository(private val api: CartApi) : CartRepository {
-    override fun getPageInfo(): Single<CartPageInfoDto> {
+    override fun getPageInfo(): Single<CartPageInfoResponse> {
         return api.getPageInfo()
             .subscribeOn(Schedulers.io())
     }

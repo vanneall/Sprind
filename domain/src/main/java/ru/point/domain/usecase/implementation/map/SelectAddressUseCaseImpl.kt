@@ -1,7 +1,7 @@
 package ru.point.domain.usecase.implementation.map
 
 import io.reactivex.rxjava3.core.Completable
-import ru.point.domain.entity.utils.AddressInfoResponse
+import ru.point.domain.entity.response.address.AddressInfoResponse
 import ru.point.domain.repository.UserRepository
 import ru.point.domain.usecase.interfaces.map.SelectAddressUseCase
 

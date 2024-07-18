@@ -7,13 +7,13 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.Query
-import ru.point.domain.entity.dto.complex.CartPageInfoDto
-import ru.point.domain.entity.dto.product.FeedProductResponse
+import ru.point.domain.entity.response.cart.CartPageInfoResponse
+import ru.point.domain.entity.response.product.FeedProductResponse
 
 interface CartApi {
 
     @GET("cart/info")
-    fun getPageInfo(): Single<CartPageInfoDto>
+    fun getPageInfo(): Single<CartPageInfoResponse>
 
     @GET("cart")
     fun getProductsFromCart(

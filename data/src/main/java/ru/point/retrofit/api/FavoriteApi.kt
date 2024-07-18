@@ -6,7 +6,7 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.Query
-import ru.point.domain.entity.dto.product.FeedProductResponse
+import ru.point.domain.entity.response.product.FeedProductResponse
 
 
 interface FavoriteApi {

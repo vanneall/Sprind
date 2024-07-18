@@ -2,7 +2,7 @@ package ru.point.sprind.di.usecases
 
 import dagger.Module
 import dagger.Provides
-import ru.point.domain.factory.interfaces.RegisterUserFactory
+import ru.point.domain.factory.interfaces.NewUserFactory
 import ru.point.domain.repository.UserRepository
 import ru.point.domain.usecase.implementation.auth.AuthorizeUseCaseImpl
 import ru.point.domain.usecase.implementation.auth.RegisterUserUseCaseImpl
@@ -23,7 +23,7 @@ class ProfileUseCaseModule {
 
     @Provides
     fun provideRegistrationUseCase(
-        factory: RegisterUserFactory,
+        factory: NewUserFactory,
         repository: UserRepository,
     ): RegisterUserUseCase {
         return RegisterUserUseCaseImpl(factory = factory, repository = repository)

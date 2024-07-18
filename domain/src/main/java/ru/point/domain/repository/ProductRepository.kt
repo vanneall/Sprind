@@ -1,19 +1,19 @@
 package ru.point.domain.repository
 
 import io.reactivex.rxjava3.core.Single
-import ru.point.domain.entity.dto.category.CategoryItemResponse
-import ru.point.domain.entity.dto.complex.ComplexProductDto
-import ru.point.domain.entity.dto.product.FeedProductResponse
-import ru.point.domain.entity.dto.product.ProductInfoDto
+import ru.point.domain.entity.response.category.CategoryItemResponse
+import ru.point.domain.entity.response.complex.ComplexProductResponse
+import ru.point.domain.entity.response.product.FeedProductResponse
+import ru.point.domain.entity.response.product.ProductInfoResponse
 
 interface ProductRepository {
-    fun getMainPageInfo(): Single<ComplexProductDto>
+    fun getMainPageInfo(): Single<ComplexProductResponse>
     fun getProductsPaging(
         offset: Int,
         limit: Int,
         request: String?
     ): Single<List<FeedProductResponse>>
     fun getProductsByName(name: String): Single<List<FeedProductResponse>>
-    fun getProductById(id: Long): Single<ProductInfoDto>
+    fun getProductById(id: Long): Single<ProductInfoResponse>
     fun getAvailableCategories(): Single<List<CategoryItemResponse>>
 }

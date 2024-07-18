@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import moxy.MvpPresenter
-import ru.point.domain.entity.view.request.RequestVo
+import ru.point.domain.entity.view.search.SearchRequestVo
 import ru.point.manager.RequestHistoryManager
 import ru.point.sprind.entity.deletage.product.request.RequestDelegate
 import javax.inject.Inject
@@ -27,7 +27,7 @@ class SearchPresenter @Inject constructor(
         val disposable = manager.getAll()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ list ->
-                val views = list.mapIndexed { index, entity -> RequestVo(index.toLong(), entity) }
+                val views = list.mapIndexed { index, entity -> SearchRequestVo(index.toLong(), entity) }
                 viewState.setAdapter(views.reversed())
             }, { ex ->
                 ex.printStackTrace()

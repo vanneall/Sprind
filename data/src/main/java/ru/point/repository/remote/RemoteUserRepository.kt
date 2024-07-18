@@ -3,11 +3,11 @@ package ru.point.repository.remote
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
-import ru.point.domain.entity.dto.order.OrderDto
-import ru.point.domain.entity.dto.user.AuthUserDto
-import ru.point.domain.entity.dto.user.RegisterUserDto
-import ru.point.domain.entity.dto.user.UserDto
-import ru.point.domain.entity.utils.AddressInfoResponse
+import ru.point.domain.entity.response.order.OrderResponse
+import ru.point.domain.entity.request.user.AuthUserRequest
+import ru.point.domain.entity.request.user.RegisterUserRequest
+import ru.point.domain.entity.request.user.UserRequest
+import ru.point.domain.entity.response.address.AddressInfoResponse
 import ru.point.domain.entity.utils.Token
 import ru.point.domain.repository.UserRepository
 import ru.point.retrofit.api.UserApi
@@ -16,15 +16,15 @@ class RemoteUserRepository(
     private val api: UserApi,
 ) : UserRepository {
 
-    override fun authorize(user: AuthUserDto): Single<Token> {
+    override fun authorize(user: AuthUserRequest): Single<Token> {
         return api.authorize(user.username, user.password).subscribeOn(Schedulers.io())
     }
 
-    override fun register(user: RegisterUserDto): Completable {
+    override fun register(user: RegisterUserRequest): Completable {
         return api.register(user = user).subscribeOn(Schedulers.io())
     }
 
-    override fun get(): Single<UserDto> {
+    override fun get(): Single<UserRequest> {
         return api.getUserInfo().subscribeOn(Schedulers.io())
     }
 
@@ -32,7 +32,7 @@ class RemoteUserRepository(
         return api.setNewAddress(address = address).subscribeOn(Schedulers.io())
     }
 
-    override fun getOrders(): Single<List<OrderDto>> {
+    override fun getOrders(): Single<List<OrderResponse>> {
         return api.getOrders().subscribeOn(Schedulers.io())
     }
 }

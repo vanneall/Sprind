@@ -3,8 +3,8 @@ package ru.point.domain.usecase.implementation.cart
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.point.domain.entity.complex.CartInfoVoContainer
-import ru.point.domain.entity.dto.complex.toCartSummaryVo
-import ru.point.domain.entity.utils.toAddressVo
+import ru.point.domain.entity.response.mappers.toAddressVo
+import ru.point.domain.entity.response.mappers.toCartSummaryVo
 import ru.point.domain.repository.CartRepository
 import ru.point.domain.usecase.interfaces.cart.GetCartPageInfoUseCase
 

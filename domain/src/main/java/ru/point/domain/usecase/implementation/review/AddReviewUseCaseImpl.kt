@@ -1,7 +1,7 @@
 package ru.point.domain.usecase.implementation.review
 
 import io.reactivex.rxjava3.core.Completable
-import ru.point.domain.entity.dto.review.CreatedReviewDto
+import ru.point.domain.entity.request.review.CreateReviewRequest
 import ru.point.domain.repository.ReviewRepository
 import ru.point.domain.usecase.interfaces.review.AddReviewUseCase
 
@@ -18,7 +18,7 @@ class AddReviewUseCaseImpl(
     ): Completable {
         return repository.addReview(
             productId,
-            CreatedReviewDto(rating, description, advantage, disadvantage)
+            CreateReviewRequest(rating, description, advantage, disadvantage)
         )
     }
 }

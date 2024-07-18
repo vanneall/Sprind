@@ -1,12 +1,12 @@
 package ru.point.domain.usecase.implementation.auth
 
 import io.reactivex.rxjava3.core.Completable
-import ru.point.domain.factory.interfaces.RegisterUserFactory
+import ru.point.domain.factory.interfaces.NewUserFactory
 import ru.point.domain.repository.UserRepository
 import ru.point.domain.usecase.interfaces.auth.RegisterUserUseCase
 
 class RegisterUserUseCaseImpl(
-    private val factory: RegisterUserFactory,
+    private val factory: NewUserFactory,
     private val repository: UserRepository
 ) : RegisterUserUseCase {
     override fun handle(

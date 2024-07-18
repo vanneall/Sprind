@@ -3,7 +3,7 @@ package ru.point.domain.usecase.implementation.shop
 import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxPagingSource
 import io.reactivex.rxjava3.core.Single
-import ru.point.domain.entity.dto.product.toProductFeedVo
+import ru.point.domain.entity.response.mappers.toProductFeedVo
 import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.repository.ShopRepository
 import ru.point.domain.usecase.interfaces.shop.GetShopProductsUseCase

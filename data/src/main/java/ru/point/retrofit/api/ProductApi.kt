@@ -4,13 +4,13 @@ import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.point.domain.entity.dto.complex.ComplexProductDto
-import ru.point.domain.entity.dto.product.FeedProductResponse
-import ru.point.domain.entity.dto.product.ProductInfoDto
+import ru.point.domain.entity.response.complex.ComplexProductResponse
+import ru.point.domain.entity.response.product.FeedProductResponse
+import ru.point.domain.entity.response.product.ProductInfoResponse
 
 interface ProductApi {
     @GET("feed/info")
-    fun getPageInfo(): Single<ComplexProductDto>
+    fun getPageInfo(): Single<ComplexProductResponse>
 
     @GET("feed")
     fun getProductDto(
@@ -20,5 +20,5 @@ interface ProductApi {
     ): Single<List<FeedProductResponse>>
 
     @GET("product/{id}")
-    fun getProductDtoById(@Path("id") id: Long): Single<ProductInfoDto>
+    fun getProductDtoById(@Path("id") id: Long): Single<ProductInfoResponse>
 }
