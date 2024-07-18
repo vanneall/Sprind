@@ -2,8 +2,10 @@ package ru.point.sprind.di.modules
 
 import dagger.Module
 import dagger.Provides
+import ru.point.domain.factory.interfaces.EmptyAddressResponseFactory
 import ru.point.domain.paging.CartPagingSource
 import ru.point.domain.paging.FavoritePagingSource
+import ru.point.domain.paging.FeedPagingSource
 import ru.point.domain.repository.CartRepository
 import ru.point.domain.repository.CategoryRepository
 import ru.point.domain.repository.FavoriteRepository
@@ -83,9 +85,15 @@ class PagingSourceModule {
     }
 
     @Provides
-    fun provideCartPagingSource(repository: CartRepository): CartPagingSource {
-        return CartPagingSource(repository = repository)
+    fun provideFeedPagingSource(repository: ProductRepository): FeedPagingSource {
+        return FeedPagingSource(repository = repository)
     }
 
-
+    @Provides
+    fun provideCartPagingSource(
+        repository: CartRepository,
+        factory: EmptyAddressResponseFactory
+    ): CartPagingSource {
+        return CartPagingSource(repository = repository, factory = factory)
+    }
 }

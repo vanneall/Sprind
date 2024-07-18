@@ -8,10 +8,6 @@ class ChangeFavoriteStateUseCaseImpl(
     private val repository: FavoriteRepository
 ) : ChangeFavoriteStateUseCase {
     override fun handle(id: Long, isFavorite: Boolean): Completable {
-        return if (isFavorite) {
-            repository.addFavorite(id = id)
-        } else {
-            repository.deleteFavorite(id = id)
-        }
+        return if (isFavorite) repository.addFavorite(id = id) else repository.deleteFavorite(id = id)
     }
 }
