@@ -10,6 +10,7 @@ import ru.point.domain.repository.FavoriteRepository
 import ru.point.domain.repository.ProductRepository
 import ru.point.domain.repository.RequestRepository
 import ru.point.domain.repository.ReviewRepository
+import ru.point.domain.repository.ShopRepository
 import ru.point.domain.repository.UserRepository
 import ru.point.repository.local.RequestRepositoryImpl
 import ru.point.repository.remote.CategoryRepositoryImpl
@@ -18,11 +19,13 @@ import ru.point.repository.remote.RemoteFavoriteRepository
 import ru.point.repository.remote.RemoteProductRepository
 import ru.point.repository.remote.RemoteReviewRepository
 import ru.point.repository.remote.RemoteUserRepository
+import ru.point.repository.remote.ShopRepositoryImpl
 import ru.point.retrofit.api.CartApi
 import ru.point.retrofit.api.CategoryApi
 import ru.point.retrofit.api.FavoriteApi
 import ru.point.retrofit.api.ProductApi
 import ru.point.retrofit.api.ReviewApi
+import ru.point.retrofit.api.ShopApi
 import ru.point.retrofit.api.UserApi
 import ru.point.room.RequestDao
 
@@ -64,6 +67,11 @@ class RepositoryModule {
     @Provides
     fun provideCategoryRepository(api: CategoryApi): CategoryRepository {
         return CategoryRepositoryImpl(api = api)
+    }
+
+    @Provides
+    fun provideShopRepository(api: ShopApi): ShopRepository {
+        return ShopRepositoryImpl(api = api)
     }
 }
 

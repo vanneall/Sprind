@@ -7,7 +7,7 @@ import dagger.Module
         ProfileUseCaseModule::class, CartUseCaseModule::class,
         FavoriteUseCaseModule::class, ProductUseCaseModule::class,
         ReviewUseCaseModule::class, MapUseCaseModule::class,
-        CategoryUseCaseModule::class
+        CategoryUseCaseModule::class, ShopUseCaseModule::class
     ]
 )
 class UseCaseModule

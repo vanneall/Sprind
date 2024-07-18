@@ -8,6 +8,7 @@ import ru.point.retrofit.api.CategoryApi
 import ru.point.retrofit.api.FavoriteApi
 import ru.point.retrofit.api.ProductApi
 import ru.point.retrofit.api.ReviewApi
+import ru.point.retrofit.api.ShopApi
 import ru.point.retrofit.api.UserApi
 
 @Module
@@ -41,5 +42,10 @@ class ApiModule {
     @Provides
     fun provideCategoryApi(retrofit: Retrofit): CategoryApi {
         return retrofit.create(CategoryApi::class.java)
+    }
+
+    @Provides
+    fun provideShopApi(retrofit: Retrofit): ShopApi {
+        return retrofit.create(ShopApi::class.java)
     }
 }
