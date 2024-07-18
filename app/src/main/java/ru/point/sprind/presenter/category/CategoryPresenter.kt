@@ -46,7 +46,7 @@ class CategoryPresenter @AssistedInject constructor(
             onFavoriteCheckedChange = ::changeProductInFavoriteState
         ),
         NestedRecyclerViewDelegate(
-            delegates = listOf(ShopDelegate()),
+            delegates = listOf(ShopDelegate(viewState::navigateToShopScreen)),
             itemDecoration = AvailableCategoriesItemDecorator()
         )
     )

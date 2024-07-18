@@ -43,7 +43,7 @@ class ShopFragment : MvpAppCompatFragment(), ShopView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentShopBinding.inflate(layoutInflater, container, true)
+        _binding = FragmentShopBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -78,11 +78,19 @@ class ShopFragment : MvpAppCompatFragment(), ShopView {
     }
 
     override fun showLoading(show: Boolean) {
-        binding.root.currentState = ConnectableLayout.ConnectionState.LOADING
+       binding.root.currentState = ConnectableLayout.ConnectionState.LOADING
     }
 
     override fun setAdapter(views: PagingData<ViewObject>) {
         pagingAdapter.submitData(lifecycle, views)
+        binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
+    }
+
+    override fun navigateToProductCard(productId: Long) {
+        val direction = ShopFragmentDirections.actionShopFragmentToProductCardFragment(
+            productId = productId
+        )
+        findNavController().navigate(directions = direction)
     }
 
     override fun onDestroyView() {

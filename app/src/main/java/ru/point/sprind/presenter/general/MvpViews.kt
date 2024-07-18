@@ -43,4 +43,7 @@ interface NavigableView: MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun navigateToCategoryScreen(categoryId: Long, title: String) {}
+
+    @StateStrategyType(SkipStrategy::class)
+    fun navigateToShopScreen(shopId: Long, title: String) {}
 }

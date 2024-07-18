@@ -15,11 +15,8 @@ import moxy.MvpPresenter
 import moxy.presenterScope
 import retrofit2.HttpException
 import ru.point.domain.manager.ProductManager
-import ru.point.domain.usecase.interfaces.category.GetCategoryProductsPageUseCase
-import ru.point.sprind.adapters.decorators.AvailableCategoriesItemDecorator
-import ru.point.sprind.entity.deletage.product.card.NestedRecyclerViewDelegate
+import ru.point.domain.usecase.interfaces.shop.GetShopProductsUseCase
 import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
-import ru.point.sprind.entity.deletage.shop.ShopDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import ru.point.sprind.presenter.category.CategoryPresenter.Factory.Companion.ID
 import ru.point.sprind.utils.pagerConfig
@@ -27,7 +24,7 @@ import ru.point.sprind.utils.pagerConfig
 @InjectViewState
 class ShopPresenter @AssistedInject constructor(
     @Assisted(ID) shopId: Long,
-    getCategoryProductsPageUseCase: GetCategoryProductsPageUseCase,
+    getShopProductsUseCase: GetShopProductsUseCase,
     private val productManager: Lazy<ProductManager>
 ) : MvpPresenter<ShopView>() {
 
@@ -44,17 +41,13 @@ class ShopPresenter @AssistedInject constructor(
             onClickCard = viewState::navigateToProductCard,
             onBuyClick = ::addProductToCart,
             onFavoriteCheckedChange = ::changeProductInFavoriteState
-        ),
-        NestedRecyclerViewDelegate(
-            delegates = listOf(ShopDelegate()),
-            itemDecoration = AvailableCategoriesItemDecorator()
         )
     )
 
     init {
         val mainDisposable = Pager(
             config = pagerConfig,
-            pagingSourceFactory = { getCategoryProductsPageUseCase.handle(categoryId = shopId) }
+            pagingSourceFactory = { getShopProductsUseCase.handle(shopId = shopId) }
         ).observable
             .cachedIn(presenterScope)
             .observeOn(AndroidSchedulers.mainThread())

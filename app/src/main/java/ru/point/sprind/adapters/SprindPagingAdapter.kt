@@ -21,14 +21,8 @@ class SprindPagingAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        println("item: ${getItem(position)?.javaClass}")
         return delegates.indexOfFirst { delegate ->
-            println(delegate.javaClass)
-            val item = getItem(position)
-            item?.let {
-                val res = delegate.isSupported(it)
-                res
-            } ?: false
+            getItem(position)?.let { delegate.isSupported(it) } ?: false
         }
     }
 }

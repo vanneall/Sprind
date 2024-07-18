@@ -7,7 +7,7 @@ import retrofit2.http.Query
 import ru.point.domain.entity.dto.product.FeedProductResponse
 
 interface ShopApi {
-    @GET("/shops/{id}")
+    @GET("shops/{id}")
     fun getShopsProducts(
         @Path("id") shopId: Long,
         @Query("offset") offset: Int,

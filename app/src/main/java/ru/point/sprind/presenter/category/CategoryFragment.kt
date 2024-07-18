@@ -106,6 +106,14 @@ class CategoryFragment : MvpAppCompatFragment(), CategoryView {
             .show()
     }
 
+    override fun navigateToShopScreen(shopId: Long, title: String) {
+        val direction = CategoryFragmentDirections.actionCategoryFragmentToShopFragment(
+            shopId = shopId,
+            title = title
+        )
+        findNavController().navigate(directions = direction)
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -9,7 +9,9 @@ import ru.point.sprind.entity.deletage.Delegate
 import ru.point.sprind.entity.viewholder.ViewHolderV2
 import ru.point.sprind.entity.viewholder.shop.ShopViewHolder
 
-class ShopDelegate : Delegate<ShopVo> {
+class ShopDelegate(
+    private val onClick: (Long, String) -> Unit
+) : Delegate<ShopVo> {
     override fun isSupported(view: ViewObject) = view is ShopVo
 
     override fun createViewHolder(parent: ViewGroup): ViewHolderV2<ShopVo> {
@@ -19,6 +21,9 @@ class ShopDelegate : Delegate<ShopVo> {
             false
         )
 
-        return ShopViewHolder(binding = binding)
+        return ShopViewHolder(
+            binding = binding,
+            onClick = onClick
+        )
     }
 }
