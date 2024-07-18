@@ -9,5 +9,5 @@ interface ReviewRepository {
 
     fun getByProductId(id: Long): Observable<List<ReviewResponse>>
 
-    fun addReview(productId: Long, dto: CreateReviewRequest): Completable
+    fun addReview(productId: Long, request: CreateReviewRequest): Completable
 }

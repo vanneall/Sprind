@@ -16,7 +16,7 @@ class RemoteReviewRepository(
         return api.getReviewsById(id = id).subscribeOn(Schedulers.io())
     }
 
-    override fun addReview(productId: Long, dto: CreateReviewRequest): Completable {
-        return api.postReview(id = productId, dto = dto).subscribeOn(Schedulers.io())
+    override fun addReview(productId: Long, request: CreateReviewRequest): Completable {
+        return api.postReview(id = productId, dto = request).subscribeOn(Schedulers.io())
     }
 }

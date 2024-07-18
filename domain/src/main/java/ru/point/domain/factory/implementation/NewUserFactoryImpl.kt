@@ -3,7 +3,7 @@ package ru.point.domain.factory.implementation
 import ru.point.domain.entity.request.user.RegisterUserRequest
 import ru.point.domain.factory.interfaces.NewUserFactory
 
-class NewUserFactoryImpl: NewUserFactory {
+class NewUserFactoryImpl : NewUserFactory {
     override fun create(
         name: String,
         secondName: String,
@@ -12,14 +12,12 @@ class NewUserFactoryImpl: NewUserFactory {
         username: String,
         secret: String,
         password: String,
-    ): RegisterUserRequest {
-        return RegisterUserRequest(
-            name = name,
-            secondName = secondName,
-            email = email,
-            username = username,
-            secret = secret,
-            password = password
-        )
-    }
+    ) = RegisterUserRequest(
+        name = name,
+        secondName = secondName,
+        email = email,
+        username = username,
+        secret = secret,
+        password = password
+    )
 }

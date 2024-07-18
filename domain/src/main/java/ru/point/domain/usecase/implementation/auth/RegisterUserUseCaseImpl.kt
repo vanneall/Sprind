@@ -27,7 +27,6 @@ class RegisterUserUseCaseImpl(
             password = password,
             username = username
         )
-
         return repository.register(user = regUser)
     }
 }

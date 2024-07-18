@@ -4,12 +4,10 @@ import ru.point.domain.entity.response.address.AddressInfoResponse
 import ru.point.domain.factory.interfaces.EmptyAddressResponseFactory
 
 class EmptyAddressResponseFactoryImpl : EmptyAddressResponseFactory {
-    override fun create(): AddressInfoResponse {
-        return AddressInfoResponse(
-            city = null,
-            street = null,
-            house = null,
-            flat = null
-        )
-    }
+    override fun create() = AddressInfoResponse(
+        city = null,
+        street = null,
+        house = null,
+        flat = null
+    )
 }

@@ -1,12 +1,12 @@
 package ru.point.domain.usecase.implementation.review
 
-import io.reactivex.rxjava3.core.Completable
-import ru.point.domain.entity.request.review.CreateReviewRequest
+import ru.point.domain.factory.interfaces.ReviewRequestFactory
 import ru.point.domain.repository.ReviewRepository
 import ru.point.domain.usecase.interfaces.review.AddReviewUseCase
 
 class AddReviewUseCaseImpl(
     private val repository: ReviewRepository,
+    private val factory: ReviewRequestFactory
 ) : AddReviewUseCase {
 
     override fun handle(
@@ -15,10 +15,13 @@ class AddReviewUseCaseImpl(
         description: String,
         advantage: String?,
         disadvantage: String?
-    ): Completable {
-        return repository.addReview(
-            productId,
-            CreateReviewRequest(rating, description, advantage, disadvantage)
+    ) = repository.addReview(
+        productId = productId,
+        request = factory.create(
+            rating = rating,
+            description = description,
+            advantage = advantage,
+            disadvantage = disadvantage
         )
-    }
+    )
 }

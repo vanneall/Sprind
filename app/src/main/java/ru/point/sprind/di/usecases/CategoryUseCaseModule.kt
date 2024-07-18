@@ -10,6 +10,6 @@ import ru.point.domain.usecase.interfaces.category.GetCategoryProductsPageUseCas
 class CategoryUseCaseModule {
     @Provides
     fun provideGetProductsPageUseCase(factory: CategoryPagingSource.Factory): GetCategoryProductsPageUseCase {
-        return GetCategoryProductsPageUseCaseImpl(categoryPagingSourceFactory = factory)
+        return GetCategoryProductsPageUseCaseImpl(pagingSourceFactory = factory)
     }
 }

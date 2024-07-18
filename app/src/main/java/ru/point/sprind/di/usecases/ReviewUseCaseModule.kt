@@ -2,6 +2,7 @@ package ru.point.sprind.di.usecases
 
 import dagger.Module
 import dagger.Provides
+import ru.point.domain.factory.interfaces.ReviewRequestFactory
 import ru.point.domain.repository.ReviewRepository
 import ru.point.domain.usecase.implementation.review.AddReviewUseCaseImpl
 import ru.point.domain.usecase.implementation.review.GetReviewsByProductIdUseCaseImpl
@@ -17,7 +18,10 @@ class ReviewUseCaseModule {
     }
 
     @Provides
-    fun provideAddReviewUseCase(repository: ReviewRepository): AddReviewUseCase {
-        return AddReviewUseCaseImpl(repository = repository)
+    fun provideAddReviewUseCase(
+        repository: ReviewRepository,
+        factory: ReviewRequestFactory
+    ): AddReviewUseCase {
+        return AddReviewUseCaseImpl(repository = repository, factory = factory)
     }
 }
