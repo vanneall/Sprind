@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_surface"
+    android:background="@color/md_theme_surfaceVariant"
     tools:context=".presenter.thanks.ThanksFragment">
 
     <ru.point.sprind.view.TitleToolbar
@@ -28,7 +28,6 @@
         android:paddingVertical="20dp"
         style="@style/regular_16"
         android:paddingHorizontal="12dp"
-        android:background="@drawable/card_background_full"
         android:lineSpacingExtra="2dp"
         android:text="@string/thanks_for_buying_text"/>
 

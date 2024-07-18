@@ -25,12 +25,13 @@ class OrdersFragment : MvpAppCompatFragment(), OrdersViewDefault {
     private var _binding: FragmentOrdersBinding? = null
     private val binding get() = _binding!!
 
-    private var _adapter: SprindDefaultAdapter? = null
-    private val adapter get() = _adapter!!
+    private var _defaultAdapter: SprindDefaultAdapter? = null
+    private val defaultAdapter get() = _defaultAdapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
+        _defaultAdapter = SprindDefaultAdapter(presenter.delegates)
     }
 
     override fun onCreateView(
@@ -42,13 +43,19 @@ class OrdersFragment : MvpAppCompatFragment(), OrdersViewDefault {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initToolbar()
         initializeRecyclerView()
     }
 
+    private fun initToolbar() {
+        binding.toolbar.setOnBackClickListener { findNavController().popBackStack() }
+    }
+
     private fun initializeRecyclerView() {
-        _adapter = SprindDefaultAdapter(presenter.delegates)
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.addItemDecoration(ProductInfoDecorator())
+        binding.recyclerView.apply {
+            adapter = defaultAdapter
+            addItemDecoration(ProductInfoDecorator())
+        }
     }
 
     override fun requireAuthorization() {
@@ -56,7 +63,7 @@ class OrdersFragment : MvpAppCompatFragment(), OrdersViewDefault {
     }
 
     override fun setAdapter(views: List<ViewObject>) {
-        adapter.submitList(views)
+        defaultAdapter.submitList(views)
         binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
     }
 
@@ -75,6 +82,6 @@ class OrdersFragment : MvpAppCompatFragment(), OrdersViewDefault {
 
     override fun onDestroy() {
         super.onDestroy()
-        _adapter = null
+        _defaultAdapter = null
     }
 }

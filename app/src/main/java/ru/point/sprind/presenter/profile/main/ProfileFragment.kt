@@ -35,11 +35,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.logout.setOnClickListener {
-            presenter.logout()
-            activity?.finish()
-        }
-
         binding.favorites.setOnClickListener {
             findNavController().navigate(R.id.action_profile_fragment_to_favorites_fragment)
         }
@@ -59,14 +54,38 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         }
     }
 
-    override fun setUsername(name: String) {
-        with(binding.greetings) {
-            if (name.isNotEmpty()) {
+    override fun setUsername(name: String?) {
+        binding.greetings.apply {
+            if (name != null) {
                 visibility = View.VISIBLE
                 text = resources.getString(R.string.greetings, name)
             }
         }
     }
+
+    override fun setLogIn() {
+        binding.accountLogout.visibility = View.GONE
+        binding.accountLogin.visibility = View.VISIBLE
+        binding.accountLogin.setOnClickListener {
+            navigateToAuthorization()
+        }
+    }
+
+    override fun setLogOut() {
+        binding.accountLogin.visibility = View.GONE
+        binding.accountLogout.visibility = View.VISIBLE
+
+        binding.accountLogout.setOnClickListener {
+            presenter.logout()
+            activity?.finish()
+        }
+    }
+
+    override fun navigateToAuthorization() {
+        val direction = ProfileFragmentDirections.actionGlobalAuthorizationFragment()
+        findNavController().navigate(directions = direction)
+    }
+
 
     override fun setIsDarkThemeEnabled(isEnabled: Boolean) {
         binding.themeSwitch.isChecked = isEnabled

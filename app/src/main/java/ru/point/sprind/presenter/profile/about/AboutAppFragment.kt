@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import ru.point.domain.utils.UtilsConst.YANDEX_MAP_TERMS_URL
 import ru.point.sprind.databinding.FragmentAboutAppBinding
 
 class AboutAppFragment : Fragment() {
@@ -23,13 +24,18 @@ class AboutAppFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.yandexMapsTerms.setOnClickListener {
-            val destination = AboutAppFragmentDirections.actionAboutAppFragmentToWebViewFragment(
-                url = "https://yandex.ru/legal/maps_termsofuse/"
-            )
+        initToolbar()
 
-            findNavController().navigate(destination)
+        binding.yandexMapsTerms.setOnClickListener {
+            val direction = AboutAppFragmentDirections.actionAboutAppFragmentToWebViewFragment(
+                url = YANDEX_MAP_TERMS_URL
+            )
+            findNavController().navigate(directions = direction)
         }
+    }
+
+    private fun initToolbar() {
+        binding.toolbar.setOnBackClickListener { findNavController().popBackStack() }
     }
 
     override fun onDestroyView() {

@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/delete_icon"
+            android:src="@drawable/baseline_clear_24"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/search"
             app:layout_constraintEnd_toStartOf="@id/search_button"
