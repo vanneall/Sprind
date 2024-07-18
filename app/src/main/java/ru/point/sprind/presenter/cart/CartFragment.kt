@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -54,6 +55,18 @@ class CartFragment : MvpAppCompatFragment(), CartView {
             adapter = pagingAdapter
             addItemDecoration(CartItemDecorator())
         }
+
+        pagingAdapter.addLoadStateListener { state ->
+            if (state.hasError) {
+                val stateError = state.append as? LoadState.Error
+                    ?: state.source.prepend as? LoadState.Error
+                    ?: state.prepend as? LoadState.Error
+                    ?: state.refresh as? LoadState.Error
+                stateError?.let { presenter.handleException(stateError.error) }
+            } else if (state.isIdle && !state.hasError){
+                showPayButton()
+            }
+        }
     }
 
     override fun setAdapter(views: PagingData<ViewObject>) {
@@ -67,6 +80,7 @@ class CartFragment : MvpAppCompatFragment(), CartView {
     }
 
     override fun navigateToAuthorization() {
+        hidePayButton()
         binding.authorizeWarning.apply {
             root.visibility = View.VISIBLE
             authorizeButton.setOnClickListener {

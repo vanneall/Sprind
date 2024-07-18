@@ -2,6 +2,7 @@ package ru.point.sprind.presenter.product.result
 
 import android.util.Log
 import androidx.paging.Pager
+import androidx.paging.PagingData
 import androidx.paging.rxjava3.cachedIn
 import androidx.paging.rxjava3.observable
 import dagger.Lazy
@@ -15,9 +16,11 @@ import moxy.InjectViewState
 import moxy.MvpPresenter
 import moxy.presenterScope
 import retrofit2.HttpException
+import ru.point.domain.entity.view.search.EmptyRequestResultVo
 import ru.point.domain.manager.ProductManager
 import ru.point.domain.usecase.interfaces.product.GetProductsByNameUseCase
 import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
+import ru.point.sprind.entity.deletage.product.request.EmptyRequestResultDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import ru.point.sprind.presenter.product.result.ResultProductFeedPresenter.Factory.Companion.QUERY
 import ru.point.sprind.utils.pagerConfig
@@ -33,6 +36,7 @@ class ResultProductFeedPresenter @AssistedInject constructor(
     private val httpExceptionManager = HttpExceptionStatusManager
         .Builder()
         .add403ExceptionHandler { viewState::navigateToAuthorization }
+        .add404ExceptionHandler { viewState.setAdapter(PagingData.from(listOf(EmptyRequestResultVo()))) }
         .addDefaultExceptionHandler { viewState::showSomethingGoesWrongError }
         .build()
 
@@ -41,7 +45,8 @@ class ResultProductFeedPresenter @AssistedInject constructor(
             onClickCard = viewState::navigateToProductCard,
             onBuyClick = ::addProductToCart,
             onFavoriteCheckedChange = ::changeProductInFavoriteState
-        )
+        ),
+        EmptyRequestResultDelegate()
     )
 
     private val mainCompositeDisposable = CompositeDisposable()
@@ -61,7 +66,7 @@ class ResultProductFeedPresenter @AssistedInject constructor(
         mainCompositeDisposable.add(pagingDisposable)
     }
 
-    private fun handleException(exception: Throwable) {
+    fun handleException(exception: Throwable) {
         if (exception is HttpException) {
             httpExceptionManager.handle(exception = exception)
         } else {

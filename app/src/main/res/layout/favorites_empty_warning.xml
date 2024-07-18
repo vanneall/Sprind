@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/md_theme_surfaceVariant"
-    android:paddingHorizontal="40dp"
-    android:paddingVertical="44dp">
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="24dp">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title"
@@ -15,17 +15,17 @@
         android:text="@string/empty_favorites_warning"
         app:layout_constraintBottom_toTopOf="@id/description"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/description"
         style="@style/regular_14"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="@string/empty_favorites_description"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title" />

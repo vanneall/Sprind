@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import moxy.MvpAppCompatFragment
@@ -60,6 +61,15 @@ class FavoriteProductsFragment : MvpAppCompatFragment(), FavoriteView {
             layoutManager.spanSizeLookup =
                 FavoriteSpanSizeLookup(presenter.viewDelegates, pagingAdapter)
             addItemDecoration(FavoritesItemDecorator())
+            pagingAdapter.addLoadStateListener { state ->
+                if (state.hasError) {
+                    val stateError = state.append as? LoadState.Error
+                        ?: state.source.prepend as? LoadState.Error
+                        ?: state.prepend as? LoadState.Error
+                        ?: state.refresh as? LoadState.Error
+                    stateError?.let { presenter.handleException(stateError.error) }
+                }
+            }
         }
     }
 

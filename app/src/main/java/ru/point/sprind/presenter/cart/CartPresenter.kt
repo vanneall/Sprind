@@ -64,7 +64,6 @@ class CartPresenter @Inject constructor(
             .subscribe(
                 { data ->
                     viewState.showLoading(show = false)
-                    viewState.showPayButton()
                     viewState.setAdapter(data)
                 },
                 { ex -> handleException(exception = ex) }
@@ -73,7 +72,7 @@ class CartPresenter @Inject constructor(
         compositeDisposable.add(pagingDisposable)
     }
 
-    private fun handleException(exception: Throwable) {
+    fun handleException(exception: Throwable) {
         if (exception is HttpException) {
             httpExceptionManager.handle(exception = exception)
         } else {

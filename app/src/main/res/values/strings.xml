@@ -71,8 +71,8 @@
     <string name="greetings">Здравствуйте, %s</string>
     <string name="authorize_warning">Авторизуйтесь, чтобы продолжить</string>
     <string name="authorize">Авторизоваться</string>
-    <string name="empty_favorites_warning">У вас нет избранных товаров :(</string>
-    <string name="empty_favorites_description">Загляните в поиск, вероятно, что-то да Вам понравится!</string>
+    <string name="empty_favorites_warning">Тут пусто...</string>
+    <string name="empty_favorites_description">У вас нет ни одного товара в избранном, перейдите к странице поиска и добавьте сюда несколько товаров, а затем прикупите их.</string>
     <string name="advantage">Достоинства:</string>
     <string name="disadvantage">Недостатки:</string>
     <string name="commentary">Комментарий:</string>
@@ -97,4 +97,6 @@
     <string name="order_id">Заказ #%s</string>
     <string name="delete_from_cart">Удалить из корзины</string>
     <string name="to_cart">К корзине</string>
+    <string name="product_not_found">Такого товара нет</string>
+    <string name="we_are_trying_to_find">Мы не нашли товаров по такому запросу, попробуйте сфорулировать запрос заново</string>
 </resources>

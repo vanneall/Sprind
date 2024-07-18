@@ -22,7 +22,7 @@ class NamedProductsPagingSource @AssistedInject constructor(
         val startPage = params.key ?: 0
         val pageSize = params.loadSize
 
-        return repository.getProductsPaging (startPage, pageSize, request)
+        return repository.getProductsPaging(startPage, pageSize, request)
             .map<LoadResult<Int, ViewObject>> { response ->
                 val prevKey = if (startPage == 0) null else startPage - pageSize
                 val nextKey = if (response.size < pageSize) null else pageSize

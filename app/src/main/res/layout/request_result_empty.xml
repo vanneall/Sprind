@@ -10,9 +10,9 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title"
         style="@style/bold_20"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/empty_cart_warning"
+        android:text="@string/product_not_found"
         app:layout_constraintBottom_toTopOf="@id/description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -22,10 +22,10 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/description"
         style="@style/regular_14"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="@string/empty_cart_description"
+        android:text="@string/we_are_trying_to_find"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title" />

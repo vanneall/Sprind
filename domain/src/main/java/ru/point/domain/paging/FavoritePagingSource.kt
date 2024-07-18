@@ -5,6 +5,7 @@ import androidx.paging.rxjava3.RxPagingSource
 import io.reactivex.rxjava3.core.Single
 import ru.point.domain.entity.response.mappers.toProductFeedVo
 import ru.point.domain.entity.view.ViewObject
+import ru.point.domain.entity.view.favorites.EmptyFavoritesVo
 import ru.point.domain.repository.FavoriteRepository
 
 class FavoritePagingSource(
@@ -21,7 +22,11 @@ class FavoritePagingSource(
                 val prevKey = if (startPage == 0) null else startPage - pageSize
                 val nextKey = if (response.size < pageSize) null else pageSize
 
-                val resultPageData = response.map { it.toProductFeedVo() }
+                val resultPageData = if (prevKey == null && nextKey == null) {
+                    listOf(EmptyFavoritesVo())
+                } else {
+                    response.map { it.toProductFeedVo() }
+                }
 
                 LoadResult.Page(
                     data = resultPageData,

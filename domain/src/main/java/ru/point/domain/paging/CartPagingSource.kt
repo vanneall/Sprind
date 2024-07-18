@@ -11,6 +11,7 @@ import ru.point.domain.entity.response.mappers.toCartProductVo
 import ru.point.domain.entity.response.mappers.toCartSummaryVo
 import ru.point.domain.entity.response.product.FeedProductResponse
 import ru.point.domain.entity.view.ViewObject
+import ru.point.domain.entity.view.cart.CartEmptyVo
 import ru.point.domain.entity.view.cart.CartHeaderVo
 import ru.point.domain.exceptions.ViewObjectMapRuleNotFoundException
 import ru.point.domain.factory.interfaces.EmptyAddressResponseFactory
@@ -34,7 +35,7 @@ class CartPagingSource(
                 val headerItems = mutableListOf<ResponseItem>()
                 val footerItems = mutableListOf<ResponseItem>()
 
-                if (prevKey == null || nextKey == null) {
+                if ((prevKey == null) xor (nextKey == null)) {
                     getPageInfoResponse(
                         isAddressRequired = prevKey == null,
                         isOrderSummaryRequired = nextKey == null,
@@ -43,8 +44,12 @@ class CartPagingSource(
                     )
                 }
 
-                val resultPageData = (headerItems + response + footerItems).map { responseItem ->
-                    mapResponseItem(responseItem)
+                val resultPageData = if (prevKey == null && nextKey == null) {
+                    listOf(CartEmptyVo())
+                } else {
+                    (headerItems + response + footerItems).map { responseItem ->
+                        mapResponseItem(responseItem)
+                    }
                 }
 
                 LoadResult.Page(

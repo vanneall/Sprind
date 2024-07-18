@@ -59,7 +59,7 @@ class FavoriteProductsPresenter @Inject constructor(
         compositeDisposable.add(disposable)
     }
 
-    private fun handleException(exception: Throwable) {
+    fun handleException(exception: Throwable) {
         if (exception is HttpException) {
             httpExceptionManager.handle(exception = exception)
         } else {

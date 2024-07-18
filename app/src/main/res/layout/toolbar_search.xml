@@ -22,6 +22,7 @@
             android:layout_marginEnd="10dp"
             android:background="@android:color/transparent"
             android:src="@drawable/arrow_back"
+            android:tint="@color/gray"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -33,17 +34,17 @@
             android:layout_width="17dp"
             android:layout_height="17dp"
             android:src="@drawable/edit_address_icon"
+            app:layout_constraintBottom_toBottomOf="@id/address"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/address"
-            app:layout_constraintBottom_toBottomOf="@id/address"/>
+            app:layout_constraintTop_toTopOf="@id/address" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/address"
             style="@style/regular_14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:layout_marginStart="4dp"
+            android:gravity="center_vertical"
             android:text="@string/select_address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/edit_address_icon"
@@ -63,10 +64,10 @@
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:lines="1"
-            android:textSize="14sp"
-            android:textColor="@color/black"
             android:paddingHorizontal="10dp"
             android:paddingStart="12dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/back"
             app:layout_constraintTop_toBottomOf="@id/address" />

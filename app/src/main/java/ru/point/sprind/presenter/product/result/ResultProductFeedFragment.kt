@@ -8,13 +8,16 @@ import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.LoadState
 import androidx.paging.PagingData
+import androidx.recyclerview.widget.GridLayoutManager
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.sprind.R
 import ru.point.sprind.adapters.SprindPagingAdapter
 import ru.point.sprind.adapters.decorators.FeedProductDecorator
+import ru.point.sprind.adapters.decorators.spans.ResultSpanSizeLookup
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentResultBinding
 import ru.point.sprind.view.ConnectableLayout
@@ -69,6 +72,8 @@ class ResultProductFeedFragment : MvpAppCompatFragment(), ResultProductFeedView 
                 val direction = ResultProductFeedFragmentDirections.actionGlobalMapFragment()
                 findNavController().navigate(directions = direction)
             }
+
+            setOnBackClickListener { findNavController().popBackStack() }
         }
     }
 
@@ -76,6 +81,22 @@ class ResultProductFeedFragment : MvpAppCompatFragment(), ResultProductFeedView 
         binding.recyclerView.apply {
             adapter = pagingAdapter
             addItemDecoration(FeedProductDecorator())
+
+            val layoutManager = layoutManager as GridLayoutManager
+            layoutManager.spanSizeLookup = ResultSpanSizeLookup(
+                delegates = presenter.viewDelegates,
+                adapter = pagingAdapter
+            )
+        }
+
+        pagingAdapter.addLoadStateListener { state ->
+            if (state.hasError) {
+                val stateError = state.append as? LoadState.Error
+                    ?: state.source.prepend as? LoadState.Error
+                    ?: state.prepend as? LoadState.Error
+                    ?: state.refresh as? LoadState.Error
+                stateError?.let { presenter.handleException(stateError.error) }
+            }
         }
     }
 
@@ -92,7 +113,6 @@ class ResultProductFeedFragment : MvpAppCompatFragment(), ResultProductFeedView 
             ResultProductFeedFragmentDirections.actionResultFragmentToProductCardFragment(
                 productId = productId
             )
-
         findNavController().navigate(directions = direction)
     }
 
