@@ -27,6 +27,7 @@ import ru.point.sprind.presenter.profile.orders.OrdersFragment
 import ru.point.sprind.presenter.review.all.AllReviewsFragment
 import ru.point.sprind.presenter.review.create.CreateReviewFragment
 import ru.point.sprind.presenter.search.SearchFragment
+import ru.point.sprind.presenter.shop.ShopFragment
 import javax.inject.Singleton
 
 @Singleton
@@ -75,6 +76,8 @@ interface AppComponent {
     fun inject(fragment: OrdersFragment)
 
     fun inject(fragment: CategoryFragment)
+
+    fun inject(fragment: ShopFragment)
 
     @Component.Factory
     interface AppComponentFactory {
