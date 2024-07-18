@@ -59,6 +59,11 @@ class ResultProductFeedFragment : MvpAppCompatFragment(), ResultProductFeedView 
         initRecyclerView()
     }
 
+    override fun onStart() {
+        super.onStart()
+        refresh()
+    }
+
     private fun initToolbar() {
         binding.toolbar.apply {
             searchText = args.request
@@ -98,6 +103,10 @@ class ResultProductFeedFragment : MvpAppCompatFragment(), ResultProductFeedView 
                 stateError?.let { presenter.handleException(stateError.error) }
             }
         }
+    }
+
+    override fun refresh() {
+        pagingAdapter.refresh()
     }
 
     override fun showBadConnection(show: Boolean) {

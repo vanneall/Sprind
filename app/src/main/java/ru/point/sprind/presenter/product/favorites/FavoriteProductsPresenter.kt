@@ -1,9 +1,7 @@
 package ru.point.sprind.presenter.product.favorites
 
 import android.util.Log
-import androidx.paging.Pager
 import androidx.paging.rxjava3.cachedIn
-import androidx.paging.rxjava3.observable
 import dagger.Lazy
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -17,13 +15,12 @@ import ru.point.domain.usecase.interfaces.favorite.GetFavoritesUseCase
 import ru.point.sprind.entity.deletage.product.favorites.EmptyFavoritesDelegate
 import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
-import ru.point.sprind.utils.pagerConfig
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @InjectViewState
 class FavoriteProductsPresenter @Inject constructor(
-    getFavoritesUseCase: GetFavoritesUseCase,
+    private val getFavoritesUseCase: GetFavoritesUseCase,
     private val productManager: Lazy<ProductManager>
 ) : MvpPresenter<FavoriteView>() {
 
@@ -45,10 +42,7 @@ class FavoriteProductsPresenter @Inject constructor(
     )
 
     init {
-        val disposable = Pager(
-            config = pagerConfig,
-            pagingSourceFactory = { getFavoritesUseCase.handle() }
-        ).observable
+        val disposable = getFavoritesUseCase.handle()
             .cachedIn(presenterScope)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -58,6 +52,7 @@ class FavoriteProductsPresenter @Inject constructor(
 
         compositeDisposable.add(disposable)
     }
+
 
     fun handleException(exception: Throwable) {
         if (exception is HttpException) {
@@ -83,7 +78,7 @@ class FavoriteProductsPresenter @Inject constructor(
         productManager.get().changeProductInFavoriteState(
             productId = productId,
             isInFavorite = isChecked,
-            onComplete = { isSuccessfulCallback(true) },
+            onComplete = { viewState.refresh() },
             onError = { ex ->
                 isSuccessfulCallback(false)
                 handleException(exception = ex)

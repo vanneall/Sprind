@@ -1,16 +1,13 @@
 package ru.point.sprind.presenter.category
 
 import android.util.Log
-import androidx.paging.Pager
 import androidx.paging.rxjava3.cachedIn
-import androidx.paging.rxjava3.observable
 import dagger.Lazy
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import moxy.presenterScope
@@ -23,9 +20,7 @@ import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
 import ru.point.sprind.entity.deletage.shop.ShopDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import ru.point.sprind.presenter.category.CategoryPresenter.Factory.Companion.ID
-import ru.point.sprind.utils.pagerConfig
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @InjectViewState
 class CategoryPresenter @AssistedInject constructor(
     @Assisted(ID) categoryId: Long,
@@ -54,10 +49,7 @@ class CategoryPresenter @AssistedInject constructor(
     private val mainCompositeDisposable = CompositeDisposable()
 
     init {
-        val mainDisposable = Pager(
-            config = pagerConfig,
-            pagingSourceFactory = { getCategoryProductsPageUseCase.handle(categoryId = categoryId) }
-        ).observable
+        val pagingDisposable = getCategoryProductsPageUseCase.handle(categoryId = categoryId)
             .cachedIn(presenterScope)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -65,7 +57,7 @@ class CategoryPresenter @AssistedInject constructor(
                 { ex -> handleException(exception = ex) }
             )
 
-        mainCompositeDisposable.add(mainDisposable)
+        mainCompositeDisposable.add(pagingDisposable)
     }
 
     private fun handleException(exception: Throwable) {
@@ -92,12 +84,18 @@ class CategoryPresenter @AssistedInject constructor(
         productManager.get().changeProductInFavoriteState(
             productId = productId,
             isInFavorite = isInFavoriteNow,
-            onComplete = { changeFavoriteStateCallback(true) },
+            onComplete = viewState::refresh,
             onError = { ex ->
                 changeFavoriteStateCallback(false)
                 handleException(exception = ex)
             }
         )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mainCompositeDisposable.clear()
+        productManager.get().clearActiveRequests()
     }
 
     @AssistedFactory
@@ -107,11 +105,5 @@ class CategoryPresenter @AssistedInject constructor(
         companion object {
             const val ID = "ru.point.sprind.presenter.category.ID"
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mainCompositeDisposable.clear()
-        productManager.get().clearActiveRequests()
     }
 }

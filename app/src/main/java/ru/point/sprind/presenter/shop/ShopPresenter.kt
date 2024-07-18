@@ -1,9 +1,7 @@
 package ru.point.sprind.presenter.shop
 
 import android.util.Log
-import androidx.paging.Pager
 import androidx.paging.rxjava3.cachedIn
-import androidx.paging.rxjava3.observable
 import dagger.Lazy
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -19,7 +17,6 @@ import ru.point.domain.usecase.interfaces.shop.GetShopProductsUseCase
 import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import ru.point.sprind.presenter.category.CategoryPresenter.Factory.Companion.ID
-import ru.point.sprind.utils.pagerConfig
 
 @InjectViewState
 class ShopPresenter @AssistedInject constructor(
@@ -45,10 +42,7 @@ class ShopPresenter @AssistedInject constructor(
     )
 
     init {
-        val mainDisposable = Pager(
-            config = pagerConfig,
-            pagingSourceFactory = { getShopProductsUseCase.handle(shopId = shopId) }
-        ).observable
+        val mainDisposable = getShopProductsUseCase.handle(shopId = shopId)
             .cachedIn(presenterScope)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -83,7 +77,7 @@ class ShopPresenter @AssistedInject constructor(
         productManager.get().changeProductInFavoriteState(
             productId = productId,
             isInFavorite = isInFavoriteNow,
-            onComplete = { changeFavoriteStateCallback(true) },
+            onComplete = { viewState.refresh() },
             onError = { ex ->
                 changeFavoriteStateCallback(false)
                 handleException(exception = ex)

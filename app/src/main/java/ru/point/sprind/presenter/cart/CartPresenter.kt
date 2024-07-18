@@ -1,10 +1,7 @@
 package ru.point.sprind.presenter.cart
 
 import android.util.Log
-import androidx.paging.Pager
-import androidx.paging.PagingData
 import androidx.paging.rxjava3.cachedIn
-import androidx.paging.rxjava3.observable
 import dagger.Lazy
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -22,13 +19,12 @@ import ru.point.sprind.entity.deletage.product.cart.CartProductDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartPromocodeDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartSummaryDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
-import ru.point.sprind.utils.pagerConfig
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @InjectViewState
 class CartPresenter @Inject constructor(
-    private val getProductsInCartUseCase: GetProductsInCartUseCase,
+    getProductsInCartUseCase: GetProductsInCartUseCase,
     private val makeOrderUseCase: Lazy<MakeOrderUseCase>,
     private val productManager: Lazy<ProductManager>
 ) : MvpPresenter<CartView>() {
@@ -55,17 +51,11 @@ class CartPresenter @Inject constructor(
 
     init {
         viewState.showLoading(show = true)
-        val pagingDisposable = Pager(
-            config = pagerConfig,
-            pagingSourceFactory = { getProductsInCartUseCase.handle() }
-        ).observable
+        val pagingDisposable = getProductsInCartUseCase.handle()
             .cachedIn(presenterScope)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { data ->
-                    viewState.showLoading(show = false)
-                    viewState.setAdapter(data)
-                },
+                { data -> viewState.setAdapter(data) },
                 { ex -> handleException(exception = ex) }
             )
 
@@ -84,6 +74,7 @@ class CartPresenter @Inject constructor(
     private fun removeProductFromCart(id: Long) {
         productManager.get().removeFromCart(
             productId = id,
+            onComplete = viewState::refresh,
             onError = ::handleException
         )
     }
@@ -96,7 +87,7 @@ class CartPresenter @Inject constructor(
         productManager.get().changeProductInFavoriteState(
             productId = productId,
             isInFavorite = isChecked,
-            onComplete = { isSuccessfulCallback(true) },
+            onComplete = viewState::refresh,
             onError = { ex ->
                 isSuccessfulCallback(false)
                 handleException(exception = ex)
@@ -110,7 +101,6 @@ class CartPresenter @Inject constructor(
             .subscribe({
                 viewState.navigateToThanksScreen()
                 viewState.hidePayButton()
-                viewState.setAdapter(PagingData.empty())
             }, { ex ->
                 handleException(exception = ex)
             })

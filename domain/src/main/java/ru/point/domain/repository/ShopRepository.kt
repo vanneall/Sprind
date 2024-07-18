@@ -1,8 +1,9 @@
 package ru.point.domain.repository
 
-import io.reactivex.rxjava3.core.Single
-import ru.point.domain.entity.response.product.FeedProductResponse
+import androidx.paging.PagingData
+import io.reactivex.rxjava3.core.Observable
+import ru.point.domain.entity.view.ViewObject
 
 interface ShopRepository {
-    fun getShopProducts(offset: Int, limit: Int, shopId: Long): Single<List<FeedProductResponse>>
+    fun getShopProducts(shopId: Long): Observable<PagingData<ViewObject>>
 }

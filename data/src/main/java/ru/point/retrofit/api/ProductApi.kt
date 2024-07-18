@@ -13,7 +13,7 @@ interface ProductApi {
     fun getPageInfo(): Single<ComplexProductResponse>
 
     @GET("feed")
-    fun getProductDto(
+    fun getProducts(
         @Query("offset") offset: Int,
         @Query("limit") limit: Int,
         @Query("name") search: String? = null

@@ -55,6 +55,11 @@ class CategoryFragment : MvpAppCompatFragment(), CategoryView {
         initRecyclerView()
     }
 
+    override fun onStart() {
+        super.onStart()
+        refresh()
+    }
+
     private fun initToolbar() {
         binding.toolbar.apply {
             text = args.title
@@ -78,6 +83,10 @@ class CategoryFragment : MvpAppCompatFragment(), CategoryView {
     override fun setAdapter(views: PagingData<ViewObject>) {
         pagingAdapter.submitData(lifecycle, views)
         binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
+    }
+
+    override fun refresh() {
+        pagingAdapter.refresh()
     }
 
     override fun navigateToProductCard(productId: Long) {

@@ -16,7 +16,6 @@ class ProductViewHolder(
 
     override fun bind(view: FeedProductVo) {
         binding.apply {
-
             image.load(view.imagesUrl.first().url) {
                 scale(Scale.FIT)
                 transformations(RoundedCornersTransformation(50f, 50f))
@@ -24,8 +23,8 @@ class ProductViewHolder(
 
             name.text = view.name
             price.text = view.price
-            isFavorite.isChecked = view.isFavorite
 
+            isFavorite.isChecked = view.isFavorite
             isFavorite.setOnClickListener {
                 val isChecked = isFavorite.isChecked
                 onFavoriteCheckedChange(view.id, isChecked) { isSuccess ->
@@ -33,14 +32,9 @@ class ProductViewHolder(
                 }
             }
 
-            root.setOnClickListener {
-                onClickCard(view.id)
-            }
+            root.setOnClickListener { onClickCard(view.id) }
 
-            if (view.inCart) {
-                buyButton.isEnabled = false
-            }
-
+            buyButton.isEnabled = !view.inCart
             buyButton.setOnClickListener { onBuyClick(view.id) }
         }
     }

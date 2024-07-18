@@ -13,7 +13,7 @@ class DiffUtilCallback<T>(
         return itemsComparator.invoke(oldItem, newItem)
     }
 
-    override fun getChangePayload(oldItem: T & Any, newItem: T & Any): Any? {
-        return null
+    override fun getChangePayload(oldItem: T & Any, newItem: T & Any): Any {
+        return Any()
     }
 }

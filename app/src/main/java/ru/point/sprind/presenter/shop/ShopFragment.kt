@@ -53,6 +53,11 @@ class ShopFragment : MvpAppCompatFragment(), ShopView {
         initRecyclerView()
     }
 
+    override fun onStart() {
+        super.onStart()
+        refresh()
+    }
+
     private fun initToolbar() {
         binding.toolbar.apply {
             text = args.title
@@ -71,6 +76,10 @@ class ShopFragment : MvpAppCompatFragment(), ShopView {
                 adapter = pagingAdapter
             )
         }
+    }
+
+    override fun refresh() {
+        pagingAdapter.refresh()
     }
 
     override fun showBadConnection(show: Boolean) {

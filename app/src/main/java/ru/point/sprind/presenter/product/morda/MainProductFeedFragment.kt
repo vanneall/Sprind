@@ -50,7 +50,11 @@ class MainProductFeedFragment : MvpAppCompatFragment(), MainProductFeedView {
         super.onViewCreated(view, savedInstanceState)
         initToolbar()
         initRecyclerView()
+    }
 
+    override fun onStart() {
+        super.onStart()
+        refresh()
     }
 
     private fun initToolbar() {
@@ -110,6 +114,10 @@ class MainProductFeedFragment : MvpAppCompatFragment(), MainProductFeedView {
 
     override fun setAddress(address: String?) {
         binding.toolbar.address = address
+    }
+
+    override fun refresh() {
+        pagingAdapter.refresh()
     }
 
     override fun setAdapter(views: PagingData<ViewObject>) {

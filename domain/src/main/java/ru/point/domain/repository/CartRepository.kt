@@ -1,14 +1,16 @@
 package ru.point.domain.repository
 
+import androidx.paging.PagingData
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import ru.point.domain.entity.response.cart.CartPageInfoResponse
-import ru.point.domain.entity.response.product.FeedProductResponse
+import ru.point.domain.entity.view.ViewObject
 
 interface CartRepository {
     fun getPageInfo(): Single<CartPageInfoResponse>
 
-    fun getProducts(offset: Int, limit: Int): Single<List<FeedProductResponse>>
+    fun getProducts(): Observable<PagingData<ViewObject>>
 
     fun addProduct(id: Long): Completable
 

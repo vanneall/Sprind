@@ -3,9 +3,6 @@ package ru.point.sprind.di.modules
 import dagger.Module
 import dagger.Provides
 import ru.point.domain.factory.interfaces.EmptyAddressResponseFactory
-import ru.point.domain.paging.CartPagingSource
-import ru.point.domain.paging.FavoritePagingSource
-import ru.point.domain.paging.FeedPagingSource
 import ru.point.domain.repository.CartRepository
 import ru.point.domain.repository.CategoryRepository
 import ru.point.domain.repository.FavoriteRepository
@@ -31,7 +28,7 @@ import ru.point.retrofit.api.ShopApi
 import ru.point.retrofit.api.UserApi
 import ru.point.room.RequestDao
 
-@Module(includes = [ApiModule::class, PagingSourceModule::class])
+@Module(includes = [ApiModule::class])
 class RepositoryModule {
     @Provides
     fun provideRemoteProductRepository(
@@ -42,8 +39,11 @@ class RepositoryModule {
     }
 
     @Provides
-    fun provideRemoteCartRepository(api: CartApi): CartRepository {
-        return RemoteCartRepository(api = api)
+    fun provideRemoteCartRepository(
+        api: CartApi,
+        factory: EmptyAddressResponseFactory
+    ): CartRepository {
+        return RemoteCartRepository(api = api, factory = factory)
     }
 
     @Provides
@@ -74,26 +74,5 @@ class RepositoryModule {
     @Provides
     fun provideShopRepository(api: ShopApi): ShopRepository {
         return ShopRepositoryImpl(api = api)
-    }
-}
-
-@Module
-class PagingSourceModule {
-    @Provides
-    fun provideFavoritePagingSource(repository: FavoriteRepository): FavoritePagingSource {
-        return FavoritePagingSource(repository = repository)
-    }
-
-    @Provides
-    fun provideFeedPagingSource(repository: ProductRepository): FeedPagingSource {
-        return FeedPagingSource(repository = repository)
-    }
-
-    @Provides
-    fun provideCartPagingSource(
-        repository: CartRepository,
-        factory: EmptyAddressResponseFactory
-    ): CartPagingSource {
-        return CartPagingSource(repository = repository, factory = factory)
     }
 }

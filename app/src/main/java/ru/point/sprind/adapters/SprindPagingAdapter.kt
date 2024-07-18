@@ -8,7 +8,8 @@ import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class SprindPagingAdapter(
     private val delegates: List<Delegate<*>>,
-) : PagingDataAdapter<ViewObject, ViewHolderV2<ViewObject>>(DiffUtilCallback()) {
+    comparator: (ViewObject, ViewObject) -> Boolean = { oldItem, newItem -> oldItem == newItem }
+) : PagingDataAdapter<ViewObject, ViewHolderV2<ViewObject>>(DiffUtilCallback(comparator)) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderV2<ViewObject> {
         return delegates[viewType]

@@ -26,6 +26,9 @@ interface UsingDefaultAdapterView: MvpView {
 interface UsingPagingAdapter: MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun setAdapter(views: PagingData<ViewObject>)
+
+    @StateStrategyType(SkipStrategy::class)
+    fun refresh()
 }
 
 interface NavigableView: MvpView {

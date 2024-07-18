@@ -1,21 +1,33 @@
 package ru.point.repository.remote
 
+import androidx.paging.Pager
+import androidx.paging.PagingData
+import androidx.paging.rxjava3.observable
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.point.domain.entity.response.cart.CartPageInfoResponse
-import ru.point.domain.entity.response.product.FeedProductResponse
+import ru.point.domain.entity.view.ViewObject
+import ru.point.domain.factory.interfaces.EmptyAddressResponseFactory
 import ru.point.domain.repository.CartRepository
+import ru.point.repository.paging.CartPagingSource
 import ru.point.retrofit.api.CartApi
 
-class RemoteCartRepository(private val api: CartApi) : CartRepository {
+class RemoteCartRepository(
+    private val api: CartApi,
+    private val factory: EmptyAddressResponseFactory
+) : CartRepository {
     override fun getPageInfo(): Single<CartPageInfoResponse> {
         return api.getPageInfo()
             .subscribeOn(Schedulers.io())
     }
 
-    override fun getProducts(offset: Int, limit: Int): Single<List<FeedProductResponse>> {
-        return api.getProductsFromCart(offset = offset, limit = limit)
+    override fun getProducts(): Observable<PagingData<ViewObject>> {
+        return Pager(
+            config = pagerConfig,
+            pagingSourceFactory = { CartPagingSource(api, factory) }
+        ).observable
             .subscribeOn(Schedulers.io())
     }
 
@@ -34,13 +46,3 @@ class RemoteCartRepository(private val api: CartApi) : CartRepository {
             .subscribeOn(Schedulers.io())
     }
 }
-
-//return Pager(
-//config = PagingConfig(
-//pageSize = 25,
-//prefetchDistance = 10,
-//maxSize = 45,
-//enablePlaceholders = false
-//),
-//pagingSourceFactory = { cartPagingSource }
-//).observable.subscribeOn(Schedulers.io())

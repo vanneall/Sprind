@@ -2,7 +2,6 @@ package ru.point.sprind.di.usecases
 
 import dagger.Module
 import dagger.Provides
-import ru.point.domain.paging.CartPagingSource
 import ru.point.domain.repository.CartRepository
 import ru.point.domain.usecase.implementation.cart.AddProductToCartUseCaseImpl
 import ru.point.domain.usecase.implementation.cart.GetCartPageInfoUseCaseImpl
@@ -19,8 +18,8 @@ import ru.point.domain.usecase.interfaces.cart.RemoveProductFromCartUseCase
 class CartUseCaseModule {
 
     @Provides
-    fun provideGetProductFromCart(pagingSource: CartPagingSource): GetProductsInCartUseCase {
-        return GetProductsInCartUseCaseImpl(cartPagingSource = pagingSource)
+    fun provideGetProductFromCart(repository: CartRepository): GetProductsInCartUseCase {
+        return GetProductsInCartUseCaseImpl(repository = repository)
     }
 
     @Provides

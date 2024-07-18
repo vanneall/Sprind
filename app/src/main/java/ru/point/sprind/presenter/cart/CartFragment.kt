@@ -11,6 +11,7 @@ import androidx.paging.PagingData
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
+import ru.point.domain.entity.view.cart.CartEmptyVo
 import ru.point.sprind.R
 import ru.point.sprind.adapters.SprindPagingAdapter
 import ru.point.sprind.adapters.decorators.CartItemDecorator
@@ -34,7 +35,13 @@ class CartFragment : MvpAppCompatFragment(), CartView {
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
-        _pagingAdapter = SprindPagingAdapter(delegates = presenter.viewDelegates)
+        _pagingAdapter = SprindPagingAdapter(
+            delegates = presenter.viewDelegates,
+            comparator = { V1, V2 ->
+                if (V1 is CartEmptyVo && V2 is CartEmptyVo) true
+                else V1 == V2
+            }
+        )
     }
 
     override fun onCreateView(
@@ -50,6 +57,11 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         initRecyclerView()
     }
 
+    override fun onStart() {
+        super.onStart()
+        refresh()
+    }
+
     private fun initRecyclerView() {
         binding.cartRecyclerView.apply {
             adapter = pagingAdapter
@@ -63,7 +75,7 @@ class CartFragment : MvpAppCompatFragment(), CartView {
                     ?: state.prepend as? LoadState.Error
                     ?: state.refresh as? LoadState.Error
                 stateError?.let { presenter.handleException(stateError.error) }
-            } else if (state.isIdle && !state.hasError){
+            } else if (state.isIdle && !state.hasError) {
                 showPayButton()
             }
         }
@@ -72,6 +84,10 @@ class CartFragment : MvpAppCompatFragment(), CartView {
     override fun setAdapter(views: PagingData<ViewObject>) {
         pagingAdapter.submitData(lifecycle = lifecycle, pagingData = views)
         binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
+    }
+
+    override fun refresh() {
+        pagingAdapter.refresh()
     }
 
     override fun changeAddress() {

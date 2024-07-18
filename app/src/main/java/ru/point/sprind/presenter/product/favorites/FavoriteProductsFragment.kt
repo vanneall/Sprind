@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
+import ru.point.domain.entity.view.favorites.EmptyFavoritesVo
 import ru.point.sprind.R
 import ru.point.sprind.adapters.SprindPagingAdapter
 import ru.point.sprind.adapters.decorators.FavoritesItemDecorator
@@ -37,7 +38,13 @@ class FavoriteProductsFragment : MvpAppCompatFragment(), FavoriteView {
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
-        _pagingAdapter = SprindPagingAdapter(delegates = presenter.viewDelegates)
+        _pagingAdapter = SprindPagingAdapter(
+            delegates = presenter.viewDelegates,
+            comparator = { V1, V2 ->
+                if (V1 is EmptyFavoritesVo && V2 is EmptyFavoritesVo) true
+                else V1 == V2
+            }
+        )
     }
 
     override fun onCreateView(
@@ -53,6 +60,11 @@ class FavoriteProductsFragment : MvpAppCompatFragment(), FavoriteView {
         initRecyclerView()
     }
 
+    override fun onStart() {
+        super.onStart()
+        refresh()
+    }
+
     private fun initRecyclerView() {
         binding.favoritesRecyclerView.apply {
             adapter = pagingAdapter
@@ -61,6 +73,7 @@ class FavoriteProductsFragment : MvpAppCompatFragment(), FavoriteView {
             layoutManager.spanSizeLookup =
                 FavoriteSpanSizeLookup(presenter.viewDelegates, pagingAdapter)
             addItemDecoration(FavoritesItemDecorator())
+
             pagingAdapter.addLoadStateListener { state ->
                 if (state.hasError) {
                     val stateError = state.append as? LoadState.Error
@@ -93,6 +106,10 @@ class FavoriteProductsFragment : MvpAppCompatFragment(), FavoriteView {
                 findNavController().navigate(FavoriteProductsFragmentDirections.actionGlobalAuthorizationFragment())
             }
         }
+    }
+
+    override fun refresh() {
+        pagingAdapter.refresh()
     }
 
     override fun showBadConnection(show: Boolean) {

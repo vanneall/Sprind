@@ -1,9 +1,7 @@
 package ru.point.sprind.presenter.product.morda
 
 import android.util.Log
-import androidx.paging.Pager
 import androidx.paging.rxjava3.cachedIn
-import androidx.paging.rxjava3.observable
 import dagger.Lazy
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -20,7 +18,6 @@ import ru.point.sprind.entity.deletage.category.CategoryDelegate
 import ru.point.sprind.entity.deletage.product.card.NestedRecyclerViewDelegate
 import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
-import ru.point.sprind.utils.pagerConfig
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -60,10 +57,7 @@ class MainProductFeedPresenter @Inject constructor(
                 { ex -> handleException(exception = ex) }
             )
 
-        val pagingDisposable = Pager(
-            config = pagerConfig,
-            pagingSourceFactory = getProductsUseCase::handle
-        ).observable
+        val pagingDisposable = getProductsUseCase.handle()
             .cachedIn(presenterScope)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -99,7 +93,7 @@ class MainProductFeedPresenter @Inject constructor(
         productManager.get().changeProductInFavoriteState(
             productId = productId,
             isInFavorite = isInFavoriteNow,
-            onComplete = { changeFavoriteStateCallback(true) },
+            onComplete = { viewState.refresh() },
             onError = { ex ->
                 changeFavoriteStateCallback(false)
                 handleException(exception = ex)

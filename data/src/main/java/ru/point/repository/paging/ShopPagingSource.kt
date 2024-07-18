@@ -1,16 +1,15 @@
-package ru.point.domain.paging
+package ru.point.repository.paging
 
 import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxPagingSource
 import io.reactivex.rxjava3.core.Single
-import ru.point.domain.entity.response.mappers.toCategoryVo
 import ru.point.domain.entity.response.mappers.toProductFeedVo
 import ru.point.domain.entity.view.ViewObject
-import ru.point.domain.entity.view.product.info.NestedRecyclerViewVo
-import ru.point.domain.repository.ProductRepository
+import ru.point.retrofit.api.ShopApi
 
-class FeedPagingSource(
-    private val repository: ProductRepository
+class ShopPagingSource (
+    private val shopId: Long,
+    private val api: ShopApi
 ) : RxPagingSource<Int, ViewObject>() {
     override fun getRefreshKey(state: PagingState<Int, ViewObject>): Int? = null
 
@@ -18,25 +17,12 @@ class FeedPagingSource(
         val startPage = params.key ?: 0
         val pageSize = params.loadSize
 
-        return repository.getProductsPaging(startPage, pageSize, null)
+        return api.getShopsProducts(shopId, startPage, pageSize)
             .map<LoadResult<Int, ViewObject>> { response ->
                 val prevKey = if (startPage == 0) null else startPage - pageSize
                 val nextKey = if (response.size < pageSize) null else pageSize
 
-                var categories = listOf<ViewObject>()
-                if (prevKey == null) {
-                    categories = listOf(
-                        NestedRecyclerViewVo(
-                            viewObjects = repository.getAvailableCategories()
-                                .blockingGet()
-                                .map { categoryResponse -> categoryResponse.toCategoryVo() })
-                    )
-                }
-
-                val resultPageData = categories +
-                        response.map { productResponse ->
-                            productResponse.toProductFeedVo()
-                        }
+                val resultPageData = response.map { responseItem -> responseItem.toProductFeedVo() }
 
                 LoadResult.Page(
                     data = resultPageData,

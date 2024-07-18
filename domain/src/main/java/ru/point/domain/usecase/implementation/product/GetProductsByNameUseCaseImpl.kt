@@ -1,10 +1,10 @@
 package ru.point.domain.usecase.implementation.product
 
-import ru.point.domain.paging.NamedProductsPagingSource
+import ru.point.domain.repository.ProductRepository
 import ru.point.domain.usecase.interfaces.product.GetProductsByNameUseCase
 
 class GetProductsByNameUseCaseImpl(
-    private val pagingSourceFactory: NamedProductsPagingSource.Factory
+    private val repository: ProductRepository
 ) : GetProductsByNameUseCase {
-    override fun handle(request: String) = pagingSourceFactory.create(request = request)
+    override fun handle(request: String) = repository.getProductsByName(request)
 }

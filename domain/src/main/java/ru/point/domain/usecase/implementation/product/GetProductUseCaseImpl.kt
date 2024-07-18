@@ -1,10 +1,10 @@
 package ru.point.domain.usecase.implementation.product
 
-import ru.point.domain.paging.FeedPagingSource
+import ru.point.domain.repository.ProductRepository
 import ru.point.domain.usecase.interfaces.product.GetProductsUseCase
 
 class GetProductUseCaseImpl(
-    private val pagingSource: FeedPagingSource
+    private val repository: ProductRepository
 ) : GetProductsUseCase {
-    override fun handle() = pagingSource
+    override fun handle() = repository.getProductsPaging()
 }

@@ -2,8 +2,6 @@ package ru.point.sprind.di.usecases
 
 import dagger.Module
 import dagger.Provides
-import ru.point.domain.paging.FeedPagingSource
-import ru.point.domain.paging.NamedProductsPagingSource
 import ru.point.domain.repository.ProductRepository
 import ru.point.domain.usecase.implementation.product.GetMainProductsPageInfoUseCaseImpl
 import ru.point.domain.usecase.implementation.product.GetProductByIdUseCaseImpl
@@ -18,13 +16,13 @@ import ru.point.domain.usecase.interfaces.product.GetProductsUseCase
 class ProductUseCaseModule {
 
     @Provides
-    fun provideGetProductUseCase(pagingSource: FeedPagingSource): GetProductsUseCase {
-        return GetProductUseCaseImpl(pagingSource = pagingSource)
+    fun provideGetProductUseCase(repository: ProductRepository): GetProductsUseCase {
+        return GetProductUseCaseImpl(repository = repository)
     }
 
     @Provides
-    fun provideGetProductByNameUseCase(pagingSourceFactory: NamedProductsPagingSource.Factory): GetProductsByNameUseCase {
-        return GetProductsByNameUseCaseImpl(pagingSourceFactory = pagingSourceFactory)
+    fun provideGetProductByNameUseCase(repository: ProductRepository): GetProductsByNameUseCase {
+        return GetProductsByNameUseCaseImpl(repository = repository)
     }
 
     @Provides

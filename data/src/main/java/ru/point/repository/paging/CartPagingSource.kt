@@ -1,4 +1,4 @@
-package ru.point.domain.paging
+package ru.point.repository.paging
 
 import androidx.paging.PagingState
 import androidx.paging.rxjava3.RxPagingSource
@@ -15,10 +15,10 @@ import ru.point.domain.entity.view.cart.CartEmptyVo
 import ru.point.domain.entity.view.cart.CartHeaderVo
 import ru.point.domain.exceptions.ViewObjectMapRuleNotFoundException
 import ru.point.domain.factory.interfaces.EmptyAddressResponseFactory
-import ru.point.domain.repository.CartRepository
+import ru.point.retrofit.api.CartApi
 
 class CartPagingSource(
-    private val repository: CartRepository,
+    private val api: CartApi,
     private val factory: EmptyAddressResponseFactory
 ) : RxPagingSource<Int, ViewObject>() {
     override fun getRefreshKey(state: PagingState<Int, ViewObject>): Int? = null
@@ -27,7 +27,7 @@ class CartPagingSource(
         val startPage = params.key ?: 0
         val pageSize = params.loadSize
 
-        return repository.getProducts(startPage, pageSize)
+        return api.getProductsFromCart(startPage, pageSize)
             .map<LoadResult<Int, ViewObject>> { response ->
                 val prevKey = if (startPage == 0) null else startPage - pageSize
                 val nextKey = if (response.size < pageSize) null else pageSize
@@ -35,7 +35,7 @@ class CartPagingSource(
                 val headerItems = mutableListOf<ResponseItem>()
                 val footerItems = mutableListOf<ResponseItem>()
 
-                if ((prevKey == null) xor (nextKey == null)) {
+                if (response.isNotEmpty()) {
                     getPageInfoResponse(
                         isAddressRequired = prevKey == null,
                         isOrderSummaryRequired = nextKey == null,
@@ -44,7 +44,7 @@ class CartPagingSource(
                     )
                 }
 
-                val resultPageData = if (prevKey == null && nextKey == null) {
+                val resultPageData = if (response.isEmpty()) {
                     listOf(CartEmptyVo())
                 } else {
                     (headerItems + response + footerItems).map { responseItem ->
@@ -67,7 +67,7 @@ class CartPagingSource(
         addressItemContainer: MutableList<ResponseItem>,
         summaryItemContainer: MutableList<ResponseItem>
     ) {
-        val pageInfoResponse = repository.getPageInfo().blockingGet()
+        val pageInfoResponse = api.getPageInfo().blockingGet()
 
         if (isAddressRequired && pageInfoResponse.summaryPriceResponse != null)
             addressItemContainer.add(pageInfoResponse.addressInfoResponse ?: factory.create())
