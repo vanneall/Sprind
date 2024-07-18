@@ -1,5 +1,6 @@
 package ru.point.repository.local
 
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -29,6 +30,11 @@ class RequestRepositoryImpl(
     override fun getAll(): Single<List<String>> {
         return dao.getAll()
             .subscribeOn(Schedulers.io())
-            .map { list -> list.map { request -> request.request } }
+            .map { list -> list.map { request -> request.request }.take(10) }
+    }
+
+    override fun clear(): Completable {
+        return dao.clear()
+            .subscribeOn(Schedulers.io())
     }
 }

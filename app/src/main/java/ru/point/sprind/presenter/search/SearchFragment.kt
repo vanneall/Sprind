@@ -80,6 +80,10 @@ class SearchFragment : MvpAppCompatFragment(), SearchRequestView {
                 return@setOnEditorClickListener false
             }
         }
+
+        binding.clearText.setOnClickListener {
+            presenter.clear()
+        }
     }
 
     private fun initRecyclerView() {

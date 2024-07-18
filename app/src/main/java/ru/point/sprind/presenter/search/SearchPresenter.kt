@@ -1,5 +1,6 @@
 package ru.point.sprind.presenter.search
 
+import android.util.Log
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
@@ -22,7 +23,6 @@ class SearchPresenter @Inject constructor(
         manager.insert(request = request)
     }
 
-
     fun getRequests() {
         val disposable = manager.getAll()
             .observeOn(AndroidSchedulers.mainThread())
@@ -36,9 +36,17 @@ class SearchPresenter @Inject constructor(
         compositeDisposable.add(disposable)
     }
 
+    fun clear() {
+        val clearDisposable = manager.clear()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe (
+                { viewState.setAdapter(listOf()) },
+                { ex -> Log.e("Exception", ex.stackTraceToString())})
+        compositeDisposable.add(clearDisposable)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.clear()
     }
-
 }

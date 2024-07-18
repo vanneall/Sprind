@@ -19,4 +19,6 @@ interface RequestDao {
     @Delete
     fun delete(requestEntity: RequestEntity)
 
+    @Query("delete from requests")
+    fun clear(): Completable
 }
