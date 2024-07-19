@@ -13,11 +13,14 @@ import retrofit2.HttpException
 import ru.point.domain.manager.ProductManager
 import ru.point.domain.usecase.interfaces.cart.GetProductsInCartUseCase
 import ru.point.domain.usecase.interfaces.cart.MakeOrderUseCase
+import ru.point.sprind.adapters.decorators.HorizontalFavoritesItemDecorator
+import ru.point.sprind.entity.deletage.product.card.NestedRecyclerViewDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartEmptyDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartHeaderDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartProductDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartPromocodeDelegate
 import ru.point.sprind.entity.deletage.product.cart.CartSummaryDelegate
+import ru.point.sprind.entity.deletage.product.feed.ProductDelegate
 import ru.point.sprind.entity.manager.HttpExceptionStatusManager
 import javax.inject.Inject
 
@@ -36,15 +39,41 @@ class CartPresenter @Inject constructor(
         .build()
 
     val viewDelegates = listOf(
+        CartHeaderDelegate(viewState::changeAddress),
         CartProductDelegate(
             onClick = viewState::navigateToProductCard,
             onFavoriteCheckedChange = ::changeProductFavoriteState,
             delete = ::removeProductFromCart
         ),
-        CartEmptyDelegate(),
         CartPromocodeDelegate(),
-        CartHeaderDelegate(viewState::changeAddress),
-        CartSummaryDelegate()
+        CartSummaryDelegate(),
+        CartEmptyDelegate(),
+        NestedRecyclerViewDelegate(
+            delegates = listOf(
+                ProductDelegate(
+                    onClickCard = viewState::navigateToProductCard,
+                    onBuyClick = { id ->
+                        productManager.get().addToCart(
+                            productId = id,
+                            onComplete = viewState::refresh,
+                            onError = ::handleException
+                        )
+                    },
+                    onFavoriteCheckedChange = { id, isFavorite, callback ->
+                        productManager.get().changeProductInFavoriteState(
+                            productId = id,
+                            isInFavorite = isFavorite,
+                            onComplete = viewState::refresh,
+                            onError = { ex ->
+                                callback(false)
+                                handleException(exception = ex)
+                            }
+                        )
+                    }
+                )
+            ),
+            itemDecoration = HorizontalFavoritesItemDecorator()
+        )
     )
 
     private val compositeDisposable = CompositeDisposable()

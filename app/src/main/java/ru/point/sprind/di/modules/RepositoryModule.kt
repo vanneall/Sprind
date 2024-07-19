@@ -41,9 +41,10 @@ class RepositoryModule {
     @Provides
     fun provideRemoteCartRepository(
         api: CartApi,
+        favoriteApi: FavoriteApi,
         factory: EmptyAddressResponseFactory
     ): CartRepository {
-        return RemoteCartRepository(api = api, factory = factory)
+        return RemoteCartRepository(api = api, favoriteApi = favoriteApi, factory = factory)
     }
 
     @Provides

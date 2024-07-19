@@ -13,9 +13,11 @@ import ru.point.domain.factory.interfaces.EmptyAddressResponseFactory
 import ru.point.domain.repository.CartRepository
 import ru.point.repository.paging.CartPagingSource
 import ru.point.retrofit.api.CartApi
+import ru.point.retrofit.api.FavoriteApi
 
 class RemoteCartRepository(
     private val api: CartApi,
+    private val favoriteApi: FavoriteApi,
     private val factory: EmptyAddressResponseFactory
 ) : CartRepository {
     override fun getPageInfo(): Single<CartPageInfoResponse> {
@@ -26,7 +28,7 @@ class RemoteCartRepository(
     override fun getProducts(): Observable<PagingData<ViewObject>> {
         return Pager(
             config = pagerConfig,
-            pagingSourceFactory = { CartPagingSource(api, factory) }
+            pagingSourceFactory = { CartPagingSource(api, favoriteApi, factory) }
         ).observable
             .subscribeOn(Schedulers.io())
     }

@@ -9,16 +9,21 @@ import ru.point.domain.entity.response.cart.SummaryPriceInfoResponse
 import ru.point.domain.entity.response.mappers.toAddressVo
 import ru.point.domain.entity.response.mappers.toCartProductVo
 import ru.point.domain.entity.response.mappers.toCartSummaryVo
+import ru.point.domain.entity.response.mappers.toProductFeedVo
 import ru.point.domain.entity.response.product.FeedProductResponse
 import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.entity.view.cart.CartEmptyVo
 import ru.point.domain.entity.view.cart.CartHeaderVo
+import ru.point.domain.entity.view.cart.CartPromocodeVo
+import ru.point.domain.entity.view.product.info.NestedRecyclerViewVo
 import ru.point.domain.exceptions.ViewObjectMapRuleNotFoundException
 import ru.point.domain.factory.interfaces.EmptyAddressResponseFactory
 import ru.point.retrofit.api.CartApi
+import ru.point.retrofit.api.FavoriteApi
 
 class CartPagingSource(
     private val api: CartApi,
+    private val favoriteApi: FavoriteApi,
     private val factory: EmptyAddressResponseFactory
 ) : RxPagingSource<Int, ViewObject>() {
     override fun getRefreshKey(state: PagingState<Int, ViewObject>): Int? = null
@@ -45,9 +50,15 @@ class CartPagingSource(
                 }
 
                 val resultPageData = if (response.isEmpty()) {
-                    listOf(CartEmptyVo())
+                    getEmptyCartViewObjects()
                 } else {
-                    (headerItems + response + footerItems).map { responseItem ->
+                    val firstPart = (headerItems + response).map { responseItem ->
+                        mapResponseItem(responseItem = responseItem)
+                    }
+                    val secondPart =
+                        if (footerItems.isNotEmpty()) listOf(CartPromocodeVo()) else listOf()
+
+                    firstPart + secondPart + footerItems.map { responseItem ->
                         mapResponseItem(responseItem)
                     }
                 }
@@ -59,6 +70,17 @@ class CartPagingSource(
                 )
             }
             .onErrorReturn { throwable -> LoadResult.Error(throwable) }
+    }
+
+    private fun getEmptyCartViewObjects(): List<ViewObject> {
+        val header = CartEmptyVo()
+        val favorites = NestedRecyclerViewVo(
+            represented = NestedRecyclerViewVo.Represented.FAVORITE,
+            viewObjects = favoriteApi.getFavorites(0, 10)
+                .blockingGet()
+                .map { response -> response.toProductFeedVo() }
+        )
+        return listOf(header, favorites)
     }
 
     private fun getPageInfoResponse(
