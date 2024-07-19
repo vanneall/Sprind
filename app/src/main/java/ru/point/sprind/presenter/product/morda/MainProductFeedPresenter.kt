@@ -87,17 +87,13 @@ class MainProductFeedPresenter @Inject constructor(
 
     private fun changeProductInFavoriteState(
         productId: Long,
-        isInFavoriteNow: Boolean,
-        changeFavoriteStateCallback: (isSuccessful: Boolean) -> Unit,
+        isInFavoriteNow: Boolean
     ) {
         productManager.get().changeProductInFavoriteState(
             productId = productId,
             isInFavorite = isInFavoriteNow,
             onComplete = { viewState.refresh() },
-            onError = { ex ->
-                changeFavoriteStateCallback(false)
-                handleException(exception = ex)
-            }
+            onError = { ex -> handleException(exception = ex) }
         )
     }
 

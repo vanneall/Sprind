@@ -12,6 +12,8 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
 import ru.point.domain.entity.view.cart.CartEmptyVo
+import ru.point.domain.entity.view.cart.CartProductVo
+import ru.point.domain.entity.view.cart.CartPromocodeVo
 import ru.point.sprind.R
 import ru.point.sprind.adapters.SprindPagingAdapter
 import ru.point.sprind.adapters.decorators.CartItemDecorator
@@ -37,9 +39,21 @@ class CartFragment : MvpAppCompatFragment(), CartView {
         super.onCreate(savedInstanceState)
         _pagingAdapter = SprindPagingAdapter(
             delegates = presenter.viewDelegates,
-            comparator = { V1, V2 ->
+            itemsComparator = { V1, V2 ->
                 if (V1 is CartEmptyVo && V2 is CartEmptyVo) true
+                else if (V1 is CartProductVo && V2 is CartProductVo) V1.id == V2.id
+                else if (V1 is CartPromocodeVo && V2 is CartPromocodeVo) true
                 else V1 == V2
+            },
+            contentComparator = { V1, V2 ->
+                if (V1 is CartEmptyVo && V2 is CartEmptyVo) true
+                else if (V1 is CartProductVo && V2 is CartProductVo) V1 == V2
+                else if (V1 is CartPromocodeVo && V2 is CartPromocodeVo) true
+                else V1 == V2
+            },
+            changePayload = { V1, V2 ->
+                if (V1 is CartProductVo && V2 is CartProductVo) V1.isFavorite xor V2.isFavorite
+                else null
             }
         )
     }

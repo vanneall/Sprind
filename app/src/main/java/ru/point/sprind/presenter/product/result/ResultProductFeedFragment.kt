@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
+import ru.point.domain.entity.view.product.card.FeedProductVo
 import ru.point.sprind.R
 import ru.point.sprind.adapters.SprindPagingAdapter
 import ru.point.sprind.adapters.decorators.FeedProductDecorator
@@ -42,7 +43,17 @@ class ResultProductFeedFragment : MvpAppCompatFragment(), ResultProductFeedView 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
-        _pagingAdapter = SprindPagingAdapter(delegates = presenter.viewDelegates)
+        _pagingAdapter = SprindPagingAdapter(
+            delegates = presenter.viewDelegates,
+            itemsComparator = { V1, V2 ->
+                if (V1 is FeedProductVo && V2 is FeedProductVo) V1.id == V2.id
+                else V1 == V2
+            },
+            changePayload = { V1, V2 ->
+                if (V1 is FeedProductVo && V2 is FeedProductVo) V1.isFavorite xor V2.isFavorite
+                else null
+            }
+        )
     }
 
     override fun onCreateView(

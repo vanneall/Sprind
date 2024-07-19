@@ -8,8 +8,16 @@ import ru.point.sprind.entity.viewholder.ViewHolderV2
 
 class SprindPagingAdapter(
     private val delegates: List<Delegate<*>>,
-    comparator: (ViewObject, ViewObject) -> Boolean = { oldItem, newItem -> oldItem == newItem }
-) : PagingDataAdapter<ViewObject, ViewHolderV2<ViewObject>>(DiffUtilCallback(comparator)) {
+    itemsComparator: (ViewObject, ViewObject) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+    contentComparator: (ViewObject, ViewObject) -> Boolean = { oldItem, newItem -> oldItem == newItem },
+    changePayload: (ViewObject, ViewObject) -> Any? = { _, _ -> null }
+) : PagingDataAdapter<ViewObject, ViewHolderV2<ViewObject>>(
+    DiffUtilCallback(
+        itemsComparator,
+        contentComparator,
+        changePayload
+    )
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderV2<ViewObject> {
         return delegates[viewType]
@@ -19,6 +27,15 @@ class SprindPagingAdapter(
 
     override fun onBindViewHolder(holder: ViewHolderV2<ViewObject>, position: Int) {
         holder.bind(getItem(position) ?: return)
+    }
+
+    override fun onBindViewHolder(
+        holder: ViewHolderV2<ViewObject>,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isEmpty()) super.onBindViewHolder(holder, position, payloads)
+        else holder.bindWithPayload(getItem(position) ?: return, payloads)
     }
 
     override fun getItemViewType(position: Int): Int {

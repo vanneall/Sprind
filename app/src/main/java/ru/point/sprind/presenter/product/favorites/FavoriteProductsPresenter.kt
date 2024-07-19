@@ -72,17 +72,13 @@ class FavoriteProductsPresenter @Inject constructor(
 
     private fun changeFavoriteState(
         productId: Long,
-        isChecked: Boolean,
-        isSuccessfulCallback: (Boolean) -> Unit,
+        isChecked: Boolean
     ) {
         productManager.get().changeProductInFavoriteState(
             productId = productId,
             isInFavorite = isChecked,
             onComplete = { viewState.refresh() },
-            onError = { ex ->
-                isSuccessfulCallback(false)
-                handleException(exception = ex)
-            }
+            onError = { ex -> handleException(exception = ex) }
         )
     }
 

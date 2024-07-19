@@ -40,7 +40,7 @@ class FavoriteProductsFragment : MvpAppCompatFragment(), FavoriteView {
         super.onCreate(savedInstanceState)
         _pagingAdapter = SprindPagingAdapter(
             delegates = presenter.viewDelegates,
-            comparator = { V1, V2 ->
+            contentComparator = { V1, V2 ->
                 if (V1 is EmptyFavoritesVo && V2 is EmptyFavoritesVo) true
                 else V1 == V2
             }

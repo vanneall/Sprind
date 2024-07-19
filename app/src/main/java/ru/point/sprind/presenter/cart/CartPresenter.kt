@@ -43,7 +43,7 @@ class CartPresenter @Inject constructor(
         CartProductDelegate(
             onClick = viewState::navigateToProductCard,
             onFavoriteCheckedChange = ::changeProductFavoriteState,
-            delete = ::removeProductFromCart
+            onDeleteByProductId = ::removeProductFromCart
         ),
         CartPromocodeDelegate(),
         CartSummaryDelegate(),
@@ -59,15 +59,12 @@ class CartPresenter @Inject constructor(
                             onError = ::handleException
                         )
                     },
-                    onFavoriteCheckedChange = { id, isFavorite, callback ->
+                    onFavoriteCheckedChange = { id, isFavorite ->
                         productManager.get().changeProductInFavoriteState(
                             productId = id,
                             isInFavorite = isFavorite,
                             onComplete = viewState::refresh,
-                            onError = { ex ->
-                                callback(false)
-                                handleException(exception = ex)
-                            }
+                            onError = { ex -> handleException(exception = ex) }
                         )
                     }
                 )
@@ -110,17 +107,13 @@ class CartPresenter @Inject constructor(
 
     private fun changeProductFavoriteState(
         productId: Long,
-        isChecked: Boolean,
-        isSuccessfulCallback: (Boolean) -> Unit,
+        isChecked: Boolean
     ) {
         productManager.get().changeProductInFavoriteState(
             productId = productId,
             isInFavorite = isChecked,
             onComplete = viewState::refresh,
-            onError = { ex ->
-                isSuccessfulCallback(false)
-                handleException(exception = ex)
-            }
+            onError = ::handleException
         )
     }
 

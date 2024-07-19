@@ -79,16 +79,12 @@ class CategoryPresenter @AssistedInject constructor(
     private fun changeProductInFavoriteState(
         productId: Long,
         isInFavoriteNow: Boolean,
-        changeFavoriteStateCallback: (isSuccessful: Boolean) -> Unit,
     ) {
         productManager.get().changeProductInFavoriteState(
             productId = productId,
             isInFavorite = isInFavoriteNow,
             onComplete = viewState::refresh,
-            onError = { ex ->
-                changeFavoriteStateCallback(false)
-                handleException(exception = ex)
-            }
+            onError = { ex -> handleException(exception = ex) }
         )
     }
 
