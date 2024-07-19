@@ -50,6 +50,8 @@ class NestedRecyclerViewViewHolder(
         return when (represented) {
             Represented.UNDEFINED -> null
             Represented.FAVORITE -> context.resources.getString(R.string.products_in_favorite)
+            Represented.CATEGORIES -> context.resources.getString(R.string.categories)
+            Represented.SHOPS -> context.resources.getString(R.string.shops)
         }
     }
 }

@@ -34,7 +34,8 @@ class CategoryPagingSource(
                         NestedRecyclerViewVo(
                             viewObjects = shop.map { responseItem ->
                                 responseItem.toShopVo()
-                            }
+                            },
+                            represented = NestedRecyclerViewVo.Represented.SHOPS
                         )
                     )
                 }

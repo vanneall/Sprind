@@ -31,7 +31,9 @@ class FeedPagingSource(
                         NestedRecyclerViewVo(
                             viewObjects = categoryApi.getAvailableCategories()
                                 .blockingGet()
-                                .map { categoryResponse -> categoryResponse.toCategoryVo() })
+                                .map { categoryResponse -> categoryResponse.toCategoryVo() },
+                            represented = NestedRecyclerViewVo.Represented.CATEGORIES
+                        )
                     )
                 }
 

@@ -101,5 +101,7 @@
     <string name="we_are_trying_to_find">Мы не нашли товаров по такому запросу, попробуйте сфорулировать запрос заново</string>
 
     <string name="products_in_favorite">Товары в избранном</string>
+    <string name="categories">Популярные категории</string>
+    <string name="shops">Популярные магазины</string>
     <string name="input_promocode">Введите промокод</string>
 </resources>

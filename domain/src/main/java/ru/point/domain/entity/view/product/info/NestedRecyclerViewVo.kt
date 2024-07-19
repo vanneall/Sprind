@@ -8,6 +8,8 @@ data class NestedRecyclerViewVo(
 ) : ViewObject {
     enum class Represented {
         UNDEFINED,
-        FAVORITE
+        FAVORITE,
+        CATEGORIES,
+        SHOPS
     }
 }
