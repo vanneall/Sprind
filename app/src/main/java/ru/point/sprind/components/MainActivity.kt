@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         val window = window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor =
-            ContextCompat.getColor(this, ru.point.sprind.R.color.md_theme_surfaceVariant)
+            ContextCompat.getColor(this, ru.point.sprind.R.color.md_theme_background)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(ru.point.sprind.R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

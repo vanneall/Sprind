@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_surfaceVariant"
     tools:context=".presenter.product.result.ResultProductFeedFragment">
 
     <ru.point.sprind.view.SearchToolbar
         android:id="@+id/toolbar"
-        android:hint="@string/search"
-        app:isEditable="false"
-        app:backVisibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/search"
+        app:backVisibility="visible"
+        app:isEditable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:showAddress="false" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

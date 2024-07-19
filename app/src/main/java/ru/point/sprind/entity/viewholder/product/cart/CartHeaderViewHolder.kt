@@ -14,12 +14,13 @@ class CartHeaderViewHolder(
         if (view.address.address != null) {
             binding.address.apply {
                 text = view.address.address
-                setTextColor(binding.root.resources.getColor(R.color.md_theme_tertiaryContainer))
+                setTextColor(binding.root.resources.getColor(R.color.md_theme_tertiary))
 
                 setOnClickListener {
                     onChangeAddressClick()
                 }
             }
+            binding.editAddressIcon.setColorFilter(binding.root.resources.getColor(R.color.md_theme_tertiary))
         }
     }
 }

@@ -25,6 +25,7 @@ import com.yandex.mapkit.map.InputListener
 import com.yandex.mapkit.map.Map
 import moxy.MvpAppCompatFragment
 import ru.point.sprind.R
+import ru.point.sprind.components.MainActivity
 import ru.point.sprind.components.SprindApplication
 import ru.point.sprind.databinding.FragmentMapBinding
 import java.util.Locale
@@ -86,6 +87,7 @@ class MapFragment : MvpAppCompatFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
+        (activity as? MainActivity)?.hideBottomNavigation()
     }
 
     override fun onCreateView(
@@ -200,6 +202,11 @@ class MapFragment : MvpAppCompatFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        (activity as? MainActivity)?.showBottomNavigation()
     }
 }
 
