@@ -89,8 +89,6 @@ class CartFragment : MvpAppCompatFragment(), CartView {
                     ?: state.prepend as? LoadState.Error
                     ?: state.refresh as? LoadState.Error
                 stateError?.let { presenter.handleException(stateError.error) }
-            } else if (state.isIdle && !state.hasError) {
-                showPayButton()
             }
         }
     }
@@ -102,6 +100,7 @@ class CartFragment : MvpAppCompatFragment(), CartView {
 
     override fun refresh() {
         pagingAdapter.refresh()
+        showPayButton()
     }
 
     override fun changeAddress() {

@@ -1,6 +1,7 @@
 package ru.point.sprind.presenter.cart
 
 import android.util.Log
+import androidx.paging.map
 import androidx.paging.rxjava3.cachedIn
 import dagger.Lazy
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -10,6 +11,7 @@ import moxy.InjectViewState
 import moxy.MvpPresenter
 import moxy.presenterScope
 import retrofit2.HttpException
+import ru.point.domain.entity.view.cart.CartEmptyVo
 import ru.point.domain.manager.ProductManager
 import ru.point.domain.usecase.interfaces.cart.GetProductsInCartUseCase
 import ru.point.domain.usecase.interfaces.cart.MakeOrderUseCase
@@ -81,7 +83,12 @@ class CartPresenter @Inject constructor(
             .cachedIn(presenterScope)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { data -> viewState.setAdapter(data) },
+                { data ->
+                    viewState.setAdapter(data.map { viewObject ->
+                        if (viewObject is CartEmptyVo) viewState.hidePayButton()
+                        viewObject
+                    })
+                },
                 { ex -> handleException(exception = ex) }
             )
 
