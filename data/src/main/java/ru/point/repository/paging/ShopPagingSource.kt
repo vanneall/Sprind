@@ -20,7 +20,7 @@ class ShopPagingSource (
         return api.getShopsProducts(shopId, startPage, pageSize)
             .map<LoadResult<Int, ViewObject>> { response ->
                 val prevKey = if (startPage == 0) null else startPage - pageSize
-                val nextKey = if (response.size < pageSize) null else pageSize
+                val nextKey = if (response.size < pageSize) null else startPage + pageSize
 
                 val resultPageData = response.map { responseItem -> responseItem.toProductFeedVo() }
 

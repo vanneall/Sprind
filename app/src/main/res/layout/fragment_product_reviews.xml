@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_theme_surfaceVariant"
-    tools:context=".presenter.review.all.AllReviewsFragment">
+    tools:context=".presenter.review.all.ProductReviewsFragment">
 
     <ru.point.sprind.view.TitleToolbar
         android:id="@+id/toolbar"
         app:text="@string/all_reviews"
+        app:backButtonVisibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

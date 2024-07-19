@@ -6,65 +6,76 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.PagingData
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.point.domain.entity.view.ViewObject
-import ru.point.sprind.adapters.SprindDefaultAdapter
+import ru.point.sprind.adapters.SprindPagingAdapter
 import ru.point.sprind.adapters.decorators.ProductInfoDecorator
 import ru.point.sprind.components.SprindApplication
-import ru.point.sprind.databinding.FragmentAllReviewsBinding
+import ru.point.sprind.databinding.FragmentProductReviewsBinding
 import ru.point.sprind.view.ConnectableLayout
 import javax.inject.Inject
 
-class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsViewDefault {
+class ProductReviewsFragment : MvpAppCompatFragment(), ProductReviewsView {
 
-    private val args by navArgs<AllReviewsFragmentArgs>()
+    private val args by navArgs<ProductReviewsFragmentArgs>()
 
     @Inject
-    lateinit var provider: AllReviewsPresenterFactory
+    lateinit var provider: ProductReviewsPresenter.Factory
     private val presenter by moxyPresenter { provider.create(args.id) }
 
-    private var _binding: FragmentAllReviewsBinding? = null
+    private var _binding: FragmentProductReviewsBinding? = null
     private val binding get() = _binding!!
 
-    private var _adapter: SprindDefaultAdapter? = null
-    private val adapter get() = _adapter!!
+    private var _pagingAdapter: SprindPagingAdapter? = null
+    private val pagingAdapter get() = _pagingAdapter!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         SprindApplication.component.inject(this)
         super.onCreate(savedInstanceState)
-        _adapter = SprindDefaultAdapter(delegates = presenter.delegates)
+        _pagingAdapter = SprindPagingAdapter(delegates = presenter.delegates)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentAllReviewsBinding.inflate(layoutInflater)
+        _binding = FragmentProductReviewsBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeRecyclerView()
+        initToolbar()
+        initRecyclerView()
+        initAddReviewButton()
+    }
 
-        binding.addReview.setOnClickListener {
-            val destination =
-                AllReviewsFragmentDirections.actionAllReviewsFragmentToCreateReviewFragment(
-                    productId = args.id
-                )
-            findNavController().navigate(destination)
+    override fun onStart() {
+        super.onStart()
+        refresh()
+    }
+
+    private fun initToolbar() {
+        binding.toolbar.setOnBackClickListener { findNavController().popBackStack() }
+    }
+
+    private fun initRecyclerView() {
+        binding.recyclerView.apply {
+            adapter = pagingAdapter
+            addItemDecoration(ProductInfoDecorator())
         }
     }
 
-    private fun initializeRecyclerView() {
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.addItemDecoration(ProductInfoDecorator())
-    }
-
-    override fun onResume() {
-        super.onResume()
-        presenter.init()
+    private fun initAddReviewButton() {
+        binding.addReview.setOnClickListener {
+            val direction =
+                ProductReviewsFragmentDirections.actionAllReviewsFragmentToCreateReviewFragment(
+                    productId = args.id
+                )
+            findNavController().navigate(direction)
+        }
     }
 
     override fun showBadConnection(show: Boolean) {
@@ -75,9 +86,13 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsViewDefault {
         binding.root.currentState = ConnectableLayout.ConnectionState.LOADING
     }
 
-    override fun setAdapter(views: List<ViewObject>) {
-        adapter.submitList(views)
+    override fun setAdapter(views: PagingData<ViewObject>) {
+        pagingAdapter.submitData(lifecycle, views)
         binding.root.currentState = ConnectableLayout.ConnectionState.SUCCESS
+    }
+
+    override fun refresh() {
+        pagingAdapter.refresh()
     }
 
     override fun onDestroyView() {
@@ -87,6 +102,6 @@ class AllReviewsFragment : MvpAppCompatFragment(), AllReviewsViewDefault {
 
     override fun onDestroy() {
         super.onDestroy()
-        _adapter = null
+        _pagingAdapter = null
     }
 }

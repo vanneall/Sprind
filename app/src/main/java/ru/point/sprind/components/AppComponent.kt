@@ -24,7 +24,7 @@ import ru.point.sprind.presenter.product.morda.MainProductFeedFragment
 import ru.point.sprind.presenter.product.result.ResultProductFeedFragment
 import ru.point.sprind.presenter.profile.main.ProfileFragment
 import ru.point.sprind.presenter.profile.orders.OrdersFragment
-import ru.point.sprind.presenter.review.all.AllReviewsFragment
+import ru.point.sprind.presenter.review.all.ProductReviewsFragment
 import ru.point.sprind.presenter.review.create.CreateReviewFragment
 import ru.point.sprind.presenter.search.SearchFragment
 import ru.point.sprind.presenter.shop.ShopFragment
@@ -61,7 +61,7 @@ interface AppComponent {
 
     fun inject(fragment: RegistrationFragment)
 
-    fun inject(fragment: AllReviewsFragment)
+    fun inject(fragment: ProductReviewsFragment)
 
     fun inject(fragment: CreateReviewFragment)
 

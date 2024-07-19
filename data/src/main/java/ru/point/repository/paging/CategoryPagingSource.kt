@@ -22,7 +22,7 @@ class CategoryPagingSource(
         return api.getCategoryProductsById(categoryId, startPage, pageSize)
             .map<LoadResult<Int, ViewObject>> { response ->
                 val prevKey = if (startPage == 0) null else startPage - pageSize
-                val nextKey = if (response.size < pageSize) null else pageSize
+                val nextKey = if (response.size < pageSize) null else startPage + pageSize
 
                 var shops = listOf<ViewObject>()
                 if (prevKey == null) {
@@ -32,8 +32,8 @@ class CategoryPagingSource(
 
                     shops = listOf(
                         NestedRecyclerViewVo(
-                            viewObjects = shop.map { shopResponse ->
-                                shopResponse.toShopVo()
+                            viewObjects = shop.map { responseItem ->
+                                responseItem.toShopVo()
                             }
                         )
                     )

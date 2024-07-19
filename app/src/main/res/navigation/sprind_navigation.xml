@@ -161,9 +161,9 @@
         app:destination="@id/authorizationFragment" />
     <fragment
         android:id="@+id/allReviewsFragment"
-        android:name="ru.point.sprind.presenter.review.all.AllReviewsFragment"
+        android:name="ru.point.sprind.presenter.review.all.ProductReviewsFragment"
         android:label="fragment_all_reviews"
-        tools:layout="@layout/fragment_all_reviews">
+        tools:layout="@layout/fragment_product_reviews">
         <action
             android:id="@+id/action_allReviewsFragment_to_createReviewFragment"
             app:destination="@id/createReviewFragment" />

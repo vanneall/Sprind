@@ -20,12 +20,12 @@ class FavoritePagingSource(
         return repository.getFavorites(startPage, pageSize)
             .map<LoadResult<Int, ViewObject>> { response ->
                 val prevKey = if (startPage == 0) null else startPage - pageSize
-                val nextKey = if (response.size < pageSize) null else pageSize
+                val nextKey = if (response.size < pageSize) null else startPage + pageSize
 
                 val resultPageData = if (response.isEmpty()) {
                     listOf(EmptyFavoritesVo())
                 } else {
-                    response.map { it.toProductFeedVo() }
+                    response.map { responseItem -> responseItem.toProductFeedVo() }
                 }
 
                 LoadResult.Page(

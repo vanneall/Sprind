@@ -23,7 +23,7 @@ class FeedPagingSource(
         return productApi.getProducts(startPage, pageSize, null)
             .map<LoadResult<Int, ViewObject>> { response ->
                 val prevKey = if (startPage == 0) null else startPage - pageSize
-                val nextKey = if (response.size < pageSize) null else pageSize
+                val nextKey = if (response.size < pageSize) null else startPage + pageSize
 
                 var categories = listOf<ViewObject>()
                 if (prevKey == null) {

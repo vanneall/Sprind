@@ -35,7 +35,7 @@ class CartPagingSource(
         return api.getProductsFromCart(startPage, pageSize)
             .map<LoadResult<Int, ViewObject>> { response ->
                 val prevKey = if (startPage == 0) null else startPage - pageSize
-                val nextKey = if (response.size < pageSize) null else pageSize
+                val nextKey = if (response.size < pageSize) null else startPage + pageSize
 
                 val headerItems = mutableListOf<ResponseItem>()
                 val footerItems = mutableListOf<ResponseItem>()
@@ -55,6 +55,7 @@ class CartPagingSource(
                     val firstPart = (headerItems + response).map { responseItem ->
                         mapResponseItem(responseItem = responseItem)
                     }
+
                     val secondPart =
                         if (footerItems.isNotEmpty()) listOf(CartPromocodeVo()) else listOf()
 
