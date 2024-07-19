@@ -27,4 +27,6 @@ data class ProductInfoResponse(
     val shopDto: ProductShopResponse,
     @SerializedName("category")
     val categoryDto: ProductCategoryResponse,
+    @SerializedName("rating")
+    val rating: Float,
 ): ResponseItem

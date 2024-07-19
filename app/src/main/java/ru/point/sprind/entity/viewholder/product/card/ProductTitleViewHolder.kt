@@ -15,6 +15,7 @@ class ProductTitleViewHolder(
             price.text = view.price
             favoriteCheckbox.isChecked = view.isFavorite
 
+            rating.text = view.rating
             favoriteCheckbox.setOnClickListener {
                 val isChecked = favoriteCheckbox.isChecked
                 onFavoriteCheckedChange(isChecked) { isSuccess ->

@@ -23,6 +23,7 @@ class ProductViewHolder(
 
             name.text = view.name
             price.text = view.price
+            rating.text = view.rating.toString()
 
             isFavorite.isChecked = view.isFavorite
             isFavorite.setOnClickListener {

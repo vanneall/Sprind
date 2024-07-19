@@ -17,6 +17,8 @@ data class FeedProductResponse(
     val isInCart: Boolean,
     @SerializedName("description")
     val description: String? = null,
+    @SerializedName("rating")
+    val rating: Float,
     @SerializedName("photosUrl")
     val imagesUrl: List<String>
 ) : ResponseItem

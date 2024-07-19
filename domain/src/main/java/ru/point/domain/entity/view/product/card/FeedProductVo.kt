@@ -9,6 +9,7 @@ data class FeedProductVo(
     val price: String,
     val isFavorite: Boolean,
     val inCart: Boolean,
+    val rating: Float,
     val description: String? = null,
     val imagesUrl: List<ImageUrlVo>
 ) : ViewObject

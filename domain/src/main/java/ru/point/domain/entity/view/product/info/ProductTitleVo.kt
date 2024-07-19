@@ -7,5 +7,5 @@ data class ProductTitleVo(
     val price: String,
     val isFavorite: Boolean,
     val isInCart: Boolean,
-    val rating: String = "5.0",
+    val rating: String,
 ) : ViewObject

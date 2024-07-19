@@ -73,6 +73,7 @@ fun FeedProductResponse.toProductFeedVo(): FeedProductVo {
         isFavorite = isFavorite,
         inCart = isInCart,
         description = description,
+        rating = rating,
         imagesUrl = if (imagesUrl.isNotEmpty()) imagesUrl.map(::ImageUrlVo)
         else listOf(ImageUrlVo(PICTURE_NOT_FOUND_URL))
     )
@@ -99,6 +100,7 @@ fun ProductInfoResponse.toProductTitleVo(): ProductTitleVo {
         isFavorite = isFavorite,
         isInCart = isInCart,
         price = StringFormatter.formatPrice(price),
+        rating = rating.toString()
     )
 }
 
